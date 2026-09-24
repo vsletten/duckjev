@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "Semantic operators for DuckDB backed by TypeSafe's Jev: typed, calibrated judgments as SQL functions."
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["duckdb>=1.1", "pyarrow>=18", "httpx>=0.27"]
+# numpy: DuckDB 1.5 create_function() refuses to register any Python UDF without it.
+dependencies = ["duckdb>=1.1", "pyarrow>=18", "httpx>=0.27", "numpy>=2"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.8"]
@@ -19,6 +20,10 @@ packages = ["duckjev"]
 [tool.ruff]
 line-length = 100
 target-version = "py313"
+
+[tool.ruff.format]
+# ruff formats Python blocks inside Markdown; leave prose docs (and the handoff) alone.
+exclude = ["*.md"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
