@@ -139,3 +139,5 @@ Notes:
   argument or an empty state gives NULL without a request.
 
 Design and decisions: [docs/HANDOFF.md](docs/HANDOFF.md).
+
+State at hand-off and next milestones: [docs/NEXT.md](docs/NEXT.md). Original build spec: [docs/HANDOFF.md](docs/HANDOFF.md).
