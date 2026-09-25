@@ -116,6 +116,13 @@ ROUNDS: dict[str, Round] = {
         "forward",
         "none",
     ),
+    "R3": Round(
+        "R1 with every option list reversed: the option-order check on the best round",
+        "v2",
+        "flat",
+        "reverse",
+        "none",
+    ),
     "R4": Round(
         "R0 with the top-up Noul fused into the intent request instead of a separate query: "
         "the fusion cost lever, and a check that the intent answers do not move",
@@ -193,6 +200,22 @@ SELECT t.intent, t.true_count,
        abs(s.expected_count - t.true_count) <= 2 * s.stderr AS within_2se
 FROM truth t LEFT JOIN hard h USING (intent) LEFT JOIN soft s USING (intent)
 ORDER BY t.intent"""
+
+# Division readout of any round's intent distribution: the mass on the argmax's division. A
+# flat round can defer to a division from this alone, with no second question.
+DIVISION_MASS_SQL = """WITH mass AS (
+  SELECT s.text, m.division, sum(e.value) AS p
+  FROM scored s, UNNEST(map_entries(s.probabilities)) AS u(e)
+  JOIN division_map m ON m.intent = e.key
+  GROUP BY ALL),
+top AS (SELECT text, arg_max(division, p) AS division, max(p) AS p FROM mass GROUP BY text)
+SELECT avg((t.division = division_of(s.label_text))::INT) AS division_accuracy,
+  avg((t.p < $thr)::INT) AS deferred,
+  avg((s.choice = s.label_text)::INT) FILTER (t.p >= $thr) AS precision_when_answered,
+  avg((t.division = division_of(s.label_text))::INT) FILTER (t.p < $thr)
+    AS division_accuracy_when_deferred,
+  avg((s.choice = s.label_text)::INT) FILTER (t.p < $thr) AS leaf_accuracy_when_deferred
+FROM scored s JOIN top t USING (text)"""
 
 CONFUSIONS_SQL = """SELECT label_text AS gold, choice AS predicted, count(*) AS n
 FROM scored WHERE choice <> label_text GROUP BY ALL ORDER BY n DESC, gold, predicted LIMIT $k"""
@@ -472,6 +495,14 @@ def fake_transport(split: str) -> httpx.MockTransport:
     return httpx.MockTransport(handle)
 
 
+def _row_dict(
+    con: duckdb.DuckDBPyConnection, sql: str, params: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    cur = con.execute(sql, params or {})
+    cols = [d[0] for d in cur.description]
+    return dict(zip(cols, cur.fetchone(), strict=True))
+
+
 def _ece(rows: list[Any]) -> float | None:
     n = sum(r[1] for r in rows)
     return sum(r[1] * abs(r[3] - r[2]) for r in rows) / n if n else None
@@ -504,12 +535,12 @@ def metrics(con: duckdb.DuckDBPyConnection, rnd: Round) -> dict[str, Any]:
         "intents_within_2se": sum(1 for r in per_intent if r[7]),
         "intents": len(per_intent),
         "confusions": [list(r) for r in con.execute(CONFUSIONS_SQL, {"k": 15}).fetchall()],
+        "division_mass": _row_dict(con, DIVISION_MASS_SQL, {"thr": DEFER_BELOW}),
         "deferral": None,
         "topup": None,
     }
     if rnd.structure == "two_level":
-        cols = [d[0] for d in con.execute(DEFERRAL_SQL).description]
-        out["deferral"] = dict(zip(cols, con.execute(DEFERRAL_SQL).fetchone(), strict=True))
+        out["deferral"] = _row_dict(con, DEFERRAL_SQL)
     if rnd.topup != "none":
         s = con.execute(TOPUP_METRICS_SQL, {"intents": list(TOPUP_INTENTS)}).fetchone()
         out["topup"] = {
@@ -646,6 +677,7 @@ def _brief(s: dict[str, Any]) -> dict[str, Any]:
         },
         "top_confusions": s["confusions"][:5],
     }
+    r["division_mass"] = _round3(s["division_mass"])
     if s["deferral"]:
         r["deferral"] = _round3(s["deferral"])
     if s["topup"]:
@@ -882,6 +914,30 @@ def _confusion_pair_table(a: dict[str, Any], b: dict[str, Any], k: int = 10) -> 
     )
 
 
+def _division_mass_table(runs: list[dict[str, Any]]) -> str:
+    return _table(
+        [
+            "run",
+            "division accuracy (mass)",
+            f"deferred (mass < {DEFER_BELOW})",
+            "intent precision when answered",
+            "division right when deferred",
+            "intent argmax right when deferred",
+        ],
+        [
+            [
+                f"{r['split']}/{r['round']}",
+                r["division_mass"]["division_accuracy"],
+                f"{r['division_mass']['deferred']:.1%}",
+                r["division_mass"]["precision_when_answered"],
+                r["division_mass"]["division_accuracy_when_deferred"],
+                r["division_mass"]["leaf_accuracy_when_deferred"],
+            ]
+            for r in runs
+        ],
+    )
+
+
 def _deferral_table(runs: list[dict[str, Any]]) -> str:
     return _table(
         [
@@ -1034,6 +1090,17 @@ def report(args: argparse.Namespace) -> int:
             _deferral_table(two_level),
             "",
         ]
+    parts += [
+        "### Deferring to a division from the intent distribution alone",
+        "",
+        "For every round, the division of a row is the one holding the most probability mass "
+        "(summed over its intents) in that row's intent distribution, and a row defers when that "
+        f"mass is under {DEFER_BELOW}. A flat round gets this readout from its one Choice, with "
+        "no second question.",
+        "",
+        _division_mass_table(dev + held),
+        "",
+    ]
     if "dev/R0" in runs and best != "R0":
         parts += [
             "### Top confusions on dev, baseline against the chosen round",
