@@ -32,7 +32,7 @@ uv run python bench/sroie.py coverage                        # candidate coverag
 uv run python bench/sroie.py run R0 --split train --limit 40 # pre-flight sample, not recorded
 uv run python bench/sroie.py run R3 --split train            # one round on the dev split
 uv run python bench/sroie.py run R3 --split test             # the held-out split
-uv run python bench/sroie.py rescore                         # recompute metrics from saved rows
+uv run python bench/sroie.py rescore                         # rebuild runs from their answer caches
 uv run python bench/sroie.py report                          # writes docs/results/sroie.md
 ```
 
@@ -48,4 +48,8 @@ becomes the run's `max_input_tokens` budget, and each run starts from a fresh ca
 file so the timed pass pays for every receipt.
 
 Per-row results (`bench/data/scored_<split>_<round>.parquet`) and the prepared data
-are gitignored. `--dry-run` swaps in a fake transport and records nothing.
+are gitignored. `rescore` rebuilds each recorded run from that run's own answer
+cache (`bench/data/cache_<split>_<round>.duckdb`) with a transport that refuses every
+request, so it costs nothing and cannot read another run's data. `--dry-run` swaps
+in a fake transport, writes only `_dry` files, and records nothing. A test checks
+the README headline table against `docs/results/sroie_runs.json`.

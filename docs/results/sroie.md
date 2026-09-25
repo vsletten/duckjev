@@ -12,13 +12,13 @@ Matching: *exact* compares case- and whitespace-insensitively; *loose* compares 
 
 | field | n | coverage | exact | selection given coverage | coverage (loose) | exact (loose) | selection (loose) | none when covered | candidates |
 |---|---|---|---|---|---|---|---|---|---|
-| company | 347 | 97.4% | **80.7%** | 82.8% | 98.3% | 80.7% | 82.1% | 0.3% | 34.8 |
-| date | 347 | 98.8% | **90.5%** | 91.5% | 98.8% | 90.5% | 91.5% | 7.9% | 1.0 |
-| address | 347 | 84.7% | **67.4%** | 79.6% | 94.2% | 67.4% | 71.6% | 0.3% | 104.2 |
-| total | 347 | 99.7% | **71.5%** | 71.7% | 99.7% | 71.5% | 71.7% | 15.3% | 8.6 |
-| all | 1388 | 95.2% | **77.5%** | 81.5% | 97.8% | 77.5% | 79.3% | 6.2% | 37.2 |
+| company | 347 | 97.4% | **92.5%** | 95.0% | 98.3% | 93.4% | 95.0% | 0.0% | 34.8 |
+| date | 347 | 98.8% | **98.8%** | 100.0% | 98.8% | 98.8% | 100.0% | 0.0% | 1.0 |
+| address | 347 | 84.7% | **81.6%** | 96.3% | 94.2% | 91.1% | 96.6% | 0.0% | 104.2 |
+| total | 347 | 99.7% | **98.6%** | 98.8% | 99.7% | 98.6% | 98.8% | 0.0% | 8.6 |
+| all | 1388 | 95.2% | **92.9%** | 97.6% | 97.8% | 95.5% | 97.6% | 0.0% | 37.2 |
 
-All four fields exact on the same receipt: **32.6%** of 347 receipts. Throughput 113.9 receipts/s (347 requests in 3.0 s at concurrency 16, 0 × 429); 6,001 input tokens per request; **$0.2521 per 1,000 receipts** ($0.0875 for the split). A cache re-run took 0.09 s with 0 requests.
+All four fields exact on the same receipt: **73.5%** of 347 receipts. Throughput 113.9 receipts/s (347 requests in 3.0 s at concurrency 16, 0 × 429); 6,001 input tokens per request; **$0.2521 per 1,000 receipts** ($0.0875 for the split). A cache re-run took 0.09 s with 0 requests.
 
 ### Held-out runs: the baseline and the chosen round
 
@@ -27,7 +27,7 @@ Exact match, with selection given coverage in brackets.
 | run | company | date | address | total | all | all four | tokens / req | $ / 1k |
 |---|---|---|---|---|---|---|---|---|
 | test/R0 | 65.7% (67.5%) | 98.8% (100.0%) | 73.2% (86.4%) | 97.1% (97.4%) | 83.7% (88.0%) | 46.4% | 5,791 | $0.2432 |
-| test/R3 | 80.7% (82.8%) | 90.5% (91.5%) | 67.4% (79.6%) | 71.5% (71.7%) | 77.5% (81.5%) | 32.6% | 6,001 | $0.2521 |
+| test/R3 | 92.5% (95.0%) | 98.8% (100.0%) | 81.6% (96.3%) | 98.6% (98.8%) | 92.9% (97.6%) | 73.5% | 6,001 | $0.2521 |
 
 ## Tuning rounds on the dev split (train)
 
@@ -53,27 +53,39 @@ Candidates are identical in every round, so coverage does not move; only selecti
 
 `p` of the returned candidate against exact match, 10 equal-width bins. Two views: over the fields whose gold value was among the candidates, which is the calibration of Jev's selection, and over every returned field, where an uncovered row is wrong whatever Jev picks.
 
-Covered fields: ECE **0.068**.
+Covered fields: ECE **0.020**.
 
 | bin | n | mean p | exact |
 |---|---|---|---|
-| 0.8–0.9 | 1239 | 0.800 | 0.868 |
+| 0.3–0.4 | 2 | 0.330 | 0.000 |
+| 0.4–0.5 | 12 | 0.463 | 0.583 |
+| 0.5–0.6 | 6 | 0.558 | 0.667 |
+| 0.6–0.7 | 17 | 0.651 | 0.882 |
+| 0.7–0.8 | 25 | 0.753 | 1.000 |
+| 0.8–0.9 | 63 | 0.844 | 0.968 |
+| 0.9–1.0 | 1196 | 0.989 | 0.984 |
 
-Every returned field: ECE **0.059**.
+Every returned field: ECE **0.050**.
 
 | bin | n | mean p | exact |
 |---|---|---|---|
-| 0.8–0.9 | 1252 | 0.800 | 0.859 |
+| 0.3–0.4 | 3 | 0.347 | 0.000 |
+| 0.4–0.5 | 15 | 0.462 | 0.467 |
+| 0.5–0.6 | 9 | 0.550 | 0.444 |
+| 0.6–0.7 | 19 | 0.649 | 0.789 |
+| 0.7–0.8 | 28 | 0.754 | 0.893 |
+| 0.8–0.9 | 66 | 0.845 | 0.924 |
+| 0.9–1.0 | 1248 | 0.988 | 0.943 |
 
 Acting only on answers at or above a threshold on `p` (answered is the share of all gold fields, precision is exact match among them):
 
 | p ≥ | answered | precision |
 |---|---|---|
-| 0.5 | 90.2% | 85.9% |
-| 0.8 | 90.2% | 85.9% |
-| 0.9 | 0.0% | – |
-| 0.95 | 0.0% | – |
-| 0.99 | 0.0% | – |
+| 0.5 | 98.7% | 93.6% |
+| 0.8 | 94.7% | 94.2% |
+| 0.9 | 89.9% | 94.3% |
+| 0.95 | 84.4% | 95.0% |
+| 0.99 | 67.0% | 98.0% |
 
 ## Where coverage is lost, held-out split
 
@@ -81,11 +93,11 @@ For gold values no candidate matches, what `jev_extract` returned instead. *Near
 
 | field | uncovered | returned none | returned a near match | other |
 |---|---|---|---|---|
-| address | 53 | 41 | 0 | 12 |
-| all | 67 | 54 | 0 | 13 |
-| company | 9 | 8 | 0 | 1 |
-| date | 4 | 4 | 0 | 0 |
-| total | 1 | 1 | 0 | 0 |
+| address | 53 | 0 | 49 | 4 |
+| all | 67 | 0 | 56 | 11 |
+| company | 9 | 0 | 7 | 2 |
+| date | 4 | 0 | 0 | 4 |
+| total | 1 | 0 | 0 | 1 |
 
 ## The SQL
 
@@ -109,15 +121,15 @@ SELECT id, gold, raw_text, layout_text,
 FROM receipts
 ```
 
-Extraction, with `{state}` the receipt text and `{order}` empty or `list_reverse`:
+Extraction. `$layout` picks the rebuilt visual rows over the raw lines, and `$reverse` reverses every candidate list through the bench macro `ordered(l, rev)`:
 
 ```sql
 CREATE OR REPLACE TABLE extracted AS
-SELECT id, jev_extract({state}, json_object(
-         'company', jev_field($company_q, {order}(company_c)),
-         'date',    jev_field($date_q,    {order}(date_c)),
-         'address', jev_field($address_q, {order}(address_c)),
-         'total',   jev_field($total_q,   {order}(total_c)))) AS x
+SELECT id, jev_extract(CASE WHEN $layout THEN layout_text ELSE raw_text END, json_object(
+         'company', jev_field($company_q, ordered(company_c, $reverse)),
+         'date',    jev_field($date_q,    ordered(date_c,    $reverse)),
+         'address', jev_field($address_q, ordered(address_c, $reverse)),
+         'total',   jev_field($total_q,   ordered(total_c,   $reverse)))) AS x
 FROM cands
 ```
 

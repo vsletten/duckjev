@@ -5,7 +5,7 @@
     uv run python bench/sroie.py run R0 --split train --limit 40   # pre-flight sample
     uv run python bench/sroie.py run R0 --split train           # one tuning round on dev
     uv run python bench/sroie.py run R2 --split test            # the held-out split
-    uv run python bench/sroie.py rescore                        # metrics from saved rows, free
+    uv run python bench/sroie.py rescore                        # rebuild from answer caches, free
     uv run python bench/sroie.py report                         # docs/results/sroie.md
     uv run python bench/sroie.py run R0 --split train --dry-run # fake transport, no key
 
@@ -187,17 +187,26 @@ SELECT id, gold, raw_text, layout_text,
        jev_line_windows(lines[1:20], 6) AS address_c
 FROM receipts"""
 
+# Fixed SQL text: $layout picks the rebuilt visual rows over the raw lines, and $reverse
+# reverses every candidate list. Nothing is formatted into the query.
 EXTRACT_SQL = """CREATE OR REPLACE TABLE extracted AS
-SELECT id, jev_extract({state}, json_object(
-         'company', jev_field($company_q, {order}(company_c)),
-         'date',    jev_field($date_q,    {order}(date_c)),
-         'address', jev_field($address_q, {order}(address_c)),
-         'total',   jev_field($total_q,   {order}(total_c)))) AS x
+SELECT id, jev_extract(CASE WHEN $layout THEN layout_text ELSE raw_text END, json_object(
+         'company', jev_field($company_q, ordered(company_c, $reverse)),
+         'date',    jev_field($date_q,    ordered(date_c,    $reverse)),
+         'address', jev_field($address_q, ordered(address_c, $reverse)),
+         'total',   jev_field($total_q,   ordered(total_c,   $reverse)))) AS x
 FROM cands"""
+EXTRACT_RERUN_SQL = EXTRACT_SQL.replace("TABLE extracted AS", "TABLE extracted_rerun AS", 1)
 
-# primary: case- and whitespace-insensitive; loose: letters and digits only. Amounts
-# compare as digits and the decimal point under both (gold writes "$8.20" for "8.20").
-NORM_MACROS = [
+LOAD_SQL = """CREATE OR REPLACE TABLE receipts AS
+SELECT * FROM (SELECT * FROM read_parquet($path) ORDER BY hash(id || 'sroie-sample') LIMIT $n)
+ORDER BY id"""
+
+# ordered(): candidate order is a round input. primary match: case- and whitespace-
+# insensitive; loose: letters and digits only. Amounts compare as digits and the decimal
+# point under both (gold writes "$8.20" for "8.20").
+BENCH_MACROS = [
+    "CREATE OR REPLACE MACRO ordered(l, rev) AS CASE WHEN rev THEN list_reverse(l) ELSE l END",
     r"""CREATE OR REPLACE MACRO norm_primary(f, s) AS CASE WHEN f = 'total'
           THEN regexp_replace(coalesce(s, ''), '[^0-9.]+', '', 'g')
           ELSE upper(regexp_replace(coalesce(s, ''), '\s+', '', 'g')) END""",
@@ -247,7 +256,7 @@ FROM (SELECT id, bool_and(exact) AS all_exact FROM scored GROUP BY id)"""
 
 RELIABILITY_SQL = """WITH b AS (
   SELECT least(floor(p * 10), 9)::INT AS bin, p, exact::INT AS correct
-  FROM scored WHERE value IS NOT NULL AND {where})
+  FROM scored WHERE value IS NOT NULL AND (covered OR NOT $covered_only))
 SELECT bin, count(*) AS n, avg(p) AS mean_p, avg(correct) AS accuracy
 FROM b GROUP BY bin ORDER BY bin"""
 
@@ -262,6 +271,19 @@ FROM scored"""
 
 def data_file(split: str) -> Path:
     return DATA / f"sroie_{split}.parquet"
+
+
+def run_tag(split: str, rnd: str, limit: int | None = None, dry_run: bool = False) -> str:
+    """Names a run's cache and per-row files; only full live runs get the bare tag."""
+    return f"{split}_{rnd}" + (f"_n{limit}" if limit else "") + ("_dry" if dry_run else "")
+
+
+def extract_params(rnd: Round) -> dict[str, Any]:
+    return {
+        "layout": rnd.state == "layout_text",
+        "reverse": rnd.order == "reverse",
+        **{f"{f}_q": rnd.wording[f] for f in FIELDS},
+    }
 
 
 def layout_text(lines: list[str], boxes: list[list[int]]) -> str:
@@ -284,9 +306,9 @@ def prepare() -> int:
     con.execute("INSTALL httpfs; LOAD httpfs;")
     for split in (TUNING_SPLIT, HELDOUT_SPLIT):
         rows = con.execute(
-            f"SELECT replace(image.path, '.jpg', '') AS id, objects.entities AS gold, "
-            f"objects.text AS lines, objects.bbox AS bbox "
-            f"FROM read_parquet('{SOURCE_URL.format(split=split)}') ORDER BY id"
+            "SELECT replace(image.path, '.jpg', '') AS id, objects.entities AS gold, "
+            "objects.text AS lines, objects.bbox AS bbox FROM read_parquet(?) ORDER BY id",
+            [SOURCE_URL.format(split=split)],
         ).fetchall()
         records = []
         for rid, gold, lines, bbox in rows:
@@ -300,9 +322,7 @@ def prepare() -> int:
                     "layout_text": layout_text(lines, boxes),
                 }
             )
-        con.register("prepared", pa.Table.from_pylist(records))
-        con.execute(f"COPY prepared TO '{data_file(split)}' (FORMAT parquet)")
-        con.unregister("prepared")
+        con.from_arrow(pa.Table.from_pylist(records)).write_parquet(str(data_file(split)))
         print(f"{split}: {len(records)} receipts -> {data_file(split).relative_to(ROOT)}")
     return 0
 
@@ -310,13 +330,9 @@ def prepare() -> int:
 def load(con: duckdb.DuckDBPyConnection, split: str, limit: int | None) -> int:
     if not data_file(split).exists():
         raise SystemExit("run `bench/sroie.py prepare` first")
-    lim = f"USING SAMPLE {limit} ROWS (reservoir, 42)" if limit else ""
-    con.execute(
-        f"CREATE OR REPLACE TABLE receipts AS SELECT * FROM "
-        f"(SELECT * FROM '{data_file(split)}' {lim}) ORDER BY id"
-    )
+    con.execute(LOAD_SQL, {"path": str(data_file(split)), "n": limit or 1_000_000})
     con.execute(CANDIDATES_SQL)
-    for m in NORM_MACROS:
+    for m in BENCH_MACROS:
         con.execute(m)
     return con.execute("SELECT count(*) FROM receipts").fetchone()[0]
 
@@ -324,38 +340,37 @@ def load(con: duckdb.DuckDBPyConnection, split: str, limit: int | None) -> int:
 # --------------------------------------------------------------------------- coverage
 
 
+EMPTY_EXTRACTED_SQL = """CREATE OR REPLACE TABLE extracted AS
+SELECT id, MAP([]::VARCHAR[], []::STRUCT(value VARCHAR, p DOUBLE, p_none DOUBLE,
+  confidence DOUBLE, n_candidates INTEGER, probabilities MAP(VARCHAR, DOUBLE))[]) AS x
+FROM cands"""
+
+COVERAGE_SQL = """SELECT field, count(*), avg(covered::INT), avg(covered_loose::INT),
+  avg(len(list_distinct(cands))), max(len(list_distinct(cands)))
+FROM (SELECT s.*, CASE s.field WHEN 'company' THEN c.company_c WHEN 'date' THEN c.date_c
+                  WHEN 'address' THEN c.address_c ELSE c.total_c END AS cands
+      FROM scored s JOIN cands c USING (id))
+GROUP BY field ORDER BY field"""
+
+
 def coverage(args: argparse.Namespace) -> int:
     con = duckdb.connect()
     duckjev.register(con, cache=False)  # macros only; nothing here calls Jev
     for split in (TUNING_SPLIT, HELDOUT_SPLIT):
         load(con, split, None)
-        con.execute(
-            "CREATE OR REPLACE TABLE extracted AS SELECT id, "
-            "MAP([]::VARCHAR[], []::STRUCT(value VARCHAR, p DOUBLE, p_none DOUBLE, "
-            "confidence DOUBLE, n_candidates INTEGER, probabilities MAP(VARCHAR, DOUBLE))[]) "
-            "AS x FROM cands"
-        )
+        con.execute(EMPTY_EXTRACTED_SQL)  # no answers: scoring then measures coverage only
         con.execute(SCORED_SQL)
-        rows = con.execute(
-            "SELECT field, count(*), avg(covered::INT), avg(covered_loose::INT), "
-            "avg(len(list_distinct(cands))), max(len(list_distinct(cands))) FROM (SELECT s.*, "
-            "CASE s.field WHEN 'company' THEN c.company_c WHEN 'date' THEN c.date_c "
-            "WHEN 'address' THEN c.address_c ELSE c.total_c END AS cands "
-            "FROM scored s JOIN cands c USING (id)) GROUP BY field ORDER BY field"
-        ).fetchall()
         print(f"== {split}")
-        for f, n, cov, cov_l, mean_c, max_c in rows:
+        for f, n, cov, cov_l, mean_c, max_c in con.execute(COVERAGE_SQL).fetchall():
             print(
                 f"  {f:8s} n={n:4d} coverage {cov:.3f}  loose {cov_l:.3f}  "
                 f"candidates mean {mean_c:.1f} max {max_c}"
             )
-    if args.show_misses:
-        load(con, args.split, None)
-        print(
-            con.execute(
-                "SELECT field, gold FROM scored WHERE NOT covered ORDER BY field LIMIT 60"
-            ).fetchall()
-        )
+        if args.show_misses and split == args.split:
+            for field, gold in con.execute(
+                "SELECT field, gold FROM scored WHERE NOT covered ORDER BY field, id"
+            ).fetchall():
+                print(f"  miss {field:8s} {gold}")
     return 0
 
 
@@ -368,7 +383,7 @@ def fake_transport(split: str) -> httpx.MockTransport:
     con = duckdb.connect()
     gold: dict[str, dict[str, str]] = {}
     for g, raw, lay in con.execute(
-        f"SELECT gold, raw_text, layout_text FROM '{data_file(split)}'"
+        "SELECT gold, raw_text, layout_text FROM read_parquet(?)", [str(data_file(split))]
     ).fetchall():
         gold[raw] = gold[lay] = g
 
@@ -403,8 +418,12 @@ def fake_transport(split: str) -> httpx.MockTransport:
     return httpx.MockTransport(handle)
 
 
-def _reliability(con: duckdb.DuckDBPyConnection, where: str) -> tuple[list[Any], float | None]:
-    rows = [list(r) for r in con.execute(RELIABILITY_SQL.format(where=where)).fetchall()]
+def _reliability(
+    con: duckdb.DuckDBPyConnection, covered_only: bool
+) -> tuple[list[Any], float | None]:
+    rows = [
+        list(r) for r in con.execute(RELIABILITY_SQL, {"covered_only": covered_only}).fetchall()
+    ]
     answered = sum(r[1] for r in rows)
     ece = sum(r[1] * abs(r[3] - r[2]) for r in rows) / answered if answered else None
     return rows, ece
@@ -417,8 +436,8 @@ def metrics(con: duckdb.DuckDBPyConnection) -> dict[str, Any]:
         r[0]: dict(zip(cols, r, strict=True)) for r in con.execute(FIELD_METRICS_SQL).fetchall()
     }
     _, record_exact = con.execute(RECORD_SQL).fetchone()
-    reliability, ece = _reliability(con, "true")
-    reliability_covered, ece_covered = _reliability(con, "covered")
+    reliability, ece = _reliability(con, covered_only=False)
+    reliability_covered, ece_covered = _reliability(con, covered_only=True)
     return {
         "fields": fields,
         "record_all_fields_exact": record_exact,
@@ -430,18 +449,41 @@ def metrics(con: duckdb.DuckDBPyConnection) -> dict[str, Any]:
     }
 
 
+def _refuse(request: httpx.Request) -> httpx.Response:
+    raise RuntimeError("rescore is served from the run's own cache; this request missed it")
+
+
 def rescore(args: argparse.Namespace) -> int:
-    """Recompute every recorded run's metrics from its saved per-row results; no Jev calls."""
+    """Rebuild every recorded run's rows and metrics from that run's Jev answer cache.
+
+    The cache is the durable record of what Jev answered. The transport refuses every
+    request, so a rescore can neither spend nor read anything but the run's own answers;
+    timing and usage in the run log are kept from the live run.
+    """
     runs = json.loads(RUNS_FILE.read_text())
-    con = duckdb.connect()
     for key, summary in runs.items():
-        scored = DATA / f"scored_{summary['split']}_{summary['round']}.parquet"
-        if not scored.exists():
-            print(f"skip {key}: {scored.relative_to(ROOT)} is missing")
+        tag = run_tag(summary["split"], summary["round"])
+        cache = DATA / f"cache_{tag}.duckdb"
+        if not cache.exists():
+            print(f"skip {key}: {cache.relative_to(ROOT)} is missing")
             continue
-        con.execute(f"CREATE OR REPLACE TABLE scored AS SELECT * FROM '{scored}'")
+        con = duckdb.connect()
+        duckjev.register(
+            con, cache_path=cache, api_key="cache-only", transport=httpx.MockTransport(_refuse)
+        )
+        load(con, summary["split"], None)
+        duckjev.usage(reset=True)
+        con.execute(EXTRACT_SQL, extract_params(ROUNDS[summary["round"]]))
+        assert duckjev.usage()["requests"] == 0
+        con.execute(SCORED_SQL)
+        con.table("scored").write_parquet(str(DATA / f"scored_{tag}.parquet"))
+        before = (summary["fields"]["all"]["exact"], summary["record_all_fields_exact"])
         summary.update(metrics(con))
-        print(f"rescored {key}")
+        after = (summary["fields"]["all"]["exact"], summary["record_all_fields_exact"])
+        print(
+            f"rescored {key}: all-fields exact {before[0]:.4f} -> {after[0]:.4f}, "
+            f"all four {before[1]:.4f} -> {after[1]:.4f}"
+        )
     RUNS_FILE.write_text(json.dumps(runs, indent=1, default=float) + "\n")
     return 0
 
@@ -449,8 +491,8 @@ def rescore(args: argparse.Namespace) -> int:
 def run(args: argparse.Namespace) -> int:
     rnd = ROUNDS[args.round]
     DATA.mkdir(parents=True, exist_ok=True)
-    tag = f"{args.split}_{args.round}" + (f"_n{args.limit}" if args.limit else "")
-    cache_file = DATA / f"cache_{tag}{'_dry' if args.dry_run else ''}.duckdb"
+    tag = run_tag(args.split, args.round, args.limit, args.dry_run)
+    cache_file = DATA / f"cache_{tag}.duckdb"
     if cache_file.exists():
         cache_file.unlink()  # a fresh cache per run, so the timed run pays for every receipt
     con = duckdb.connect()
@@ -463,24 +505,22 @@ def run(args: argparse.Namespace) -> int:
         api_key="dry-run" if args.dry_run else None,
     )
     n = load(con, args.split, args.limit)
-    order = "list_reverse" if rnd.order == "reverse" else ""
-    extract_sql = EXTRACT_SQL.format(state=rnd.state, order=order)
-    params = {f"{f}_q": rnd.wording[f] for f in FIELDS}
+    params = extract_params(rnd)
 
     duckjev.usage(reset=True)
     t0 = time.perf_counter()
-    con.execute(extract_sql, params)
+    con.execute(EXTRACT_SQL, params)
     secs = time.perf_counter() - t0
     use = duckjev.usage(reset=True)
 
     t0 = time.perf_counter()
-    con.execute(extract_sql.replace("TABLE extracted", "TABLE extracted_rerun"), params)
+    con.execute(EXTRACT_RERUN_SQL, params)
     rerun_secs = time.perf_counter() - t0
     rerun = duckjev.usage(reset=True)
     duckjev.flush(con)
 
     con.execute(SCORED_SQL)
-    con.execute(f"COPY scored TO '{DATA / f'scored_{tag}.parquet'}' (FORMAT parquet)")
+    con.table("scored").write_parquet(str(DATA / f"scored_{tag}.parquet"))
 
     summary = {
         "round": args.round,
@@ -511,9 +551,7 @@ def run(args: argparse.Namespace) -> int:
         RUNS_FILE.write_text(json.dumps(runs, indent=1, default=float) + "\n")
         print(f"recorded {args.split}/{args.round} in {RUNS_FILE.relative_to(ROOT)}")
     else:
-        (DATA / f"summary_{tag}{'_dry' if args.dry_run else ''}.json").write_text(
-            json.dumps(summary, indent=1, default=float)
-        )
+        (DATA / f"summary_{tag}.json").write_text(json.dumps(summary, indent=1, default=float))
     return 0
 
 
@@ -696,7 +734,9 @@ def report(args: argparse.Namespace) -> int:
         "",
         f"```sql\n{CANDIDATES_SQL}\n```",
         "",
-        "Extraction, with `{state}` the receipt text and `{order}` empty or `list_reverse`:",
+        "Extraction. `$layout` picks the rebuilt visual rows over the raw lines, and "
+        "`$reverse` reverses every candidate list through the bench macro "
+        "`ordered(l, rev)`:",
         "",
         f"```sql\n{EXTRACT_SQL}\n```",
         "",
@@ -809,7 +849,7 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--concurrency", type=int, default=16)
     r.add_argument("--max-usd", type=float, default=0.50, help="hard budget for this run")
     r.add_argument("--dry-run", action="store_true", help="fake transport, no network")
-    sub.add_parser("rescore", help="recompute recorded metrics from saved rows; no Jev calls")
+    sub.add_parser("rescore", help="rebuild recorded runs from their answer caches; no requests")
     sub.add_parser("report")
     args = p.parse_args(argv)
     commands = {

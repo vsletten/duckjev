@@ -2011,17 +2011,17 @@
     "n": 347,
     "coverage": 0.8472622478386167,
     "coverage_loose": 0.9423631123919308,
-    "exact": 0.6743515850144092,
-    "exact_loose": 0.6743515850144092,
+    "exact": 0.8155619596541787,
+    "exact_loose": 0.9106628242074928,
     "n_covered": 294,
-    "selection": 0.7959183673469388,
-    "selection_loose": 0.7155963302752294,
-    "none_rate": 0.12103746397694524,
-    "none_when_covered": 0.003401360544217687,
+    "selection": 0.9625850340136054,
+    "selection_loose": 0.9663608562691132,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
     "n_uncovered": 53,
-    "uncovered_none": 41,
-    "uncovered_near": 0,
-    "uncovered_other": 12,
+    "uncovered_none": 0,
+    "uncovered_near": 49,
+    "uncovered_other": 4,
     "mean_candidates": 104.15561959654178,
     "max_candidates": 105
    },
@@ -2030,17 +2030,17 @@
     "n": 1388,
     "coverage": 0.9517291066282421,
     "coverage_loose": 0.9776657060518732,
-    "exact": 0.7752161383285303,
-    "exact_loose": 0.7752161383285303,
+    "exact": 0.9286743515850144,
+    "exact_loose": 0.9546109510086456,
     "n_covered": 1321,
-    "selection": 0.8145344436033308,
-    "selection_loose": 0.7929255711127488,
-    "none_rate": 0.09798270893371758,
-    "none_when_covered": 0.06207418622255867,
+    "selection": 0.975775927327782,
+    "selection_loose": 0.976418570375829,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
     "n_uncovered": 67,
-    "uncovered_none": 54,
-    "uncovered_near": 0,
-    "uncovered_other": 13,
+    "uncovered_none": 0,
+    "uncovered_near": 56,
+    "uncovered_other": 11,
     "mean_candidates": 37.15201729106628,
     "max_candidates": 105
    },
@@ -2049,17 +2049,17 @@
     "n": 347,
     "coverage": 0.9740634005763689,
     "coverage_loose": 0.9827089337175793,
-    "exact": 0.8069164265129684,
-    "exact_loose": 0.8069164265129684,
+    "exact": 0.9250720461095101,
+    "exact_loose": 0.9337175792507204,
     "n_covered": 338,
-    "selection": 0.8284023668639053,
-    "selection_loose": 0.8211143695014663,
-    "none_rate": 0.025936599423631124,
-    "none_when_covered": 0.0029585798816568047,
+    "selection": 0.9497041420118343,
+    "selection_loose": 0.9501466275659824,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
     "n_uncovered": 9,
-    "uncovered_none": 8,
-    "uncovered_near": 0,
-    "uncovered_other": 1,
+    "uncovered_none": 0,
+    "uncovered_near": 7,
+    "uncovered_other": 2,
     "mean_candidates": 34.80115273775216,
     "max_candidates": 39
    },
@@ -2068,17 +2068,17 @@
     "n": 347,
     "coverage": 0.9884726224783862,
     "coverage_loose": 0.9884726224783862,
-    "exact": 0.9048991354466859,
-    "exact_loose": 0.9048991354466859,
+    "exact": 0.9884726224783862,
+    "exact_loose": 0.9884726224783862,
     "n_covered": 343,
-    "selection": 0.9154518950437318,
-    "selection_loose": 0.9154518950437318,
-    "none_rate": 0.0893371757925072,
-    "none_when_covered": 0.07871720116618076,
+    "selection": 1.0,
+    "selection_loose": 1.0,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
     "n_uncovered": 4,
-    "uncovered_none": 4,
+    "uncovered_none": 0,
     "uncovered_near": 0,
-    "uncovered_other": 0,
+    "uncovered_other": 4,
     "mean_candidates": 1.043227665706052,
     "max_candidates": 3
    },
@@ -2087,66 +2087,138 @@
     "n": 347,
     "coverage": 0.9971181556195965,
     "coverage_loose": 0.9971181556195965,
-    "exact": 0.7146974063400576,
-    "exact_loose": 0.7146974063400576,
+    "exact": 0.9855907780979827,
+    "exact_loose": 0.9855907780979827,
     "n_covered": 346,
-    "selection": 0.7167630057803468,
-    "selection_loose": 0.7167630057803468,
-    "none_rate": 0.15561959654178675,
-    "none_when_covered": 0.1531791907514451,
+    "selection": 0.9884393063583815,
+    "selection_loose": 0.9884393063583815,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
     "n_uncovered": 1,
-    "uncovered_none": 1,
+    "uncovered_none": 0,
     "uncovered_near": 0,
-    "uncovered_other": 0,
+    "uncovered_other": 1,
     "mean_candidates": 8.60806916426513,
     "max_candidates": 25
    }
   },
-  "record_all_fields_exact": 0.3256484149855908,
+  "record_all_fields_exact": 0.7348703170028819,
   "reliability": [
    [
+    3,
+    3,
+    0.3466666666666667,
+    0.0
+   ],
+   [
+    4,
+    15,
+    0.4620000000000001,
+    0.4666666666666667
+   ],
+   [
+    5,
+    9,
+    0.55,
+    0.4444444444444444
+   ],
+   [
+    6,
+    19,
+    0.6494736842105263,
+    0.7894736842105263
+   ],
+   [
+    7,
+    28,
+    0.7535714285714284,
+    0.8928571428571429
+   ],
+   [
     8,
-    1252,
-    0.7999999999999818,
-    0.8594249201277955
+    66,
+    0.8453030303030303,
+    0.9242424242424242
+   ],
+   [
+    9,
+    1248,
+    0.987724358974364,
+    0.9431089743589743
    ]
   ],
-  "ece": 0.059424920127813634,
+  "ece": 0.05007925072046558,
   "thresholds": [
    [
     0.5,
-    0.9020172910662824,
-    0.8594249201277955
+    0.9870317002881844,
+    0.9357664233576642
    ],
    [
     0.8,
-    0.9020172910662824,
-    0.8594249201277955
+    0.946685878962536,
+    0.9421613394216134
    ],
    [
     0.9,
-    0.0,
-    null
+    0.899135446685879,
+    0.9431089743589743
    ],
    [
     0.95,
-    0.0,
-    null
+    0.8436599423631124,
+    0.9496157130657558
    ],
    [
     0.99,
-    0.0,
-    null
+    0.670028818443804,
+    0.9795698924731183
    ]
   ],
   "reliability_covered": [
    [
+    3,
+    2,
+    0.33,
+    0.0
+   ],
+   [
+    4,
+    12,
+    0.4625000000000001,
+    0.5833333333333334
+   ],
+   [
+    5,
+    6,
+    0.5583333333333333,
+    0.6666666666666666
+   ],
+   [
+    6,
+    17,
+    0.6511764705882354,
+    0.8823529411764706
+   ],
+   [
+    7,
+    25,
+    0.7528,
+    1.0
+   ],
+   [
     8,
-    1239,
-    0.7999999999999822,
-    0.8684422921711057
+    63,
+    0.8442857142857141,
+    0.9682539682539683
+   ],
+   [
+    9,
+    1196,
+    0.9886872909699035,
+    0.9841137123745819
    ]
   ],
-  "ece_covered": 0.06844229217112352
+  "ece_covered": 0.01979560938683167
  }
 }
