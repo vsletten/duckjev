@@ -1,0 +1,138 @@
+{
+  "_": "Division map for the two-level rounds of bench/banking77.py. Written from the 77 label names and train-split examples only; the divisions must partition the 77 intents. Order is the option order of the division Choice in forward rounds; `what` is the division's option description and `label` names it in the per-division question.",
+  "divisions": [
+    {
+      "key": "card_getting",
+      "label": "getting a card",
+      "what": "Getting a card: ordering, delivery, activation, linking it to the app, the PIN for a new card, spare, virtual and disposable cards and their limits, a card about to expire, whether the card is Visa or Mastercard",
+      "intents": [
+        "activate_my_card",
+        "card_arrival",
+        "card_delivery_estimate",
+        "card_linking",
+        "get_physical_card",
+        "getting_spare_card",
+        "getting_virtual_card",
+        "get_disposable_virtual_card",
+        "order_physical_card",
+        "card_about_to_expire",
+        "visa_or_mastercard",
+        "disposable_card_limits"
+      ]
+    },
+    {
+      "key": "card_security",
+      "label": "a card, PIN, passcode or phone that cannot be used",
+      "what": "A card, PIN, passcode or phone that cannot be used: lost or stolen card or phone, a card swallowed by an ATM, a compromised card, a blocked PIN or changing the PIN, a forgotten app passcode, contactless or a virtual card not working, a card that stopped working",
+      "intents": [
+        "card_not_working",
+        "card_swallowed",
+        "compromised_card",
+        "contactless_not_working",
+        "lost_or_stolen_card",
+        "lost_or_stolen_phone",
+        "pin_blocked",
+        "change_pin",
+        "virtual_card_not_working",
+        "passcode_forgotten"
+      ]
+    },
+    {
+      "key": "card_payments",
+      "label": "paying with the card",
+      "what": "Paying with the card: where it is accepted, a payment declined, pending, reverted or not recognised, a fee or extra charge on a payment, the wrong exchange rate on a payment, a payment charged twice, a direct debit not recognised, refunds",
+      "intents": [
+        "card_acceptance",
+        "card_payment_fee_charged",
+        "card_payment_not_recognised",
+        "card_payment_wrong_exchange_rate",
+        "declined_card_payment",
+        "pending_card_payment",
+        "reverted_card_payment?",
+        "transaction_charged_twice",
+        "extra_charge_on_statement",
+        "direct_debit_payment_not_recognised",
+        "Refund_not_showing_up",
+        "request_refund"
+      ]
+    },
+    {
+      "key": "cash_atm",
+      "label": "withdrawing cash at an ATM",
+      "what": "Withdrawing cash at an ATM: which ATMs accept the card, a withdrawal fee, a declined or pending withdrawal, the wrong amount of cash dispensed, the wrong exchange rate on a withdrawal, a withdrawal not recognised",
+      "intents": [
+        "atm_support",
+        "cash_withdrawal_charge",
+        "cash_withdrawal_not_recognised",
+        "declined_cash_withdrawal",
+        "pending_cash_withdrawal",
+        "wrong_amount_of_cash_received",
+        "wrong_exchange_rate_for_cash_withdrawal"
+      ]
+    },
+    {
+      "key": "sending_money",
+      "label": "sending money to someone else",
+      "what": "Sending money out to someone else by transfer: a transfer that failed, was declined or is pending, cancelling a transfer, a transfer fee, how long transfers take, a recipient who has not received the money, a beneficiary that cannot be added",
+      "intents": [
+        "beneficiary_not_allowed",
+        "cancel_transfer",
+        "declined_transfer",
+        "failed_transfer",
+        "pending_transfer",
+        "transfer_fee_charged",
+        "transfer_not_received_by_recipient",
+        "transfer_timing"
+      ]
+    },
+    {
+      "key": "adding_money",
+      "label": "adding money to this account",
+      "what": "Adding money to this account (topping up) by card, bank transfer, cash, cheque, Apple Pay or Google Pay, or receiving salary: how to do it, which cards and currencies work, fees, limits, verification, automatic top-ups, and a top-up or deposit that is pending, failed, reverted or not showing in the balance",
+      "intents": [
+        "automatic_top_up",
+        "pending_top_up",
+        "top_up_by_bank_transfer_charge",
+        "top_up_by_card_charge",
+        "top_up_by_cash_or_cheque",
+        "top_up_failed",
+        "top_up_limits",
+        "top_up_reverted",
+        "topping_up_by_card",
+        "verify_top_up",
+        "apple_pay_or_google_pay",
+        "supported_cards_and_currencies",
+        "transfer_into_account",
+        "receiving_money",
+        "balance_not_updated_after_bank_transfer",
+        "balance_not_updated_after_cheque_or_cash_deposit"
+      ]
+    },
+    {
+      "key": "currency_exchange",
+      "label": "exchanging or holding currencies",
+      "what": "Exchanging or holding currencies in the app: how to exchange, which exchange rate is used, exchange fees, which fiat currencies can be held",
+      "intents": [
+        "exchange_charge",
+        "exchange_rate",
+        "exchange_via_app",
+        "fiat_currency_support"
+      ]
+    },
+    {
+      "key": "account_identity",
+      "label": "the account itself or identity",
+      "what": "The account itself and identity: age limits, supported countries, changing personal details, closing the account, verifying identity or the source of funds and why that is required",
+      "intents": [
+        "age_limit",
+        "country_support",
+        "edit_personal_details",
+        "terminate_account",
+        "unable_to_verify_identity",
+        "verify_my_identity",
+        "verify_source_of_funds",
+        "why_verify_identity"
+      ]
+    }
+  ]
+}
