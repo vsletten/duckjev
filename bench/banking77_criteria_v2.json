@@ -1,1 +1,264 @@
-{}
+{
+  "_": "Structured criteria overlaid on banking77_criteria.json for round R1: the intents in every dev-split confusion pair with five or more errors in R0. Each says what the intent covers, which neighbouring intent it is not for, and verbatim examples from the train split outside the dev sample.",
+  "balance_not_updated_after_bank_transfer": {
+    "what": "A bank transfer into this account was made but the balance has not updated or the money has not arrived, or how long a transfer already made will take to show in the balance",
+    "not_for": "A general or upcoming question about how long transfers take (transfer_timing); a transfer that failed or was declined",
+    "examples": [
+      "After transfering some money my balance hasn't changed.",
+      "I've made a bank transfer but the money doesn't seem to be in my account.",
+      "I made a transfer from France two days ago now but there hasn't made it there yet. Do international transfers take longer?"
+    ]
+  },
+  "transfer_timing": {
+    "what": "How long a transfer takes to arrive or go through, asked as a general or upcoming question, in either direction",
+    "not_for": "A transfer already made whose money has not shown in this account's balance (balance_not_updated_after_bank_transfer), one the recipient has not received (transfer_not_received_by_recipient), or one showing as pending (pending_transfer)",
+    "examples": [
+      "I'm having money transferred from Europe, how long will this take?",
+      "How long until transfers from Europe go through?",
+      "I need quickly transfer something from China. About how long will it take?"
+    ]
+  },
+  "beneficiary_not_allowed": {
+    "what": "A transfer to a particular beneficiary or account is not allowed, or the beneficiary cannot be named or added; the app refuses the recipient",
+    "not_for": "A transfer that failed after being attempted with no recipient problem stated (failed_transfer); a transfer shown as declined (declined_transfer)",
+    "examples": [
+      "I got a message that I cannot name X as a beneficiary.",
+      "My beneficiary is not allowed?  Why?",
+      "Are there restrictions to transfers to certain accounts?"
+    ]
+  },
+  "failed_transfer": {
+    "what": "A transfer the customer tried to make did not work or failed, often after several attempts with the details correct",
+    "not_for": "The recipient or beneficiary being refused (beneficiary_not_allowed); a transfer that says declined (declined_transfer); a transfer that went through but is pending (pending_transfer)",
+    "examples": [
+      "I tried to make a transfer, but it didn't work.",
+      "Why does my transfer keep failing? I've tried 5 times and they all failed.",
+      "Why was I unable to complete my transfer?"
+    ]
+  },
+  "declined_transfer": {
+    "what": "A transfer that came back as declined or rejected",
+    "not_for": "A transfer that failed or did not work without saying declined (failed_transfer); a declined card payment (declined_card_payment)",
+    "examples": [
+      "Transfer was declined, could not complete request.",
+      "I have a transfer that was declined.",
+      "I had everything lined up to make a transfer, and then it rejected it."
+    ]
+  },
+  "direct_debit_payment_not_recognised": {
+    "what": "A direct debit, or money deducted by a seller or company from the account, that the customer did not authorise or recognise",
+    "not_for": "A card payment or purchase the customer did not make (card_payment_not_recognised)",
+    "examples": [
+      "There was a direct debit from my account and I didn't authorise it",
+      "I see a direct debit charge that I did not approve",
+      "I checked my account and see that funds were deducted from a seller I didn't approve of. Can you help me understand?"
+    ]
+  },
+  "card_payment_not_recognised": {
+    "what": "A card payment or purchase on the statement that the customer did not make or does not recognise, including several strange payments, even when they fear someone has their card details and want the card frozen",
+    "not_for": "A direct debit or a seller taking money (direct_debit_payment_not_recognised); a cash withdrawal not recognised (cash_withdrawal_not_recognised); a general worry that the card is compromised with no specific payment named (compromised_card)",
+    "examples": [
+      "There is a payment on my card that I do not recognize.  I've never seen the name on the transaction before.",
+      "There were a couple of payments that I have noticed on my account with my card that I didn't make. Is it possible that somebody else has my card information?",
+      "I need to freeze my card. There are charges on there that i did not authorize. They've been coming out for a couple of days. Can i get this money back?"
+    ]
+  },
+  "compromised_card": {
+    "what": "The customer thinks the card or its details may be stolen, compromised or used by someone else, asked as a suspicion or as what to do about it",
+    "not_for": "Specific card payments on the statement the customer did not make (card_payment_not_recognised); a card that is lost or stolen (lost_or_stolen_card)",
+    "examples": [
+      "What should I do if I think that someone might be using me card?",
+      "I think my card has been compromised in some way.",
+      "How do I report possible fraudulent activity on my account?"
+    ]
+  },
+  "topping_up_by_card": {
+    "what": "Adding money to this account with a card (how to top up by card or credit card), including whether other people can top up the account, or a card top-up whose money has not appeared",
+    "not_for": "Topping up by bank transfer (transfer_into_account); which cards or currencies are accepted for top-ups (supported_cards_and_currencies); a fee for a card top-up (top_up_by_card_charge)",
+    "examples": [
+      "How do I to up by card?",
+      "I want to know how to transfer money with my credit card",
+      "Can other people top up my account?"
+    ]
+  },
+  "transfer_into_account": {
+    "what": "Putting money into this account by bank transfer: how to do it, whether a bank transfer can top up the account, how to deposit money",
+    "not_for": "Topping up with a credit or debit card (topping_up_by_card); an incoming transfer that has not shown up (balance_not_updated_after_bank_transfer); salary or money from other people (receiving_money)",
+    "examples": [
+      "I can't figure out how to transfer money into my account.",
+      "Is a bank transfer acceptable for topping up my account?",
+      "I want to transfer money into my account"
+    ]
+  },
+  "supported_cards_and_currencies": {
+    "what": "Which cards (for example American Express, US or foreign credit cards) and which currencies are accepted for adding money to the account",
+    "not_for": "How to top up by card (topping_up_by_card); which currencies the account can hold or exchange (fiat_currency_support)",
+    "examples": [
+      "What cards and currencies can I use?",
+      "Do you accept US credit cards?",
+      "What currencies do you accept for adding money to my account?"
+    ]
+  },
+  "pending_top_up": {
+    "what": "A top-up that has not come through yet: still pending, not completed, the funds not available yet, waiting for it",
+    "not_for": "A top-up that was declined, denied or failed outright (top_up_failed); a top-up that went through and was then reverted (top_up_reverted)",
+    "examples": [
+      "How long will it take for my top up to work? It's still pending",
+      "I topped up but it isn't in my account",
+      "My top up did not complete."
+    ]
+  },
+  "top_up_failed": {
+    "what": "A top-up attempt that failed, was declined or denied, or the card did not work for the top-up",
+    "not_for": "A top-up still pending or not yet showing (pending_top_up); a top-up reverted after going through (top_up_reverted); a top-up by Apple Pay or Google Pay not working (apple_pay_or_google_pay)",
+    "examples": [
+      "Why has my top-up been denied?",
+      "I tried topping up my account but it failed, can you help me?",
+      "Why is my card being declined when I try to do a top-up? How can this be immediately resolved?"
+    ]
+  },
+  "top_up_reverted": {
+    "what": "A top-up that was reverted or rejected by the app after being made, or money added that then disappeared",
+    "not_for": "A top-up still pending (pending_top_up); a top-up attempt that simply failed (top_up_failed)",
+    "examples": [
+      "Why was my top up reverted?",
+      "I was checking my statement and my top-up has been reverted",
+      "When I top-up, the app reverts it."
+    ]
+  },
+  "top_up_by_bank_transfer_charge": {
+    "what": "Fees for topping up or receiving money by bank transfer, SEPA or SWIFT, whether transfers into the account cost anything, or what transfers cost, asked before making one",
+    "not_for": "A fee already charged on a transfer the customer sent (transfer_fee_charged); fees for topping up by card (top_up_by_card_charge)",
+    "examples": [
+      "Does it cost me anything to top up my account via bank transfer?",
+      "Are there fees for receiving a SEPA transfer?",
+      "How much does it cost to make transfers?"
+    ]
+  },
+  "transfer_fee_charged": {
+    "what": "A fee or extra charge that was applied to a transfer the customer made",
+    "not_for": "Whether transfers or top-ups by bank transfer cost anything, asked in advance (top_up_by_bank_transfer_charge); a fee on a card payment (card_payment_fee_charged) or cash withdrawal (cash_withdrawal_charge)",
+    "examples": [
+      "I just transferred some money. Why was I charged a fee?",
+      "Why was there an extra charge when I transferred money?",
+      "Why was my transfer charged a fee?"
+    ]
+  },
+  "apple_pay_or_google_pay": {
+    "what": "Topping up or paying with Apple Pay, Google Pay or an Apple Watch: whether it is possible, how to, or it not working",
+    "not_for": "A card top-up that failed with no Apple Pay or Google Pay involved (top_up_failed)",
+    "examples": [
+      "Is topping up with Apple Pay possible?",
+      "Why can't I get my top up to work in Apple Pay?",
+      "How do you Top Up on the apple watch?"
+    ]
+  },
+  "card_about_to_expire": {
+    "what": "The card is expiring or about to expire and the customer asks what happens or how to get a new one, including needing a new card while abroad, for example in China",
+    "not_for": "Ordering a first or additional physical card with no expiry or travel mentioned (order_physical_card)",
+    "examples": [
+      "My card is about to expire.  How do I get a new card?",
+      "What happens after my card expires?",
+      "Where can I order a card when I am in China?"
+    ]
+  },
+  "order_physical_card": {
+    "what": "How to order or request a physical card, where to order it, whether an actual card is available",
+    "not_for": "A replacement for a card that is expiring or a new card needed abroad (card_about_to_expire); a spare or additional card (getting_spare_card); a virtual card (getting_virtual_card)",
+    "examples": [
+      "Help me order my card.",
+      "Is a physical card also available",
+      "Can I request a card?"
+    ]
+  },
+  "card_not_working": {
+    "what": "The card does not work, has stopped working or cannot be used, with no clear reason, including a card declined somewhere with the customer asking what the problem is",
+    "not_for": "A specific card payment that was declined, asked as why the payment was declined (declined_card_payment); contactless not working (contactless_not_working); a virtual card not working (virtual_card_not_working)",
+    "examples": [
+      "Something's wrong my card won't work.",
+      "Out of the blue, my card stopped working.",
+      "I have not been able to use this card."
+    ]
+  },
+  "declined_card_payment": {
+    "what": "A card payment that was declined or rejected, or the card being declined repeatedly when paying",
+    "not_for": "A card that simply stopped working with no payment mentioned (card_not_working); a declined cash withdrawal (declined_cash_withdrawal); a declined transfer (declined_transfer); a payment reverted after going through (reverted_card_payment?)",
+    "examples": [
+      "Card payment didn't go through.",
+      "I've tried using my card multiple times and it keeps getting declined.",
+      "Why do you keep declining my payment?I tried several times with this card and it is just not working."
+    ]
+  },
+  "reverted_card_payment?": {
+    "what": "A card payment that was reverted, returned or cancelled after being made, with the money back in the account",
+    "not_for": "A payment declined at the time of paying (declined_card_payment); a merchant refund not showing up (Refund_not_showing_up)",
+    "examples": [
+      "Why would my card payment get reverted?",
+      "I made a payment but it was returned.",
+      "I tried to buy something online but my funds were transferred back to my account. What is happening?"
+    ]
+  },
+  "receiving_money": {
+    "what": "Receiving money from someone else or a salary into the account, including in a different currency; who can send money and how",
+    "not_for": "Which currencies the account can hold or exchange in general (fiat_currency_support); topping up by bank transfer (transfer_into_account)",
+    "examples": [
+      "Will you accept my salary if it's in another currency?",
+      "How do I receive money from someone?",
+      "How would my friend be able to send me money?"
+    ]
+  },
+  "fiat_currency_support": {
+    "what": "Which fiat currencies the account can hold or exchange, or whether several currencies can be held",
+    "not_for": "Receiving salary or payments in another currency (receiving_money); which currencies are accepted for topping up (supported_cards_and_currencies)",
+    "examples": [
+      "Which fiat currencies are supported?",
+      "Please tell me the types of currency I can hold.",
+      "Does my account have the option to hold multiple currencies?"
+    ]
+  },
+  "transfer_not_received_by_recipient": {
+    "what": "A transfer the customer sent shows as done on their side but the recipient has not received it",
+    "not_for": "A transfer still showing as pending on the customer's side (pending_transfer); a general question about how long transfers take (transfer_timing)",
+    "examples": [
+      "Why hasn't my friend received the money i sent them yet?",
+      "I transferred a payment a couple days ago and it shows done, but it has not been received.  Could you please help me?",
+      "why hasn't a transaction to a friend cleared yet?"
+    ]
+  },
+  "pending_transfer": {
+    "what": "A transfer the customer made is still showing as pending, or when a pending transfer will go through",
+    "not_for": "A completed transfer the recipient has not received (transfer_not_received_by_recipient); how long transfers take in general (transfer_timing)",
+    "examples": [
+      "Why does my transfer still say it is pending?",
+      "there is a transfer pending.",
+      "How long do I have to wait for the transfer to be finalized?"
+    ]
+  },
+  "wrong_exchange_rate_for_cash_withdrawal": {
+    "what": "A cash withdrawal abroad or at an ATM got the wrong or an unexpected exchange rate",
+    "not_for": "A fee or extra charge on a cash withdrawal (cash_withdrawal_charge); how exchange rates work in general (exchange_rate); the wrong rate on a card payment (card_payment_wrong_exchange_rate)",
+    "examples": [
+      "Why was my cash withdrawal given the wrong exchange rate?",
+      "I needed some cash while abroad, and I'm pretty sure the wrong exchange rate was applied.",
+      "How did you arrive at the rate of exchange? I thought that I would get more cash."
+    ]
+  },
+  "cash_withdrawal_charge": {
+    "what": "A fee or extra charge for withdrawing cash at an ATM",
+    "not_for": "The wrong exchange rate on a cash withdrawal (wrong_exchange_rate_for_cash_withdrawal); a fee on a card payment (card_payment_fee_charged) or a transfer (transfer_fee_charged)",
+    "examples": [
+      "Why was I charged for a cash withdrawal at the ATM?",
+      "I got a strange fee when I used the ATM.",
+      "Why do I see extra charges for withdrawing my money?"
+    ]
+  },
+  "exchange_rate": {
+    "what": "What exchange rate is used, how it is calculated, why it changes, or what rate the customer will get",
+    "not_for": "The wrong rate applied to a cash withdrawal (wrong_exchange_rate_for_cash_withdrawal) or a card payment (card_payment_wrong_exchange_rate); exchange fees (exchange_charge); how to exchange in the app (exchange_via_app)",
+    "examples": [
+      "How do I know what exchange rate I will get?",
+      "What are your exchange rates calculated from?",
+      "Why is your exchange rate different on different days?"
+    ]
+  }
+}

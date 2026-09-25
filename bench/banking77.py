@@ -62,7 +62,7 @@ DIVISIONS_FILE = BENCH / "banking77_divisions.json"
 
 INSTR = "Which banking-support intent does this customer message express?"
 DIVISION_INSTR = "Which area of banking support is this customer message about?"
-LEAF_INSTR = "If this customer message is about {what}, which of these intents does it express?"
+LEAF_INSTR = "If this customer message is about {label}, which of these intents does it express?"
 TOPUP_Q = "Is the customer asking about topping up (adding money to) their account?"
 TOPUP_INTENTS = (
     "automatic_top_up",
@@ -113,6 +113,21 @@ ROUNDS: dict[str, Round] = {
         "speculatively in one request; the intent distribution is the product",
         "v2",
         "two_level",
+        "forward",
+        "none",
+    ),
+    "R4": Round(
+        "R0 with the top-up Noul fused into the intent request instead of a separate query: "
+        "the fusion cost lever, and a check that the intent answers do not move",
+        "v1",
+        "flat",
+        "forward",
+        "fused",
+    ),
+    "R5": Round(
+        "R0 with short glosses, a few words per intent: the gloss-length cost lever",
+        "short",
+        "flat",
         "forward",
         "none",
     ),
@@ -195,6 +210,11 @@ FROM scored"""
 # --------------------------------------------------------------------------- questions
 
 
+def _rel(path: Path) -> str:
+    """A path for messages: relative to the repo when inside it, else as is."""
+    return str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path)
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -212,7 +232,7 @@ def intent_criteria(name: str) -> dict[str, Any]:
     base = load_json(CRITERIA_FILES["v1"])
     if name == "v1":
         return base
-    overlay = load_json(CRITERIA_FILES[name])
+    overlay = {k: v for k, v in load_json(CRITERIA_FILES[name]).items() if not k.startswith("_")}
     unknown = set(overlay) - set(base)
     if unknown:
         raise ValueError(f"{name} glosses name intents that do not exist: {sorted(unknown)}")
@@ -247,10 +267,9 @@ def questions_for(rnd: Round) -> dict[str, Any]:
             "criteria": {d["key"]: d["what"] for d in divs},
         }
         for d in divs:
-            what = d["what"][0].lower() + d["what"][1:]
             q[f"intent_{d['key']}"] = {
                 "type": "choice",
-                "instructions": LEAF_INSTR.format(what=what),
+                "instructions": LEAF_INSTR.format(label=d["label"]),
                 "criteria": {k: crit[k] for k in ordered(d["intents"], rnd)},
             }
     if rnd.topup == "fused":
@@ -364,7 +383,7 @@ def prepare() -> int:
             resp = httpx.get(SOURCE_URL.format(split=split), follow_redirects=True, timeout=60)
             resp.raise_for_status()
             path.write_bytes(resp.content)
-        print(f"{split}: {sum(1 for _ in path.open())} rows -> {path.relative_to(ROOT)}")
+        print(f"{split}: {sum(1 for _ in path.open())} rows -> {_rel(path)}")
     con = duckdb.connect()
     con.execute(
         "COPY (SELECT text, label_text FROM read_json($train) "
@@ -381,7 +400,7 @@ def prepare() -> int:
         "SELECT count(*), count(DISTINCT label_text) FROM read_parquet(?)",
         [str(data_file("dev"))],
     ).fetchone()
-    print(f"dev: {n} rows, {k} intents x {DEV_PER_INTENT} -> {data_file('dev').relative_to(ROOT)}")
+    print(f"dev: {n} rows, {k} intents x {DEV_PER_INTENT} -> {_rel(data_file('dev'))}")
     return 0
 
 
@@ -592,7 +611,7 @@ def run(args: argparse.Namespace) -> int:
         runs = json.loads(RUNS_FILE.read_text()) if RUNS_FILE.exists() else {}
         runs[f"{args.split}/{args.round}"] = summary
         RUNS_FILE.write_text(json.dumps(runs, indent=1, default=float) + "\n")
-        print(f"recorded {args.split}/{args.round} in {RUNS_FILE.relative_to(ROOT)}")
+        print(f"recorded {args.split}/{args.round} in {_rel(RUNS_FILE)}")
     else:
         (DATA / f"summary_{tag}.json").write_text(json.dumps(summary, indent=1, default=float))
     return 0
@@ -655,7 +674,7 @@ def rescore(args: argparse.Namespace) -> int:
         tag = run_tag(summary["split"], summary["round"])
         cache = DATA / f"cache_{tag}.duckdb"
         if not cache.exists():
-            print(f"skip {key}: {cache.relative_to(ROOT)} is missing")
+            print(f"skip {key}: {_rel(cache)} is missing")
             continue
         rnd = ROUNDS[summary["round"]]
         con = duckdb.connect()
@@ -684,7 +703,7 @@ def confusions(args: argparse.Namespace) -> int:
     con.execute("CREATE TABLE scored AS SELECT * FROM read_parquet(?)", [str(path)])
     rows = con.execute(CONFUSIONS_SQL, {"k": args.top}).fetchall()
     total = con.execute("SELECT count(*) FILTER (choice <> label_text) FROM scored").fetchone()[0]
-    print(f"{path.relative_to(ROOT)}: {total} errors; top {args.top} pairs")
+    print(f"{_rel(path)}: {total} errors; top {args.top} pairs")
     for gold, pred, n in rows:
         print(f"  {n:3d}  {gold}  ->  {pred}")
     if args.show:
@@ -1085,7 +1104,7 @@ def report(args: argparse.Namespace) -> int:
         f"Flat rounds ask `{INSTR}` with the 77 glosses of the round's gloss set as options. "
         f"Two-level rounds ask `{DIVISION_INSTR}` over the divisions in "
         "`bench/banking77_divisions.json`, and for each division `"
-        + LEAF_INSTR.format(what="<the division's description>")
+        + LEAF_INSTR.format(label="<the division's label>")
         + "` over that division's intents. Gloss sets: `v1` is `bench/banking77_criteria.json`; "
         "`v2` overlays `bench/banking77_criteria_v2.json` (structured what / not_for / examples "
         "for the confusable intents) on v1; `short` is `bench/banking77_criteria_short.json`.",
@@ -1103,7 +1122,7 @@ def report(args: argparse.Namespace) -> int:
         "",
     ]
     RESULTS.write_text("\n".join(parts))
-    print(f"wrote {RESULTS.relative_to(ROOT)} (chosen round {best})")
+    print(f"wrote {_rel(RESULTS)} (chosen round {best})")
     return 0
 
 
