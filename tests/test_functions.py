@@ -59,6 +59,11 @@ def test_register_installs_functions_and_macros(con: duckdb.DuckDBPyConnection) 
         "jev_argmax",
         "jev_p",
         "jev_runner_up",
+        "jev_extract",
+        "jev_field",
+        "jev_money_spans",
+        "jev_date_spans",
+        "jev_line_windows",
     } <= names
 
 
