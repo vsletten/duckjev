@@ -139,7 +139,6 @@ def tiny_data(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     monkeypatch.setattr(bench, "DATA", data)
     monkeypatch.setattr(bench, "RUNS_FILE", tmp_path / "runs.json")
     monkeypatch.setattr(bench, "RESULTS", tmp_path / "banking77.md")
-    monkeypatch.setattr(bench, "ROUND_ONE_FILE", tmp_path / "missing.json")
     return data
 
 
@@ -175,6 +174,8 @@ def test_rescore_and_report_from_the_run_log(tiny_data: Path) -> None:
         shutil.copy(tiny_data / f"cache_dev_{rnd}_dry.duckdb", live_cache)
         runs[f"dev/{rnd}"] = s
         runs[f"test/{rnd}"] = {**s, "split": "test"}  # no cache for test, so rescore skips it
+    legacy = {k: v for k, v in runs["test/R0"].items() if not isinstance(v, (list, dict))}
+    runs["pr1/R0"] = {**legacy, "legacy": True, "split": "PR #1 test", "accuracy": 0.5}
     bench.RUNS_FILE.write_text(json.dumps(runs))
     before = {k: r["accuracy"] for k, r in runs.items()}
 
@@ -189,6 +190,7 @@ def test_rescore_and_report_from_the_run_log(tiny_data: Path) -> None:
     assert f"## Held-out test split, round {best}" in text
     assert "## Tuning rounds on the dev split" in text
     assert "dev/R0" in text and "dev/R2" in text
+    assert "| PR #1 test/R0 | **0.500** |" in text  # the imported run leads the held-out table
     assert "### Two-level rounds: deferral to the division" in text
 
 

@@ -262,9 +262,9 @@ and are scripts under `bench/`, never tests. Never print, log, or commit the key
   bench run uses a fresh cache file, so the measurements are unaffected, but a user who
   reorders options against a warm cache gets the old answers back. Make the key
   order-preserving (or include a hash of the option order) in a small follow-on.
-- `docs/results/banking77.json` is the PR #1 headline, kept so the report can show that
-  run as the first baseline row; the run log for everything since is
-  `docs/results/banking77_runs.json`.
+- The PR #1 held-out run lives in `docs/results/banking77_runs.json` as the `pr1/R0`
+  entry (flagged `legacy`, no answer cache), imported from its headline file
+  `docs/results/banking77.json`, which PR #3 removed so that `report` reads one file.
 - README "further reading" should cite LOTUS (semantic operators), provenance
   semirings (Green, Karvounarakis, Tannen 2007) and probabilistic databases (Dalvi &
   Suciu; MystiQ/Trio/MayBMS): calibrated Jev answers are the input those systems
