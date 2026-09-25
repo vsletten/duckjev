@@ -36,8 +36,9 @@ questions over one state in one request), `jev_noul(state, q[, criteria_json])`,
 `jev_extract(state, fields_json)` (select, don't generate: see below), and the
 macros `sem_where`, `expected_count`, `expected_count_var`,
 `expected_count_stderr`, `jev_argmax`, `jev_p`, `jev_runner_up`, `jev_field`,
-`jev_money_spans`, `jev_date_spans` and `jev_line_windows`. Question specs
-are JSON strings. Answers are cached by
+`jev_money_spans`, `jev_date_spans`, `jev_line_windows`, and for pairs `jev_pair`,
+`jev_match`, `sem_match` and the table macros `sem_join`, `sem_dups`, `sem_dedup` and
+`sem_topk` (see "Joins, dedup and top-k" below). Question specs are JSON strings. Answers are cached by
 `sha256(model, state, questions)`, option order included, in
 `~/.cache/duckjev/cache.duckdb`, so re-running a query is free. `duckjev.usage()` reports requests, tokens, cache hits, 429s and
 estimated dollars. The API key is only read at the first call that needs the
@@ -80,6 +81,73 @@ SELECT count(*) FILTER (WHERE sem_where(text, $q, 0.5)) AS filtered_rows,
        expected_count_stderr(jev_noul(text, $q))       AS stderr
 FROM tickets;
 ```
+
+## Joins, dedup and top-k
+
+`jev_match(a, b, q)` is one Noul over both records (`jev_pair` builds the state, a JSON
+object with `a` and `b`; a STRUCT becomes a nested object). The table macros take table
+and column names as strings, block on key equality, judge every blocked pair once, and
+return both rows with the probability:
+
+```sql
+-- products from two catalogues that share a first word, judged as the same product
+SELECT left_row.name, right_row.name, p
+FROM sem_join('catalogue_a', 'catalogue_b', 'brand', 'name', 'name', $q, 0.5);
+
+-- the calibrated size of the join, with its standard error, from the unfiltered pairs
+SELECT expected_count(p), expected_count_stderr(p)
+FROM sem_join('catalogue_a', 'catalogue_b', 'brand', 'name', 'name', $q, 0.0);
+
+-- the catalogue without every row that matches an earlier row (by id) in its block
+SELECT * FROM sem_dedup('catalogue', 'id', 'brand', 'name', $q, 0.5);
+
+-- the five most premium products, by a Score over three levels
+SELECT name, score, confidence
+FROM sem_topk('catalogue', 'name', 'How premium is this product?',
+              '["budget", "mid-range", "premium"]', 5);
+```
+
+`$q` is the matching question, for example `Do these two listings describe the same
+product: the same model, not merely the same brand?`. The macros work on tables and views
+(DuckDB's `query_table`), so several fields match at once through a STRUCT column
+(`struct_pack(name := name, price := price)`). Blocking is yours: the block key decides
+how many pairs get judged, and one request is one pair. Two things the benchmark below
+settled: put the fuller record first, and give the question the rules of the match (what
+still counts as the same, what makes it different), which is what sharpens the
+probabilities on the near-misses.
+
+## Entity-matching numbers
+
+Live runs on 2026-09-25 over the held-out test pairs of two DeepMatcher sets, run only
+with the baseline and the round chosen on their valid splits. Every pair is one
+`jev_match`; R0 is the plain question over the JSON pair, R2 the colleague-style question
+over the pair as labeled text lines. Full tables, all five dev rounds, the blocking
+coverage and the macros run live are in
+[docs/results/entity_matching.md](docs/results/entity_matching.md), generated from the
+committed run log `docs/results/entity_matching_runs.json`.
+
+| corpus | R0 F1 at 0.5 | R2 F1 at 0.5 | R2 precision / recall | AUROC | ECE | expected matches Σp vs true | $ per 1,000 pairs |
+|---|---|---|---|---|---|---|---|
+| Abt-Buy | 0.898 | **0.915** | 0.894 / 0.937 | 0.996 | 0.022 | 229.6 ± 7.3 vs 206 | $0.0207 |
+| DBLP-ACM | 0.965 | **0.978** | 0.973 / 0.982 | 0.999 | 0.020 | 459.6 ± 7.6 vs 444 | $0.0190 |
+
+What the rounds taught:
+
+- Saying what counts as the same and what does not is the lever: F1 up 1.3 to 1.7 points
+  held out, ECE halved, and the join-size estimate Σp moved from about 35% over the true
+  count to about 10% over, on both corpora.
+- Record order matters for pairs: putting the shorter record first cost Abt-Buy four F1
+  points on dev, unlike the flat Banking77 option list where order was noise. Text lines
+  beat the JSON object by a point; the same guidance as Noul `criteria` matched it at 15%
+  more tokens.
+- The remaining Σp overshoot lives in the lowest bin: Jev leaves about 1.5% on clear
+  non-matches, and over a thousand of them that adds twenty to the count. The lowest-p
+  gold matches on Abt-Buy are capacity and colour variants of the same model, which the
+  question defines as different products.
+- Blocking without Jev: the first word of the name keeps 5.2% of the Abt-Buy cross
+  product and 92.7% of its true matches; the year keeps 10.0% of DBLP-ACM and all of them.
+  `sem_join` over 100 sampled Abt-Buy rows judged 5,076 blocked pairs for $0.11 and recalled
+  85 of the 89 labeled matches inside those blocks.
 
 ## Extraction: select, don't generate
 
@@ -236,6 +304,7 @@ uv sync --extra dev
 uv run pytest -q                 # offline: a fake transport, sockets blocked
 uv run ruff check . && uv run ruff format --check .
 uv run python bench/banking77.py prepare && uv run python bench/banking77.py run R3 --split test  # live
+uv run python bench/entity_matching.py prepare && uv run python bench/entity_matching.py run R2 --corpus abt --split test  # live
 uv run python bench/sroie.py prepare && uv run python bench/sroie.py coverage     # offline
 uv run python bench/sroie.py run R3 --split test && uv run python bench/sroie.py report # live
 ```
