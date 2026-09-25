@@ -4,7 +4,7 @@ from pathlib import Path
 
 from fake import FakeTransport
 
-from duckjev.cache import AnswerCache
+from duckjev.cache import AnswerCache, cache_key
 from duckjev.client import JevClient, Usage
 
 NOUL = {"q": {"type": "noul", "instructions": "about a card?"}}
@@ -77,3 +77,27 @@ def test_unopenable_file_falls_back_to_memory(tmp_path: Path) -> None:
         client(t, cache).judge([("card", NOUL)])
     assert any("memory only" in str(w.message) for w in caught)
     assert len(cache) == 1
+
+
+CHOICE = {"q": {"type": "choice", "instructions": "which?", "criteria": {"a": "A", "b": "B"}}}
+CHOICE_REVERSED = {
+    "q": {"type": "choice", "instructions": "which?", "criteria": {"b": "B", "a": "A"}}
+}
+
+
+def test_key_preserves_option_order() -> None:
+    assert cache_key("m", "s", CHOICE) == cache_key("m", "s", dict(CHOICE))
+    assert cache_key("m", "s", CHOICE) != cache_key("m", "s", CHOICE_REVERSED)
+    assert cache_key("m", {"x": 1, "y": 2}, CHOICE) != cache_key("m", {"y": 2, "x": 1}, CHOICE)
+
+
+def test_reordered_options_are_not_served_from_cache(tmp_path: Path) -> None:
+    t = FakeTransport()
+    c = client(t, AnswerCache(tmp_path / "c.duckdb"))
+    c.judge([("card", CHOICE)])
+    c.judge([("card", CHOICE_REVERSED)])
+    c.judge([("card", CHOICE)])
+    assert [list(r["questions"]["q"]["criteria"]) for r in t.requests] == [["a", "b"], ["b", "a"]]
+    u = c.usage.snapshot()
+    assert (u["cache_hits"], u["cache_misses"]) == (1, 2)
+    c.close()

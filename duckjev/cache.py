@@ -35,11 +35,17 @@ CREATE TABLE IF NOT EXISTS jev_cache (
 
 
 def canonical_json(obj: Any) -> str:
-    return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    """Compact JSON in the order the objects were built, which is the order sent to Jev.
+
+    Keys are deliberately not sorted: option order in a Choice, level order in a Score
+    and field order in an object state all reach the model and can change its answer,
+    so two requests that differ only in order must not share a cache entry.
+    """
+    return json.dumps(obj, separators=(",", ":"), ensure_ascii=False)
 
 
 def cache_key(model: str, state: Any, questions: dict[str, Any]) -> str:
-    """sha256 of the canonical JSON of (model, state, questions)."""
+    """sha256 of the canonical JSON of (model, state, questions), order included."""
     payload = canonical_json({"model": model, "state": state, "questions": questions})
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 

@@ -246,7 +246,10 @@ Keep one `httpx.AsyncClient` per client instance with connection pooling.
 ### 4.4 Cache
 
 Key: `sha256(canonical_json({"model": model, "state": state, "questions": questions}))`
-where canonical JSON is `sort_keys=True, separators=(",", ":")`.
+where canonical JSON is compact (`separators=(",", ":")`) in the order the objects were
+built. (The build spec said `sort_keys=True`; that was changed after the SROIE and
+Banking77 rounds showed option order reaches the model and changes answers, so reordered
+options must not share an entry.)
 Value: the `answers` object plus `usage` and a timestamp.
 
 Constraint: **do not write to the query's own DuckDB connection from inside a

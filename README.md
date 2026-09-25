@@ -38,8 +38,8 @@ macros `sem_where`, `expected_count`, `expected_count_var`,
 `expected_count_stderr`, `jev_argmax`, `jev_p`, `jev_runner_up`, `jev_field`,
 `jev_money_spans`, `jev_date_spans` and `jev_line_windows`. Question specs
 are JSON strings. Answers are cached by
-`sha256(model, state, questions)` in `~/.cache/duckjev/cache.duckdb`, so re-running
-a query is free. `duckjev.usage()` reports requests, tokens, cache hits, 429s and
+`sha256(model, state, questions)`, option order included, in
+`~/.cache/duckjev/cache.duckdb`, so re-running a query is free. `duckjev.usage()` reports requests, tokens, cache hits, 429s and
 estimated dollars. The API key is only read at the first call that needs the
 network, so registering, macros and fully cached queries all work offline.
 

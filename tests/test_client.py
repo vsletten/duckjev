@@ -135,4 +135,5 @@ def test_answers_received_before_failure_are_cached() -> None:
 
 def test_cache_key_includes_model() -> None:
     assert cache_key("jev-1.13.0", "s", NOUL) != cache_key("jev-1.14.0", "s", NOUL)
-    assert cache_key("m", "s", {"a": 1, "b": 2}) == cache_key("m", "s", {"b": 2, "a": 1})
+    # order is part of the key: it is what the model sees
+    assert cache_key("m", "s", {"a": 1, "b": 2}) != cache_key("m", "s", {"b": 2, "a": 1})
