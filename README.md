@@ -32,9 +32,11 @@ duckjev.register(con)   # installs functions, macros and the answer cache
 
 `register()` installs `jev(state, questions_json)` (the fused primitive: many
 questions over one state in one request), `jev_noul(state, q[, criteria_json])`,
-`jev_choice(state, q, criteria_json)`, `jev_score(state, q, levels_json)`, and the
+`jev_choice(state, q, criteria_json)`, `jev_score(state, q, levels_json)`,
+`jev_extract(state, fields_json)` (select, don't generate: see below), and the
 macros `sem_where`, `expected_count`, `expected_count_var`,
-`expected_count_stderr`, `jev_argmax`, `jev_p` and `jev_runner_up`. Question specs
+`expected_count_stderr`, `jev_argmax`, `jev_p`, `jev_runner_up`, `jev_field`,
+`jev_money_spans`, `jev_date_spans` and `jev_line_windows`. Question specs
 are JSON strings. Answers are cached by
 `sha256(model, state, questions)` in `~/.cache/duckjev/cache.duckdb`, so re-running
 a query is free. `duckjev.usage()` reports requests, tokens, cache hits, 429s and
@@ -78,6 +80,96 @@ SELECT count(*) FILTER (WHERE sem_where(text, $q, 0.5)) AS filtered_rows,
        expected_count_stderr(jev_noul(text, $q))       AS stderr
 FROM tickets;
 ```
+
+## Extraction: select, don't generate
+
+`jev_extract(state, fields_json)` pulls fields out of text without letting a model
+write them. SQL proposes candidate values for each row, and Jev picks one per field.
+The answer is always a verbatim copy of a candidate, so it cannot invent a value or
+transpose a digit. Each row is one fused request with one Choice per field, over
+that row's own candidates plus a `none` option.
+
+```sql
+SELECT id,
+       x['total'].value AS total, x['total'].p AS total_p,
+       x['date'].value  AS issued
+FROM (SELECT id, jev_extract(text, json_object(
+        'total', jev_field('Which amount is the final total the customer paid, after tax '
+                           'and rounding? Not the subtotal, the tax, the cash handed over '
+                           'or the change.', jev_money_spans(text)),
+        'date',  jev_field('On what date was this receipt issued?', jev_date_spans(text))
+      )) AS x
+      FROM receipts);
+```
+
+The result is `MAP(VARCHAR, STRUCT(value, p, p_none, confidence, n_candidates,
+probabilities))`, keyed by field name:
+
+- `value` is the chosen candidate. It is NULL when `none` wins, or when the field had
+  no candidates, in which case it is not asked at all.
+- `p` is the probability of what was returned, and `p_none` is the mass on `none`.
+- `probabilities` is the whole distribution over the candidates.
+
+`jev_field(instructions, candidates[, none])` builds one field's spec. Candidates can
+be a list, or a JSON object mapping each candidate to a description. `none` is a
+description, or `false` to drop the option. The builders over-find on purpose, since
+Jev can only pick what it is offered:
+
+- `jev_money_spans(text)` finds amounts with two decimals.
+- `jev_date_spans(text)` finds numeric, month-name and compact dates.
+- `jev_line_windows(lines, k)` returns every run of 1 to k consecutive lines, for
+  multi-line names and addresses.
+
+A Choice takes at most 255 options, so a field with more than 254 distinct
+candidates raises an error. Narrow such a list in SQL with `candidates[1:254]`.
+
+Candidate coverage is the number to design for. On the SROIE receipts benchmark
+below, when the gold value is among the candidates, Jev picks it 97.6% of the time.
+
+## SROIE receipts numbers
+
+These come from live runs on 2026-09-24 against ICDAR 2019 SROIE: 973 scanned
+Malaysian receipts, with the task-1 line transcriptions as text and the four task-3
+key fields as gold. The data is `rth/sroie-2019-v2`, and the model is `jev-1.13.0`.
+Six rounds were tuned on the 626 train receipts, and the round with the best dev
+score ran once on the 347 held-out test receipts. Full tables, SQL and every round
+are in [docs/results/sroie.md](docs/results/sroie.md). Nothing is trained, and the
+input is the transcription, not the image, so these numbers are not comparable with
+image-based SROIE leaderboards.
+
+| held-out test, 347 receipts | coverage | exact | selection given coverage |
+|---|---|---|---|
+| company | 97.4% | 92.5% | 95.0% |
+| date | 98.8% | 98.8% | 100.0% |
+| address | 84.7% | 81.6% | 96.3% |
+| total | 99.7% | 98.6% | 98.8% |
+| **all fields** | **95.2%** | **92.9%** | **97.6%** |
+
+All four fields were exact on 73.5% of receipts, against 46.4% for the untuned
+baseline. Throughput was 114 receipts/s at concurrency 16 with no 429s. Cost was
+**$0.25 per 1,000 receipts**, at about 6,000 input tokens per request. On covered
+fields, calibration error is 0.020 (ECE, 10 bins). Answers with `p ≥ 0.99` cover
+67% of fields at 98.0% exact.
+
+Reading the numbers:
+
+- **Most exact-match misses are coverage misses, and most of those are the gold.**
+  Annotators typed the SROIE gold values, and in places they corrected a misprint
+  (`SDN BHD` for the printed `SDN BND`) or added punctuation. For 56 of the 67
+  held-out fields that no candidate matched, Jev returned the printed text the gold
+  was typed from. Letters-and-digits matching lifts address from 81.6% to 91.1%.
+- **Tuning was the inputs.**
+  - Wording that says what to leave out (registration numbers, the company line in
+    an address) lifted dev company selection from 67% to 90%.
+  - Offering the longest runs of lines first lifted address selection from 93% to 97%.
+  - Rebuilding the receipt into visual rows changed nothing.
+  - Two hypotheses failed and are kept in the results doc: R4 asked for a trailing
+    branch line in the address, and R5 changed the company preference.
+- **R5 shows Jev following the rule it is given.** Switching the company question
+  from "the registered name wins" to "the first name printed wins" gained 44 dev
+  receipts and lost 45. Jev applied each rule consistently. The gold uses both
+  conventions on receipts that print a shop name above a registered name, so that
+  company ceiling comes from the labels.
 
 ## Banking77 numbers
 
@@ -126,6 +218,8 @@ uv sync --extra dev
 uv run pytest -q                 # offline: a fake transport, sockets blocked
 uv run ruff check . && uv run ruff format --check .
 uv run python bench/banking77.py sample && uv run python bench/banking77.py full   # live
+uv run python bench/sroie.py prepare && uv run python bench/sroie.py coverage     # offline
+uv run python bench/sroie.py run R3 --split test && uv run python bench/sroie.py report # live
 ```
 
 Notes:

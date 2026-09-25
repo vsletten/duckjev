@@ -1,0 +1,2152 @@
+{
+ "train/R0": {
+  "round": "R0",
+  "split": "train",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "baseline: plain one-line questions; lines in annotation order",
+   "state": "raw_text",
+   "order": "forward",
+   "wording": {
+    "company": "What is the company name on this receipt?",
+    "date": "What is the date of this receipt?",
+    "address": "What is the address on this receipt?",
+    "total": "What is the total amount on this receipt?"
+   },
+   "selectable": true
+  },
+  "receipts": 626,
+  "model": "jev-1.13.0",
+  "duckjev": "0.1.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 01:45 UTC",
+  "seconds": 4.955021008150652,
+  "usage": {
+   "rows": 626,
+   "deduped": 2,
+   "cache_hits": 0,
+   "cache_misses": 624,
+   "requests": 624,
+   "input_tokens": 3618606,
+   "output_tokens": 3282573,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.151981452
+  },
+  "receipts_per_second": 126.33649765970218,
+  "input_tokens_per_request": 5799.048076923077,
+  "usd_per_1k_receipts": 0.24278187220447284,
+  "rerun_seconds": 0.15222965087741613,
+  "rerun_usage": {
+   "rows": 626,
+   "deduped": 2,
+   "cache_hits": 624,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "fields": {
+   "address": {
+    "field": "address",
+    "n": 625,
+    "coverage": 0.8432,
+    "coverage_loose": 0.9376,
+    "exact": 0.7248,
+    "exact_loose": 0.808,
+    "n_covered": 527,
+    "selection": 0.8595825426944972,
+    "selection_loose": 0.8617747440273038,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0,
+    "n_uncovered": 98,
+    "uncovered_none": 1,
+    "uncovered_near": 79,
+    "uncovered_other": 18,
+    "mean_candidates": 104.1984,
+    "max_candidates": 105
+   },
+   "all": {
+    "field": "all",
+    "n": 2502,
+    "coverage": 0.9496402877697842,
+    "coverage_loose": 0.9752198241406874,
+    "exact": 0.8349320543565147,
+    "exact_loose": 0.8577138289368506,
+    "n_covered": 2376,
+    "selection": 0.8792087542087542,
+    "selection_loose": 0.8795081967213115,
+    "none_rate": 0.0007993605115907274,
+    "none_when_covered": 0.0,
+    "n_uncovered": 126,
+    "uncovered_none": 2,
+    "uncovered_near": 92,
+    "uncovered_other": 32,
+    "mean_candidates": 37.06554756195044,
+    "max_candidates": 105
+   },
+   "company": {
+    "field": "company",
+    "n": 626,
+    "coverage": 0.9664536741214057,
+    "coverage_loose": 0.9712460063897763,
+    "exact": 0.6517571884984026,
+    "exact_loose": 0.6565495207667732,
+    "n_covered": 605,
+    "selection": 0.6743801652892562,
+    "selection_loose": 0.6759868421052632,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
+    "n_uncovered": 21,
+    "uncovered_none": 0,
+    "uncovered_near": 11,
+    "uncovered_other": 10,
+    "mean_candidates": 34.80031948881789,
+    "max_candidates": 41
+   },
+   "date": {
+    "field": "date",
+    "n": 626,
+    "coverage": 0.9904153354632588,
+    "coverage_loose": 0.9936102236421726,
+    "exact": 0.987220447284345,
+    "exact_loose": 0.9904153354632588,
+    "n_covered": 620,
+    "selection": 0.9967741935483871,
+    "selection_loose": 0.9967845659163987,
+    "none_rate": 0.001597444089456869,
+    "none_when_covered": 0.0,
+    "n_uncovered": 6,
+    "uncovered_none": 1,
+    "uncovered_near": 2,
+    "uncovered_other": 3,
+    "mean_candidates": 1.0463258785942493,
+    "max_candidates": 3
+   },
+   "total": {
+    "field": "total",
+    "n": 625,
+    "coverage": 0.9984,
+    "coverage_loose": 0.9984,
+    "exact": 0.976,
+    "exact_loose": 0.976,
+    "n_covered": 624,
+    "selection": 0.9775641025641025,
+    "selection_loose": 0.9775641025641025,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
+    "n_uncovered": 1,
+    "uncovered_none": 0,
+    "uncovered_near": 0,
+    "uncovered_other": 1,
+    "mean_candidates": 8.2784,
+    "max_candidates": 30
+   }
+  },
+  "record_all_fields_exact": 0.46485623003194887,
+  "reliability": [
+   [
+    2,
+    18,
+    0.26944444444444443,
+    0.4444444444444444
+   ],
+   [
+    3,
+    73,
+    0.36027397260273974,
+    0.3561643835616438
+   ],
+   [
+    4,
+    122,
+    0.4459016393442623,
+    0.5819672131147541
+   ],
+   [
+    5,
+    159,
+    0.5507547169811323,
+    0.610062893081761
+   ],
+   [
+    6,
+    232,
+    0.6478017241379308,
+    0.5646551724137931
+   ],
+   [
+    7,
+    183,
+    0.7374316939890708,
+    0.5573770491803278
+   ],
+   [
+    8,
+    164,
+    0.8524999999999997,
+    0.774390243902439
+   ],
+   [
+    9,
+    1549,
+    0.9902775984506179,
+    0.9857972885732731
+   ]
+  ],
+  "ece": 0.040588000000002775,
+  "thresholds": [
+   [
+    0.5,
+    0.9140687450039968,
+    0.8675120244862266
+   ],
+   [
+    0.8,
+    0.684652278177458,
+    0.9655575014594279
+   ],
+   [
+    0.9,
+    0.6191047162270183,
+    0.9857972885732731
+   ],
+   [
+    0.95,
+    0.5739408473221422,
+    0.9923398328690808
+   ],
+   [
+    0.99,
+    0.5123900879296562,
+    0.9937597503900156
+   ]
+  ],
+  "reliability_covered": [
+   [
+    2,
+    14,
+    0.26642857142857146,
+    0.5714285714285714
+   ],
+   [
+    3,
+    61,
+    0.359016393442623,
+    0.4262295081967213
+   ],
+   [
+    4,
+    98,
+    0.4451020408163264,
+    0.7244897959183674
+   ],
+   [
+    5,
+    138,
+    0.5523188405797103,
+    0.7028985507246377
+   ],
+   [
+    6,
+    215,
+    0.6478139534883721,
+    0.6093023255813953
+   ],
+   [
+    7,
+    164,
+    0.7366463414634141,
+    0.6219512195121951
+   ],
+   [
+    8,
+    152,
+    0.8514473684210522,
+    0.8355263157894737
+   ],
+   [
+    9,
+    1534,
+    0.9905410691003954,
+    0.9954367666232073
+   ]
+  ],
+  "ece_covered": 0.03937289562289283
+ },
+ "train/R1": {
+  "round": "R1",
+  "split": "train",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "colleague-style questions that say what to exclude",
+   "state": "raw_text",
+   "order": "forward",
+   "wording": {
+    "company": "Which candidate is the name of the business that issued this receipt, exactly as printed? When the receipt prints a registered company name (usually ending in SDN BHD, S/B, BHD or BERHAD), that registered name is the answer, even if a shop brand or outlet name is printed more prominently. Leave out registration numbers in brackets. Not a person's name, the cashier, the customer, or the mall.",
+    "date": "Which candidate is the date of this purchase, the day the receipt was issued? Not a date printed in a promotion, a membership expiry or a return-policy deadline.",
+    "address": "Which candidate is the full postal address of the business that issued this receipt, as printed near the top: all of its lines in order, from the building or street line through the postcode, city and state? Leave out the business name, registration or GST numbers, and telephone or fax lines.",
+    "total": "Which amount is the final total of this receipt: what the customer had to pay after tax, discounts and rounding? Not the subtotal before tax, the tax or GST amount, the cash handed over, or the change given back."
+   },
+   "selectable": true
+  },
+  "receipts": 626,
+  "model": "jev-1.13.0",
+  "duckjev": "0.1.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 01:45 UTC",
+  "seconds": 5.237280042143539,
+  "usage": {
+   "rows": 626,
+   "deduped": 2,
+   "cache_hits": 0,
+   "cache_misses": 624,
+   "requests": 624,
+   "input_tokens": 3737765,
+   "output_tokens": 3279357,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.15698613
+  },
+  "receipts_per_second": 119.52769280288243,
+  "input_tokens_per_request": 5990.008012820513,
+  "usd_per_1k_receipts": 0.25077656549520766,
+  "rerun_seconds": 0.1626650069374591,
+  "rerun_usage": {
+   "rows": 626,
+   "deduped": 2,
+   "cache_hits": 624,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "fields": {
+   "address": {
+    "field": "address",
+    "n": 625,
+    "coverage": 0.8432,
+    "coverage_loose": 0.9376,
+    "exact": 0.7856,
+    "exact_loose": 0.8768,
+    "n_covered": 527,
+    "selection": 0.9316888045540797,
+    "selection_loose": 0.9351535836177475,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0,
+    "n_uncovered": 98,
+    "uncovered_none": 1,
+    "uncovered_near": 84,
+    "uncovered_other": 13,
+    "mean_candidates": 104.1984,
+    "max_candidates": 105
+   },
+   "all": {
+    "field": "all",
+    "n": 2502,
+    "coverage": 0.9496402877697842,
+    "coverage_loose": 0.9752198241406874,
+    "exact": 0.9056754596322941,
+    "exact_loose": 0.9304556354916067,
+    "n_covered": 2376,
+    "selection": 0.9537037037037037,
+    "selection_loose": 0.9540983606557377,
+    "none_rate": 0.0035971223021582736,
+    "none_when_covered": 0.0025252525252525255,
+    "n_uncovered": 126,
+    "uncovered_none": 3,
+    "uncovered_near": 98,
+    "uncovered_other": 25,
+    "mean_candidates": 37.06554756195044,
+    "max_candidates": 105
+   },
+   "company": {
+    "field": "company",
+    "n": 626,
+    "coverage": 0.9664536741214057,
+    "coverage_loose": 0.9712460063897763,
+    "exact": 0.8706070287539937,
+    "exact_loose": 0.8753993610223643,
+    "n_covered": 605,
+    "selection": 0.9008264462809917,
+    "selection_loose": 0.9013157894736842,
+    "none_rate": 0.009584664536741214,
+    "none_when_covered": 0.008264462809917356,
+    "n_uncovered": 21,
+    "uncovered_none": 1,
+    "uncovered_near": 12,
+    "uncovered_other": 8,
+    "mean_candidates": 34.80031948881789,
+    "max_candidates": 41
+   },
+   "date": {
+    "field": "date",
+    "n": 626,
+    "coverage": 0.9904153354632588,
+    "coverage_loose": 0.9936102236421726,
+    "exact": 0.9856230031948882,
+    "exact_loose": 0.9888178913738019,
+    "n_covered": 620,
+    "selection": 0.9951612903225806,
+    "selection_loose": 0.9951768488745981,
+    "none_rate": 0.001597444089456869,
+    "none_when_covered": 0.0,
+    "n_uncovered": 6,
+    "uncovered_none": 1,
+    "uncovered_near": 2,
+    "uncovered_other": 3,
+    "mean_candidates": 1.0463258785942493,
+    "max_candidates": 3
+   },
+   "total": {
+    "field": "total",
+    "n": 625,
+    "coverage": 0.9984,
+    "coverage_loose": 0.9984,
+    "exact": 0.9808,
+    "exact_loose": 0.9808,
+    "n_covered": 624,
+    "selection": 0.9823717948717948,
+    "selection_loose": 0.9823717948717948,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0016025641025641025,
+    "n_uncovered": 1,
+    "uncovered_none": 0,
+    "uncovered_near": 0,
+    "uncovered_other": 1,
+    "mean_candidates": 8.2784,
+    "max_candidates": 30
+   }
+  },
+  "record_all_fields_exact": 0.6565495207667732,
+  "reliability": [
+   [
+    2,
+    1,
+    0.27,
+    0.0
+   ],
+   [
+    3,
+    5,
+    0.368,
+    0.2
+   ],
+   [
+    4,
+    9,
+    0.46444444444444444,
+    0.5555555555555556
+   ],
+   [
+    5,
+    24,
+    0.5475,
+    0.5416666666666666
+   ],
+   [
+    6,
+    36,
+    0.6461111111111113,
+    0.5555555555555556
+   ],
+   [
+    7,
+    33,
+    0.747878787878788,
+    0.5454545454545454
+   ],
+   [
+    8,
+    90,
+    0.8525555555555554,
+    0.8
+   ],
+   [
+    9,
+    2295,
+    0.9900784313725486,
+    0.9311546840958606
+   ]
+  ],
+  "ece": 0.06095868431608465,
+  "thresholds": [
+   [
+    0.5,
+    0.9904076738609112,
+    0.9120258272800645
+   ],
+   [
+    0.8,
+    0.9532374100719424,
+    0.9262054507337526
+   ],
+   [
+    0.9,
+    0.9172661870503597,
+    0.9311546840958606
+   ],
+   [
+    0.95,
+    0.8749000799360511,
+    0.9342165372316126
+   ],
+   [
+    0.99,
+    0.7226219024780176,
+    0.9607300884955752
+   ]
+  ],
+  "reliability_covered": [
+   [
+    2,
+    1,
+    0.27,
+    0.0
+   ],
+   [
+    3,
+    4,
+    0.37,
+    0.25
+   ],
+   [
+    4,
+    8,
+    0.47000000000000003,
+    0.625
+   ],
+   [
+    5,
+    21,
+    0.5480952380952382,
+    0.6190476190476191
+   ],
+   [
+    6,
+    33,
+    0.6460606060606063,
+    0.6060606060606061
+   ],
+   [
+    7,
+    26,
+    0.7476923076923078,
+    0.6923076923076923
+   ],
+   [
+    8,
+    82,
+    0.8523170731707317,
+    0.8780487804878049
+   ],
+   [
+    9,
+    2195,
+    0.9904419134396378,
+    0.9735763097949887
+   ]
+  ],
+  "ece_covered": 0.0191434599156139
+ },
+ "train/R2": {
+  "round": "R2",
+  "split": "train",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R1 plus the receipt rebuilt into visual rows from the boxes",
+   "state": "layout_text",
+   "order": "forward",
+   "wording": {
+    "company": "Which candidate is the name of the business that issued this receipt, exactly as printed? When the receipt prints a registered company name (usually ending in SDN BHD, S/B, BHD or BERHAD), that registered name is the answer, even if a shop brand or outlet name is printed more prominently. Leave out registration numbers in brackets. Not a person's name, the cashier, the customer, or the mall.",
+    "date": "Which candidate is the date of this purchase, the day the receipt was issued? Not a date printed in a promotion, a membership expiry or a return-policy deadline.",
+    "address": "Which candidate is the full postal address of the business that issued this receipt, as printed near the top: all of its lines in order, from the building or street line through the postcode, city and state? Leave out the business name, registration or GST numbers, and telephone or fax lines.",
+    "total": "Which amount is the final total of this receipt: what the customer had to pay after tax, discounts and rounding? Not the subtotal before tax, the tax or GST amount, the cash handed over, or the change given back."
+   },
+   "selectable": true
+  },
+  "receipts": 626,
+  "model": "jev-1.13.0",
+  "duckjev": "0.1.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 01:45 UTC",
+  "seconds": 5.155845523113385,
+  "usage": {
+   "rows": 626,
+   "deduped": 1,
+   "cache_hits": 0,
+   "cache_misses": 625,
+   "requests": 625,
+   "input_tokens": 3756196,
+   "output_tokens": 3285113,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.157760232
+  },
+  "receipts_per_second": 121.4155849304784,
+  "input_tokens_per_request": 6009.9136,
+  "usd_per_1k_receipts": 0.25201315015974446,
+  "rerun_seconds": 0.16141349403187633,
+  "rerun_usage": {
+   "rows": 626,
+   "deduped": 1,
+   "cache_hits": 625,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "fields": {
+   "address": {
+    "field": "address",
+    "n": 625,
+    "coverage": 0.8432,
+    "coverage_loose": 0.9376,
+    "exact": 0.7824,
+    "exact_loose": 0.872,
+    "n_covered": 527,
+    "selection": 0.9278937381404174,
+    "selection_loose": 0.9300341296928327,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0,
+    "n_uncovered": 98,
+    "uncovered_none": 1,
+    "uncovered_near": 83,
+    "uncovered_other": 14,
+    "mean_candidates": 104.1984,
+    "max_candidates": 105
+   },
+   "all": {
+    "field": "all",
+    "n": 2502,
+    "coverage": 0.9496402877697842,
+    "coverage_loose": 0.9752198241406874,
+    "exact": 0.9052757793764988,
+    "exact_loose": 0.929656274980016,
+    "n_covered": 2376,
+    "selection": 0.9532828282828283,
+    "selection_loose": 0.9532786885245902,
+    "none_rate": 0.004796163069544364,
+    "none_when_covered": 0.003367003367003367,
+    "n_uncovered": 126,
+    "uncovered_none": 4,
+    "uncovered_near": 97,
+    "uncovered_other": 25,
+    "mean_candidates": 37.06554756195044,
+    "max_candidates": 105
+   },
+   "company": {
+    "field": "company",
+    "n": 626,
+    "coverage": 0.9664536741214057,
+    "coverage_loose": 0.9712460063897763,
+    "exact": 0.8722044728434505,
+    "exact_loose": 0.8769968051118211,
+    "n_covered": 605,
+    "selection": 0.9024793388429752,
+    "selection_loose": 0.9029605263157895,
+    "none_rate": 0.012779552715654952,
+    "none_when_covered": 0.009917355371900827,
+    "n_uncovered": 21,
+    "uncovered_none": 2,
+    "uncovered_near": 12,
+    "uncovered_other": 7,
+    "mean_candidates": 34.80031948881789,
+    "max_candidates": 41
+   },
+   "date": {
+    "field": "date",
+    "n": 626,
+    "coverage": 0.9904153354632588,
+    "coverage_loose": 0.9936102236421726,
+    "exact": 0.9856230031948882,
+    "exact_loose": 0.9888178913738019,
+    "n_covered": 620,
+    "selection": 0.9951612903225806,
+    "selection_loose": 0.9951768488745981,
+    "none_rate": 0.001597444089456869,
+    "none_when_covered": 0.0,
+    "n_uncovered": 6,
+    "uncovered_none": 1,
+    "uncovered_near": 2,
+    "uncovered_other": 3,
+    "mean_candidates": 1.0463258785942493,
+    "max_candidates": 3
+   },
+   "total": {
+    "field": "total",
+    "n": 625,
+    "coverage": 0.9984,
+    "coverage_loose": 0.9984,
+    "exact": 0.9808,
+    "exact_loose": 0.9808,
+    "n_covered": 624,
+    "selection": 0.9823717948717948,
+    "selection_loose": 0.9823717948717948,
+    "none_rate": 0.0032,
+    "none_when_covered": 0.003205128205128205,
+    "n_uncovered": 1,
+    "uncovered_none": 0,
+    "uncovered_near": 0,
+    "uncovered_other": 1,
+    "mean_candidates": 8.2784,
+    "max_candidates": 30
+   }
+  },
+  "record_all_fields_exact": 0.6597444089456869,
+  "reliability": [
+   [
+    3,
+    5,
+    0.34,
+    0.0
+   ],
+   [
+    4,
+    9,
+    0.4644444444444445,
+    0.4444444444444444
+   ],
+   [
+    5,
+    24,
+    0.5470833333333333,
+    0.5416666666666666
+   ],
+   [
+    6,
+    26,
+    0.6465384615384614,
+    0.6538461538461539
+   ],
+   [
+    7,
+    39,
+    0.7461538461538462,
+    0.5641025641025641
+   ],
+   [
+    8,
+    80,
+    0.8538750000000004,
+    0.725
+   ],
+   [
+    9,
+    2307,
+    0.9903294321629801,
+    0.9323797139141743
+   ]
+  ],
+  "ece": 0.06156626506023896,
+  "thresholds": [
+   [
+    0.5,
+    0.9896083133493205,
+    0.9131663974151858
+   ],
+   [
+    0.8,
+    0.9540367705835332,
+    0.9254294093003771
+   ],
+   [
+    0.9,
+    0.9220623501199041,
+    0.9323797139141743
+   ],
+   [
+    0.95,
+    0.876898481215028,
+    0.935278030993619
+   ],
+   [
+    0.99,
+    0.7294164668265388,
+    0.96
+   ]
+  ],
+  "reliability_covered": [
+   [
+    3,
+    4,
+    0.335,
+    0.0
+   ],
+   [
+    4,
+    7,
+    0.47714285714285715,
+    0.5714285714285714
+   ],
+   [
+    5,
+    21,
+    0.5485714285714286,
+    0.6190476190476191
+   ],
+   [
+    6,
+    25,
+    0.6471999999999999,
+    0.68
+   ],
+   [
+    7,
+    33,
+    0.7481818181818182,
+    0.6666666666666666
+   ],
+   [
+    8,
+    69,
+    0.853913043478261,
+    0.8405797101449275
+   ],
+   [
+    9,
+    2209,
+    0.9906156631960165,
+    0.9737437754640109
+   ]
+  ],
+  "ece_covered": 0.019079391891892002
+ },
+ "train/R3": {
+  "round": "R3",
+  "split": "train",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R2 with every candidate list reversed, as an option-order check; it lifted address selection, so order became a lever: reversed puts the longest runs of lines first",
+   "state": "layout_text",
+   "order": "reverse",
+   "wording": {
+    "company": "Which candidate is the name of the business that issued this receipt, exactly as printed? When the receipt prints a registered company name (usually ending in SDN BHD, S/B, BHD or BERHAD), that registered name is the answer, even if a shop brand or outlet name is printed more prominently. Leave out registration numbers in brackets. Not a person's name, the cashier, the customer, or the mall.",
+    "date": "Which candidate is the date of this purchase, the day the receipt was issued? Not a date printed in a promotion, a membership expiry or a return-policy deadline.",
+    "address": "Which candidate is the full postal address of the business that issued this receipt, as printed near the top: all of its lines in order, from the building or street line through the postcode, city and state? Leave out the business name, registration or GST numbers, and telephone or fax lines.",
+    "total": "Which amount is the final total of this receipt: what the customer had to pay after tax, discounts and rounding? Not the subtotal before tax, the tax or GST amount, the cash handed over, or the change given back."
+   },
+   "selectable": true
+  },
+  "receipts": 626,
+  "model": "jev-1.13.0",
+  "duckjev": "0.1.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 01:45 UTC",
+  "seconds": 5.167953605065122,
+  "usage": {
+   "rows": 626,
+   "deduped": 1,
+   "cache_hits": 0,
+   "cache_misses": 625,
+   "requests": 625,
+   "input_tokens": 3756196,
+   "output_tokens": 3285517,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.157760232
+  },
+  "receipts_per_second": 121.13111839596549,
+  "input_tokens_per_request": 6009.9136,
+  "usd_per_1k_receipts": 0.25201315015974446,
+  "rerun_seconds": 0.15635716496035457,
+  "rerun_usage": {
+   "rows": 626,
+   "deduped": 1,
+   "cache_hits": 625,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "fields": {
+   "address": {
+    "field": "address",
+    "n": 625,
+    "coverage": 0.8432,
+    "coverage_loose": 0.9376,
+    "exact": 0.816,
+    "exact_loose": 0.9056,
+    "n_covered": 527,
+    "selection": 0.967741935483871,
+    "selection_loose": 0.9658703071672355,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0,
+    "n_uncovered": 98,
+    "uncovered_none": 1,
+    "uncovered_near": 88,
+    "uncovered_other": 9,
+    "mean_candidates": 104.1984,
+    "max_candidates": 105
+   },
+   "all": {
+    "field": "all",
+    "n": 2502,
+    "coverage": 0.9496402877697842,
+    "coverage_loose": 0.9752198241406874,
+    "exact": 0.9148681055155875,
+    "exact_loose": 0.9392486011191047,
+    "n_covered": 2376,
+    "selection": 0.9633838383838383,
+    "selection_loose": 0.9631147540983607,
+    "none_rate": 0.004396482813749001,
+    "none_when_covered": 0.002946127946127946,
+    "n_uncovered": 126,
+    "uncovered_none": 4,
+    "uncovered_near": 102,
+    "uncovered_other": 20,
+    "mean_candidates": 37.06554756195044,
+    "max_candidates": 105
+   },
+   "company": {
+    "field": "company",
+    "n": 626,
+    "coverage": 0.9664536741214057,
+    "coverage_loose": 0.9712460063897763,
+    "exact": 0.8753993610223643,
+    "exact_loose": 0.8801916932907349,
+    "n_covered": 605,
+    "selection": 0.9057851239669421,
+    "selection_loose": 0.90625,
+    "none_rate": 0.012779552715654952,
+    "none_when_covered": 0.009917355371900827,
+    "n_uncovered": 21,
+    "uncovered_none": 2,
+    "uncovered_near": 12,
+    "uncovered_other": 7,
+    "mean_candidates": 34.80031948881789,
+    "max_candidates": 41
+   },
+   "date": {
+    "field": "date",
+    "n": 626,
+    "coverage": 0.9904153354632588,
+    "coverage_loose": 0.9936102236421726,
+    "exact": 0.9856230031948882,
+    "exact_loose": 0.9888178913738019,
+    "n_covered": 620,
+    "selection": 0.9951612903225806,
+    "selection_loose": 0.9951768488745981,
+    "none_rate": 0.001597444089456869,
+    "none_when_covered": 0.0,
+    "n_uncovered": 6,
+    "uncovered_none": 1,
+    "uncovered_near": 2,
+    "uncovered_other": 3,
+    "mean_candidates": 1.0463258785942493,
+    "max_candidates": 3
+   },
+   "total": {
+    "field": "total",
+    "n": 625,
+    "coverage": 0.9984,
+    "coverage_loose": 0.9984,
+    "exact": 0.9824,
+    "exact_loose": 0.9824,
+    "n_covered": 624,
+    "selection": 0.9839743589743589,
+    "selection_loose": 0.9839743589743589,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0016025641025641025,
+    "n_uncovered": 1,
+    "uncovered_none": 0,
+    "uncovered_near": 0,
+    "uncovered_other": 1,
+    "mean_candidates": 8.2784,
+    "max_candidates": 30
+   }
+  },
+  "record_all_fields_exact": 0.6900958466453674,
+  "reliability": [
+   [
+    3,
+    1,
+    0.39,
+    0.0
+   ],
+   [
+    4,
+    12,
+    0.4575,
+    0.75
+   ],
+   [
+    5,
+    22,
+    0.5399999999999999,
+    0.5909090909090909
+   ],
+   [
+    6,
+    27,
+    0.6514814814814817,
+    0.7407407407407407
+   ],
+   [
+    7,
+    54,
+    0.7546296296296297,
+    0.7777777777777778
+   ],
+   [
+    8,
+    130,
+    0.8481538461538458,
+    0.8692307692307693
+   ],
+   [
+    9,
+    2245,
+    0.9875812917594685,
+    0.93184855233853
+   ]
+  ],
+  "ece": 0.05481332798073341,
+  "thresholds": [
+   [
+    0.5,
+    0.9904076738609112,
+    0.9200968523002422
+   ],
+   [
+    0.8,
+    0.9492406075139888,
+    0.9284210526315789
+   ],
+   [
+    0.9,
+    0.8972821742605915,
+    0.93184855233853
+   ],
+   [
+    0.95,
+    0.8409272581934453,
+    0.9372623574144486
+   ],
+   [
+    0.99,
+    0.6554756195043965,
+    0.974390243902439
+   ]
+  ],
+  "reliability_covered": [
+   [
+    3,
+    1,
+    0.39,
+    0.0
+   ],
+   [
+    4,
+    11,
+    0.4627272727272727,
+    0.8181818181818182
+   ],
+   [
+    5,
+    18,
+    0.5400000000000001,
+    0.7222222222222222
+   ],
+   [
+    6,
+    25,
+    0.6531999999999999,
+    0.8
+   ],
+   [
+    7,
+    48,
+    0.7531249999999999,
+    0.875
+   ],
+   [
+    8,
+    117,
+    0.847350427350427,
+    0.9658119658119658
+   ],
+   [
+    9,
+    2149,
+    0.9885109353187583,
+    0.9734760353652862
+   ]
+  ],
+  "ece_covered": 0.02670747150696993
+ },
+ "train/R4": {
+  "round": "R4",
+  "split": "train",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R3 with the address question asking for a trailing branch or outlet line as part of the block, the hypothesis from R2's too-short misses; the gold mostly leaves it out, so this hurt",
+   "state": "layout_text",
+   "order": "reverse",
+   "wording": {
+    "company": "Which candidate is the name of the business that issued this receipt, exactly as printed? When the receipt prints a registered company name (usually ending in SDN BHD, S/B, BHD or BERHAD), that registered name is the answer, even if a shop brand or outlet name is printed more prominently. Leave out registration numbers in brackets. Not a person's name, the cashier, the customer, or the mall.",
+    "date": "Which candidate is the date of this purchase, the day the receipt was issued? Not a date printed in a promotion, a membership expiry or a return-policy deadline.",
+    "address": "Which candidate is the full address block of the business that issued this receipt, as printed near the top: every line of it in order, from the building or street line through the postcode, city and state, including a branch, outlet or mall name printed as the last line of that block? Leave out the business name, registration or GST numbers, and telephone or fax lines.",
+    "total": "Which amount is the final total of this receipt: what the customer had to pay after tax, discounts and rounding? Not the subtotal before tax, the tax or GST amount, the cash handed over, or the change given back."
+   },
+   "selectable": true
+  },
+  "receipts": 626,
+  "model": "jev-1.13.0",
+  "duckjev": "0.1.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 01:46 UTC",
+  "seconds": 5.078626164933667,
+  "usage": {
+   "rows": 626,
+   "deduped": 1,
+   "cache_hits": 0,
+   "cache_misses": 625,
+   "requests": 625,
+   "input_tokens": 3766821,
+   "output_tokens": 3287083,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.158206482
+  },
+  "receipts_per_second": 123.2616813425519,
+  "input_tokens_per_request": 6026.9136,
+  "usd_per_1k_receipts": 0.25272600958466457,
+  "rerun_seconds": 0.1651668988633901,
+  "rerun_usage": {
+   "rows": 626,
+   "deduped": 1,
+   "cache_hits": 625,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "fields": {
+   "address": {
+    "field": "address",
+    "n": 625,
+    "coverage": 0.8432,
+    "coverage_loose": 0.9376,
+    "exact": 0.7168,
+    "exact_loose": 0.8048,
+    "n_covered": 527,
+    "selection": 0.8500948766603416,
+    "selection_loose": 0.8583617747440273,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0,
+    "n_uncovered": 98,
+    "uncovered_none": 1,
+    "uncovered_near": 82,
+    "uncovered_other": 15,
+    "mean_candidates": 104.1984,
+    "max_candidates": 105
+   },
+   "all": {
+    "field": "all",
+    "n": 2502,
+    "coverage": 0.9496402877697842,
+    "coverage_loose": 0.9752198241406874,
+    "exact": 0.8892885691446842,
+    "exact_loose": 0.913269384492406,
+    "n_covered": 2376,
+    "selection": 0.9364478114478114,
+    "selection_loose": 0.9364754098360656,
+    "none_rate": 0.005195843325339729,
+    "none_when_covered": 0.003787878787878788,
+    "n_uncovered": 126,
+    "uncovered_none": 4,
+    "uncovered_near": 96,
+    "uncovered_other": 26,
+    "mean_candidates": 37.06554756195044,
+    "max_candidates": 105
+   },
+   "company": {
+    "field": "company",
+    "n": 626,
+    "coverage": 0.9664536741214057,
+    "coverage_loose": 0.9712460063897763,
+    "exact": 0.8753993610223643,
+    "exact_loose": 0.8801916932907349,
+    "n_covered": 605,
+    "selection": 0.9057851239669421,
+    "selection_loose": 0.90625,
+    "none_rate": 0.012779552715654952,
+    "none_when_covered": 0.009917355371900827,
+    "n_uncovered": 21,
+    "uncovered_none": 2,
+    "uncovered_near": 12,
+    "uncovered_other": 7,
+    "mean_candidates": 34.80031948881789,
+    "max_candidates": 41
+   },
+   "date": {
+    "field": "date",
+    "n": 626,
+    "coverage": 0.9904153354632588,
+    "coverage_loose": 0.9936102236421726,
+    "exact": 0.9824281150159745,
+    "exact_loose": 0.9856230031948882,
+    "n_covered": 620,
+    "selection": 0.9919354838709677,
+    "selection_loose": 0.9919614147909968,
+    "none_rate": 0.004792332268370607,
+    "none_when_covered": 0.0032258064516129032,
+    "n_uncovered": 6,
+    "uncovered_none": 1,
+    "uncovered_near": 2,
+    "uncovered_other": 3,
+    "mean_candidates": 1.0463258785942493,
+    "max_candidates": 3
+   },
+   "total": {
+    "field": "total",
+    "n": 625,
+    "coverage": 0.9984,
+    "coverage_loose": 0.9984,
+    "exact": 0.9824,
+    "exact_loose": 0.9824,
+    "n_covered": 624,
+    "selection": 0.9839743589743589,
+    "selection_loose": 0.9839743589743589,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0016025641025641025,
+    "n_uncovered": 1,
+    "uncovered_none": 0,
+    "uncovered_near": 0,
+    "uncovered_other": 1,
+    "mean_candidates": 8.2784,
+    "max_candidates": 30
+   }
+  },
+  "record_all_fields_exact": 0.6006389776357828,
+  "reliability": [
+   [
+    2,
+    4,
+    0.275,
+    0.5
+   ],
+   [
+    3,
+    16,
+    0.34249999999999997,
+    0.5625
+   ],
+   [
+    4,
+    19,
+    0.43842105263157904,
+    0.5263157894736842
+   ],
+   [
+    5,
+    24,
+    0.5541666666666667,
+    0.6666666666666666
+   ],
+   [
+    6,
+    71,
+    0.6571830985915493,
+    0.6619718309859155
+   ],
+   [
+    7,
+    137,
+    0.7553284671532853,
+    0.7883211678832117
+   ],
+   [
+    8,
+    254,
+    0.8485039370078745,
+    0.7755905511811023
+   ],
+   [
+    9,
+    1964,
+    0.9872912423625301,
+    0.9348268839103869
+   ]
+  ],
+  "ece": 0.054323021293695935,
+  "thresholds": [
+   [
+    0.5,
+    0.9792166266986411,
+    0.8995918367346939
+   ],
+   [
+    0.8,
+    0.8864908073541167,
+    0.9165915238954012
+   ],
+   [
+    0.9,
+    0.7849720223820943,
+    0.9348268839103869
+   ],
+   [
+    0.95,
+    0.7082334132693845,
+    0.9565462753950339
+   ],
+   [
+    0.99,
+    0.6047162270183853,
+    0.9781890284203569
+   ]
+  ],
+  "reliability_covered": [
+   [
+    2,
+    3,
+    0.27666666666666667,
+    0.6666666666666666
+   ],
+   [
+    3,
+    16,
+    0.34249999999999997,
+    0.5625
+   ],
+   [
+    4,
+    14,
+    0.43500000000000005,
+    0.7142857142857143
+   ],
+   [
+    5,
+    23,
+    0.5530434782608696,
+    0.6956521739130435
+   ],
+   [
+    6,
+    64,
+    0.6565625000000003,
+    0.734375
+   ],
+   [
+    7,
+    127,
+    0.7540944881889772,
+    0.8503937007874016
+   ],
+   [
+    8,
+    223,
+    0.8478923766816144,
+    0.8834080717488789
+   ],
+   [
+    9,
+    1897,
+    0.9888086452293146,
+    0.9678439641539273
+   ]
+  ],
+  "ece_covered": 0.03243768483312614
+ },
+ "train/R5": {
+  "round": "R5",
+  "split": "train",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R3 with the company question preferring whichever issuer name is printed first, shop or registered",
+   "state": "layout_text",
+   "order": "reverse",
+   "wording": {
+    "company": "Which candidate is the name of the business that issued this receipt, exactly as printed where the receipt names its issuer at the top? If a shop or brand name is printed above a registered company name (one ending in SDN BHD, S/B, BHD or BERHAD), the shop or brand name is the answer; if the registered name comes first or is the only name, it is the answer. Leave out registration numbers in brackets. Not a person's name, the cashier, the customer, or the mall.",
+    "date": "Which candidate is the date of this purchase, the day the receipt was issued? Not a date printed in a promotion, a membership expiry or a return-policy deadline.",
+    "address": "Which candidate is the full postal address of the business that issued this receipt, as printed near the top: all of its lines in order, from the building or street line through the postcode, city and state? Leave out the business name, registration or GST numbers, and telephone or fax lines.",
+    "total": "Which amount is the final total of this receipt: what the customer had to pay after tax, discounts and rounding? Not the subtotal before tax, the tax or GST amount, the cash handed over, or the change given back."
+   },
+   "selectable": true
+  },
+  "receipts": 626,
+  "model": "jev-1.13.0",
+  "duckjev": "0.1.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 01:47 UTC",
+  "seconds": 5.695284098852426,
+  "usage": {
+   "rows": 626,
+   "deduped": 1,
+   "cache_hits": 0,
+   "cache_misses": 625,
+   "requests": 625,
+   "input_tokens": 3768696,
+   "output_tokens": 3285248,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.158285232
+  },
+  "receipts_per_second": 109.91550011107194,
+  "input_tokens_per_request": 6029.9136,
+  "usd_per_1k_receipts": 0.2528518083067093,
+  "rerun_seconds": 0.16038172412663698,
+  "rerun_usage": {
+   "rows": 626,
+   "deduped": 1,
+   "cache_hits": 625,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "fields": {
+   "address": {
+    "field": "address",
+    "n": 625,
+    "coverage": 0.8432,
+    "coverage_loose": 0.9376,
+    "exact": 0.816,
+    "exact_loose": 0.9056,
+    "n_covered": 527,
+    "selection": 0.967741935483871,
+    "selection_loose": 0.9658703071672355,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0,
+    "n_uncovered": 98,
+    "uncovered_none": 1,
+    "uncovered_near": 88,
+    "uncovered_other": 9,
+    "mean_candidates": 104.1984,
+    "max_candidates": 105
+   },
+   "all": {
+    "field": "all",
+    "n": 2502,
+    "coverage": 0.9496402877697842,
+    "coverage_loose": 0.9752198241406874,
+    "exact": 0.913269384492406,
+    "exact_loose": 0.9376498800959233,
+    "n_covered": 2376,
+    "selection": 0.9617003367003367,
+    "selection_loose": 0.9614754098360656,
+    "none_rate": 0.0019984012789768186,
+    "none_when_covered": 0.0008417508417508417,
+    "n_uncovered": 126,
+    "uncovered_none": 3,
+    "uncovered_near": 101,
+    "uncovered_other": 22,
+    "mean_candidates": 37.06554756195044,
+    "max_candidates": 105
+   },
+   "company": {
+    "field": "company",
+    "n": 626,
+    "coverage": 0.9664536741214057,
+    "coverage_loose": 0.9712460063897763,
+    "exact": 0.8706070287539937,
+    "exact_loose": 0.8753993610223643,
+    "n_covered": 605,
+    "selection": 0.9008264462809917,
+    "selection_loose": 0.9013157894736842,
+    "none_rate": 0.001597444089456869,
+    "none_when_covered": 0.0,
+    "n_uncovered": 21,
+    "uncovered_none": 1,
+    "uncovered_near": 11,
+    "uncovered_other": 9,
+    "mean_candidates": 34.80031948881789,
+    "max_candidates": 41
+   },
+   "date": {
+    "field": "date",
+    "n": 626,
+    "coverage": 0.9904153354632588,
+    "coverage_loose": 0.9936102236421726,
+    "exact": 0.9840255591054313,
+    "exact_loose": 0.987220447284345,
+    "n_covered": 620,
+    "selection": 0.9935483870967742,
+    "selection_loose": 0.9935691318327974,
+    "none_rate": 0.003194888178913738,
+    "none_when_covered": 0.0016129032258064516,
+    "n_uncovered": 6,
+    "uncovered_none": 1,
+    "uncovered_near": 2,
+    "uncovered_other": 3,
+    "mean_candidates": 1.0463258785942493,
+    "max_candidates": 3
+   },
+   "total": {
+    "field": "total",
+    "n": 625,
+    "coverage": 0.9984,
+    "coverage_loose": 0.9984,
+    "exact": 0.9824,
+    "exact_loose": 0.9824,
+    "n_covered": 624,
+    "selection": 0.9839743589743589,
+    "selection_loose": 0.9839743589743589,
+    "none_rate": 0.0016,
+    "none_when_covered": 0.0016025641025641025,
+    "n_uncovered": 1,
+    "uncovered_none": 0,
+    "uncovered_near": 0,
+    "uncovered_other": 1,
+    "mean_candidates": 8.2784,
+    "max_candidates": 30
+   }
+  },
+  "record_all_fields_exact": 0.6916932907348243,
+  "reliability": [
+   [
+    2,
+    2,
+    0.245,
+    0.0
+   ],
+   [
+    3,
+    3,
+    0.32666666666666666,
+    0.3333333333333333
+   ],
+   [
+    4,
+    14,
+    0.46071428571428574,
+    0.2857142857142857
+   ],
+   [
+    5,
+    47,
+    0.5495744680851065,
+    0.5319148936170213
+   ],
+   [
+    6,
+    39,
+    0.6476923076923077,
+    0.717948717948718
+   ],
+   [
+    7,
+    71,
+    0.7422535211267607,
+    0.704225352112676
+   ],
+   [
+    8,
+    127,
+    0.8582677165354332,
+    0.8188976377952756
+   ],
+   [
+    9,
+    2194,
+    0.9829945305378371,
+    0.9448495897903373
+   ]
+  ],
+  "ece": 0.03921505806968951,
+  "thresholds": [
+   [
+    0.5,
+    0.9904076738609112,
+    0.9200968523002422
+   ],
+   [
+    0.8,
+    0.9276578737010391,
+    0.9379577768203361
+   ],
+   [
+    0.9,
+    0.876898481215028,
+    0.9448495897903373
+   ],
+   [
+    0.95,
+    0.7829736211031175,
+    0.9520163348647269
+   ],
+   [
+    0.99,
+    0.5691446842525979,
+    0.9782303370786517
+   ]
+  ],
+  "reliability_covered": [
+   [
+    3,
+    3,
+    0.32666666666666666,
+    0.3333333333333333
+   ],
+   [
+    4,
+    12,
+    0.4650000000000001,
+    0.3333333333333333
+   ],
+   [
+    5,
+    42,
+    0.5478571428571429,
+    0.5952380952380952
+   ],
+   [
+    6,
+    35,
+    0.6488571428571429,
+    0.8
+   ],
+   [
+    7,
+    66,
+    0.7421212121212123,
+    0.7575757575757576
+   ],
+   [
+    8,
+    116,
+    0.859051724137931,
+    0.896551724137931
+   ],
+   [
+    9,
+    2100,
+    0.9837857142857253,
+    0.9871428571428571
+   ]
+  ],
+  "ece_covered": 0.008972198820546281
+ },
+ "test/R0": {
+  "round": "R0",
+  "split": "test",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "baseline: plain one-line questions; lines in annotation order",
+   "state": "raw_text",
+   "order": "forward",
+   "wording": {
+    "company": "What is the company name on this receipt?",
+    "date": "What is the date of this receipt?",
+    "address": "What is the address on this receipt?",
+    "total": "What is the total amount on this receipt?"
+   },
+   "selectable": true
+  },
+  "receipts": 347,
+  "model": "jev-1.13.0",
+  "duckjev": "0.1.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 01:47 UTC",
+  "seconds": 2.9456833170261234,
+  "usage": {
+   "rows": 347,
+   "deduped": 0,
+   "cache_hits": 0,
+   "cache_misses": 347,
+   "requests": 347,
+   "input_tokens": 2009545,
+   "output_tokens": 1823796,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.08440088999999999
+  },
+  "receipts_per_second": 117.79949256402794,
+  "input_tokens_per_request": 5791.195965417867,
+  "usd_per_1k_receipts": 0.2432302305475504,
+  "rerun_seconds": 0.07761324010789394,
+  "rerun_usage": {
+   "rows": 347,
+   "deduped": 0,
+   "cache_hits": 347,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "fields": {
+   "address": {
+    "field": "address",
+    "n": 347,
+    "coverage": 0.8472622478386167,
+    "coverage_loose": 0.9423631123919308,
+    "exact": 0.7319884726224783,
+    "exact_loose": 0.8155619596541787,
+    "n_covered": 294,
+    "selection": 0.8639455782312925,
+    "selection_loose": 0.8654434250764526,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
+    "n_uncovered": 53,
+    "uncovered_none": 0,
+    "uncovered_near": 44,
+    "uncovered_other": 9,
+    "mean_candidates": 104.15561959654178,
+    "max_candidates": 105
+   },
+   "all": {
+    "field": "all",
+    "n": 1388,
+    "coverage": 0.9517291066282421,
+    "coverage_loose": 0.9776657060518732,
+    "exact": 0.8371757925072046,
+    "exact_loose": 0.8602305475504323,
+    "n_covered": 1321,
+    "selection": 0.8796366389099167,
+    "selection_loose": 0.8798820928518791,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
+    "n_uncovered": 67,
+    "uncovered_none": 0,
+    "uncovered_near": 50,
+    "uncovered_other": 17,
+    "mean_candidates": 37.15201729106628,
+    "max_candidates": 105
+   },
+   "company": {
+    "field": "company",
+    "n": 347,
+    "coverage": 0.9740634005763689,
+    "coverage_loose": 0.9827089337175793,
+    "exact": 0.6570605187319885,
+    "exact_loose": 0.6657060518731989,
+    "n_covered": 338,
+    "selection": 0.6745562130177515,
+    "selection_loose": 0.6774193548387096,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
+    "n_uncovered": 9,
+    "uncovered_none": 0,
+    "uncovered_near": 6,
+    "uncovered_other": 3,
+    "mean_candidates": 34.80115273775216,
+    "max_candidates": 39
+   },
+   "date": {
+    "field": "date",
+    "n": 347,
+    "coverage": 0.9884726224783862,
+    "coverage_loose": 0.9884726224783862,
+    "exact": 0.9884726224783862,
+    "exact_loose": 0.9884726224783862,
+    "n_covered": 343,
+    "selection": 1.0,
+    "selection_loose": 1.0,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
+    "n_uncovered": 4,
+    "uncovered_none": 0,
+    "uncovered_near": 0,
+    "uncovered_other": 4,
+    "mean_candidates": 1.043227665706052,
+    "max_candidates": 3
+   },
+   "total": {
+    "field": "total",
+    "n": 347,
+    "coverage": 0.9971181556195965,
+    "coverage_loose": 0.9971181556195965,
+    "exact": 0.9711815561959655,
+    "exact_loose": 0.9711815561959655,
+    "n_covered": 346,
+    "selection": 0.9739884393063584,
+    "selection_loose": 0.9739884393063584,
+    "none_rate": 0.0,
+    "none_when_covered": 0.0,
+    "n_uncovered": 1,
+    "uncovered_none": 0,
+    "uncovered_near": 0,
+    "uncovered_other": 1,
+    "mean_candidates": 8.60806916426513,
+    "max_candidates": 25
+   }
+  },
+  "record_all_fields_exact": 0.46397694524495675,
+  "reliability": [
+   [
+    2,
+    10,
+    0.261,
+    0.5
+   ],
+   [
+    3,
+    50,
+    0.35640000000000016,
+    0.56
+   ],
+   [
+    4,
+    70,
+    0.4387142857142858,
+    0.5714285714285714
+   ],
+   [
+    5,
+    84,
+    0.5494047619047621,
+    0.4880952380952381
+   ],
+   [
+    6,
+    117,
+    0.6493162393162394,
+    0.5213675213675214
+   ],
+   [
+    7,
+    91,
+    0.7450549450549452,
+    0.6043956043956044
+   ],
+   [
+    8,
+    111,
+    0.8483783783783779,
+    0.8018018018018018
+   ],
+   [
+    9,
+    855,
+    0.9910994152046803,
+    0.9859649122807017
+   ]
+  ],
+  "ece": 0.04635446685879079,
+  "thresholds": [
+   [
+    0.5,
+    0.9063400576368876,
+    0.8656597774244833
+   ],
+   [
+    0.8,
+    0.6959654178674352,
+    0.9648033126293996
+   ],
+   [
+    0.9,
+    0.6159942363112392,
+    0.9859649122807017
+   ],
+   [
+    0.95,
+    0.579250720461095,
+    0.9888059701492538
+   ],
+   [
+    0.99,
+    0.5230547550432276,
+    0.9889807162534435
+   ]
+  ],
+  "reliability_covered": [
+   [
+    2,
+    8,
+    0.27375000000000005,
+    0.625
+   ],
+   [
+    3,
+    43,
+    0.3548837209302327,
+    0.6511627906976745
+   ],
+   [
+    4,
+    58,
+    0.435,
+    0.6896551724137931
+   ],
+   [
+    5,
+    69,
+    0.5471014492753625,
+    0.5942028985507246
+   ],
+   [
+    6,
+    111,
+    0.6497297297297296,
+    0.5495495495495496
+   ],
+   [
+    7,
+    86,
+    0.7433720930232559,
+    0.6395348837209303
+   ],
+   [
+    8,
+    102,
+    0.8489215686274505,
+    0.8725490196078431
+   ],
+   [
+    9,
+    844,
+    0.9913625592417081,
+    0.9988151658767772
+   ]
+  ],
+  "ece_covered": 0.04717638152914332
+ },
+ "test/R3": {
+  "round": "R3",
+  "split": "test",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R2 with every candidate list reversed, as an option-order check; it lifted address selection, so order became a lever: reversed puts the longest runs of lines first",
+   "state": "layout_text",
+   "order": "reverse",
+   "wording": {
+    "company": "Which candidate is the name of the business that issued this receipt, exactly as printed? When the receipt prints a registered company name (usually ending in SDN BHD, S/B, BHD or BERHAD), that registered name is the answer, even if a shop brand or outlet name is printed more prominently. Leave out registration numbers in brackets. Not a person's name, the cashier, the customer, or the mall.",
+    "date": "Which candidate is the date of this purchase, the day the receipt was issued? Not a date printed in a promotion, a membership expiry or a return-policy deadline.",
+    "address": "Which candidate is the full postal address of the business that issued this receipt, as printed near the top: all of its lines in order, from the building or street line through the postcode, city and state? Leave out the business name, registration or GST numbers, and telephone or fax lines.",
+    "total": "Which amount is the final total of this receipt: what the customer had to pay after tax, discounts and rounding? Not the subtotal before tax, the tax or GST amount, the cash handed over, or the change given back."
+   },
+   "selectable": true
+  },
+  "receipts": 347,
+  "model": "jev-1.13.0",
+  "duckjev": "0.1.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 01:47 UTC",
+  "seconds": 3.045332676032558,
+  "usage": {
+   "rows": 347,
+   "deduped": 0,
+   "cache_hits": 0,
+   "cache_misses": 347,
+   "requests": 347,
+   "input_tokens": 2082469,
+   "output_tokens": 1822006,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.08746369799999999
+  },
+  "receipts_per_second": 113.94485821892852,
+  "input_tokens_per_request": 6001.3515850144095,
+  "usd_per_1k_receipts": 0.25205676657060516,
+  "rerun_seconds": 0.0873554921709001,
+  "rerun_usage": {
+   "rows": 347,
+   "deduped": 0,
+   "cache_hits": 347,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "fields": {
+   "address": {
+    "field": "address",
+    "n": 347,
+    "coverage": 0.8472622478386167,
+    "coverage_loose": 0.9423631123919308,
+    "exact": 0.6743515850144092,
+    "exact_loose": 0.6743515850144092,
+    "n_covered": 294,
+    "selection": 0.7959183673469388,
+    "selection_loose": 0.7155963302752294,
+    "none_rate": 0.12103746397694524,
+    "none_when_covered": 0.003401360544217687,
+    "n_uncovered": 53,
+    "uncovered_none": 41,
+    "uncovered_near": 0,
+    "uncovered_other": 12,
+    "mean_candidates": 104.15561959654178,
+    "max_candidates": 105
+   },
+   "all": {
+    "field": "all",
+    "n": 1388,
+    "coverage": 0.9517291066282421,
+    "coverage_loose": 0.9776657060518732,
+    "exact": 0.7752161383285303,
+    "exact_loose": 0.7752161383285303,
+    "n_covered": 1321,
+    "selection": 0.8145344436033308,
+    "selection_loose": 0.7929255711127488,
+    "none_rate": 0.09798270893371758,
+    "none_when_covered": 0.06207418622255867,
+    "n_uncovered": 67,
+    "uncovered_none": 54,
+    "uncovered_near": 0,
+    "uncovered_other": 13,
+    "mean_candidates": 37.15201729106628,
+    "max_candidates": 105
+   },
+   "company": {
+    "field": "company",
+    "n": 347,
+    "coverage": 0.9740634005763689,
+    "coverage_loose": 0.9827089337175793,
+    "exact": 0.8069164265129684,
+    "exact_loose": 0.8069164265129684,
+    "n_covered": 338,
+    "selection": 0.8284023668639053,
+    "selection_loose": 0.8211143695014663,
+    "none_rate": 0.025936599423631124,
+    "none_when_covered": 0.0029585798816568047,
+    "n_uncovered": 9,
+    "uncovered_none": 8,
+    "uncovered_near": 0,
+    "uncovered_other": 1,
+    "mean_candidates": 34.80115273775216,
+    "max_candidates": 39
+   },
+   "date": {
+    "field": "date",
+    "n": 347,
+    "coverage": 0.9884726224783862,
+    "coverage_loose": 0.9884726224783862,
+    "exact": 0.9048991354466859,
+    "exact_loose": 0.9048991354466859,
+    "n_covered": 343,
+    "selection": 0.9154518950437318,
+    "selection_loose": 0.9154518950437318,
+    "none_rate": 0.0893371757925072,
+    "none_when_covered": 0.07871720116618076,
+    "n_uncovered": 4,
+    "uncovered_none": 4,
+    "uncovered_near": 0,
+    "uncovered_other": 0,
+    "mean_candidates": 1.043227665706052,
+    "max_candidates": 3
+   },
+   "total": {
+    "field": "total",
+    "n": 347,
+    "coverage": 0.9971181556195965,
+    "coverage_loose": 0.9971181556195965,
+    "exact": 0.7146974063400576,
+    "exact_loose": 0.7146974063400576,
+    "n_covered": 346,
+    "selection": 0.7167630057803468,
+    "selection_loose": 0.7167630057803468,
+    "none_rate": 0.15561959654178675,
+    "none_when_covered": 0.1531791907514451,
+    "n_uncovered": 1,
+    "uncovered_none": 1,
+    "uncovered_near": 0,
+    "uncovered_other": 0,
+    "mean_candidates": 8.60806916426513,
+    "max_candidates": 25
+   }
+  },
+  "record_all_fields_exact": 0.3256484149855908,
+  "reliability": [
+   [
+    8,
+    1252,
+    0.7999999999999818,
+    0.8594249201277955
+   ]
+  ],
+  "ece": 0.059424920127813634,
+  "thresholds": [
+   [
+    0.5,
+    0.9020172910662824,
+    0.8594249201277955
+   ],
+   [
+    0.8,
+    0.9020172910662824,
+    0.8594249201277955
+   ],
+   [
+    0.9,
+    0.0,
+    null
+   ],
+   [
+    0.95,
+    0.0,
+    null
+   ],
+   [
+    0.99,
+    0.0,
+    null
+   ]
+  ],
+  "reliability_covered": [
+   [
+    8,
+    1239,
+    0.7999999999999822,
+    0.8684422921711057
+   ]
+  ],
+  "ece_covered": 0.06844229217112352
+ }
+}

@@ -1,6 +1,7 @@
 # duckjev — state at hand-off and what comes next
 
-Written 2026-09-24 13:20 PDT by the Claude Fable 5.1 session that ran the build.
+Written 2026-09-24 13:20 PDT by the Claude Fable 5.1 session that ran the build;
+§1.1 and §3.1 updated the same day by the Claude Opus 5.5 session that built `jev_extract`.
 Read `docs/HANDOFF.md` first: it is the original build spec and still describes the
 package design, the verified Jev API contract, the DuckDB UDF facts, and the repo
 conventions. This file says what actually shipped, what the numbers mean, and the
@@ -22,11 +23,34 @@ Tier one, complete against HANDOFF §7:
 - Benchmark script `bench/banking77.py` with `bench/banking77_criteria.json` (77 one-line
   glosses), results in `docs/results/banking77.md`, headline numbers in the README.
 
+Then `jev_extract` (§3.1), in PR #2 on branch `jev-extract`; see §1.1.
+
 Deviations from HANDOFF forced by DuckDB 1.5.5 or the data (all recorded in PR #1):
 `numpy` is a runtime dependency; types come from `duckdb.sqltypes`; NULL handling is
 `'special'`; the soft group-by is written `UNNEST(...) AS u(e)`; data is
 `mteb/banking77` `test.jsonl` (3,080 rows; the parquet has 3,076); Markdown is
 excluded from `ruff format`.
+
+## 1.1 `jev_extract` (PR #2, 2026-09-24)
+
+- `jev_extract(state, fields_json)` returns `MAP(VARCHAR, STRUCT(value, p, p_none,
+  confidence, n_candidates, probabilities))`. Each row is one fused request with one
+  Choice per field over that row's own candidates plus `none`. Candidates are
+  stripped, deduped in order and capped at 254 (more raises).
+- Fields with no candidates are not asked; a row with no candidates at all sends no
+  request.
+- Macros: `jev_field(instructions, candidates[, none])`, `jev_money_spans`,
+  `jev_date_spans`, `jev_line_windows(lines, k)`.
+- 60 offline tests (17 new).
+- Benchmark `bench/sroie.py` on ICDAR 2019 SROIE receipts (`rth/sroie-2019-v2`,
+  626 train as dev, 347 test held out). Results are in `docs/results/sroie.md`,
+  generated from the committed run log `docs/results/sroie_runs.json`.
+- Held-out test, 347 receipts, round R3:
+  - candidate coverage 95.2%, exact 92.9%, selection given coverage 97.6%;
+  - all four fields exact on 73.5% of receipts (baseline 46.4%);
+  - $0.25 per 1,000 receipts, 114 receipts/s;
+  - ECE 0.020 on covered fields.
+- Total live spend for all rounds: $1.11.
 
 ## 2. The numbers and what they mean
 
@@ -63,15 +87,32 @@ per the classification-using-confidence cookbook), and re-measure.
 
 ## 3. Next milestones, in priority order
 
-### 3.1 `jev_extract(state, candidates_json)` — select, don't generate
-The strongest follow-on and the pattern that scales to large-scale extraction. Code
-proposes candidate spans (`regexp_extract_all`, date/money/id patterns, a
-dictionary); Jev picks per field from the candidates plus a `none` option; result is
-a STRUCT of `(value, p)` per field. Implement as one fused `jev()` request per row
-with one Choice per field. Benchmark on a public receipts or invoices corpus
-(field-level exact match and coverage of the candidate builder, reported
-separately). In the sibling email-poc repo this pattern scored 50/52 exact when the
-candidate set covered the value, so candidate coverage is the metric to design for.
+### 3.1 `jev_extract` — done (PR #2); what the rounds taught
+
+Shipped as `jev_extract(state, fields_json)`; numbers in §1.1 and
+`docs/results/sroie.md`. What the six dev rounds showed, and the next levers:
+
+- **Wording that names the exclusions** lifted company selection from 67% to 90%.
+  The plain question picked the printed line with its registration number, and the
+  address question picked the address with the company line in front.
+- **Candidate order matters for nested spans.** Line windows nest (a 3-line window
+  contains 2-line ones). Offering the longest first lifted address selection from 93%
+  to 97%, while reversing the regex hit lists moved amounts and dates by 0.2 points at most. Make
+  longest-first the default for window builders (a `jev_line_windows` option), and
+  check order on any new nested builder.
+- **Company has a label ceiling on SROIE, not a reading one.** R3 ("the registered
+  name wins") and R5 ("the first-printed name wins") each got about 90%. They swap 44
+  dev receipts for 45: Jev follows either rule, and the gold uses both. On a
+  customer's corpus, state their convention in the question.
+- **`none` never fired.** Every SROIE receipt has all four fields. Measuring the
+  `none` option and `p_none` calibration needs a corpus with optional fields
+  (invoices with and without PO numbers, due dates, tax ids).
+- **Cost lever.** About 6,000 input tokens per request, most of it the ~104 address
+  windows. Two stages (pick the first address line, then the block length), or a
+  cheap Noul pre-filter on lines, should cut that several-fold. Measure against R3.
+- **Coverage lever.** Address coverage is 84.7% strict and 94.2% loose. The gap is
+  gold punctuation, not missing lines, so the builders are not the constraint here.
+  Next corpus: invoices (FATURA, or a Kleister set), where the builders will matter.
 
 ### 3.2 Round two on Banking77 (cheap, ~$0.30)
 Criteria tightening on confusable pairs; two-level Choice (division → intent) with

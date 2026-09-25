@@ -35,10 +35,23 @@ SCORE_SQL_TYPE = duckdb.struct_type(
         "legend": duckdb.map_type(T.VARCHAR, T.VARCHAR),
     }
 )
+EXTRACT_SQL_TYPE = duckdb.map_type(
+    T.VARCHAR,
+    duckdb.struct_type(
+        {
+            "value": T.VARCHAR,
+            "p": T.DOUBLE,
+            "p_none": T.DOUBLE,
+            "confidence": T.DOUBLE,
+            "n_candidates": T.INTEGER,
+            "probabilities": PROB_MAP,
+        }
+    ),
+)
 
 #: UDFs registered by register(); the typed noul arities are exposed through
 #: an overloaded ``jev_noul`` macro because DuckDB does not overload Python UDFs.
-UDF_NAMES = ("jev", "jev_noul2", "jev_noul3", "jev_choice", "jev_score")
+UDF_NAMES = ("jev", "jev_noul2", "jev_noul3", "jev_choice", "jev_score", "jev_extract")
 
 
 def _column(arr: pa.Array | pa.ChunkedArray, n: int) -> list[Any]:
@@ -83,6 +96,30 @@ def _judge_rows(
     return out
 
 
+def _extract_rows(client: JevClient, states: list[Any], specs: list[Any]) -> pa.Array:
+    """One fused request per row: a Choice per field over that row's own candidates."""
+    n = len(states)
+    parsed: dict[str, tuple[marshal.Questions, list[marshal.ExtractField]]] = {}
+    fields: list[list[marshal.ExtractField] | None] = [None] * n
+    rows: list[int] = []
+    batch: list[tuple[Any, marshal.Questions]] = []
+    for i in range(n):
+        state, spec = states[i], specs[i]
+        if state is None or not str(state).strip() or spec is None:
+            continue
+        if spec not in parsed:
+            parsed[spec] = marshal.extract_questions(spec)
+        questions, fields[i] = parsed[spec]
+        if questions:  # a row whose fields all lack candidates needs no request
+            rows.append(i)
+            batch.append((state, questions))
+    answers: list[dict[str, Any] | None] = [None] * n
+    if batch:
+        for i, a in zip(rows, client.judge(batch), strict=True):
+            answers[i] = a
+    return marshal.extract_array(fields, answers)
+
+
 def _one(answers: list[dict[str, Any] | None]) -> list[dict[str, Any] | None]:
     return [None if a is None else a[marshal.QID] for a in answers]
 
@@ -124,12 +161,17 @@ def make_udfs(client: JevClient) -> dict[str, Callable[..., pa.Array]]:
 
         return marshal.score_array(_one(_judge_rows(client, states, build, [ins, lev])))
 
+    def jev_extract(state: pa.Array, spec_json: pa.Array) -> pa.Array:
+        states, specs = _columns([state, spec_json])
+        return _extract_rows(client, states, specs)
+
     return {
         "jev": jev,
         "jev_noul2": jev_noul2,
         "jev_noul3": jev_noul3,
         "jev_choice": jev_choice,
         "jev_score": jev_score,
+        "jev_extract": jev_extract,
     }
 
 
@@ -139,6 +181,7 @@ _SIGNATURES: dict[str, tuple[list[duckdb.sqltype], duckdb.sqltype]] = {
     "jev_noul3": ([T.VARCHAR, T.VARCHAR, T.VARCHAR], T.DOUBLE),
     "jev_choice": ([T.VARCHAR, T.VARCHAR, T.VARCHAR], CHOICE_SQL_TYPE),
     "jev_score": ([T.VARCHAR, T.VARCHAR, T.VARCHAR], SCORE_SQL_TYPE),
+    "jev_extract": ([T.VARCHAR, T.VARCHAR], EXTRACT_SQL_TYPE),
 }
 
 

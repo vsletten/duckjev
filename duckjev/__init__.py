@@ -1,8 +1,9 @@
 """duckjev: semantic operators for DuckDB backed by TypeSafe's Jev.
 
 Usage: ``duckjev.register(con)`` installs ``jev()``, ``jev_noul()``,
-``jev_choice()``, ``jev_score()``, the ``sem_where`` / ``expected_count`` macros
-and the answer cache on a DuckDB connection.
+``jev_choice()``, ``jev_score()``, ``jev_extract()``, the ``sem_where`` /
+``expected_count`` / candidate-builder macros and the answer cache on a DuckDB
+connection.
 """
 
 from __future__ import annotations
