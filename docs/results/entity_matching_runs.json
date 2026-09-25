@@ -1,0 +1,5260 @@
+{
+ "coverage": {
+  "legacy": true,
+  "rows": [
+   {
+    "corpus": "abt",
+    "block": "lower(split_part(name, ' ', 1))",
+    "left_rows": 1081,
+    "right_rows": 1092,
+    "cross_pairs": 1180452,
+    "blocked_pairs": 61272,
+    "gold_pairs": 1028,
+    "gold_pairs_blocked": 953,
+    "gold_recall": 0.9270428015564203
+   },
+   {
+    "corpus": "dblp",
+    "block": "year",
+    "left_rows": 2616,
+    "right_rows": 2294,
+    "cross_pairs": 6001104,
+    "blocked_pairs": 601284,
+    "gold_pairs": 2220,
+    "gold_pairs_blocked": 2220,
+    "gold_recall": 1.0
+   }
+  ]
+ },
+ "abt/dev/R0": {
+  "corpus": "abt",
+  "round": "R0",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "baseline: the plain question over the JSON pair state",
+   "wording": "plain",
+   "layout": "json",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two product listings describe the same product?",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:28 UTC",
+  "seconds": 12.768151944037527,
+  "usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 0,
+   "cache_misses": 1912,
+   "requests": 1912,
+   "input_tokens": 814532,
+   "output_tokens": 38240,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.034210344
+  },
+  "pairs_per_second": 150.06087086038585,
+  "input_tokens_per_request": 426.010460251046,
+  "usd_per_1k_pairs": 0.01785508559498956,
+  "rerun_seconds": 0.01838385104201734,
+  "rerun_usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 1912,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 1916,
+  "pairs": 1916,
+  "positives": 206,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 224,
+   "true_positives": 200,
+   "precision": 0.8928571428571429,
+   "recall": 0.970873786407767,
+   "f1": 0.930232558139535
+  },
+  "best_dev_threshold": {
+   "threshold": 0.45,
+   "predicted": 230,
+   "true_positives": 203,
+   "precision": 0.8826086956521739,
+   "recall": 0.9854368932038835,
+   "f1": 0.9311926605504587
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 724,
+    "true_positives": 206,
+    "precision": 0.2845303867403315,
+    "recall": 1.0,
+    "f1": 0.443010752688172
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 455,
+    "true_positives": 206,
+    "precision": 0.45274725274725275,
+    "recall": 1.0,
+    "f1": 0.6232980332829047
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 354,
+    "true_positives": 206,
+    "precision": 0.5819209039548022,
+    "recall": 1.0,
+    "f1": 0.7357142857142857
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 300,
+    "true_positives": 206,
+    "precision": 0.6866666666666666,
+    "recall": 1.0,
+    "f1": 0.8142292490118578
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 278,
+    "true_positives": 205,
+    "precision": 0.737410071942446,
+    "recall": 0.9951456310679612,
+    "f1": 0.8471074380165288
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 261,
+    "true_positives": 205,
+    "precision": 0.7854406130268199,
+    "recall": 0.9951456310679612,
+    "f1": 0.8779443254817987
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 246,
+    "true_positives": 204,
+    "precision": 0.8292682926829268,
+    "recall": 0.9902912621359223,
+    "f1": 0.9026548672566372
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 235,
+    "true_positives": 203,
+    "precision": 0.8638297872340426,
+    "recall": 0.9854368932038835,
+    "f1": 0.9206349206349206
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 230,
+    "true_positives": 203,
+    "precision": 0.8826086956521739,
+    "recall": 0.9854368932038835,
+    "f1": 0.9311926605504587
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 224,
+    "true_positives": 200,
+    "precision": 0.8928571428571429,
+    "recall": 0.970873786407767,
+    "f1": 0.930232558139535
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 222,
+    "true_positives": 199,
+    "precision": 0.8963963963963963,
+    "recall": 0.9660194174757282,
+    "f1": 0.9299065420560747
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 216,
+    "true_positives": 196,
+    "precision": 0.9074074074074074,
+    "recall": 0.9514563106796117,
+    "f1": 0.9289099526066351
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 206,
+    "true_positives": 190,
+    "precision": 0.9223300970873787,
+    "recall": 0.9223300970873787,
+    "f1": 0.9223300970873787
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 202,
+    "true_positives": 187,
+    "precision": 0.9257425742574258,
+    "recall": 0.9077669902912622,
+    "f1": 0.9166666666666666
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 195,
+    "true_positives": 184,
+    "precision": 0.9435897435897436,
+    "recall": 0.8932038834951457,
+    "f1": 0.9177057356608479
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 184,
+    "true_positives": 175,
+    "precision": 0.9510869565217391,
+    "recall": 0.8495145631067961,
+    "f1": 0.8974358974358975
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 151,
+    "true_positives": 144,
+    "precision": 0.9536423841059603,
+    "recall": 0.6990291262135923,
+    "f1": 0.8067226890756302
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 102,
+    "true_positives": 102,
+    "precision": 1.0,
+    "recall": 0.49514563106796117,
+    "f1": 0.6623376623376623
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 25,
+    "true_positives": 25,
+    "precision": 1.0,
+    "recall": 0.12135922330097088,
+    "f1": 0.21645021645021648
+   }
+  ],
+  "auroc": 0.9975302333503662,
+  "expected_count": 278.5499999999998,
+  "expected_stderr": 10.021471947772895,
+  "expected_within_2se": false,
+  "ece": 0.048971816283924954,
+  "reliability": [
+   [
+    0,
+    1461,
+    0.02960985626283379,
+    0.0
+   ],
+   [
+    1,
+    155,
+    0.13374193548387106,
+    0.0
+   ],
+   [
+    2,
+    39,
+    0.23769230769230773,
+    0.02564102564102564
+   ],
+   [
+    3,
+    26,
+    0.3438461538461538,
+    0.07692307692307693
+   ],
+   [
+    4,
+    11,
+    0.45272727272727276,
+    0.2727272727272727
+   ],
+   [
+    5,
+    8,
+    0.565,
+    0.5
+   ],
+   [
+    6,
+    14,
+    0.6335714285714286,
+    0.6428571428571429
+   ],
+   [
+    7,
+    18,
+    0.7494444444444445,
+    0.6666666666666666
+   ],
+   [
+    8,
+    82,
+    0.8495121951219513,
+    0.8902439024390244
+   ],
+   [
+    9,
+    102,
+    0.9297058823529408,
+    1.0
+   ]
+  ],
+  "false_negatives": [
+   [
+    "491",
+    "736",
+    1,
+    0.23,
+    "{\"a\":{\"name\":\"canon black eos rebel xsi digital slr camera xsireb1855\",\"description\":\"canon black eos rebel xsi digital slr camera xsireb1855 12.2 megapixel digic iii image processor extensive noise reduction technology auto optimization 3."
+   ],
+   [
+    "902",
+    "960",
+    1,
+    0.34,
+    "{\"a\":{\"name\":\"canon powershot black digital camera sx110isb\",\"description\":\"canon powershot sx110 is black digital camera sx110isb 9.0 megapixel 10x optical zoom lens with optical image stabilizer technology 3.0 ' lcd display digic iii imag"
+   ],
+   [
+    "302",
+    "426",
+    1,
+    0.39,
+    "{\"a\":{\"name\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\",\"description\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct drive motor 1200 rpm powerful spin senseclean system 9 washing "
+   ],
+   [
+    "30",
+    "41",
+    1,
+    0.48,
+    "{\"a\":{\"name\":\"sanus euro foundations satellite speaker stand efsats\",\"description\":\"sanus euro foundations satellite speaker stand efsats sturdy base adjustable pillar and floor spikes includes three different speaker mounting methods conte"
+   ],
+   [
+    "472",
+    "684",
+    1,
+    0.49,
+    "{\"a\":{\"name\":\"yamaha 7.2 channel black digital home theater receiver rxv863bk\",\"description\":\"yamaha 7.2 channel black digital home theater receiver rxv863bk 4 scene buttons xm ready with xm hd surround sirius satellite radio ready ypao ipo"
+   ]
+  ],
+  "false_positives": [
+   [
+    "690",
+    "783",
+    0,
+    0.86,
+    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30757ss\",\"description\":\"lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview wi"
+   ],
+   [
+    "19",
+    "40",
+    0,
+    0.85,
+    "{\"a\":{\"name\":\"omnimount wall speaker mount 20wlbk\",\"description\":\"omnimount wall speaker mount 20wlbk stainless steel shafts and all necessary hardware included supports speakers up to 20 lbs . sold as single black finish\",\"price\":\"39.95\"},"
+   ],
+   [
+    "297",
+    "453",
+    0,
+    0.85,
+    "{\"a\":{\"name\":\"lg dle3733w white xl capacity electric dryer dle3733wh\",\"description\":\"lg dle3733w white xl capacity electric dryer dle3733wh 7.3 cu . ft. capacity lodecibel quiet system 7 drying programs 5 temperature levels upfront electron"
+   ],
+   [
+    "673",
+    "782",
+    0,
+    0.85,
+    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30453ss\",\"description\":\"lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop eleme"
+   ],
+   [
+    "673",
+    "786",
+    0,
+    0.85,
+    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30453ss\",\"description\":\"lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop eleme"
+   ]
+  ]
+ },
+ "dblp/dev/R0": {
+  "corpus": "dblp",
+  "round": "R0",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "baseline: the plain question over the JSON pair state",
+   "wording": "plain",
+   "layout": "json",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two records describe the same publication?",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:29 UTC",
+  "seconds": 18.60466629313305,
+  "usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2,
+   "cache_misses": 2451,
+   "requests": 2451,
+   "input_tokens": 923280,
+   "output_tokens": 49020,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.03877776
+  },
+  "pairs_per_second": 132.9236418990638,
+  "input_tokens_per_request": 376.6952264381885,
+  "usd_per_1k_pairs": 0.015680452891225233,
+  "rerun_seconds": 0.017776683904230595,
+  "rerun_usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2453,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 2473,
+  "pairs": 2473,
+  "positives": 444,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 477,
+   "true_positives": 444,
+   "precision": 0.9308176100628931,
+   "recall": 1.0,
+   "f1": 0.9641693811074918
+  },
+  "best_dev_threshold": {
+   "threshold": 0.7,
+   "predicted": 457,
+   "true_positives": 441,
+   "precision": 0.9649890590809628,
+   "recall": 0.9932432432432432,
+   "f1": 0.978912319644839
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 833,
+    "true_positives": 444,
+    "precision": 0.5330132052821128,
+    "recall": 1.0,
+    "f1": 0.6953797963978073
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 649,
+    "true_positives": 444,
+    "precision": 0.6841294298921418,
+    "recall": 1.0,
+    "f1": 0.8124428179322963
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 597,
+    "true_positives": 444,
+    "precision": 0.7437185929648241,
+    "recall": 1.0,
+    "f1": 0.8530259365994236
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 566,
+    "true_positives": 444,
+    "precision": 0.784452296819788,
+    "recall": 1.0,
+    "f1": 0.8792079207920792
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 538,
+    "true_positives": 444,
+    "precision": 0.8252788104089219,
+    "recall": 1.0,
+    "f1": 0.9042769857433809
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 522,
+    "true_positives": 444,
+    "precision": 0.8505747126436781,
+    "recall": 1.0,
+    "f1": 0.9192546583850931
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 508,
+    "true_positives": 444,
+    "precision": 0.8740157480314961,
+    "recall": 1.0,
+    "f1": 0.9327731092436975
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 493,
+    "true_positives": 444,
+    "precision": 0.9006085192697769,
+    "recall": 1.0,
+    "f1": 0.9477054429028815
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 484,
+    "true_positives": 444,
+    "precision": 0.9173553719008265,
+    "recall": 1.0,
+    "f1": 0.956896551724138
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 477,
+    "true_positives": 444,
+    "precision": 0.9308176100628931,
+    "recall": 1.0,
+    "f1": 0.9641693811074918
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 471,
+    "true_positives": 444,
+    "precision": 0.9426751592356688,
+    "recall": 1.0,
+    "f1": 0.9704918032786886
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 465,
+    "true_positives": 444,
+    "precision": 0.9548387096774194,
+    "recall": 1.0,
+    "f1": 0.9768976897689768
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 462,
+    "true_positives": 442,
+    "precision": 0.9567099567099567,
+    "recall": 0.9954954954954955,
+    "f1": 0.9757174392935982
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 457,
+    "true_positives": 441,
+    "precision": 0.9649890590809628,
+    "recall": 0.9932432432432432,
+    "f1": 0.978912319644839
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 448,
+    "true_positives": 434,
+    "precision": 0.96875,
+    "recall": 0.9774774774774775,
+    "f1": 0.9730941704035874
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 421,
+    "true_positives": 413,
+    "precision": 0.9809976247030879,
+    "recall": 0.9301801801801802,
+    "f1": 0.9549132947976879
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 391,
+    "true_positives": 389,
+    "precision": 0.9948849104859335,
+    "recall": 0.8761261261261262,
+    "f1": 0.9317365269461078
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 329,
+    "true_positives": 327,
+    "precision": 0.993920972644377,
+    "recall": 0.7364864864864865,
+    "f1": 0.8460543337645536
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 258,
+    "true_positives": 257,
+    "precision": 0.9961240310077519,
+    "recall": 0.5788288288288288,
+    "f1": 0.7321937321937322
+   }
+  ],
+  "auroc": 0.9991397262220327,
+  "expected_count": 511.3999999999892,
+  "expected_stderr": 10.23873039004344,
+  "expected_within_2se": false,
+  "ece": 0.04439951475940157,
+  "reliability": [
+   [
+    0,
+    1824,
+    0.02254934210526338,
+    0.0
+   ],
+   [
+    1,
+    83,
+    0.1354216867469879,
+    0.0
+   ],
+   [
+    2,
+    44,
+    0.23863636363636376,
+    0.0
+   ],
+   [
+    3,
+    29,
+    0.34448275862068967,
+    0.0
+   ],
+   [
+    4,
+    16,
+    0.44125000000000003,
+    0.0
+   ],
+   [
+    5,
+    12,
+    0.5416666666666667,
+    0.0
+   ],
+   [
+    6,
+    8,
+    0.6475000000000001,
+    0.375
+   ],
+   [
+    7,
+    36,
+    0.7597222222222222,
+    0.7777777777777778
+   ],
+   [
+    8,
+    92,
+    0.8552173913043476,
+    0.9347826086956522
+   ],
+   [
+    9,
+    329,
+    0.9537082066869312,
+    0.993920972644377
+   ]
+  ],
+  "false_negatives": [
+   [
+    "155",
+    "659",
+    1,
+    0.61,
+    "{\"a\":{\"title\":\"data mining : practical machine learning tools and techniques - book review\",\"authors\":\"james geller\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"data mining : practical machine learning tools and techniques with jav"
+   ],
+   [
+    "2524",
+    "1542",
+    1,
+    0.62,
+    "{\"a\":{\"title\":\"indexing multimedia databases ( tutorial )\",\"authors\":\"christos faloutsos\",\"venue\":\"sigmod conference\",\"year\":\"1995\"},\"b\":{\"title\":\"indexing multimedia databases\",\"authors\":\"christos faloutsos\",\"venue\":\"international conferen"
+   ],
+   [
+    "2113",
+    "391",
+    1,
+    0.65,
+    "{\"a\":{\"title\":\"data management in ecommerce : the good , the bad , and the ugly\",\"authors\":\"avigdor gal\",\"venue\":\"sigmod conference\",\"year\":\"2000\"},\"b\":{\"title\":\"data management in ecommerce ( tutorial session ) : the good , the bad , and t"
+   ],
+   [
+    "1541",
+    "255",
+    1,
+    0.7,
+    "{\"a\":{\"title\":\"data mining techniques\",\"authors\":\"jiawei han\",\"venue\":\"sigmod conference\",\"year\":\"1996\"},\"b\":{\"title\":\"data mining techniques\",\"authors\":\"jiawei han\",\"venue\":\"international conference on management of data\",\"year\":\"1996\"}}"
+   ],
+   [
+    "1058",
+    "43",
+    1,
+    0.71,
+    "{\"a\":{\"title\":\"in-memory data management for consumer transactions the times-ten approach\",\"authors\":\"times-ten team\",\"venue\":\"sigmod conference\",\"year\":\"1999\"},\"b\":{\"title\":\"in-memory data management for consumer transactions the timesten "
+   ]
+  ],
+  "false_positives": [
+   [
+    "2470",
+    "343",
+    0,
+    0.95,
+    "{\"a\":{\"title\":\"editorial\",\"authors\":\"richard t. snodgrass\",\"venue\":\"acm trans . database syst .\",\"year\":\"2001\"},\"b\":{\"title\":\"editorial\",\"authors\":\"richard snodgrass\",\"venue\":\"acm transactions on database systems ( tods )\",\"year\":\"2001\"}}"
+   ],
+   [
+    "942",
+    "669",
+    0,
+    0.93,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "1899",
+    "512",
+    0,
+    0.84,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book reviews\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "386",
+    "619",
+    0,
+    0.84,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book reviews\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "705",
+    "512",
+    0,
+    0.84,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book reviews\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ]
+  ]
+ },
+ "abt/dev/R1": {
+  "corpus": "abt",
+  "round": "R1",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "colleague-style question that says what counts as the same and what does not",
+   "wording": "colleague",
+   "layout": "json",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two listings, from two different retailers, describe the same product: the same model, not merely the same brand or product line? Different wording, a missing description or price, and a different price still mean the same product when the model number or model name matches. A different model number, a different size, colour or capacity variant, or an accessory, part or bundle for the product is a different product.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:29 UTC",
+  "seconds": 12.254458107985556,
+  "usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 0,
+   "cache_misses": 1912,
+   "requests": 1912,
+   "input_tokens": 956020,
+   "output_tokens": 38240,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.04015284
+  },
+  "pairs_per_second": 156.35126279075925,
+  "input_tokens_per_request": 500.010460251046,
+  "usd_per_1k_pairs": 0.02095659707724426,
+  "rerun_seconds": 0.01663538021966815,
+  "rerun_usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 1912,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 1916,
+  "pairs": 1916,
+  "positives": 206,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 212,
+   "true_positives": 194,
+   "precision": 0.9150943396226415,
+   "recall": 0.941747572815534,
+   "f1": 0.9282296650717704
+  },
+  "best_dev_threshold": {
+   "threshold": 0.35,
+   "predicted": 222,
+   "true_positives": 200,
+   "precision": 0.9009009009009009,
+   "recall": 0.970873786407767,
+   "f1": 0.9345794392523364
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 337,
+    "true_positives": 206,
+    "precision": 0.6112759643916914,
+    "recall": 1.0,
+    "f1": 0.7587476979742174
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 269,
+    "true_positives": 205,
+    "precision": 0.7620817843866171,
+    "recall": 0.9951456310679612,
+    "f1": 0.8631578947368422
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 247,
+    "true_positives": 202,
+    "precision": 0.8178137651821862,
+    "recall": 0.9805825242718447,
+    "f1": 0.891832229580574
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 237,
+    "true_positives": 202,
+    "precision": 0.8523206751054853,
+    "recall": 0.9805825242718447,
+    "f1": 0.9119638826185101
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 234,
+    "true_positives": 202,
+    "precision": 0.8632478632478633,
+    "recall": 0.9805825242718447,
+    "f1": 0.9181818181818182
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 226,
+    "true_positives": 201,
+    "precision": 0.8893805309734514,
+    "recall": 0.9757281553398058,
+    "f1": 0.9305555555555556
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 222,
+    "true_positives": 200,
+    "precision": 0.9009009009009009,
+    "recall": 0.970873786407767,
+    "f1": 0.9345794392523364
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 219,
+    "true_positives": 198,
+    "precision": 0.9041095890410958,
+    "recall": 0.9611650485436893,
+    "f1": 0.9317647058823529
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 214,
+    "true_positives": 195,
+    "precision": 0.9112149532710281,
+    "recall": 0.9466019417475728,
+    "f1": 0.9285714285714286
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 212,
+    "true_positives": 194,
+    "precision": 0.9150943396226415,
+    "recall": 0.941747572815534,
+    "f1": 0.9282296650717704
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 209,
+    "true_positives": 193,
+    "precision": 0.9234449760765551,
+    "recall": 0.9368932038834952,
+    "f1": 0.9301204819277109
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 202,
+    "true_positives": 189,
+    "precision": 0.9356435643564357,
+    "recall": 0.9174757281553398,
+    "f1": 0.926470588235294
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 199,
+    "true_positives": 188,
+    "precision": 0.9447236180904522,
+    "recall": 0.912621359223301,
+    "f1": 0.928395061728395
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 193,
+    "true_positives": 184,
+    "precision": 0.9533678756476683,
+    "recall": 0.8932038834951457,
+    "f1": 0.9223057644110276
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 185,
+    "true_positives": 180,
+    "precision": 0.972972972972973,
+    "recall": 0.8737864077669902,
+    "f1": 0.9207161125319694
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 175,
+    "true_positives": 173,
+    "precision": 0.9885714285714285,
+    "recall": 0.8398058252427184,
+    "f1": 0.9081364829396326
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 161,
+    "true_positives": 161,
+    "precision": 1.0,
+    "recall": 0.7815533980582524,
+    "f1": 0.8773841961852862
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 139,
+    "true_positives": 139,
+    "precision": 1.0,
+    "recall": 0.6747572815533981,
+    "f1": 0.8057971014492754
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 85,
+    "true_positives": 85,
+    "precision": 1.0,
+    "recall": 0.41262135922330095,
+    "f1": 0.5841924398625429
+   }
+  ],
+  "auroc": 0.9983080679043888,
+  "expected_count": 229.8699999999996,
+  "expected_stderr": 7.541836646334876,
+  "expected_within_2se": false,
+  "ece": 0.024838204592902126,
+  "reliability": [
+   [
+    0,
+    1647,
+    0.017972070431087044,
+    0.0006071645415907711
+   ],
+   [
+    1,
+    32,
+    0.135,
+    0.09375
+   ],
+   [
+    2,
+    11,
+    0.2581818181818182,
+    0.09090909090909091
+   ],
+   [
+    3,
+    7,
+    0.34714285714285714,
+    0.42857142857142855
+   ],
+   [
+    4,
+    7,
+    0.43428571428571433,
+    0.5714285714285714
+   ],
+   [
+    5,
+    10,
+    0.5549999999999999,
+    0.5
+   ],
+   [
+    6,
+    9,
+    0.6566666666666666,
+    0.5555555555555556
+   ],
+   [
+    7,
+    18,
+    0.7505555555555555,
+    0.6111111111111112
+   ],
+   [
+    8,
+    36,
+    0.8530555555555555,
+    0.9444444444444444
+   ],
+   [
+    9,
+    139,
+    0.9493525179856107,
+    1.0
+   ]
+  ],
+  "false_negatives": [
+   [
+    "902",
+    "960",
+    1,
+    0.09,
+    "{\"a\":{\"name\":\"canon powershot black digital camera sx110isb\",\"description\":\"canon powershot sx110 is black digital camera sx110isb 9.0 megapixel 10x optical zoom lens with optical image stabilizer technology 3.0 ' lcd display digic iii imag"
+   ],
+   [
+    "491",
+    "736",
+    1,
+    0.11,
+    "{\"a\":{\"name\":\"canon black eos rebel xsi digital slr camera xsireb1855\",\"description\":\"canon black eos rebel xsi digital slr camera xsireb1855 12.2 megapixel digic iii image processor extensive noise reduction technology auto optimization 3."
+   ],
+   [
+    "832",
+    "49",
+    1,
+    0.12,
+    "{\"a\":{\"name\":\"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h\",\"description\":\"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h record up to 30 minutes of video on these write-once discs 1.4 gb storage capacity compatible with minidvd"
+   ],
+   [
+    "302",
+    "426",
+    1,
+    0.14,
+    "{\"a\":{\"name\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\",\"description\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct drive motor 1200 rpm powerful spin senseclean system 9 washing "
+   ],
+   [
+    "157",
+    "713",
+    1,
+    0.29,
+    "{\"a\":{\"name\":\"denon 5-disc cd auto changer black finish dcm290\",\"description\":\"denon 5-disc cd auto changer dcm290 cd-r/rw playback advanced multilevel noise shaping dac digital filter 3-mode random playback intelligent disc scan music cale"
+   ]
+  ],
+  "false_positives": [
+   [
+    "93",
+    "86",
+    0,
+    0.82,
+    "{\"a\":{\"name\":\"canon cyan photo ink cartridge cyan cli8pc\",\"description\":\"canon cyan photo ink cartridge cli8pc compatible with the pixma ip6600d printer\",\"price\":\"16.0\"},\"b\":{\"name\":\"canon cli-8c ink cartridge 0621b002\",\"description\":\"cyan\""
+   ],
+   [
+    "19",
+    "40",
+    0,
+    0.8,
+    "{\"a\":{\"name\":\"omnimount wall speaker mount 20wlbk\",\"description\":\"omnimount wall speaker mount 20wlbk stainless steel shafts and all necessary hardware included supports speakers up to 20 lbs . sold as single black finish\",\"price\":\"39.95\"},"
+   ],
+   [
+    "297",
+    "453",
+    0,
+    0.78,
+    "{\"a\":{\"name\":\"lg dle3733w white xl capacity electric dryer dle3733wh\",\"description\":\"lg dle3733w white xl capacity electric dryer dle3733wh 7.3 cu . ft. capacity lodecibel quiet system 7 drying programs 5 temperature levels upfront electron"
+   ],
+   [
+    "719",
+    "801",
+    0,
+    0.77,
+    "{\"a\":{\"name\":\"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh\",\"description\":\"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm ex"
+   ],
+   [
+    "690",
+    "783",
+    0,
+    0.76,
+    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30757ss\",\"description\":\"lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview wi"
+   ]
+  ]
+ },
+ "abt/dev/R2": {
+  "corpus": "abt",
+  "round": "R2",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R1 with the pair as labeled text lines instead of a JSON object",
+   "wording": "colleague",
+   "layout": "text",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two listings, from two different retailers, describe the same product: the same model, not merely the same brand or product line? Different wording, a missing description or price, and a different price still mean the same product when the model number or model name matches. A different model number, a different size, colour or capacity variant, or an accessory, part or bundle for the product is a different product.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:30 UTC",
+  "seconds": 13.124903762945905,
+  "usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 0,
+   "cache_misses": 1912,
+   "requests": 1912,
+   "input_tokens": 942672,
+   "output_tokens": 38240,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.039592224
+  },
+  "pairs_per_second": 145.98202277179598,
+  "input_tokens_per_request": 493.02928870292885,
+  "usd_per_1k_pairs": 0.020664000000000002,
+  "rerun_seconds": 0.015486686024814844,
+  "rerun_usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 1912,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 1916,
+  "pairs": 1916,
+  "positives": 206,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 215,
+   "true_positives": 198,
+   "precision": 0.9209302325581395,
+   "recall": 0.9611650485436893,
+   "f1": 0.9406175771971497
+  },
+  "best_dev_threshold": {
+   "threshold": 0.4,
+   "predicted": 219,
+   "true_positives": 200,
+   "precision": 0.91324200913242,
+   "recall": 0.970873786407767,
+   "f1": 0.9411764705882353
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 302,
+    "true_positives": 206,
+    "precision": 0.6821192052980133,
+    "recall": 1.0,
+    "f1": 0.8110236220472441
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 262,
+    "true_positives": 206,
+    "precision": 0.7862595419847328,
+    "recall": 1.0,
+    "f1": 0.8803418803418803
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 240,
+    "true_positives": 202,
+    "precision": 0.8416666666666667,
+    "recall": 0.9805825242718447,
+    "f1": 0.905829596412556
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 232,
+    "true_positives": 201,
+    "precision": 0.8663793103448276,
+    "recall": 0.9757281553398058,
+    "f1": 0.9178082191780822
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 228,
+    "true_positives": 200,
+    "precision": 0.8771929824561403,
+    "recall": 0.970873786407767,
+    "f1": 0.9216589861751152
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 225,
+    "true_positives": 200,
+    "precision": 0.8888888888888888,
+    "recall": 0.970873786407767,
+    "f1": 0.9280742459396751
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 220,
+    "true_positives": 200,
+    "precision": 0.9090909090909091,
+    "recall": 0.970873786407767,
+    "f1": 0.9389671361502346
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 219,
+    "true_positives": 200,
+    "precision": 0.91324200913242,
+    "recall": 0.970873786407767,
+    "f1": 0.9411764705882353
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 215,
+    "true_positives": 198,
+    "precision": 0.9209302325581395,
+    "recall": 0.9611650485436893,
+    "f1": 0.9406175771971497
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 215,
+    "true_positives": 198,
+    "precision": 0.9209302325581395,
+    "recall": 0.9611650485436893,
+    "f1": 0.9406175771971497
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 210,
+    "true_positives": 194,
+    "precision": 0.9238095238095239,
+    "recall": 0.941747572815534,
+    "f1": 0.9326923076923078
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 208,
+    "true_positives": 192,
+    "precision": 0.9230769230769231,
+    "recall": 0.9320388349514563,
+    "f1": 0.927536231884058
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 202,
+    "true_positives": 188,
+    "precision": 0.9306930693069307,
+    "recall": 0.912621359223301,
+    "f1": 0.9215686274509804
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 198,
+    "true_positives": 185,
+    "precision": 0.9343434343434344,
+    "recall": 0.8980582524271845,
+    "f1": 0.9158415841584159
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 192,
+    "true_positives": 182,
+    "precision": 0.9479166666666666,
+    "recall": 0.883495145631068,
+    "f1": 0.9145728643216081
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 182,
+    "true_positives": 172,
+    "precision": 0.945054945054945,
+    "recall": 0.8349514563106796,
+    "f1": 0.88659793814433
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 168,
+    "true_positives": 162,
+    "precision": 0.9642857142857143,
+    "recall": 0.7864077669902912,
+    "f1": 0.8663101604278075
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 143,
+    "true_positives": 141,
+    "precision": 0.986013986013986,
+    "recall": 0.6844660194174758,
+    "f1": 0.8080229226361031
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 88,
+    "true_positives": 88,
+    "precision": 1.0,
+    "recall": 0.42718446601941745,
+    "f1": 0.5986394557823129
+   }
+  ],
+  "auroc": 0.9977701129847272,
+  "expected_count": 226.06999999999903,
+  "expected_stderr": 7.124429801745529,
+  "expected_within_2se": false,
+  "ece": 0.021299582463465788,
+  "reliability": [
+   [
+    0,
+    1654,
+    0.015477629987908352,
+    0.0
+   ],
+   [
+    1,
+    30,
+    0.13366666666666668,
+    0.16666666666666666
+   ],
+   [
+    2,
+    7,
+    0.2414285714285714,
+    0.14285714285714285
+   ],
+   [
+    3,
+    6,
+    0.32333333333333336,
+    0.0
+   ],
+   [
+    4,
+    4,
+    0.4225,
+    0.5
+   ],
+   [
+    5,
+    7,
+    0.54,
+    0.8571428571428571
+   ],
+   [
+    6,
+    10,
+    0.638,
+    0.7
+   ],
+   [
+    7,
+    16,
+    0.75125,
+    0.8125
+   ],
+   [
+    8,
+    39,
+    0.8515384615384614,
+    0.7948717948717948
+   ],
+   [
+    9,
+    143,
+    0.949300699300699,
+    0.986013986013986
+   ]
+  ],
+  "false_negatives": [
+   [
+    "832",
+    "49",
+    1,
+    0.1,
+    "A: name: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h; description: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h record up to 30 minutes of video on these write-once discs 1.4 gb storage capacity compatible with minidvd camcor"
+   ],
+   [
+    "491",
+    "736",
+    1,
+    0.11,
+    "A: name: canon black eos rebel xsi digital slr camera xsireb1855; description: canon black eos rebel xsi digital slr camera xsireb1855 12.2 megapixel digic iii image processor extensive noise reduction technology auto optimization 3.0 ' lcd"
+   ],
+   [
+    "902",
+    "960",
+    1,
+    0.12,
+    "A: name: canon powershot black digital camera sx110isb; description: canon powershot sx110 is black digital camera sx110isb 9.0 megapixel 10x optical zoom lens with optical image stabilizer technology 3.0 ' lcd display digic iii image proce"
+   ],
+   [
+    "302",
+    "426",
+    1,
+    0.13,
+    "A: name: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g; description: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct drive motor 1200 rpm powerful spin senseclean system 9 washing program"
+   ],
+   [
+    "30",
+    "41",
+    1,
+    0.18,
+    "A: name: sanus euro foundations satellite speaker stand efsats; description: sanus euro foundations satellite speaker stand efsats sturdy base adjustable pillar and floor spikes includes three different speaker mounting methods contemporary"
+   ]
+  ],
+  "false_positives": [
+   [
+    "690",
+    "783",
+    0,
+    0.9,
+    "A: name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview window wa"
+   ],
+   [
+    "719",
+    "801",
+    0,
+    0.9,
+    "A: name: lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh; description: lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm exhaust s"
+   ],
+   [
+    "673",
+    "782",
+    0,
+    0.87,
+    "A: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop elements wit"
+   ],
+   [
+    "673",
+    "786",
+    0,
+    0.87,
+    "A: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop elements wit"
+   ],
+   [
+    "720",
+    "801",
+    0,
+    0.87,
+    "A: name: lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk; description: lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm exhaust s"
+   ]
+  ]
+ },
+ "abt/dev/R4": {
+  "corpus": "abt",
+  "round": "R4",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R1 with the guidance moved from the question into the Noul's true / false criteria",
+   "wording": "colleague",
+   "layout": "json",
+   "order": "ab",
+   "criteria": true,
+   "selectable": true
+  },
+  "question": "Do these two listings, from two different retailers, describe the same product: the same model, not merely the same brand or product line? Different wording, a missing description or price, and a different price still mean the same product when the model number or model name matches. A different model number, a different size, colour or capacity variant, or an accessory, part or bundle for the product is a different product.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:30 UTC",
+  "seconds": 13.194882855983451,
+  "usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 0,
+   "cache_misses": 1912,
+   "requests": 1912,
+   "input_tokens": 1095596,
+   "output_tokens": 38240,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.046015032
+  },
+  "pairs_per_second": 145.2078067620855,
+  "input_tokens_per_request": 573.010460251046,
+  "usd_per_1k_pairs": 0.02401619624217119,
+  "rerun_seconds": 0.019569320837035775,
+  "rerun_usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 1912,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 1916,
+  "pairs": 1916,
+  "positives": 206,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 205,
+   "true_positives": 193,
+   "precision": 0.9414634146341463,
+   "recall": 0.9368932038834952,
+   "f1": 0.9391727493917275
+  },
+  "best_dev_threshold": {
+   "threshold": 0.35,
+   "predicted": 217,
+   "true_positives": 199,
+   "precision": 0.9170506912442397,
+   "recall": 0.9660194174757282,
+   "f1": 0.9408983451536644
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 355,
+    "true_positives": 206,
+    "precision": 0.5802816901408451,
+    "recall": 1.0,
+    "f1": 0.7344028520499108
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 261,
+    "true_positives": 205,
+    "precision": 0.7854406130268199,
+    "recall": 0.9951456310679612,
+    "f1": 0.8779443254817987
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 239,
+    "true_positives": 202,
+    "precision": 0.8451882845188284,
+    "recall": 0.9805825242718447,
+    "f1": 0.9078651685393259
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 229,
+    "true_positives": 201,
+    "precision": 0.8777292576419214,
+    "recall": 0.9757281553398058,
+    "f1": 0.9241379310344828
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 221,
+    "true_positives": 200,
+    "precision": 0.9049773755656109,
+    "recall": 0.970873786407767,
+    "f1": 0.936768149882904
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 218,
+    "true_positives": 199,
+    "precision": 0.9128440366972477,
+    "recall": 0.9660194174757282,
+    "f1": 0.9386792452830189
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 217,
+    "true_positives": 199,
+    "precision": 0.9170506912442397,
+    "recall": 0.9660194174757282,
+    "f1": 0.9408983451536644
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 213,
+    "true_positives": 196,
+    "precision": 0.92018779342723,
+    "recall": 0.9514563106796117,
+    "f1": 0.9355608591885441
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 211,
+    "true_positives": 195,
+    "precision": 0.9241706161137441,
+    "recall": 0.9466019417475728,
+    "f1": 0.9352517985611511
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 205,
+    "true_positives": 193,
+    "precision": 0.9414634146341463,
+    "recall": 0.9368932038834952,
+    "f1": 0.9391727493917275
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 199,
+    "true_positives": 189,
+    "precision": 0.949748743718593,
+    "recall": 0.9174757281553398,
+    "f1": 0.9333333333333333
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 194,
+    "true_positives": 184,
+    "precision": 0.9484536082474226,
+    "recall": 0.8932038834951457,
+    "f1": 0.92
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 189,
+    "true_positives": 181,
+    "precision": 0.9576719576719577,
+    "recall": 0.8786407766990292,
+    "f1": 0.9164556962025316
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 183,
+    "true_positives": 179,
+    "precision": 0.9781420765027322,
+    "recall": 0.8689320388349514,
+    "f1": 0.9203084832904884
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 176,
+    "true_positives": 175,
+    "precision": 0.9943181818181818,
+    "recall": 0.8495145631067961,
+    "f1": 0.9162303664921466
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 169,
+    "true_positives": 168,
+    "precision": 0.9940828402366864,
+    "recall": 0.8155339805825242,
+    "f1": 0.896
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 158,
+    "true_positives": 158,
+    "precision": 1.0,
+    "recall": 0.7669902912621359,
+    "f1": 0.868131868131868
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 143,
+    "true_positives": 143,
+    "precision": 1.0,
+    "recall": 0.6941747572815534,
+    "f1": 0.8194842406876791
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 91,
+    "true_positives": 91,
+    "precision": 1.0,
+    "recall": 0.441747572815534,
+    "f1": 0.6127946127946128
+   }
+  ],
+  "auroc": 0.9984571055470391,
+  "expected_count": 235.04000000000377,
+  "expected_stderr": 8.162328099261783,
+  "expected_within_2se": false,
+  "ece": 0.030657620041753954,
+  "reliability": [
+   [
+    0,
+    1655,
+    0.02490030211480398,
+    0.0006042296072507553
+   ],
+   [
+    1,
+    32,
+    0.13343750000000001,
+    0.125
+   ],
+   [
+    2,
+    11,
+    0.23636363636363636,
+    0.18181818181818182
+   ],
+   [
+    3,
+    5,
+    0.364,
+    0.6
+   ],
+   [
+    4,
+    8,
+    0.46125000000000005,
+    0.375
+   ],
+   [
+    5,
+    11,
+    0.5354545454545453,
+    0.8181818181818182
+   ],
+   [
+    6,
+    11,
+    0.6472727272727273,
+    0.45454545454545453
+   ],
+   [
+    7,
+    14,
+    0.7471428571428572,
+    0.7857142857142857
+   ],
+   [
+    8,
+    26,
+    0.8519230769230769,
+    0.9615384615384616
+   ],
+   [
+    9,
+    143,
+    0.94986013986014,
+    1.0
+   ]
+  ],
+  "false_negatives": [
+   [
+    "902",
+    "960",
+    1,
+    0.09,
+    "{\"a\":{\"name\":\"canon powershot black digital camera sx110isb\",\"description\":\"canon powershot sx110 is black digital camera sx110isb 9.0 megapixel 10x optical zoom lens with optical image stabilizer technology 3.0 ' lcd display digic iii imag"
+   ],
+   [
+    "491",
+    "736",
+    1,
+    0.1,
+    "{\"a\":{\"name\":\"canon black eos rebel xsi digital slr camera xsireb1855\",\"description\":\"canon black eos rebel xsi digital slr camera xsireb1855 12.2 megapixel digic iii image processor extensive noise reduction technology auto optimization 3."
+   ],
+   [
+    "832",
+    "49",
+    1,
+    0.1,
+    "{\"a\":{\"name\":\"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h\",\"description\":\"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h record up to 30 minutes of video on these write-once discs 1.4 gb storage capacity compatible with minidvd"
+   ],
+   [
+    "302",
+    "426",
+    1,
+    0.14,
+    "{\"a\":{\"name\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\",\"description\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct drive motor 1200 rpm powerful spin senseclean system 9 washing "
+   ],
+   [
+    "157",
+    "713",
+    1,
+    0.16,
+    "{\"a\":{\"name\":\"denon 5-disc cd auto changer black finish dcm290\",\"description\":\"denon 5-disc cd auto changer dcm290 cd-r/rw playback advanced multilevel noise shaping dac digital filter 3-mode random playback intelligent disc scan music cale"
+   ]
+  ],
+  "false_positives": [
+   [
+    "93",
+    "86",
+    0,
+    0.8,
+    "{\"a\":{\"name\":\"canon cyan photo ink cartridge cyan cli8pc\",\"description\":\"canon cyan photo ink cartridge cli8pc compatible with the pixma ip6600d printer\",\"price\":\"16.0\"},\"b\":{\"name\":\"canon cli-8c ink cartridge 0621b002\",\"description\":\"cyan\""
+   ],
+   [
+    "19",
+    "40",
+    0,
+    0.74,
+    "{\"a\":{\"name\":\"omnimount wall speaker mount 20wlbk\",\"description\":\"omnimount wall speaker mount 20wlbk stainless steel shafts and all necessary hardware included supports speakers up to 20 lbs . sold as single black finish\",\"price\":\"39.95\"},"
+   ],
+   [
+    "297",
+    "453",
+    0,
+    0.73,
+    "{\"a\":{\"name\":\"lg dle3733w white xl capacity electric dryer dle3733wh\",\"description\":\"lg dle3733w white xl capacity electric dryer dle3733wh 7.3 cu . ft. capacity lodecibel quiet system 7 drying programs 5 temperature levels upfront electron"
+   ],
+   [
+    "719",
+    "801",
+    0,
+    0.73,
+    "{\"a\":{\"name\":\"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh\",\"description\":\"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm ex"
+   ],
+   [
+    "720",
+    "801",
+    0,
+    0.69,
+    "{\"a\":{\"name\":\"lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk\",\"description\":\"lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm ex"
+   ]
+  ]
+ },
+ "dblp/dev/R1": {
+  "corpus": "dblp",
+  "round": "R1",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "colleague-style question that says what counts as the same and what does not",
+   "wording": "colleague",
+   "layout": "json",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two bibliographic records describe the same publication: the same paper with the same title and the same authors? Differences in capitalisation, punctuation, abbreviation, author name formatting or author order, and a venue written differently (a conference against its proceedings, a journal against its abbreviation) still mean the same publication. A different paper with a similar title, a different author list, or a different year is a different publication.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:30 UTC",
+  "seconds": 16.981038593919948,
+  "usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2,
+   "cache_misses": 2451,
+   "requests": 2451,
+   "input_tokens": 1121811,
+   "output_tokens": 49020,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.047116062
+  },
+  "pairs_per_second": 145.63302393561818,
+  "input_tokens_per_request": 457.6952264381885,
+  "usd_per_1k_pairs": 0.01905218843509907,
+  "rerun_seconds": 0.020401855930685997,
+  "rerun_usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2453,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 2473,
+  "pairs": 2473,
+  "positives": 444,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 449,
+   "true_positives": 435,
+   "precision": 0.9688195991091314,
+   "recall": 0.9797297297297297,
+   "f1": 0.9742441209406495
+  },
+  "best_dev_threshold": {
+   "threshold": 0.7,
+   "predicted": 429,
+   "true_positives": 426,
+   "precision": 0.993006993006993,
+   "recall": 0.9594594594594594,
+   "f1": 0.9759450171821306
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 570,
+    "true_positives": 444,
+    "precision": 0.7789473684210526,
+    "recall": 1.0,
+    "f1": 0.8757396449704142
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 508,
+    "true_positives": 443,
+    "precision": 0.8720472440944882,
+    "recall": 0.9977477477477478,
+    "f1": 0.930672268907563
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 491,
+    "true_positives": 443,
+    "precision": 0.9022403258655805,
+    "recall": 0.9977477477477478,
+    "f1": 0.9475935828877005
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 483,
+    "true_positives": 443,
+    "precision": 0.917184265010352,
+    "recall": 0.9977477477477478,
+    "f1": 0.9557713052858684
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 476,
+    "true_positives": 442,
+    "precision": 0.9285714285714286,
+    "recall": 0.9954954954954955,
+    "f1": 0.9608695652173913
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 469,
+    "true_positives": 441,
+    "precision": 0.9402985074626866,
+    "recall": 0.9932432432432432,
+    "f1": 0.9660460021905806
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 461,
+    "true_positives": 440,
+    "precision": 0.9544468546637744,
+    "recall": 0.990990990990991,
+    "f1": 0.9723756906077348
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 456,
+    "true_positives": 439,
+    "precision": 0.9627192982456141,
+    "recall": 0.9887387387387387,
+    "f1": 0.9755555555555556
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 453,
+    "true_positives": 437,
+    "precision": 0.9646799116997793,
+    "recall": 0.9842342342342343,
+    "f1": 0.9743589743589743
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 449,
+    "true_positives": 435,
+    "precision": 0.9688195991091314,
+    "recall": 0.9797297297297297,
+    "f1": 0.9742441209406495
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 444,
+    "true_positives": 432,
+    "precision": 0.972972972972973,
+    "recall": 0.972972972972973,
+    "f1": 0.972972972972973
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 442,
+    "true_positives": 431,
+    "precision": 0.9751131221719457,
+    "recall": 0.9707207207207207,
+    "f1": 0.9729119638826186
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 434,
+    "true_positives": 428,
+    "precision": 0.9861751152073732,
+    "recall": 0.963963963963964,
+    "f1": 0.9749430523917996
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 429,
+    "true_positives": 426,
+    "precision": 0.993006993006993,
+    "recall": 0.9594594594594594,
+    "f1": 0.9759450171821306
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 425,
+    "true_positives": 423,
+    "precision": 0.9952941176470588,
+    "recall": 0.9527027027027027,
+    "f1": 0.9735327963176064
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 422,
+    "true_positives": 420,
+    "precision": 0.995260663507109,
+    "recall": 0.9459459459459459,
+    "f1": 0.9699769053117783
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 412,
+    "true_positives": 410,
+    "precision": 0.9951456310679612,
+    "recall": 0.9234234234234234,
+    "f1": 0.9579439252336449
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 382,
+    "true_positives": 380,
+    "precision": 0.9947643979057592,
+    "recall": 0.8558558558558559,
+    "f1": 0.9200968523002423
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 309,
+    "true_positives": 307,
+    "precision": 0.9935275080906149,
+    "recall": 0.6914414414414415,
+    "f1": 0.8154050464807436
+   }
+  ],
+  "auroc": 0.9991597067742952,
+  "expected_count": 459.2799999999901,
+  "expected_stderr": 7.649431351414339,
+  "expected_within_2se": true,
+  "ece": 0.02173877881116068,
+  "reliability": [
+   [
+    0,
+    1965,
+    0.012722646310432946,
+    0.0005089058524173028
+   ],
+   [
+    1,
+    25,
+    0.1364,
+    0.0
+   ],
+   [
+    2,
+    14,
+    0.24571428571428577,
+    0.14285714285714285
+   ],
+   [
+    3,
+    13,
+    0.33769230769230774,
+    0.15384615384615385
+   ],
+   [
+    4,
+    7,
+    0.4485714285714285,
+    0.5714285714285714
+   ],
+   [
+    5,
+    7,
+    0.5342857142857144,
+    0.5714285714285714
+   ],
+   [
+    6,
+    13,
+    0.636923076923077,
+    0.38461538461538464
+   ],
+   [
+    7,
+    7,
+    0.7557142857142857,
+    0.8571428571428571
+   ],
+   [
+    8,
+    40,
+    0.85825,
+    1.0
+   ],
+   [
+    9,
+    382,
+    0.9640314136125665,
+    0.9947643979057592
+   ]
+  ],
+  "false_negatives": [
+   [
+    "155",
+    "659",
+    1,
+    0.09,
+    "{\"a\":{\"title\":\"data mining : practical machine learning tools and techniques - book review\",\"authors\":\"james geller\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"data mining : practical machine learning tools and techniques with jav"
+   ],
+   [
+    "2152",
+    "1166",
+    1,
+    0.24,
+    "{\"a\":{\"title\":\"the impact of technology on commercial transaction processing\",\"authors\":\"edward e. cobb\",\"venue\":\"vldb j.\",\"year\":\"1997\"},\"b\":{\"title\":\"the impact of object technology on commercial transaction processing\",\"authors\":\"edward "
+   ],
+   [
+    "2116",
+    "900",
+    1,
+    0.29,
+    "{\"a\":{\"title\":\"performing jobs without decompression in a compressed database system\",\"authors\":\"n. winterbottom , s. j. o'connell\",\"venue\":\"sigmod record\",\"year\":\"2003\"},\"b\":{\"title\":\"performing joins without decompression in a compressed "
+   ],
+   [
+    "1645",
+    "564",
+    1,
+    0.31,
+    "{\"a\":{\"title\":\"reminiscences on influential papers\",\"authors\":\"christos h. papadimitriou , anant jhingran , yannis e. ioannidis , kenneth a. ross\",\"venue\":\"sigmod record\",\"year\":\"2000\"},\"b\":{\"title\":\"reminiscences on influential papers\",\"au"
+   ],
+   [
+    "382",
+    "2058",
+    1,
+    0.35,
+    "{\"a\":{\"title\":\"a framework for change diagnosis of data streams\",\"authors\":\"charu c. aggarwal\",\"venue\":\"sigmod conference\",\"year\":\"2003\"},\"b\":{\"title\":\"a framework for diagnosing changes in evolving data streams\",\"authors\":\"charu c. aggarwa"
+   ]
+  ],
+  "false_positives": [
+   [
+    "2470",
+    "343",
+    0,
+    0.97,
+    "{\"a\":{\"title\":\"editorial\",\"authors\":\"richard t. snodgrass\",\"venue\":\"acm trans . database syst .\",\"year\":\"2001\"},\"b\":{\"title\":\"editorial\",\"authors\":\"richard snodgrass\",\"venue\":\"acm transactions on database systems ( tods )\",\"year\":\"2001\"}}"
+   ],
+   [
+    "942",
+    "669",
+    0,
+    0.97,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "1751",
+    "804",
+    0,
+    0.73,
+    "{\"a\":{\"title\":\"context-based prefetch - an optimization for implementing objects on relations\",\"authors\":\"david shutt , philip a. bernstein , shankar pal\",\"venue\":\"vldb j.\",\"year\":\"2000\"},\"b\":{\"title\":\"context-based prefetch for implementin"
+   ],
+   [
+    "317",
+    "1032",
+    0,
+    0.69,
+    "{\"a\":{\"title\":\"garbage collection in object-oriented databases using transactional cyclic reference counting\",\"authors\":\"s. sudarshan , prasan roy , abraham silberschatz , srinivas ashwin , s. seshadri\",\"venue\":\"vldb j.\",\"year\":\"1998\"},\"b\":"
+   ],
+   [
+    "1165",
+    "1911",
+    0,
+    0.68,
+    "{\"a\":{\"title\":\"tpc-d : the challenges , issues and results\",\"authors\":\"ramesh bhashyam\",\"venue\":\"vldb\",\"year\":\"1996\"},\"b\":{\"title\":\"tpc-d-the challenges , issues and results\",\"authors\":\"ramesh bhashyam\",\"venue\":\"acm sigmod record\",\"year\":\"1"
+   ]
+  ]
+ },
+ "dblp/dev/R2": {
+  "corpus": "dblp",
+  "round": "R2",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R1 with the pair as labeled text lines instead of a JSON object",
+   "wording": "colleague",
+   "layout": "text",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two bibliographic records describe the same publication: the same paper with the same title and the same authors? Differences in capitalisation, punctuation, abbreviation, author name formatting or author order, and a venue written differently (a conference against its proceedings, a journal against its abbreviation) still mean the same publication. A different paper with a similar title, a different author list, or a different year is a different publication.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:30 UTC",
+  "seconds": 16.590492563089356,
+  "usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2,
+   "cache_misses": 2451,
+   "requests": 2451,
+   "input_tokens": 1116244,
+   "output_tokens": 49020,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.046882248
+  },
+  "pairs_per_second": 149.0612765471441,
+  "input_tokens_per_request": 455.42390860873115,
+  "usd_per_1k_pairs": 0.01895764173069147,
+  "rerun_seconds": 0.021139841061085463,
+  "rerun_usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2453,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 2473,
+  "pairs": 2473,
+  "positives": 444,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 452,
+   "true_positives": 438,
+   "precision": 0.9690265486725663,
+   "recall": 0.9864864864864865,
+   "f1": 0.9776785714285714
+  },
+  "best_dev_threshold": {
+   "threshold": 0.55,
+   "predicted": 446,
+   "true_positives": 436,
+   "precision": 0.9775784753363229,
+   "recall": 0.9819819819819819,
+   "f1": 0.9797752808988766
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 567,
+    "true_positives": 444,
+    "precision": 0.783068783068783,
+    "recall": 1.0,
+    "f1": 0.8783382789317508
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 530,
+    "true_positives": 443,
+    "precision": 0.8358490566037736,
+    "recall": 0.9977477477477478,
+    "f1": 0.9096509240246407
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 495,
+    "true_positives": 443,
+    "precision": 0.8949494949494949,
+    "recall": 0.9977477477477478,
+    "f1": 0.9435569755058573
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 487,
+    "true_positives": 443,
+    "precision": 0.9096509240246407,
+    "recall": 0.9977477477477478,
+    "f1": 0.9516648764769066
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 479,
+    "true_positives": 443,
+    "precision": 0.9248434237995825,
+    "recall": 0.9977477477477478,
+    "f1": 0.9599133261105092
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 475,
+    "true_positives": 443,
+    "precision": 0.9326315789473684,
+    "recall": 0.9977477477477478,
+    "f1": 0.9640914036996735
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 468,
+    "true_positives": 442,
+    "precision": 0.9444444444444444,
+    "recall": 0.9954954954954955,
+    "f1": 0.9692982456140351
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 458,
+    "true_positives": 439,
+    "precision": 0.9585152838427947,
+    "recall": 0.9887387387387387,
+    "f1": 0.9733924611973392
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 452,
+    "true_positives": 438,
+    "precision": 0.9690265486725663,
+    "recall": 0.9864864864864865,
+    "f1": 0.9776785714285714
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 452,
+    "true_positives": 438,
+    "precision": 0.9690265486725663,
+    "recall": 0.9864864864864865,
+    "f1": 0.9776785714285714
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 446,
+    "true_positives": 436,
+    "precision": 0.9775784753363229,
+    "recall": 0.9819819819819819,
+    "f1": 0.9797752808988766
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 444,
+    "true_positives": 434,
+    "precision": 0.9774774774774775,
+    "recall": 0.9774774774774775,
+    "f1": 0.9774774774774775
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 440,
+    "true_positives": 432,
+    "precision": 0.9818181818181818,
+    "recall": 0.972972972972973,
+    "f1": 0.9773755656108598
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 433,
+    "true_positives": 429,
+    "precision": 0.9907621247113164,
+    "recall": 0.9662162162162162,
+    "f1": 0.9783352337514253
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 429,
+    "true_positives": 427,
+    "precision": 0.9953379953379954,
+    "recall": 0.9617117117117117,
+    "f1": 0.9782359679266895
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 422,
+    "true_positives": 420,
+    "precision": 0.995260663507109,
+    "recall": 0.9459459459459459,
+    "f1": 0.9699769053117783
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 414,
+    "true_positives": 412,
+    "precision": 0.9951690821256038,
+    "recall": 0.9279279279279279,
+    "f1": 0.9603729603729604
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 383,
+    "true_positives": 381,
+    "precision": 0.9947780678851175,
+    "recall": 0.8581081081081081,
+    "f1": 0.9214026602176542
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 316,
+    "true_positives": 314,
+    "precision": 0.9936708860759493,
+    "recall": 0.7072072072072072,
+    "f1": 0.8263157894736842
+   }
+  ],
+  "auroc": 0.9992845852259357,
+  "expected_count": 462.9499999999902,
+  "expected_stderr": 7.638998625474444,
+  "expected_within_2se": false,
+  "ece": 0.021548726243429062,
+  "reliability": [
+   [
+    0,
+    1943,
+    0.011816778178075436,
+    0.000514668039114771
+   ],
+   [
+    1,
+    43,
+    0.126046511627907,
+    0.0
+   ],
+   [
+    2,
+    12,
+    0.23666666666666666,
+    0.0
+   ],
+   [
+    3,
+    17,
+    0.35117647058823526,
+    0.23529411764705882
+   ],
+   [
+    4,
+    6,
+    0.4183333333333334,
+    0.16666666666666666
+   ],
+   [
+    5,
+    8,
+    0.535,
+    0.5
+   ],
+   [
+    6,
+    11,
+    0.6490909090909092,
+    0.45454545454545453
+   ],
+   [
+    7,
+    11,
+    0.7563636363636363,
+    0.8181818181818182
+   ],
+   [
+    8,
+    39,
+    0.8641025641025638,
+    1.0
+   ],
+   [
+    9,
+    383,
+    0.9655613577023512,
+    0.9947780678851175
+   ]
+  ],
+  "false_negatives": [
+   [
+    "155",
+    "659",
+    1,
+    0.06,
+    "A: title: data mining : practical machine learning tools and techniques - book review; authors: james geller; venue: sigmod record; year: 2002\nB: title: data mining : practical machine learning tools and techniques with java implementations"
+   ],
+   [
+    "1871",
+    "402",
+    1,
+    0.32,
+    "A: title: spire : a progressive content-based spatial image retrieval engine; authors: chung-sheng li , vittorio castelli , lawrence d. bergman , john r. smith; venue: sigmod conference; year: 2000\nB: title: spire : a progressive content-ba"
+   ],
+   [
+    "2152",
+    "1166",
+    1,
+    0.36,
+    "A: title: the impact of technology on commercial transaction processing; authors: edward e. cobb; venue: vldb j.; year: 1997\nB: title: the impact of object technology on commercial transaction processing; authors: edward e. cobb; venue: the"
+   ],
+   [
+    "1645",
+    "564",
+    1,
+    0.38,
+    "A: title: reminiscences on influential papers; authors: christos h. papadimitriou , anant jhingran , yannis e. ioannidis , kenneth a. ross; venue: sigmod record; year: 2000\nB: title: reminiscences on influential papers; authors: kenneth a. "
+   ],
+   [
+    "382",
+    "2058",
+    1,
+    0.38,
+    "A: title: a framework for change diagnosis of data streams; authors: charu c. aggarwal; venue: sigmod conference; year: 2003\nB: title: a framework for diagnosing changes in evolving data streams; authors: charu c. aggarwal; venue: internati"
+   ]
+  ],
+  "false_positives": [
+   [
+    "2470",
+    "343",
+    0,
+    0.97,
+    "A: title: editorial; authors: richard t. snodgrass; venue: acm trans . database syst .; year: 2001\nB: title: editorial; authors: richard snodgrass; venue: acm transactions on database systems ( tods ); year: 2001"
+   ],
+   [
+    "942",
+    "669",
+    0,
+    0.96,
+    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+   ],
+   [
+    "1165",
+    "1911",
+    0,
+    0.72,
+    "A: title: tpc-d : the challenges , issues and results; authors: ramesh bhashyam; venue: vldb; year: 1996\nB: title: tpc-d-the challenges , issues and results; authors: ramesh bhashyam; venue: acm sigmod record; year: 1996"
+   ],
+   [
+    "1751",
+    "804",
+    0,
+    0.7,
+    "A: title: context-based prefetch - an optimization for implementing objects on relations; authors: david shutt , philip a. bernstein , shankar pal; venue: vldb j.; year: 2000\nB: title: context-based prefetch for implementing objects on rela"
+   ],
+   [
+    "2583",
+    "599",
+    0,
+    0.68,
+    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2001\nB: title: book reviews; authors: karl aberer; venue: acm sigmod record; year: 2001"
+   ]
+  ]
+ },
+ "dblp/dev/R4": {
+  "corpus": "dblp",
+  "round": "R4",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R1 with the guidance moved from the question into the Noul's true / false criteria",
+   "wording": "colleague",
+   "layout": "json",
+   "order": "ab",
+   "criteria": true,
+   "selectable": true
+  },
+  "question": "Do these two bibliographic records describe the same publication: the same paper with the same title and the same authors? Differences in capitalisation, punctuation, abbreviation, author name formatting or author order, and a venue written differently (a conference against its proceedings, a journal against its abbreviation) still mean the same publication. A different paper with a similar title, a different author list, or a different year is a different publication.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:31 UTC",
+  "seconds": 16.24298395193182,
+  "usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2,
+   "cache_misses": 2451,
+   "requests": 2451,
+   "input_tokens": 1293381,
+   "output_tokens": 49020,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.054322002
+  },
+  "pairs_per_second": 152.250350509389,
+  "input_tokens_per_request": 527.6952264381885,
+  "usd_per_1k_pairs": 0.02196603396684189,
+  "rerun_seconds": 0.02831178600899875,
+  "rerun_usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2453,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 2473,
+  "pairs": 2473,
+  "positives": 444,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 447,
+   "true_positives": 434,
+   "precision": 0.970917225950783,
+   "recall": 0.9774774774774775,
+   "f1": 0.9741863075196409
+  },
+  "best_dev_threshold": {
+   "threshold": 0.4,
+   "predicted": 454,
+   "true_positives": 439,
+   "precision": 0.9669603524229075,
+   "recall": 0.9887387387387387,
+   "f1": 0.977728285077951
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 564,
+    "true_positives": 444,
+    "precision": 0.7872340425531915,
+    "recall": 1.0,
+    "f1": 0.880952380952381
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 503,
+    "true_positives": 444,
+    "precision": 0.882703777335984,
+    "recall": 1.0,
+    "f1": 0.9376979936642027
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 488,
+    "true_positives": 443,
+    "precision": 0.9077868852459017,
+    "recall": 0.9977477477477478,
+    "f1": 0.9506437768240344
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 479,
+    "true_positives": 443,
+    "precision": 0.9248434237995825,
+    "recall": 0.9977477477477478,
+    "f1": 0.9599133261105092
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 471,
+    "true_positives": 442,
+    "precision": 0.9384288747346072,
+    "recall": 0.9954954954954955,
+    "f1": 0.966120218579235
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 465,
+    "true_positives": 441,
+    "precision": 0.9483870967741935,
+    "recall": 0.9932432432432432,
+    "f1": 0.9702970297029702
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 456,
+    "true_positives": 439,
+    "precision": 0.9627192982456141,
+    "recall": 0.9887387387387387,
+    "f1": 0.9755555555555556
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 454,
+    "true_positives": 439,
+    "precision": 0.9669603524229075,
+    "recall": 0.9887387387387387,
+    "f1": 0.977728285077951
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 450,
+    "true_positives": 436,
+    "precision": 0.9688888888888889,
+    "recall": 0.9819819819819819,
+    "f1": 0.9753914988814317
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 447,
+    "true_positives": 434,
+    "precision": 0.970917225950783,
+    "recall": 0.9774774774774775,
+    "f1": 0.9741863075196409
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 446,
+    "true_positives": 433,
+    "precision": 0.9708520179372198,
+    "recall": 0.9752252252252253,
+    "f1": 0.9730337078651685
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 442,
+    "true_positives": 433,
+    "precision": 0.9796380090497737,
+    "recall": 0.9752252252252253,
+    "f1": 0.9774266365688488
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 436,
+    "true_positives": 430,
+    "precision": 0.9862385321100917,
+    "recall": 0.9684684684684685,
+    "f1": 0.9772727272727272
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 433,
+    "true_positives": 428,
+    "precision": 0.9884526558891455,
+    "recall": 0.963963963963964,
+    "f1": 0.976054732041049
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 428,
+    "true_positives": 426,
+    "precision": 0.9953271028037384,
+    "recall": 0.9594594594594594,
+    "f1": 0.9770642201834863
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 425,
+    "true_positives": 423,
+    "precision": 0.9952941176470588,
+    "recall": 0.9527027027027027,
+    "f1": 0.9735327963176064
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 425,
+    "true_positives": 423,
+    "precision": 0.9952941176470588,
+    "recall": 0.9527027027027027,
+    "f1": 0.9735327963176064
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 407,
+    "true_positives": 405,
+    "precision": 0.995085995085995,
+    "recall": 0.9121621621621622,
+    "f1": 0.9518213866039953
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 347,
+    "true_positives": 345,
+    "precision": 0.9942363112391931,
+    "recall": 0.777027027027027,
+    "f1": 0.8723135271807838
+   }
+  ],
+  "auroc": 0.9992951305174075,
+  "expected_count": 462.6399999999896,
+  "expected_stderr": 7.443722187185663,
+  "expected_within_2se": false,
+  "ece": 0.02078447230084919,
+  "reliability": [
+   [
+    0,
+    1970,
+    0.013248730964467346,
+    0.0
+   ],
+   [
+    1,
+    24,
+    0.1358333333333333,
+    0.041666666666666664
+   ],
+   [
+    2,
+    14,
+    0.24714285714285716,
+    0.14285714285714285
+   ],
+   [
+    3,
+    11,
+    0.32999999999999996,
+    0.18181818181818182
+   ],
+   [
+    4,
+    7,
+    0.43999999999999995,
+    0.7142857142857143
+   ],
+   [
+    5,
+    5,
+    0.568,
+    0.2
+   ],
+   [
+    6,
+    9,
+    0.6377777777777778,
+    0.5555555555555556
+   ],
+   [
+    7,
+    8,
+    0.74875,
+    0.625
+   ],
+   [
+    8,
+    18,
+    0.875,
+    1.0
+   ],
+   [
+    9,
+    407,
+    0.9650859950859966,
+    0.995085995085995
+   ]
+  ],
+  "false_negatives": [
+   [
+    "155",
+    "659",
+    1,
+    0.11,
+    "{\"a\":{\"title\":\"data mining : practical machine learning tools and techniques - book review\",\"authors\":\"james geller\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"data mining : practical machine learning tools and techniques with jav"
+   ],
+   [
+    "2152",
+    "1166",
+    1,
+    0.24,
+    "{\"a\":{\"title\":\"the impact of technology on commercial transaction processing\",\"authors\":\"edward e. cobb\",\"venue\":\"vldb j.\",\"year\":\"1997\"},\"b\":{\"title\":\"the impact of object technology on commercial transaction processing\",\"authors\":\"edward "
+   ],
+   [
+    "2116",
+    "900",
+    1,
+    0.29,
+    "{\"a\":{\"title\":\"performing jobs without decompression in a compressed database system\",\"authors\":\"n. winterbottom , s. j. o'connell\",\"venue\":\"sigmod record\",\"year\":\"2003\"},\"b\":{\"title\":\"performing joins without decompression in a compressed "
+   ],
+   [
+    "1946",
+    "2145",
+    1,
+    0.32,
+    "{\"a\":{\"title\":\"title , preface to the special issue on persistent object systems\",\"authors\":\"?\",\"venue\":\"vldb j.\",\"year\":\"1995\"},\"b\":{\"title\":\"special issue on persistent object systems\",\"authors\":null,\"venue\":\"the vldb journal -- the inter"
+   ],
+   [
+    "1645",
+    "564",
+    1,
+    0.33,
+    "{\"a\":{\"title\":\"reminiscences on influential papers\",\"authors\":\"christos h. papadimitriou , anant jhingran , yannis e. ioannidis , kenneth a. ross\",\"venue\":\"sigmod record\",\"year\":\"2000\"},\"b\":{\"title\":\"reminiscences on influential papers\",\"au"
+   ]
+  ],
+  "false_positives": [
+   [
+    "942",
+    "669",
+    0,
+    0.97,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "2470",
+    "343",
+    0,
+    0.96,
+    "{\"a\":{\"title\":\"editorial\",\"authors\":\"richard t. snodgrass\",\"venue\":\"acm trans . database syst .\",\"year\":\"2001\"},\"b\":{\"title\":\"editorial\",\"authors\":\"richard snodgrass\",\"venue\":\"acm transactions on database systems ( tods )\",\"year\":\"2001\"}}"
+   ],
+   [
+    "1165",
+    "1911",
+    0,
+    0.74,
+    "{\"a\":{\"title\":\"tpc-d : the challenges , issues and results\",\"authors\":\"ramesh bhashyam\",\"venue\":\"vldb\",\"year\":\"1996\"},\"b\":{\"title\":\"tpc-d-the challenges , issues and results\",\"authors\":\"ramesh bhashyam\",\"venue\":\"acm sigmod record\",\"year\":\"1"
+   ],
+   [
+    "317",
+    "1032",
+    0,
+    0.74,
+    "{\"a\":{\"title\":\"garbage collection in object-oriented databases using transactional cyclic reference counting\",\"authors\":\"s. sudarshan , prasan roy , abraham silberschatz , srinivas ashwin , s. seshadri\",\"venue\":\"vldb j.\",\"year\":\"1998\"},\"b\":"
+   ],
+   [
+    "1751",
+    "804",
+    0,
+    0.73,
+    "{\"a\":{\"title\":\"context-based prefetch - an optimization for implementing objects on relations\",\"authors\":\"david shutt , philip a. bernstein , shankar pal\",\"venue\":\"vldb j.\",\"year\":\"2000\"},\"b\":{\"title\":\"context-based prefetch for implementin"
+   ]
+  ]
+ },
+ "abt/dev/R3": {
+  "corpus": "abt",
+  "round": "R3",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R2 with the records swapped, B first: the order check on the best round",
+   "wording": "colleague",
+   "layout": "text",
+   "order": "ba",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two listings, from two different retailers, describe the same product: the same model, not merely the same brand or product line? Different wording, a missing description or price, and a different price still mean the same product when the model number or model name matches. A different model number, a different size, colour or capacity variant, or an accessory, part or bundle for the product is a different product.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:31 UTC",
+  "seconds": 13.322909391019493,
+  "usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 0,
+   "cache_misses": 1912,
+   "requests": 1912,
+   "input_tokens": 942665,
+   "output_tokens": 38240,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.03959193
+  },
+  "pairs_per_second": 143.8124319370894,
+  "input_tokens_per_request": 493.0256276150628,
+  "usd_per_1k_pairs": 0.02066384655532359,
+  "rerun_seconds": 0.017298473045229912,
+  "rerun_usage": {
+   "rows": 1916,
+   "deduped": 4,
+   "cache_hits": 1912,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 1916,
+  "pairs": 1916,
+  "positives": 206,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 202,
+   "true_positives": 183,
+   "precision": 0.905940594059406,
+   "recall": 0.8883495145631068,
+   "f1": 0.8970588235294118
+  },
+  "best_dev_threshold": {
+   "threshold": 0.35,
+   "predicted": 216,
+   "true_positives": 195,
+   "precision": 0.9027777777777778,
+   "recall": 0.9466019417475728,
+   "f1": 0.9241706161137441
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 317,
+    "true_positives": 206,
+    "precision": 0.6498422712933754,
+    "recall": 1.0,
+    "f1": 0.7877629063097514
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 255,
+    "true_positives": 205,
+    "precision": 0.803921568627451,
+    "recall": 0.9951456310679612,
+    "f1": 0.8893709327548808
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 239,
+    "true_positives": 202,
+    "precision": 0.8451882845188284,
+    "recall": 0.9805825242718447,
+    "f1": 0.9078651685393259
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 233,
+    "true_positives": 202,
+    "precision": 0.8669527896995708,
+    "recall": 0.9805825242718447,
+    "f1": 0.9202733485193622
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 223,
+    "true_positives": 197,
+    "precision": 0.8834080717488789,
+    "recall": 0.9563106796116505,
+    "f1": 0.9184149184149184
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 222,
+    "true_positives": 196,
+    "precision": 0.8828828828828829,
+    "recall": 0.9514563106796117,
+    "f1": 0.9158878504672898
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 216,
+    "true_positives": 195,
+    "precision": 0.9027777777777778,
+    "recall": 0.9466019417475728,
+    "f1": 0.9241706161137441
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 211,
+    "true_positives": 191,
+    "precision": 0.9052132701421801,
+    "recall": 0.9271844660194175,
+    "f1": 0.9160671462829737
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 206,
+    "true_positives": 187,
+    "precision": 0.9077669902912622,
+    "recall": 0.9077669902912622,
+    "f1": 0.9077669902912622
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 202,
+    "true_positives": 183,
+    "precision": 0.905940594059406,
+    "recall": 0.8883495145631068,
+    "f1": 0.8970588235294118
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 196,
+    "true_positives": 181,
+    "precision": 0.923469387755102,
+    "recall": 0.8786407766990292,
+    "f1": 0.900497512437811
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 188,
+    "true_positives": 178,
+    "precision": 0.9468085106382979,
+    "recall": 0.8640776699029126,
+    "f1": 0.9035532994923857
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 180,
+    "true_positives": 172,
+    "precision": 0.9555555555555556,
+    "recall": 0.8349514563106796,
+    "f1": 0.8911917098445595
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 172,
+    "true_positives": 166,
+    "precision": 0.9651162790697675,
+    "recall": 0.8058252427184466,
+    "f1": 0.8783068783068784
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 163,
+    "true_positives": 158,
+    "precision": 0.9693251533742331,
+    "recall": 0.7669902912621359,
+    "f1": 0.856368563685637
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 154,
+    "true_positives": 151,
+    "precision": 0.9805194805194806,
+    "recall": 0.7330097087378641,
+    "f1": 0.8388888888888889
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 143,
+    "true_positives": 143,
+    "precision": 1.0,
+    "recall": 0.6941747572815534,
+    "f1": 0.8194842406876791
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 123,
+    "true_positives": 123,
+    "precision": 1.0,
+    "recall": 0.5970873786407767,
+    "f1": 0.7477203647416413
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 84,
+    "true_positives": 84,
+    "precision": 1.0,
+    "recall": 0.4077669902912621,
+    "f1": 0.5793103448275861
+   }
+  ],
+  "auroc": 0.9975855901890649,
+  "expected_count": 215.20999999999904,
+  "expected_stderr": 7.468902195102018,
+  "expected_within_2se": true,
+  "ece": 0.025328810020877054,
+  "reliability": [
+   [
+    0,
+    1661,
+    0.016381697772426505,
+    0.0006020469596628537
+   ],
+   [
+    1,
+    22,
+    0.1318181818181818,
+    0.13636363636363635
+   ],
+   [
+    2,
+    11,
+    0.2254545454545455,
+    0.5454545454545454
+   ],
+   [
+    3,
+    11,
+    0.3472727272727273,
+    0.45454545454545453
+   ],
+   [
+    4,
+    9,
+    0.44777777777777783,
+    0.8888888888888888
+   ],
+   [
+    5,
+    14,
+    0.5471428571428572,
+    0.35714285714285715
+   ],
+   [
+    6,
+    16,
+    0.65,
+    0.75
+   ],
+   [
+    7,
+    18,
+    0.7444444444444445,
+    0.8333333333333334
+   ],
+   [
+    8,
+    31,
+    0.856451612903226,
+    0.9032258064516129
+   ],
+   [
+    9,
+    123,
+    0.9492682926829267,
+    1.0
+   ]
+  ],
+  "false_negatives": [
+   [
+    "902",
+    "960",
+    1,
+    0.09,
+    "A: name: canon powershot sx110 is digital camera silver 2666b001; description: canon powershot sx110 is 9 megapixel digital camera w / 10x optical zoom , 3 ' lcd , iso 1600 , optical image stabilizer silver\nB: name: canon powershot black di"
+   ],
+   [
+    "326",
+    "431",
+    1,
+    0.1,
+    "A: name: apple ipod shuffle 1gb mp3 player mb226ll/a; description: 1gb flash memory silver\nB: name: apple 1gb silver ipod shuffle mb225lla; description: apple 1gb silver 2nd generation ipod shuffle mb225lla holds up to 240 songs 12 hours of"
+   ],
+   [
+    "832",
+    "49",
+    1,
+    0.1,
+    "A: name: sony mini dvd-r media 3dmr30l1h; description: 1.4 gb 3 pack; price: 6.99\nB: name: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h; description: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h record up to 30 minutes of vide"
+   ],
+   [
+    "30",
+    "41",
+    1,
+    0.11,
+    "A: name: sanus euro foundation series iii speaker stand efsatsiii; description: steel silver\nB: name: sanus euro foundations satellite speaker stand efsats; description: sanus euro foundations satellite speaker stand efsats sturdy base adju"
+   ],
+   [
+    "302",
+    "426",
+    1,
+    0.22,
+    "A: name: lg 4.0 cu . ft. capacity front load washer w / sanitary cycle\nB: name: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g; description: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct"
+   ]
+  ],
+  "false_positives": [
+   [
+    "673",
+    "782",
+    0,
+    0.8,
+    "A: name: lg 5.6 cu.ft . freestanding electric range\nB: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet conv"
+   ],
+   [
+    "673",
+    "786",
+    0,
+    0.8,
+    "A: name: lg 5.6 cu.ft . freestanding electric range\nB: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet conv"
+   ],
+   [
+    "690",
+    "783",
+    0,
+    0.8,
+    "A: name: lg 5.6 cu.ft . freestanding electric range\nB: name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleani"
+   ],
+   [
+    "297",
+    "453",
+    0,
+    0.76,
+    "A: name: lg 27 ' front-load electric dryer with 7.3 cu . ft. capacity\nB: name: lg dle3733w white xl capacity electric dryer dle3733wh; description: lg dle3733w white xl capacity electric dryer dle3733wh 7.3 cu . ft. capacity lodecibel quiet"
+   ],
+   [
+    "689",
+    "782",
+    0,
+    0.75,
+    "A: name: lg 5.6 cu.ft . freestanding electric range\nB: name: lg black freestanding electric range lre30757bk; description: lg black freestanding electric range lre30757bk 5.6 cu . ft. capacity dual convection self-cleaning touch controls ce"
+   ]
+  ]
+ },
+ "dblp/dev/R3": {
+  "corpus": "dblp",
+  "round": "R3",
+  "split": "dev",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R2 with the records swapped, B first: the order check on the best round",
+   "wording": "colleague",
+   "layout": "text",
+   "order": "ba",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two bibliographic records describe the same publication: the same paper with the same title and the same authors? Differences in capitalisation, punctuation, abbreviation, author name formatting or author order, and a venue written differently (a conference against its proceedings, a journal against its abbreviation) still mean the same publication. A different paper with a similar title, a different author list, or a different year is a different publication.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:32 UTC",
+  "seconds": 17.393287988146767,
+  "usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2,
+   "cache_misses": 2451,
+   "requests": 2451,
+   "input_tokens": 1116244,
+   "output_tokens": 49020,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.046882248
+  },
+  "pairs_per_second": 142.18128289977764,
+  "input_tokens_per_request": 455.42390860873115,
+  "usd_per_1k_pairs": 0.01895764173069147,
+  "rerun_seconds": 0.021601205924525857,
+  "rerun_usage": {
+   "rows": 2473,
+   "deduped": 20,
+   "cache_hits": 2453,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 2473,
+  "pairs": 2473,
+  "positives": 444,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 445,
+   "true_positives": 431,
+   "precision": 0.9685393258426966,
+   "recall": 0.9707207207207207,
+   "f1": 0.9696287964004499
+  },
+  "best_dev_threshold": {
+   "threshold": 0.45,
+   "predicted": 455,
+   "true_positives": 437,
+   "precision": 0.9604395604395605,
+   "recall": 0.9842342342342343,
+   "f1": 0.9721913236929923
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 551,
+    "true_positives": 443,
+    "precision": 0.8039927404718693,
+    "recall": 0.9977477477477478,
+    "f1": 0.8904522613065327
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 511,
+    "true_positives": 443,
+    "precision": 0.8669275929549902,
+    "recall": 0.9977477477477478,
+    "f1": 0.9277486910994763
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 493,
+    "true_positives": 443,
+    "precision": 0.8985801217038539,
+    "recall": 0.9977477477477478,
+    "f1": 0.9455709711846317
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 483,
+    "true_positives": 443,
+    "precision": 0.917184265010352,
+    "recall": 0.9977477477477478,
+    "f1": 0.9557713052858684
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 474,
+    "true_positives": 442,
+    "precision": 0.9324894514767933,
+    "recall": 0.9954954954954955,
+    "f1": 0.9629629629629629
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 466,
+    "true_positives": 440,
+    "precision": 0.944206008583691,
+    "recall": 0.990990990990991,
+    "f1": 0.9670329670329669
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 462,
+    "true_positives": 439,
+    "precision": 0.9502164502164502,
+    "recall": 0.9887387387387387,
+    "f1": 0.9690949227373068
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 460,
+    "true_positives": 438,
+    "precision": 0.9521739130434783,
+    "recall": 0.9864864864864865,
+    "f1": 0.9690265486725664
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 455,
+    "true_positives": 437,
+    "precision": 0.9604395604395605,
+    "recall": 0.9842342342342343,
+    "f1": 0.9721913236929923
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 445,
+    "true_positives": 431,
+    "precision": 0.9685393258426966,
+    "recall": 0.9707207207207207,
+    "f1": 0.9696287964004499
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 438,
+    "true_positives": 426,
+    "precision": 0.9726027397260274,
+    "recall": 0.9594594594594594,
+    "f1": 0.9659863945578231
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 417,
+    "true_positives": 413,
+    "precision": 0.9904076738609112,
+    "recall": 0.9301801801801802,
+    "f1": 0.959349593495935
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 404,
+    "true_positives": 402,
+    "precision": 0.995049504950495,
+    "recall": 0.9054054054054054,
+    "f1": 0.9481132075471699
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 388,
+    "true_positives": 386,
+    "precision": 0.9948453608247423,
+    "recall": 0.8693693693693694,
+    "f1": 0.9278846153846154
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 367,
+    "true_positives": 365,
+    "precision": 0.9945504087193461,
+    "recall": 0.8220720720720721,
+    "f1": 0.9001233045622689
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 342,
+    "true_positives": 340,
+    "precision": 0.9941520467836257,
+    "recall": 0.7657657657657657,
+    "f1": 0.8651399491094147
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 318,
+    "true_positives": 316,
+    "precision": 0.9937106918238994,
+    "recall": 0.7117117117117117,
+    "f1": 0.8293963254593175
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 294,
+    "true_positives": 292,
+    "precision": 0.9931972789115646,
+    "recall": 0.6576576576576577,
+    "f1": 0.7913279132791328
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 274,
+    "true_positives": 272,
+    "precision": 0.9927007299270073,
+    "recall": 0.6126126126126126,
+    "f1": 0.7576601671309192
+   }
+  ],
+  "auroc": 0.9989443608221331,
+  "expected_count": 436.54999999999,
+  "expected_stderr": 8.352550508677021,
+  "expected_within_2se": true,
+  "ece": 0.025188030731904978,
+  "reliability": [
+   [
+    0,
+    1962,
+    0.011972477064220506,
+    0.0005096839959225281
+   ],
+   [
+    1,
+    28,
+    0.13499999999999998,
+    0.0
+   ],
+   [
+    2,
+    17,
+    0.2435294117647059,
+    0.17647058823529413
+   ],
+   [
+    3,
+    6,
+    0.335,
+    0.3333333333333333
+   ],
+   [
+    4,
+    15,
+    0.45466666666666666,
+    0.4666666666666667
+   ],
+   [
+    5,
+    28,
+    0.5596428571428572,
+    0.6428571428571429
+   ],
+   [
+    6,
+    29,
+    0.6468965517241381,
+    0.9310344827586207
+   ],
+   [
+    7,
+    46,
+    0.7506521739130435,
+    1.0
+   ],
+   [
+    8,
+    48,
+    0.85,
+    1.0
+   ],
+   [
+    9,
+    294,
+    0.9746598639455769,
+    0.9931972789115646
+   ]
+  ],
+  "false_negatives": [
+   [
+    "155",
+    "659",
+    1,
+    0.04,
+    "A: title: data mining : practical machine learning tools and techniques with java implementations; authors: ian h. witten , eibe frank; venue: acm sigmod record; year: 2002\nB: title: data mining : practical machine learning tools and techni"
+   ],
+   [
+    "1135",
+    "906",
+    1,
+    0.21,
+    "A: title: small worlds : the dynamics of networks between order and randomness; authors: jie wu , duncan j. watts; venue: acm sigmod record; year: 2002\nB: title: small worlds : the dynamics of networks between order and randomness - book re"
+   ],
+   [
+    "2524",
+    "1542",
+    1,
+    0.27,
+    "A: title: indexing multimedia databases; authors: christos faloutsos; venue: international conference on management of data; year: 1995\nB: title: indexing multimedia databases ( tutorial ); authors: christos faloutsos; venue: sigmod confere"
+   ],
+   [
+    "1645",
+    "564",
+    1,
+    0.29,
+    "A: title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmod record; year: 2000\nB: title: reminiscences on influential papers; authors: christos h. papadimitriou , anant jhingran , yannis e. ioannidis , kenneth"
+   ],
+   [
+    "2116",
+    "900",
+    1,
+    0.34,
+    "A: title: performing joins without decompression in a compressed database system; authors: s. j. o'connell , n. winterbottom; venue: acm sigmod record; year: 2003\nB: title: performing jobs without decompression in a compressed database syst"
+   ]
+  ],
+  "false_positives": [
+   [
+    "2470",
+    "343",
+    0,
+    0.98,
+    "A: title: editorial; authors: richard snodgrass; venue: acm transactions on database systems ( tods ); year: 2001\nB: title: editorial; authors: richard t. snodgrass; venue: acm trans . database syst .; year: 2001"
+   ],
+   [
+    "942",
+    "669",
+    0,
+    0.96,
+    "A: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002"
+   ],
+   [
+    "2418",
+    "1240",
+    0,
+    0.61,
+    "A: title: picodmbs : scaling down database techniques for the smartcard; authors: christophe bobineau , luc bouganim , philippe pucheral , patrick valduriez; venue: very large data bases; year: 2000\nB: title: picodbms : scaling down databas"
+   ],
+   [
+    "130",
+    "763",
+    0,
+    0.6,
+    "A: title: database tuning : principles , experiments , and troubleshooting techniques ( part i ); authors: dennis shasha , philippe bonnet; venue: international conference on management of data; year: 2002\nB: title: database tuning : princi"
+   ],
+   [
+    "303",
+    "1137",
+    0,
+    0.58,
+    "A: title: tpc-d : the challenges , issues and results; authors: ramesh bhashyam; venue: very large data bases; year: 1996\nB: title: tcp-d - the challenges , issues and results; authors: ramesh bhashyam; venue: sigmod record; year: 1996"
+   ]
+  ]
+ },
+ "abt/test/R0": {
+  "corpus": "abt",
+  "round": "R0",
+  "split": "test",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "baseline: the plain question over the JSON pair state",
+   "wording": "plain",
+   "layout": "json",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two product listings describe the same product?",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:32 UTC",
+  "seconds": 13.455550207057968,
+  "usage": {
+   "rows": 1916,
+   "deduped": 5,
+   "cache_hits": 0,
+   "cache_misses": 1911,
+   "requests": 1911,
+   "input_tokens": 818540,
+   "output_tokens": 38220,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.03437868
+  },
+  "pairs_per_second": 142.39477171249246,
+  "input_tokens_per_request": 428.33071690214547,
+  "usd_per_1k_pairs": 0.01794294363256785,
+  "rerun_seconds": 0.0140883419662714,
+  "rerun_usage": {
+   "rows": 1916,
+   "deduped": 5,
+   "cache_hits": 1911,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 1916,
+  "pairs": 1916,
+  "positives": 206,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 237,
+   "true_positives": 199,
+   "precision": 0.8396624472573839,
+   "recall": 0.9660194174757282,
+   "f1": 0.8984198645598194
+  },
+  "best_dev_threshold": {
+   "threshold": 0.6,
+   "predicted": 219,
+   "true_positives": 193,
+   "precision": 0.8812785388127854,
+   "recall": 0.9368932038834952,
+   "f1": 0.908235294117647
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 709,
+    "true_positives": 206,
+    "precision": 0.29055007052186177,
+    "recall": 1.0,
+    "f1": 0.45027322404371584
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 451,
+    "true_positives": 205,
+    "precision": 0.45454545454545453,
+    "recall": 0.9951456310679612,
+    "f1": 0.624048706240487
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 352,
+    "true_positives": 205,
+    "precision": 0.5823863636363636,
+    "recall": 0.9951456310679612,
+    "f1": 0.7347670250896058
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 314,
+    "true_positives": 205,
+    "precision": 0.6528662420382165,
+    "recall": 0.9951456310679612,
+    "f1": 0.7884615384615384
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 287,
+    "true_positives": 205,
+    "precision": 0.7142857142857143,
+    "recall": 0.9951456310679612,
+    "f1": 0.8316430020283976
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 269,
+    "true_positives": 203,
+    "precision": 0.7546468401486989,
+    "recall": 0.9854368932038835,
+    "f1": 0.8547368421052631
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 259,
+    "true_positives": 203,
+    "precision": 0.7837837837837838,
+    "recall": 0.9854368932038835,
+    "f1": 0.8731182795698924
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 248,
+    "true_positives": 202,
+    "precision": 0.8145161290322581,
+    "recall": 0.9805825242718447,
+    "f1": 0.8898678414096918
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 240,
+    "true_positives": 201,
+    "precision": 0.8375,
+    "recall": 0.9757281553398058,
+    "f1": 0.9013452914798207
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 237,
+    "true_positives": 199,
+    "precision": 0.8396624472573839,
+    "recall": 0.9660194174757282,
+    "f1": 0.8984198645598194
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 229,
+    "true_positives": 196,
+    "precision": 0.8558951965065502,
+    "recall": 0.9514563106796117,
+    "f1": 0.9011494252873563
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 219,
+    "true_positives": 193,
+    "precision": 0.8812785388127854,
+    "recall": 0.9368932038834952,
+    "f1": 0.908235294117647
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 213,
+    "true_positives": 190,
+    "precision": 0.892018779342723,
+    "recall": 0.9223300970873787,
+    "f1": 0.9069212410501193
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 208,
+    "true_positives": 185,
+    "precision": 0.8894230769230769,
+    "recall": 0.8980582524271845,
+    "f1": 0.8937198067632851
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 196,
+    "true_positives": 180,
+    "precision": 0.9183673469387755,
+    "recall": 0.8737864077669902,
+    "f1": 0.8955223880597014
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 176,
+    "true_positives": 166,
+    "precision": 0.9431818181818182,
+    "recall": 0.8058252427184466,
+    "f1": 0.8691099476439791
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 137,
+    "true_positives": 133,
+    "precision": 0.9708029197080292,
+    "recall": 0.6456310679611651,
+    "f1": 0.7755102040816327
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 95,
+    "true_positives": 95,
+    "precision": 1.0,
+    "recall": 0.46116504854368934,
+    "f1": 0.6312292358803987
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 29,
+    "true_positives": 29,
+    "precision": 1.0,
+    "recall": 0.1407766990291262,
+    "f1": 0.24680851063829787
+   }
+  ],
+  "auroc": 0.9952506671208766,
+  "expected_count": 280.56,
+  "expected_stderr": 10.04055775343177,
+  "expected_within_2se": false,
+  "ece": 0.04930062630480175,
+  "reliability": [
+   [
+    0,
+    1465,
+    0.02871672354948818,
+    0.0006825938566552901
+   ],
+   [
+    1,
+    137,
+    0.13058394160583933,
+    0.0
+   ],
+   [
+    2,
+    45,
+    0.238888888888889,
+    0.044444444444444446
+   ],
+   [
+    3,
+    21,
+    0.34428571428571425,
+    0.047619047619047616
+   ],
+   [
+    4,
+    11,
+    0.4336363636363636,
+    0.2727272727272727
+   ],
+   [
+    5,
+    18,
+    0.5444444444444445,
+    0.3333333333333333
+   ],
+   [
+    6,
+    11,
+    0.6381818181818182,
+    0.7272727272727273
+   ],
+   [
+    7,
+    32,
+    0.7500000000000002,
+    0.59375
+   ],
+   [
+    8,
+    81,
+    0.8464197530864199,
+    0.8765432098765432
+   ],
+   [
+    9,
+    95,
+    0.931263157894737,
+    1.0
+   ]
+  ],
+  "false_negatives": [
+   [
+    "410",
+    "645",
+    1,
+    0.05,
+    "{\"a\":{\"name\":\"apple 500gb time capsule wireless hard drive mb276lla\",\"description\":\"apple 500gb time capsule wireless hard drive mb276lla 500gb 7200-rpm serial ata server-grade hard disk drive up to 5x the performance and 2x the range with "
+   ],
+   [
+    "409",
+    "96",
+    1,
+    0.27,
+    "{\"a\":{\"name\":\"logitech dinovo media desktop laser keyboard and mouse combo 967562\",\"description\":\"logitech dinovo media desktop laser keyboard and mouse combo 967562 unique ultra-flat keyboard detached customizable mediapad precision rechar"
+   ],
+   [
+    "527",
+    "738",
+    1,
+    0.27,
+    "{\"a\":{\"name\":\"boston acoustics solo am/fm large display clock radio hsolomdnt\",\"description\":\"boston acoustics solo am/fm large display clock radio hsolomdnt rotating clock face precision tuner 3\u00a01/2 ? full-range speaker auxiliary input hig"
+   ],
+   [
+    "121",
+    "371",
+    1,
+    0.38,
+    "{\"a\":{\"name\":\"tivo wireless adapter ag0100\",\"description\":\"tivo wireless adapter ag0100 for use with a tivo series 2 only flip-up antenna optimized wireless performance\",\"price\":null},\"b\":{\"name\":\"tvio wireless usb network adpator\",\"descrip"
+   ],
+   [
+    "281",
+    "280",
+    1,
+    0.41,
+    "{\"a\":{\"name\":\"tech craft dark cherry veneto series tv stand swp60\",\"description\":\"tech craft dark cherry veneto series tv stand swp60 60 ' wide credenza for flat panel tv?s and dlp?s center channel compartment and storage 260 lbs tv capacit"
+   ]
+  ],
+  "false_positives": [
+   [
+    "690",
+    "785",
+    0,
+    0.86,
+    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30757ss\",\"description\":\"lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview wi"
+   ],
+   [
+    "673",
+    "785",
+    0,
+    0.85,
+    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30453ss\",\"description\":\"lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop eleme"
+   ],
+   [
+    "714",
+    "787",
+    0,
+    0.85,
+    "{\"a\":{\"name\":\"lg 30 ' stainless steel freestanding gas range lrg30357ss\",\"description\":\"lg 30 ' stainless steel freestanding gas range lrg30357ss 5.0 cu . ft. capacity oven superboil burner 5 burner system smoothtouch controls warming drawe"
+   ],
+   [
+    "714",
+    "789",
+    0,
+    0.85,
+    "{\"a\":{\"name\":\"lg 30 ' stainless steel freestanding gas range lrg30357ss\",\"description\":\"lg 30 ' stainless steel freestanding gas range lrg30357ss 5.0 cu . ft. capacity oven superboil burner 5 burner system smoothtouch controls warming drawe"
+   ],
+   [
+    "689",
+    "786",
+    0,
+    0.83,
+    "{\"a\":{\"name\":\"lg black freestanding electric range lre30757bk\",\"description\":\"lg black freestanding electric range lre30757bk 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview window warming drawer "
+   ]
+  ]
+ },
+ "abt/test/R2": {
+  "corpus": "abt",
+  "round": "R2",
+  "split": "test",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R1 with the pair as labeled text lines instead of a JSON object",
+   "wording": "colleague",
+   "layout": "text",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two listings, from two different retailers, describe the same product: the same model, not merely the same brand or product line? Different wording, a missing description or price, and a different price still mean the same product when the model number or model name matches. A different model number, a different size, colour or capacity variant, or an accessory, part or bundle for the product is a different product.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:32 UTC",
+  "seconds": 13.432313933037221,
+  "usage": {
+   "rows": 1916,
+   "deduped": 5,
+   "cache_hits": 0,
+   "cache_misses": 1911,
+   "requests": 1911,
+   "input_tokens": 946204,
+   "output_tokens": 38220,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.039740568
+  },
+  "pairs_per_second": 142.64109739778598,
+  "input_tokens_per_request": 495.13553113553115,
+  "usd_per_1k_pairs": 0.02074142379958246,
+  "rerun_seconds": 0.019624736858531833,
+  "rerun_usage": {
+   "rows": 1916,
+   "deduped": 5,
+   "cache_hits": 1911,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 1916,
+  "pairs": 1916,
+  "positives": 206,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 216,
+   "true_positives": 193,
+   "precision": 0.8935185185185185,
+   "recall": 0.9368932038834952,
+   "f1": 0.9146919431279621
+  },
+  "best_dev_threshold": {
+   "threshold": 0.55,
+   "predicted": 212,
+   "true_positives": 192,
+   "precision": 0.9056603773584906,
+   "recall": 0.9320388349514563,
+   "f1": 0.9186602870813397
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 307,
+    "true_positives": 205,
+    "precision": 0.6677524429967426,
+    "recall": 0.9951456310679612,
+    "f1": 0.7992202729044834
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 273,
+    "true_positives": 205,
+    "precision": 0.7509157509157509,
+    "recall": 0.9951456310679612,
+    "f1": 0.8559498956158663
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 258,
+    "true_positives": 203,
+    "precision": 0.7868217054263565,
+    "recall": 0.9854368932038835,
+    "f1": 0.875
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 244,
+    "true_positives": 200,
+    "precision": 0.819672131147541,
+    "recall": 0.970873786407767,
+    "f1": 0.888888888888889
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 238,
+    "true_positives": 199,
+    "precision": 0.8361344537815126,
+    "recall": 0.9660194174757282,
+    "f1": 0.8963963963963965
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 235,
+    "true_positives": 198,
+    "precision": 0.8425531914893617,
+    "recall": 0.9611650485436893,
+    "f1": 0.8979591836734694
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 232,
+    "true_positives": 198,
+    "precision": 0.853448275862069,
+    "recall": 0.9611650485436893,
+    "f1": 0.9041095890410958
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 228,
+    "true_positives": 197,
+    "precision": 0.8640350877192983,
+    "recall": 0.9563106796116505,
+    "f1": 0.9078341013824887
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 222,
+    "true_positives": 195,
+    "precision": 0.8783783783783784,
+    "recall": 0.9466019417475728,
+    "f1": 0.9112149532710281
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 216,
+    "true_positives": 193,
+    "precision": 0.8935185185185185,
+    "recall": 0.9368932038834952,
+    "f1": 0.9146919431279621
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 212,
+    "true_positives": 192,
+    "precision": 0.9056603773584906,
+    "recall": 0.9320388349514563,
+    "f1": 0.9186602870813397
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 208,
+    "true_positives": 189,
+    "precision": 0.9086538461538461,
+    "recall": 0.9174757281553398,
+    "f1": 0.9130434782608696
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 203,
+    "true_positives": 186,
+    "precision": 0.916256157635468,
+    "recall": 0.9029126213592233,
+    "f1": 0.9095354523227384
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 195,
+    "true_positives": 179,
+    "precision": 0.9179487179487179,
+    "recall": 0.8689320388349514,
+    "f1": 0.8927680798004987
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 188,
+    "true_positives": 176,
+    "precision": 0.9361702127659575,
+    "recall": 0.8543689320388349,
+    "f1": 0.8934010152284263
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 179,
+    "true_positives": 169,
+    "precision": 0.9441340782122905,
+    "recall": 0.8203883495145631,
+    "f1": 0.877922077922078
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 165,
+    "true_positives": 159,
+    "precision": 0.9636363636363636,
+    "recall": 0.7718446601941747,
+    "f1": 0.8571428571428571
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 137,
+    "true_positives": 137,
+    "precision": 1.0,
+    "recall": 0.6650485436893204,
+    "f1": 0.7988338192419826
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 82,
+    "true_positives": 82,
+    "precision": 1.0,
+    "recall": 0.39805825242718446,
+    "f1": 0.5694444444444444
+   }
+  ],
+  "auroc": 0.9960909555442004,
+  "expected_count": 229.55999999999818,
+  "expected_stderr": 7.308392436097002,
+  "expected_within_2se": false,
+  "ece": 0.022087682672234002,
+  "reliability": [
+   [
+    0,
+    1643,
+    0.015045648204504184,
+    0.0006086427267194157
+   ],
+   [
+    1,
+    29,
+    0.14206896551724138,
+    0.1724137931034483
+   ],
+   [
+    2,
+    9,
+    0.23111111111111113,
+    0.2222222222222222
+   ],
+   [
+    3,
+    7,
+    0.34714285714285714,
+    0.14285714285714285
+   ],
+   [
+    4,
+    12,
+    0.4416666666666667,
+    0.3333333333333333
+   ],
+   [
+    5,
+    8,
+    0.54875,
+    0.5
+   ],
+   [
+    6,
+    13,
+    0.6530769230769231,
+    0.7692307692307693
+   ],
+   [
+    7,
+    16,
+    0.754375,
+    0.625
+   ],
+   [
+    8,
+    42,
+    0.8559523809523808,
+    0.7619047619047619
+   ],
+   [
+    9,
+    137,
+    0.9489781021897812,
+    1.0
+   ]
+  ],
+  "false_negatives": [
+   [
+    "410",
+    "645",
+    1,
+    0.02,
+    "A: name: apple 500gb time capsule wireless hard drive mb276lla; description: apple 500gb time capsule wireless hard drive mb276lla 500gb 7200-rpm serial ata server-grade hard disk drive up to 5x the performance and 2x the range with 802.11 "
+   ],
+   [
+    "41",
+    "811",
+    1,
+    0.11,
+    "A: name: maytag bisque over-the-range microwave oven mmv4205bt; description: maytag bisque over-the-range microwave oven mmv4205bt 2.0 cu . ft. capacity 1,150 watts ten power levels 220 cfm airflow with two adjustable fan speeds scrolling v"
+   ],
+   [
+    "527",
+    "738",
+    1,
+    0.14,
+    "A: name: boston acoustics solo am/fm large display clock radio hsolomdnt; description: boston acoustics solo am/fm large display clock radio hsolomdnt rotating clock face precision tuner 3\u00a01/2 ? full-range speaker auxiliary input high contr"
+   ],
+   [
+    "409",
+    "96",
+    1,
+    0.15,
+    "A: name: logitech dinovo media desktop laser keyboard and mouse combo 967562; description: logitech dinovo media desktop laser keyboard and mouse combo 967562 unique ultra-flat keyboard detached customizable mediapad precision rechargeable "
+   ],
+   [
+    "349",
+    "1046",
+    1,
+    0.18,
+    "A: name: chestnut hill sound george ipod music system in white chs4001; description: chestnut hill sound george ipod music system in white chs4001 playback system for the ipod full feature wireless remote charging stand kit bandless am/fm r"
+   ]
+  ],
+  "false_positives": [
+   [
+    "673",
+    "785",
+    0,
+    0.88,
+    "A: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop elements wit"
+   ],
+   [
+    "690",
+    "785",
+    0,
+    0.87,
+    "A: name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview window wa"
+   ],
+   [
+    "691",
+    "786",
+    0,
+    0.87,
+    "A: name: lg 5.6 cu . ft. white freestanding electric range lre30453wh; description: lg 5.6 cu . ft. white freestanding electric range lre30453wh intuitouch control system evenjet convection system 5.6 cubic capacity wideview oven window 5 r"
+   ],
+   [
+    "692",
+    "785",
+    0,
+    0.85,
+    "A: name: lg 5.6 cu . ft. black freestanding electric range lre30453bk; description: lg 5.6 cu . ft. black freestanding electric range lre30453bk intuitouch control system evenjet convection system 5.6 cubic capacity wideview oven window 5 r"
+   ],
+   [
+    "714",
+    "787",
+    0,
+    0.85,
+    "A: name: lg 30 ' stainless steel freestanding gas range lrg30357ss; description: lg 30 ' stainless steel freestanding gas range lrg30357ss 5.0 cu . ft. capacity oven superboil burner 5 burner system smoothtouch controls warming drawer elect"
+   ]
+  ]
+ },
+ "dblp/test/R0": {
+  "corpus": "dblp",
+  "round": "R0",
+  "split": "test",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "baseline: the plain question over the JSON pair state",
+   "wording": "plain",
+   "layout": "json",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two records describe the same publication?",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:33 UTC",
+  "seconds": 17.365811639931053,
+  "usage": {
+   "rows": 2473,
+   "deduped": 16,
+   "cache_hits": 3,
+   "cache_misses": 2454,
+   "requests": 2454,
+   "input_tokens": 922880,
+   "output_tokens": 49080,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.03876096
+  },
+  "pairs_per_second": 142.40624344407655,
+  "input_tokens_per_request": 376.0717196414018,
+  "usd_per_1k_pairs": 0.015673659522846745,
+  "rerun_seconds": 0.017624248983338475,
+  "rerun_usage": {
+   "rows": 2473,
+   "deduped": 16,
+   "cache_hits": 2457,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 2473,
+  "pairs": 2473,
+  "positives": 444,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 474,
+   "true_positives": 443,
+   "precision": 0.9345991561181435,
+   "recall": 0.9977477477477478,
+   "f1": 0.9651416122004357
+  },
+  "best_dev_threshold": {
+   "threshold": 0.6,
+   "predicted": 464,
+   "true_positives": 442,
+   "precision": 0.9525862068965517,
+   "recall": 0.9954954954954955,
+   "f1": 0.9735682819383259
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 836,
+    "true_positives": 444,
+    "precision": 0.5311004784688995,
+    "recall": 1.0,
+    "f1": 0.69375
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 654,
+    "true_positives": 444,
+    "precision": 0.6788990825688074,
+    "recall": 1.0,
+    "f1": 0.8087431693989072
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 586,
+    "true_positives": 444,
+    "precision": 0.757679180887372,
+    "recall": 1.0,
+    "f1": 0.8621359223300971
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 558,
+    "true_positives": 444,
+    "precision": 0.7956989247311828,
+    "recall": 1.0,
+    "f1": 0.8862275449101796
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 535,
+    "true_positives": 444,
+    "precision": 0.8299065420560747,
+    "recall": 1.0,
+    "f1": 0.9070480081716037
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 510,
+    "true_positives": 444,
+    "precision": 0.8705882352941177,
+    "recall": 1.0,
+    "f1": 0.9308176100628931
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 495,
+    "true_positives": 444,
+    "precision": 0.896969696969697,
+    "recall": 1.0,
+    "f1": 0.9456869009584664
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 484,
+    "true_positives": 444,
+    "precision": 0.9173553719008265,
+    "recall": 1.0,
+    "f1": 0.956896551724138
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 479,
+    "true_positives": 444,
+    "precision": 0.9269311064718163,
+    "recall": 1.0,
+    "f1": 0.962080173347779
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 474,
+    "true_positives": 443,
+    "precision": 0.9345991561181435,
+    "recall": 0.9977477477477478,
+    "f1": 0.9651416122004357
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 467,
+    "true_positives": 443,
+    "precision": 0.9486081370449678,
+    "recall": 0.9977477477477478,
+    "f1": 0.9725576289791438
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 464,
+    "true_positives": 442,
+    "precision": 0.9525862068965517,
+    "recall": 0.9954954954954955,
+    "f1": 0.9735682819383259
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 461,
+    "true_positives": 440,
+    "precision": 0.9544468546637744,
+    "recall": 0.990990990990991,
+    "f1": 0.9723756906077348
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 457,
+    "true_positives": 438,
+    "precision": 0.9584245076586433,
+    "recall": 0.9864864864864865,
+    "f1": 0.9722530521642618
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 446,
+    "true_positives": 433,
+    "precision": 0.9708520179372198,
+    "recall": 0.9752252252252253,
+    "f1": 0.9730337078651685
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 426,
+    "true_positives": 415,
+    "precision": 0.9741784037558685,
+    "recall": 0.9346846846846847,
+    "f1": 0.9540229885057471
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 396,
+    "true_positives": 388,
+    "precision": 0.9797979797979798,
+    "recall": 0.8738738738738738,
+    "f1": 0.9238095238095239
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 334,
+    "true_positives": 329,
+    "precision": 0.9850299401197605,
+    "recall": 0.740990990990991,
+    "f1": 0.8457583547557841
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 243,
+    "true_positives": 243,
+    "precision": 1.0,
+    "recall": 0.5472972972972973,
+    "f1": 0.7074235807860261
+   }
+  ],
+  "auroc": 0.9986291121086587,
+  "expected_count": 509.03999999998825,
+  "expected_stderr": 10.24619929534845,
+  "expected_within_2se": false,
+  "ece": 0.041447634452082605,
+  "reliability": [
+   [
+    0,
+    1819,
+    0.022990654205607614,
+    0.0
+   ],
+   [
+    1,
+    96,
+    0.1329166666666666,
+    0.0
+   ],
+   [
+    2,
+    48,
+    0.2422916666666667,
+    0.0
+   ],
+   [
+    3,
+    26,
+    0.3396153846153846,
+    0.0
+   ],
+   [
+    4,
+    10,
+    0.4499999999999999,
+    0.1
+   ],
+   [
+    5,
+    10,
+    0.53,
+    0.1
+   ],
+   [
+    6,
+    7,
+    0.6514285714285715,
+    0.5714285714285714
+   ],
+   [
+    7,
+    31,
+    0.7538709677419354,
+    0.7419354838709677
+   ],
+   [
+    8,
+    92,
+    0.8576086956521742,
+    0.9347826086956522
+   ],
+   [
+    9,
+    334,
+    0.9502095808383232,
+    0.9850299401197605
+   ]
+  ],
+  "false_negatives": [
+   [
+    "1996",
+    "2011",
+    1,
+    0.49,
+    "{\"a\":{\"title\":\"stream : the stanford stream data manager\",\"authors\":\"jennifer widom , mayur datar , shivnath babu , justin rosenstein , itaru nishizawa , arvind arasu , keith ito , brian babcock\",\"venue\":\"sigmod conference\",\"year\":\"2003\"},\""
+   ],
+   [
+    "1814",
+    "1496",
+    1,
+    0.55,
+    "{\"a\":{\"title\":\"upsizing from file server to clent server architectures\",\"authors\":\"the access team\",\"venue\":\"sigmod conference\",\"year\":\"1995\"},\"b\":{\"title\":\"upsizing form file server to client server architectures\",\"authors\":\"corporate the "
+   ],
+   [
+    "2284",
+    "284",
+    1,
+    0.64,
+    "{\"a\":{\"title\":\"ominisearch : a method for searching dynamic content on the web\",\"authors\":\"henrique paques , ling liu , david buttler , calton pu\",\"venue\":\"sigmod conference\",\"year\":\"2001\"},\"b\":{\"title\":\"ominisearch : a method for searching"
+   ],
+   [
+    "393",
+    "2250",
+    1,
+    0.64,
+    "{\"a\":{\"title\":\"data grid management systems\",\"authors\":\"arun jagatheesan , arcot rajasekar\",\"venue\":\"sigmod conference\",\"year\":\"2003\"},\"b\":{\"title\":\"data grid management systems\",\"authors\":\"arun jagatheesan , arcot rajasekar\",\"venue\":\"inter"
+   ],
+   [
+    "2599",
+    "434",
+    1,
+    0.67,
+    "{\"a\":{\"title\":\"indexing images in oracle8i\",\"authors\":\"melliyal annamalai , samuel defazio , rajiv chopra\",\"venue\":\"sigmod conference\",\"year\":\"2000\"},\"b\":{\"title\":\"indexing images in oracle8i\",\"authors\":\"melliyal annamalai , rajiv chopra , "
+   ]
+  ],
+  "false_positives": [
+   [
+    "1899",
+    "513",
+    0,
+    0.92,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "386",
+    "744",
+    0,
+    0.92,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "705",
+    "669",
+    0,
+    0.92,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "705",
+    "904",
+    0,
+    0.92,
+    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+   ],
+   [
+    "359",
+    "551",
+    0,
+    0.9,
+    "{\"a\":{\"title\":\"reminiscences on influential papers\",\"authors\":\"daniel j. rosenkrantz , nick koudas , dan suciu , peter scheuermann , rajeev rastogi , jiawei han , kenneth a. ross\",\"venue\":\"sigmod record\",\"year\":\"2001\"},\"b\":{\"title\":\"reminis"
+   ]
+  ]
+ },
+ "dblp/test/R2": {
+  "corpus": "dblp",
+  "round": "R2",
+  "split": "test",
+  "limit": null,
+  "dry_run": false,
+  "round_config": {
+   "note": "R1 with the pair as labeled text lines instead of a JSON object",
+   "wording": "colleague",
+   "layout": "text",
+   "order": "ab",
+   "criteria": false,
+   "selectable": true
+  },
+  "question": "Do these two bibliographic records describe the same publication: the same paper with the same title and the same authors? Differences in capitalisation, punctuation, abbreviation, author name formatting or author order, and a venue written differently (a conference against its proceedings, a journal against its abbreviation) still mean the same publication. A different paper with a similar title, a different author list, or a different year is a different publication.",
+  "model": "jev-1.13.0",
+  "duckjev": "0.2.0",
+  "duckdb": "1.5.5",
+  "python": "3.13.1",
+  "concurrency": 16,
+  "timestamp": "2026-09-25 05:33 UTC",
+  "seconds": 17.44321456295438,
+  "usage": {
+   "rows": 2473,
+   "deduped": 16,
+   "cache_hits": 3,
+   "cache_misses": 2454,
+   "requests": 2454,
+   "input_tokens": 1116002,
+   "output_tokens": 49080,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.046872084
+  },
+  "pairs_per_second": 141.77432669160177,
+  "input_tokens_per_request": 454.76854115729424,
+  "usd_per_1k_pairs": 0.018953531742822483,
+  "rerun_seconds": 0.023955178912729025,
+  "rerun_usage": {
+   "rows": 2473,
+   "deduped": 16,
+   "cache_hits": 2457,
+   "cache_misses": 0,
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.0
+  },
+  "rerun_identical_rows": 2473,
+  "pairs": 2473,
+  "positives": 444,
+  "threshold": 0.5,
+  "at_threshold": {
+   "predicted": 448,
+   "true_positives": 436,
+   "precision": 0.9732142857142857,
+   "recall": 0.9819819819819819,
+   "f1": 0.9775784753363228
+  },
+  "best_dev_threshold": {
+   "threshold": 0.6,
+   "predicted": 443,
+   "true_positives": 434,
+   "precision": 0.9796839729119639,
+   "recall": 0.9774774774774775,
+   "f1": 0.9785794813979707
+  },
+  "sweep": [
+   {
+    "threshold": 0.05,
+    "predicted": 550,
+    "true_positives": 444,
+    "precision": 0.8072727272727273,
+    "recall": 1.0,
+    "f1": 0.8933601609657948
+   },
+   {
+    "threshold": 0.1,
+    "predicted": 514,
+    "true_positives": 444,
+    "precision": 0.8638132295719845,
+    "recall": 1.0,
+    "f1": 0.9269311064718163
+   },
+   {
+    "threshold": 0.15,
+    "predicted": 491,
+    "true_positives": 444,
+    "precision": 0.9042769857433809,
+    "recall": 1.0,
+    "f1": 0.9497326203208556
+   },
+   {
+    "threshold": 0.2,
+    "predicted": 480,
+    "true_positives": 444,
+    "precision": 0.925,
+    "recall": 1.0,
+    "f1": 0.961038961038961
+   },
+   {
+    "threshold": 0.25,
+    "predicted": 477,
+    "true_positives": 444,
+    "precision": 0.9308176100628931,
+    "recall": 1.0,
+    "f1": 0.9641693811074918
+   },
+   {
+    "threshold": 0.3,
+    "predicted": 471,
+    "true_positives": 442,
+    "precision": 0.9384288747346072,
+    "recall": 0.9954954954954955,
+    "f1": 0.966120218579235
+   },
+   {
+    "threshold": 0.35,
+    "predicted": 466,
+    "true_positives": 439,
+    "precision": 0.9420600858369099,
+    "recall": 0.9887387387387387,
+    "f1": 0.964835164835165
+   },
+   {
+    "threshold": 0.4,
+    "predicted": 459,
+    "true_positives": 438,
+    "precision": 0.954248366013072,
+    "recall": 0.9864864864864865,
+    "f1": 0.9700996677740864
+   },
+   {
+    "threshold": 0.45,
+    "predicted": 453,
+    "true_positives": 437,
+    "precision": 0.9646799116997793,
+    "recall": 0.9842342342342343,
+    "f1": 0.9743589743589743
+   },
+   {
+    "threshold": 0.5,
+    "predicted": 448,
+    "true_positives": 436,
+    "precision": 0.9732142857142857,
+    "recall": 0.9819819819819819,
+    "f1": 0.9775784753363228
+   },
+   {
+    "threshold": 0.55,
+    "predicted": 445,
+    "true_positives": 434,
+    "precision": 0.9752808988764045,
+    "recall": 0.9774774774774775,
+    "f1": 0.9763779527559054
+   },
+   {
+    "threshold": 0.6,
+    "predicted": 443,
+    "true_positives": 434,
+    "precision": 0.9796839729119639,
+    "recall": 0.9774774774774775,
+    "f1": 0.9785794813979707
+   },
+   {
+    "threshold": 0.65,
+    "predicted": 441,
+    "true_positives": 432,
+    "precision": 0.9795918367346939,
+    "recall": 0.972972972972973,
+    "f1": 0.976271186440678
+   },
+   {
+    "threshold": 0.7,
+    "predicted": 435,
+    "true_positives": 428,
+    "precision": 0.9839080459770115,
+    "recall": 0.963963963963964,
+    "f1": 0.9738339021615473
+   },
+   {
+    "threshold": 0.75,
+    "predicted": 431,
+    "true_positives": 425,
+    "precision": 0.9860788863109049,
+    "recall": 0.9572072072072072,
+    "f1": 0.9714285714285715
+   },
+   {
+    "threshold": 0.8,
+    "predicted": 421,
+    "true_positives": 416,
+    "precision": 0.9881235154394299,
+    "recall": 0.9369369369369369,
+    "f1": 0.9618497109826589
+   },
+   {
+    "threshold": 0.85,
+    "predicted": 408,
+    "true_positives": 403,
+    "precision": 0.9877450980392157,
+    "recall": 0.9076576576576577,
+    "f1": 0.9460093896713616
+   },
+   {
+    "threshold": 0.9,
+    "predicted": 379,
+    "true_positives": 375,
+    "precision": 0.9894459102902374,
+    "recall": 0.8445945945945946,
+    "f1": 0.9113001215066828
+   },
+   {
+    "threshold": 0.95,
+    "predicted": 311,
+    "true_positives": 307,
+    "precision": 0.9871382636655949,
+    "recall": 0.6914414414414415,
+    "f1": 0.8132450331125829
+   }
+  ],
+  "auroc": 0.998751215483596,
+  "expected_count": 459.56999999999033,
+  "expected_stderr": 7.587773059336993,
+  "expected_within_2se": false,
+  "ece": 0.019632025879498378,
+  "reliability": [
+   [
+    0,
+    1959,
+    0.012052067381317307,
+    0.0
+   ],
+   [
+    1,
+    34,
+    0.13352941176470592,
+    0.0
+   ],
+   [
+    2,
+    9,
+    0.24888888888888885,
+    0.2222222222222222
+   ],
+   [
+    3,
+    12,
+    0.3458333333333334,
+    0.3333333333333333
+   ],
+   [
+    4,
+    11,
+    0.43727272727272726,
+    0.18181818181818182
+   ],
+   [
+    5,
+    5,
+    0.542,
+    0.4
+   ],
+   [
+    6,
+    8,
+    0.65625,
+    0.75
+   ],
+   [
+    7,
+    14,
+    0.7571428571428571,
+    0.8571428571428571
+   ],
+   [
+    8,
+    42,
+    0.8602380952380952,
+    0.9761904761904762
+   ],
+   [
+    9,
+    379,
+    0.9644591029023776,
+    0.9894459102902374
+   ]
+  ],
+  "false_negatives": [
+   [
+    "1996",
+    "2011",
+    1,
+    0.27,
+    "A: title: stream : the stanford stream data manager; authors: jennifer widom , mayur datar , shivnath babu , justin rosenstein , itaru nishizawa , arvind arasu , keith ito , brian babcock; venue: sigmod conference; year: 2003\nB: title: stre"
+   ],
+   [
+    "2599",
+    "434",
+    1,
+    0.27,
+    "A: title: indexing images in oracle8i; authors: melliyal annamalai , samuel defazio , rajiv chopra; venue: sigmod conference; year: 2000\nB: title: indexing images in oracle8i; authors: melliyal annamalai , rajiv chopra , samuel defazio , su"
+   ],
+   [
+    "131",
+    "927",
+    1,
+    0.31,
+    "A: title: reminiscences an influential papers; authors: jeffrey f. naughton , minos n. garofalakis , kenneth a. ross; venue: sigmod record; year: 2003\nB: title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmo"
+   ],
+   [
+    "139",
+    "1491",
+    1,
+    0.34,
+    "A: title: things every update replication customer should know; authors: rob golding; venue: sigmod conference; year: 1995\nB: title: things every update replication customer should know ( abstract ); authors: rob goldring; venue: internatio"
+   ],
+   [
+    "2284",
+    "284",
+    1,
+    0.34,
+    "A: title: ominisearch : a method for searching dynamic content on the web; authors: henrique paques , ling liu , david buttler , calton pu; venue: sigmod conference; year: 2001\nB: title: ominisearch : a method for searching dynamic content "
+   ]
+  ],
+  "false_positives": [
+   [
+    "1899",
+    "513",
+    0,
+    0.97,
+    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+   ],
+   [
+    "386",
+    "744",
+    0,
+    0.97,
+    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+   ],
+   [
+    "705",
+    "669",
+    0,
+    0.97,
+    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+   ],
+   [
+    "705",
+    "904",
+    0,
+    0.97,
+    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+   ],
+   [
+    "866",
+    "552",
+    0,
+    0.89,
+    "A: title: special issue on data mining for intrusion detection and threat analysis - guest editor 's introduction; authors: daniel barbar\u00e1; venue: sigmod record; year: 2001\nB: title: special section on data mining for intrusion detection an"
+   ]
+  ]
+ },
+ "demo/abt": {
+  "corpus": "abt",
+  "sample_rows": 100,
+  "block": "lower(split_part(name, ' ', 1))",
+  "question": "Do these two listings, from two different retailers, describe the same product: the same model, not merely the same brand or product line? Different wording, a missing description or price, and a different price still mean the same product when the model number or model name matches. A different model number, a different size, colour or capacity variant, or an accessory, part or bundle for the product is a different product.",
+  "dry_run": false,
+  "timestamp": "2026-09-25 05:33 UTC",
+  "join_seconds": 35.916092969011515,
+  "join_usage": {
+   "rows": 5076,
+   "deduped": 44,
+   "cache_hits": 0,
+   "cache_misses": 5032,
+   "requests": 5032,
+   "input_tokens": 2561421,
+   "output_tokens": 100640,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.107579682
+  },
+  "join": {
+   "blocked_pairs": 5076,
+   "matched": 92,
+   "expected": 147.30000000000504,
+   "stderr": 8.393926375660131,
+   "matched_gold_positive": 85,
+   "matched_gold_negative": 4,
+   "matched_unlabeled": 3,
+   "gold_positive_in_blocks": 89,
+   "gold_positive_matched": 85
+  },
+  "dedup": {
+   "rows_in": 271,
+   "survivors": 248,
+   "duplicate_pairs": 23
+  },
+  "dedup_seconds": 6.499347679084167,
+  "dedup_usage": {
+   "rows": 3976,
+   "deduped": 0,
+   "cache_hits": 2930,
+   "cache_misses": 1046,
+   "requests": 1046,
+   "input_tokens": 512194,
+   "output_tokens": 20920,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.021512148
+  },
+  "topk": [
+   [
+    "weber stainless steel summit s-650 liquid propane grill 1780001",
+    1.96,
+    0.94
+   ],
+   [
+    "canon black 21.1 megapixel eos digital slr camera body eos5dmarkiibody",
+    1.92,
+    0.88
+   ],
+   [
+    "apple 1tb time capsule wireless hard drive mb277lla",
+    1.61,
+    0.42
+   ],
+   [
+    "sony vaio rt series black all-in-one desktop computer vgcrt150y",
+    1.55,
+    0.33
+   ],
+   [
+    "samsung 52 ' series 7 black flat panel lcd hdtv ln52a750",
+    1.37,
+    0.4
+   ]
+  ],
+  "topk_seconds": 0.7423622710630298,
+  "topk_usage": {
+   "rows": 100,
+   "deduped": 0,
+   "cache_hits": 0,
+   "cache_misses": 100,
+   "requests": 100,
+   "input_tokens": 39063,
+   "output_tokens": 1700,
+   "retries": 0,
+   "rate_limited": 0,
+   "overloaded": 0,
+   "est_usd": 0.001640646
+  }
+ }
+}
