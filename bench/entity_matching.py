@@ -228,6 +228,26 @@ FROM b GROUP BY bin ORDER BY bin"""
 EXAMPLES_SQL = """SELECT lid, rid, label, p, state FROM judged
 WHERE label = $label ORDER BY p {dir}, lid, rid LIMIT $k"""
 
+# Every SQL variant is built here, at import, from the corpus and round constants; the
+# execute() calls below take only these constants and bound parameters.
+LOAD_RECORDS_SQLS: dict[tuple[str, str], str] = {
+    (key, t): LOAD_RECORDS_SQL.format(t=t, rec=rec_sql(c), block=c.block)
+    for key, c in CORPORA.items()
+    for t in ("recs_a", "recs_b")
+}
+REC_TEXT_SQLS: dict[str, str] = {key: rec_text_sql(c) for key, c in CORPORA.items()}
+JUDGE_SQLS: dict[tuple[str, str, bool, str], str] = {
+    (layout, order, crit, table): JUDGE_SQL.format(
+        table=table,
+        state=state,
+        noul=f"jev_noul({state}, $q, $criteria)" if crit else f"jev_noul({state}, $q)",
+    )
+    for (layout, order), state in STATE_SQL.items()
+    for crit in (False, True)
+    for table in ("judged", "judged_rerun")
+}
+EXAMPLES_SQLS: dict[str, str] = {d: EXAMPLES_SQL.format(dir=d) for d in ("ASC", "DESC")}
+
 COVERAGE_SQL = """WITH gold AS (
   SELECT DISTINCT ltable_id::VARCHAR AS lid, rtable_id::VARCHAR AS rid
   FROM read_csv($pairs, header = true, union_by_name = true) WHERE label = 1),
@@ -271,15 +291,11 @@ def prepare() -> int:
 
 
 def load_records(con: duckdb.DuckDBPyConnection, corpus: str) -> None:
-    c = CORPORA[corpus]
     for t, file in (("recs_a", "tableA.csv"), ("recs_b", "tableB.csv")):
         if not data_file(corpus, file).exists():
             raise SystemExit("run `bench/entity_matching.py prepare` first")
-        con.execute(
-            LOAD_RECORDS_SQL.format(t=t, rec=rec_sql(c), block=c.block),
-            {"path": str(data_file(corpus, file))},
-        )
-    con.execute(rec_text_sql(c))
+        con.execute(LOAD_RECORDS_SQLS[(corpus, t)], {"path": str(data_file(corpus, file))})
+    con.execute(REC_TEXT_SQLS[corpus])
 
 
 def load(con: duckdb.DuckDBPyConnection, corpus: str, split: str, limit: int | None) -> int:
@@ -295,17 +311,18 @@ def split_size(corpus: str, split: str) -> int:
     return load(con, corpus, split, None)
 
 
-def judge_params(corpus: str, rnd: Round) -> tuple[str, dict[str, Any]]:
-    """The judged SQL of a round and its bound parameters."""
+def judge_sql(rnd: Round, table: str) -> str:
+    """The judged SQL of a round, one of the constants built at import."""
+    return JUDGE_SQLS[(rnd.layout, rnd.order, rnd.criteria, table)]
+
+
+def judge_params(corpus: str, rnd: Round) -> dict[str, Any]:
+    """The bound parameters of a round's judged SQL: the question, and criteria if asked."""
     c = CORPORA[corpus]
-    state = STATE_SQL[(rnd.layout, rnd.order)]
     params: dict[str, Any] = {"q": c.colleague if rnd.wording == "colleague" else c.plain}
-    noul = "jev_noul(state, $q)"
     if rnd.criteria:
         params["criteria"] = json.dumps(c.criteria)
-        noul = "jev_noul(state, $q, $criteria)"
-    sql = JUDGE_SQL.format(table="{table}", state=state, noul=noul.replace("state", state, 1))
-    return sql, params
+    return params
 
 
 # --------------------------------------------------------------------------- coverage
@@ -448,7 +465,7 @@ def metrics(con: duckdb.DuckDBPyConnection, threshold: float = THRESHOLD) -> dic
     ece = sum(r[1] * abs(r[3] - r[2]) for r in reliability) / n if n else None
 
     def examples(label: int, direction: str) -> list[list[Any]]:
-        rows = con.execute(EXAMPLES_SQL.format(dir=direction), {"label": label, "k": 5}).fetchall()
+        rows = con.execute(EXAMPLES_SQLS[direction], {"label": label, "k": 5}).fetchall()
         return [[lid, rid, y, p, *_two_sides(s)] for lid, rid, y, p, s in rows]
 
     return {
@@ -505,16 +522,16 @@ def run(args: argparse.Namespace) -> int:
     tag = run_tag(args.corpus, args.split, args.round, args.limit, args.dry_run)
     con = _connect(DATA / f"cache_{tag}.duckdb", args)
     n = load(con, args.corpus, args.split, args.limit)
-    sql, params = judge_params(args.corpus, rnd)
+    params = judge_params(args.corpus, rnd)
 
     duckjev.usage(reset=True)
     t0 = time.perf_counter()
-    con.execute(sql.format(table="judged"), params)
+    con.execute(judge_sql(rnd, "judged"), params)
     secs = time.perf_counter() - t0
     use = duckjev.usage(reset=True)
 
     t0 = time.perf_counter()
-    con.execute(sql.format(table="judged_rerun"), params)
+    con.execute(judge_sql(rnd, "judged_rerun"), params)
     rerun_secs = time.perf_counter() - t0
     rerun = duckjev.usage(reset=True)
     identical = con.execute(IDENTICAL_SQL).fetchone()[0]
@@ -606,9 +623,9 @@ def rescore(args: argparse.Namespace) -> int:
             con, cache_path=cache, api_key="cache-only", transport=httpx.MockTransport(_refuse)
         )
         load(con, summary["corpus"], summary["split"], None)
-        sql, params = judge_params(summary["corpus"], ROUNDS[summary["round"]])
+        rnd = ROUNDS[summary["round"]]
         duckjev.usage(reset=True)
-        con.execute(sql.format(table="judged"), params)
+        con.execute(judge_sql(rnd, "judged"), judge_params(summary["corpus"], rnd))
         assert duckjev.usage()["requests"] == 0
         con.table("judged").write_parquet(str(DATA / f"judged_{tag}.parquet"))
         before = summary["at_threshold"]["f1"]

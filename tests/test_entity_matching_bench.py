@@ -37,16 +37,23 @@ def test_corpora_and_rounds_are_well_formed() -> None:
         assert (r.layout, r.order) in bench.STATE_SQL
 
 
-def test_judge_params_follow_the_round() -> None:
-    sql, params = bench.judge_params("abt", bench.ROUNDS["R0"])
+def test_judge_sql_and_params_follow_the_round() -> None:
+    params = bench.judge_params("abt", bench.ROUNDS["R0"])
     assert params == {"q": bench.CORPORA["abt"].plain}
-    assert "jev_noul(jev_pair(a_rec, b_rec), $q)" in sql and "{table}" in sql
-    sql, params = bench.judge_params("dblp", bench.ROUNDS["R3"])
+    sql = bench.judge_sql(bench.ROUNDS["R0"], "judged")
+    assert "jev_noul(jev_pair(a_rec, b_rec), $q)" in sql and "TABLE judged AS" in sql
+    params = bench.judge_params("dblp", bench.ROUNDS["R3"])
     assert params["q"] == bench.CORPORA["dblp"].colleague and "criteria" not in params
+    sql = bench.judge_sql(bench.ROUNDS["R3"], "judged_rerun")
     assert "rec_text(b_rec) || chr(10) || 'B: ' || rec_text(a_rec)" in sql
-    sql, params = bench.judge_params("abt", bench.ROUNDS["R4"])
+    assert "TABLE judged_rerun AS" in sql
+    params = bench.judge_params("abt", bench.ROUNDS["R4"])
     assert json.loads(params["criteria"]) == bench.CORPORA["abt"].criteria
-    assert "$criteria)" in sql
+    assert "$criteria)" in bench.judge_sql(bench.ROUNDS["R4"], "judged")
+    assert len(bench.JUDGE_SQLS) == len(bench.STATE_SQL) * 2 * 2
+    assert set(bench.LOAD_RECORDS_SQLS) == {
+        (k, t) for k in bench.CORPORA for t in ("recs_a", "recs_b")
+    }
 
 
 def test_auroc_and_prf() -> None:
