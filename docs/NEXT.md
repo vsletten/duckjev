@@ -259,8 +259,9 @@ and are scripts under `bench/`, never tests. Never print, log, or commit the key
 - The merged `spike-banking77` branch still exists on origin; delete it or keep it.
 - The answer-cache key is order-preserving since PR #4: reordering the options of a
   Choice, the levels of a Score or the fields of an object state is a new key. Entries
-  written before that change are never hit again (they were keyed on sorted JSON); the
-  default cache file can be deleted to reclaim the space.
+  written before that change whose insertion order differed from sorted-key order are
+  never hit again (they were keyed on sorted JSON); deleting the default cache file
+  reclaims only those orphaned entries.
 - The PR #1 held-out run lives in `docs/results/banking77_runs.json` as the `pr1/R0`
   entry (flagged `legacy`, no answer cache), imported from its headline file
   `docs/results/banking77.json`, which PR #3 removed so that `report` reads one file.
