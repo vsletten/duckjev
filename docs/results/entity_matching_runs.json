@@ -324,35 +324,40 @@
     "736",
     1,
     0.23,
-    "{\"a\":{\"name\":\"canon black eos rebel xsi digital slr camera xsireb1855\",\"description\":\"canon black eos rebel xsi digital slr camera xsireb1855 12.2 megapixel digic iii image processor extensive noise reduction technology auto optimization 3."
+    "{\"name\": \"canon black eos rebel xsi digital slr camera xsireb1855\", \"description\": \"canon black eos rebel xsi ",
+    "{\"name\": \"canon eos rebel xsi digital slr camera silver 2757b001\", \"description\": \"12.2 megapixel 3 ' active m"
    ],
    [
     "902",
     "960",
     1,
     0.34,
-    "{\"a\":{\"name\":\"canon powershot black digital camera sx110isb\",\"description\":\"canon powershot sx110 is black digital camera sx110isb 9.0 megapixel 10x optical zoom lens with optical image stabilizer technology 3.0 ' lcd display digic iii imag"
+    "{\"name\": \"canon powershot black digital camera sx110isb\", \"description\": \"canon powershot sx110 is black digit",
+    "{\"name\": \"canon powershot sx110 is digital camera silver 2666b001\", \"description\": \"canon powershot sx110 is 9"
    ],
    [
     "302",
     "426",
     1,
     0.39,
-    "{\"a\":{\"name\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\",\"description\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct drive motor 1200 rpm powerful spin senseclean system 9 washing "
+    "{\"name\": \"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\", \"description\": \"lg wm2455hg 4.2 cu ft p",
+    "{\"name\": \"lg 4.0 cu . ft. capacity front load washer w / sanitary cycle\", \"description\": null, \"price\": null}"
    ],
    [
     "30",
     "41",
     1,
     0.48,
-    "{\"a\":{\"name\":\"sanus euro foundations satellite speaker stand efsats\",\"description\":\"sanus euro foundations satellite speaker stand efsats sturdy base adjustable pillar and floor spikes includes three different speaker mounting methods conte"
+    "{\"name\": \"sanus euro foundations satellite speaker stand efsats\", \"description\": \"sanus euro foundations satel",
+    "{\"name\": \"sanus euro foundation series iii speaker stand efsatsiii\", \"description\": \"steel silver\", \"price\": n"
    ],
    [
     "472",
     "684",
     1,
     0.49,
-    "{\"a\":{\"name\":\"yamaha 7.2 channel black digital home theater receiver rxv863bk\",\"description\":\"yamaha 7.2 channel black digital home theater receiver rxv863bk 4 scene buttons xm ready with xm hd surround sirius satellite radio ready ypao ipo"
+    "{\"name\": \"yamaha 7.2 channel black digital home theater receiver rxv863bk\", \"description\": \"yamaha 7.2 channel",
+    "{\"name\": \"yamaha rx-v863 home theater receiver rxv863bl\", \"description\": \"735w dolby truehd , dolby digital ex"
    ]
   ],
   "false_positives": [
@@ -361,35 +366,40 @@
     "783",
     0,
     0.86,
-    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30757ss\",\"description\":\"lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview wi"
+    "{\"name\": \"lg stainless steel freestanding electric range lre30757ss\", \"description\": \"lg stainless steel frees",
+    "{\"name\": \"lg 5.6 cu.ft . freestanding electric range\", \"description\": null, \"price\": null}"
    ],
    [
     "19",
     "40",
     0,
     0.85,
-    "{\"a\":{\"name\":\"omnimount wall speaker mount 20wlbk\",\"description\":\"omnimount wall speaker mount 20wlbk stainless steel shafts and all necessary hardware included supports speakers up to 20 lbs . sold as single black finish\",\"price\":\"39.95\"},"
+    "{\"name\": \"omnimount wall speaker mount 20wlbk\", \"description\": \"omnimount wall speaker mount 20wlbk stainless ",
+    "{\"name\": \"omnimount stainless steel speaker mount 20.0 wall-w\", \"description\": \"stainless steel 20 lb\", \"price"
    ],
    [
     "297",
     "453",
     0,
     0.85,
-    "{\"a\":{\"name\":\"lg dle3733w white xl capacity electric dryer dle3733wh\",\"description\":\"lg dle3733w white xl capacity electric dryer dle3733wh 7.3 cu . ft. capacity lodecibel quiet system 7 drying programs 5 temperature levels upfront electron"
+    "{\"name\": \"lg dle3733w white xl capacity electric dryer dle3733wh\", \"description\": \"lg dle3733w white xl capaci",
+    "{\"name\": \"lg 27 ' front-load electric dryer with 7.3 cu . ft. capacity\", \"description\": null, \"price\": null}"
    ],
    [
     "673",
     "782",
     0,
     0.85,
-    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30453ss\",\"description\":\"lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop eleme"
+    "{\"name\": \"lg stainless steel freestanding electric range lre30453ss\", \"description\": \"lg stainless steel frees",
+    "{\"name\": \"lg 5.6 cu.ft . freestanding electric range\", \"description\": null, \"price\": null}"
    ],
    [
     "673",
     "786",
     0,
     0.85,
-    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30453ss\",\"description\":\"lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop eleme"
+    "{\"name\": \"lg stainless steel freestanding electric range lre30453ss\", \"description\": \"lg stainless steel frees",
+    "{\"name\": \"lg 5.6 cu.ft . freestanding electric range\", \"description\": null, \"price\": null}"
    ]
   ]
  },
@@ -691,35 +701,40 @@
     "659",
     1,
     0.61,
-    "{\"a\":{\"title\":\"data mining : practical machine learning tools and techniques - book review\",\"authors\":\"james geller\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"data mining : practical machine learning tools and techniques with jav"
+    "{\"title\": \"data mining : practical machine learning tools and techniques - book review\", \"authors\": \"james gel",
+    "{\"title\": \"data mining : practical machine learning tools and techniques with java implementations\", \"authors\""
    ],
    [
     "2524",
     "1542",
     1,
     0.62,
-    "{\"a\":{\"title\":\"indexing multimedia databases ( tutorial )\",\"authors\":\"christos faloutsos\",\"venue\":\"sigmod conference\",\"year\":\"1995\"},\"b\":{\"title\":\"indexing multimedia databases\",\"authors\":\"christos faloutsos\",\"venue\":\"international conferen"
+    "{\"title\": \"indexing multimedia databases ( tutorial )\", \"authors\": \"christos faloutsos\", \"venue\": \"sigmod conf",
+    "{\"title\": \"indexing multimedia databases\", \"authors\": \"christos faloutsos\", \"venue\": \"international conference"
    ],
    [
     "2113",
     "391",
     1,
     0.65,
-    "{\"a\":{\"title\":\"data management in ecommerce : the good , the bad , and the ugly\",\"authors\":\"avigdor gal\",\"venue\":\"sigmod conference\",\"year\":\"2000\"},\"b\":{\"title\":\"data management in ecommerce ( tutorial session ) : the good , the bad , and t"
+    "{\"title\": \"data management in ecommerce : the good , the bad , and the ugly\", \"authors\": \"avigdor gal\", \"venue",
+    "{\"title\": \"data management in ecommerce ( tutorial session ) : the good , the bad , and the ugly\", \"authors\": "
    ],
    [
     "1541",
     "255",
     1,
     0.7,
-    "{\"a\":{\"title\":\"data mining techniques\",\"authors\":\"jiawei han\",\"venue\":\"sigmod conference\",\"year\":\"1996\"},\"b\":{\"title\":\"data mining techniques\",\"authors\":\"jiawei han\",\"venue\":\"international conference on management of data\",\"year\":\"1996\"}}"
+    "{\"title\": \"data mining techniques\", \"authors\": \"jiawei han\", \"venue\": \"sigmod conference\", \"year\": \"1996\"}",
+    "{\"title\": \"data mining techniques\", \"authors\": \"jiawei han\", \"venue\": \"international conference on management "
    ],
    [
     "1058",
     "43",
     1,
     0.71,
-    "{\"a\":{\"title\":\"in-memory data management for consumer transactions the times-ten approach\",\"authors\":\"times-ten team\",\"venue\":\"sigmod conference\",\"year\":\"1999\"},\"b\":{\"title\":\"in-memory data management for consumer transactions the timesten "
+    "{\"title\": \"in-memory data management for consumer transactions the times-ten approach\", \"authors\": \"times-ten ",
+    "{\"title\": \"in-memory data management for consumer transactions the timesten approach\", \"authors\": \"corporate t"
    ]
   ],
   "false_positives": [
@@ -728,35 +743,40 @@
     "343",
     0,
     0.95,
-    "{\"a\":{\"title\":\"editorial\",\"authors\":\"richard t. snodgrass\",\"venue\":\"acm trans . database syst .\",\"year\":\"2001\"},\"b\":{\"title\":\"editorial\",\"authors\":\"richard snodgrass\",\"venue\":\"acm transactions on database systems ( tods )\",\"year\":\"2001\"}}"
+    "{\"title\": \"editorial\", \"authors\": \"richard t. snodgrass\", \"venue\": \"acm trans . database syst .\", \"year\": \"200",
+    "{\"title\": \"editorial\", \"authors\": \"richard snodgrass\", \"venue\": \"acm transactions on database systems ( tods )"
    ],
    [
     "942",
     "669",
     0,
     0.93,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "1899",
     "512",
     0,
     0.84,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book reviews\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book reviews\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "386",
     "619",
     0,
     0.84,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book reviews\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book reviews\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "705",
     "512",
     0,
     0.84,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book reviews\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book reviews\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ]
   ]
  },
@@ -1058,35 +1078,40 @@
     "960",
     1,
     0.09,
-    "{\"a\":{\"name\":\"canon powershot black digital camera sx110isb\",\"description\":\"canon powershot sx110 is black digital camera sx110isb 9.0 megapixel 10x optical zoom lens with optical image stabilizer technology 3.0 ' lcd display digic iii imag"
+    "{\"name\": \"canon powershot black digital camera sx110isb\", \"description\": \"canon powershot sx110 is black digit",
+    "{\"name\": \"canon powershot sx110 is digital camera silver 2666b001\", \"description\": \"canon powershot sx110 is 9"
    ],
    [
     "491",
     "736",
     1,
     0.11,
-    "{\"a\":{\"name\":\"canon black eos rebel xsi digital slr camera xsireb1855\",\"description\":\"canon black eos rebel xsi digital slr camera xsireb1855 12.2 megapixel digic iii image processor extensive noise reduction technology auto optimization 3."
+    "{\"name\": \"canon black eos rebel xsi digital slr camera xsireb1855\", \"description\": \"canon black eos rebel xsi ",
+    "{\"name\": \"canon eos rebel xsi digital slr camera silver 2757b001\", \"description\": \"12.2 megapixel 3 ' active m"
    ],
    [
     "832",
     "49",
     1,
     0.12,
-    "{\"a\":{\"name\":\"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h\",\"description\":\"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h record up to 30 minutes of video on these write-once discs 1.4 gb storage capacity compatible with minidvd"
+    "{\"name\": \"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h\", \"description\": \"sony 8cm minidvd-r camcorder m",
+    "{\"name\": \"sony mini dvd-r media 3dmr30l1h\", \"description\": \"1.4 gb 3 pack\", \"price\": \"6.99\"}"
    ],
    [
     "302",
     "426",
     1,
     0.14,
-    "{\"a\":{\"name\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\",\"description\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct drive motor 1200 rpm powerful spin senseclean system 9 washing "
+    "{\"name\": \"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\", \"description\": \"lg wm2455hg 4.2 cu ft p",
+    "{\"name\": \"lg 4.0 cu . ft. capacity front load washer w / sanitary cycle\", \"description\": null, \"price\": null}"
    ],
    [
     "157",
     "713",
     1,
     0.29,
-    "{\"a\":{\"name\":\"denon 5-disc cd auto changer black finish dcm290\",\"description\":\"denon 5-disc cd auto changer dcm290 cd-r/rw playback advanced multilevel noise shaping dac digital filter 3-mode random playback intelligent disc scan music cale"
+    "{\"name\": \"denon 5-disc cd auto changer black finish dcm290\", \"description\": \"denon 5-disc cd auto changer dcm2",
+    "{\"name\": \"denon pro 5 cd carousel changer nic dcm290p\", \"description\": null, \"price\": null}"
    ]
   ],
   "false_positives": [
@@ -1095,35 +1120,40 @@
     "86",
     0,
     0.82,
-    "{\"a\":{\"name\":\"canon cyan photo ink cartridge cyan cli8pc\",\"description\":\"canon cyan photo ink cartridge cli8pc compatible with the pixma ip6600d printer\",\"price\":\"16.0\"},\"b\":{\"name\":\"canon cli-8c ink cartridge 0621b002\",\"description\":\"cyan\""
+    "{\"name\": \"canon cyan photo ink cartridge cyan cli8pc\", \"description\": \"canon cyan photo ink cartridge cli8pc c",
+    "{\"name\": \"canon cli-8c ink cartridge 0621b002\", \"description\": \"cyan\", \"price\": \"13.99\"}"
    ],
    [
     "19",
     "40",
     0,
     0.8,
-    "{\"a\":{\"name\":\"omnimount wall speaker mount 20wlbk\",\"description\":\"omnimount wall speaker mount 20wlbk stainless steel shafts and all necessary hardware included supports speakers up to 20 lbs . sold as single black finish\",\"price\":\"39.95\"},"
+    "{\"name\": \"omnimount wall speaker mount 20wlbk\", \"description\": \"omnimount wall speaker mount 20wlbk stainless ",
+    "{\"name\": \"omnimount stainless steel speaker mount 20.0 wall-w\", \"description\": \"stainless steel 20 lb\", \"price"
    ],
    [
     "297",
     "453",
     0,
     0.78,
-    "{\"a\":{\"name\":\"lg dle3733w white xl capacity electric dryer dle3733wh\",\"description\":\"lg dle3733w white xl capacity electric dryer dle3733wh 7.3 cu . ft. capacity lodecibel quiet system 7 drying programs 5 temperature levels upfront electron"
+    "{\"name\": \"lg dle3733w white xl capacity electric dryer dle3733wh\", \"description\": \"lg dle3733w white xl capaci",
+    "{\"name\": \"lg 27 ' front-load electric dryer with 7.3 cu . ft. capacity\", \"description\": null, \"price\": null}"
    ],
    [
     "719",
     "801",
     0,
     0.77,
-    "{\"a\":{\"name\":\"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh\",\"description\":\"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm ex"
+    "{\"name\": \"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh\", \"description\": \"lg 2.0 cu . ft. ove",
+    "{\"name\": \"lg 2.0 cu.ft . over the range microwave oven\", \"description\": null, \"price\": null}"
    ],
    [
     "690",
     "783",
     0,
     0.76,
-    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30757ss\",\"description\":\"lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview wi"
+    "{\"name\": \"lg stainless steel freestanding electric range lre30757ss\", \"description\": \"lg stainless steel frees",
+    "{\"name\": \"lg 5.6 cu.ft . freestanding electric range\", \"description\": null, \"price\": null}"
    ]
   ]
  },
@@ -1425,35 +1455,40 @@
     "49",
     1,
     0.1,
-    "A: name: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h; description: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h record up to 30 minutes of video on these write-once discs 1.4 gb storage capacity compatible with minidvd camcor"
+    "name: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h; description: sony 8cm minidvd-r camcorder media 3 p",
+    "name: sony mini dvd-r media 3dmr30l1h; description: 1.4 gb 3 pack; price: 6.99"
    ],
    [
     "491",
     "736",
     1,
     0.11,
-    "A: name: canon black eos rebel xsi digital slr camera xsireb1855; description: canon black eos rebel xsi digital slr camera xsireb1855 12.2 megapixel digic iii image processor extensive noise reduction technology auto optimization 3.0 ' lcd"
+    "name: canon black eos rebel xsi digital slr camera xsireb1855; description: canon black eos rebel xsi digital ",
+    "name: canon eos rebel xsi digital slr camera silver 2757b001; description: 12.2 megapixel 3 ' active matrix tf"
    ],
    [
     "902",
     "960",
     1,
     0.12,
-    "A: name: canon powershot black digital camera sx110isb; description: canon powershot sx110 is black digital camera sx110isb 9.0 megapixel 10x optical zoom lens with optical image stabilizer technology 3.0 ' lcd display digic iii image proce"
+    "name: canon powershot black digital camera sx110isb; description: canon powershot sx110 is black digital camer",
+    "name: canon powershot sx110 is digital camera silver 2666b001; description: canon powershot sx110 is 9 megapix"
    ],
    [
     "302",
     "426",
     1,
     0.13,
-    "A: name: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g; description: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct drive motor 1200 rpm powerful spin senseclean system 9 washing program"
+    "name: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g; description: lg wm2455hg 4.2 cu ft pearl gra",
+    "name: lg 4.0 cu . ft. capacity front load washer w / sanitary cycle"
    ],
    [
     "30",
     "41",
     1,
     0.18,
-    "A: name: sanus euro foundations satellite speaker stand efsats; description: sanus euro foundations satellite speaker stand efsats sturdy base adjustable pillar and floor spikes includes three different speaker mounting methods contemporary"
+    "name: sanus euro foundations satellite speaker stand efsats; description: sanus euro foundations satellite spe",
+    "name: sanus euro foundation series iii speaker stand efsatsiii; description: steel silver"
    ]
   ],
   "false_positives": [
@@ -1462,35 +1497,40 @@
     "783",
     0,
     0.9,
-    "A: name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview window wa"
+    "name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding ",
+    "name: lg 5.6 cu.ft . freestanding electric range"
    ],
    [
     "719",
     "801",
     0,
     0.9,
-    "A: name: lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh; description: lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm exhaust s"
+    "name: lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh; description: lg 2.0 cu . ft. over-the-ra",
+    "name: lg 2.0 cu.ft . over the range microwave oven"
    ],
    [
     "673",
     "782",
     0,
     0.87,
-    "A: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop elements wit"
+    "name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding ",
+    "name: lg 5.6 cu.ft . freestanding electric range"
    ],
    [
     "673",
     "786",
     0,
     0.87,
-    "A: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop elements wit"
+    "name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding ",
+    "name: lg 5.6 cu.ft . freestanding electric range"
    ],
    [
     "720",
     "801",
     0,
     0.87,
-    "A: name: lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk; description: lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm exhaust s"
+    "name: lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk; description: lg 2.0 cu . ft. over-the-ra",
+    "name: lg 2.0 cu.ft . over the range microwave oven"
    ]
   ]
  },
@@ -1792,35 +1832,40 @@
     "960",
     1,
     0.09,
-    "{\"a\":{\"name\":\"canon powershot black digital camera sx110isb\",\"description\":\"canon powershot sx110 is black digital camera sx110isb 9.0 megapixel 10x optical zoom lens with optical image stabilizer technology 3.0 ' lcd display digic iii imag"
+    "{\"name\": \"canon powershot black digital camera sx110isb\", \"description\": \"canon powershot sx110 is black digit",
+    "{\"name\": \"canon powershot sx110 is digital camera silver 2666b001\", \"description\": \"canon powershot sx110 is 9"
    ],
    [
     "491",
     "736",
     1,
     0.1,
-    "{\"a\":{\"name\":\"canon black eos rebel xsi digital slr camera xsireb1855\",\"description\":\"canon black eos rebel xsi digital slr camera xsireb1855 12.2 megapixel digic iii image processor extensive noise reduction technology auto optimization 3."
+    "{\"name\": \"canon black eos rebel xsi digital slr camera xsireb1855\", \"description\": \"canon black eos rebel xsi ",
+    "{\"name\": \"canon eos rebel xsi digital slr camera silver 2757b001\", \"description\": \"12.2 megapixel 3 ' active m"
    ],
    [
     "832",
     "49",
     1,
     0.1,
-    "{\"a\":{\"name\":\"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h\",\"description\":\"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h record up to 30 minutes of video on these write-once discs 1.4 gb storage capacity compatible with minidvd"
+    "{\"name\": \"sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h\", \"description\": \"sony 8cm minidvd-r camcorder m",
+    "{\"name\": \"sony mini dvd-r media 3dmr30l1h\", \"description\": \"1.4 gb 3 pack\", \"price\": \"6.99\"}"
    ],
    [
     "302",
     "426",
     1,
     0.14,
-    "{\"a\":{\"name\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\",\"description\":\"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct drive motor 1200 rpm powerful spin senseclean system 9 washing "
+    "{\"name\": \"lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g\", \"description\": \"lg wm2455hg 4.2 cu ft p",
+    "{\"name\": \"lg 4.0 cu . ft. capacity front load washer w / sanitary cycle\", \"description\": null, \"price\": null}"
    ],
    [
     "157",
     "713",
     1,
     0.16,
-    "{\"a\":{\"name\":\"denon 5-disc cd auto changer black finish dcm290\",\"description\":\"denon 5-disc cd auto changer dcm290 cd-r/rw playback advanced multilevel noise shaping dac digital filter 3-mode random playback intelligent disc scan music cale"
+    "{\"name\": \"denon 5-disc cd auto changer black finish dcm290\", \"description\": \"denon 5-disc cd auto changer dcm2",
+    "{\"name\": \"denon pro 5 cd carousel changer nic dcm290p\", \"description\": null, \"price\": null}"
    ]
   ],
   "false_positives": [
@@ -1829,35 +1874,40 @@
     "86",
     0,
     0.8,
-    "{\"a\":{\"name\":\"canon cyan photo ink cartridge cyan cli8pc\",\"description\":\"canon cyan photo ink cartridge cli8pc compatible with the pixma ip6600d printer\",\"price\":\"16.0\"},\"b\":{\"name\":\"canon cli-8c ink cartridge 0621b002\",\"description\":\"cyan\""
+    "{\"name\": \"canon cyan photo ink cartridge cyan cli8pc\", \"description\": \"canon cyan photo ink cartridge cli8pc c",
+    "{\"name\": \"canon cli-8c ink cartridge 0621b002\", \"description\": \"cyan\", \"price\": \"13.99\"}"
    ],
    [
     "19",
     "40",
     0,
     0.74,
-    "{\"a\":{\"name\":\"omnimount wall speaker mount 20wlbk\",\"description\":\"omnimount wall speaker mount 20wlbk stainless steel shafts and all necessary hardware included supports speakers up to 20 lbs . sold as single black finish\",\"price\":\"39.95\"},"
+    "{\"name\": \"omnimount wall speaker mount 20wlbk\", \"description\": \"omnimount wall speaker mount 20wlbk stainless ",
+    "{\"name\": \"omnimount stainless steel speaker mount 20.0 wall-w\", \"description\": \"stainless steel 20 lb\", \"price"
    ],
    [
     "297",
     "453",
     0,
     0.73,
-    "{\"a\":{\"name\":\"lg dle3733w white xl capacity electric dryer dle3733wh\",\"description\":\"lg dle3733w white xl capacity electric dryer dle3733wh 7.3 cu . ft. capacity lodecibel quiet system 7 drying programs 5 temperature levels upfront electron"
+    "{\"name\": \"lg dle3733w white xl capacity electric dryer dle3733wh\", \"description\": \"lg dle3733w white xl capaci",
+    "{\"name\": \"lg 27 ' front-load electric dryer with 7.3 cu . ft. capacity\", \"description\": null, \"price\": null}"
    ],
    [
     "719",
     "801",
     0,
     0.73,
-    "{\"a\":{\"name\":\"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh\",\"description\":\"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm ex"
+    "{\"name\": \"lg 2.0 cu . ft. over-the-range white microwave oven lmvm2085wh\", \"description\": \"lg 2.0 cu . ft. ove",
+    "{\"name\": \"lg 2.0 cu.ft . over the range microwave oven\", \"description\": null, \"price\": null}"
    ],
    [
     "720",
     "801",
     0,
     0.69,
-    "{\"a\":{\"name\":\"lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk\",\"description\":\"lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk warming lamp glide & spin sliding tray with turntable sensor cook feature 300 cfm ex"
+    "{\"name\": \"lg 2.0 cu . ft. over-the-range black microwave oven lmvm2085bk\", \"description\": \"lg 2.0 cu . ft. ove",
+    "{\"name\": \"lg 2.0 cu.ft . over the range microwave oven\", \"description\": null, \"price\": null}"
    ]
   ]
  },
@@ -2159,35 +2209,40 @@
     "659",
     1,
     0.09,
-    "{\"a\":{\"title\":\"data mining : practical machine learning tools and techniques - book review\",\"authors\":\"james geller\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"data mining : practical machine learning tools and techniques with jav"
+    "{\"title\": \"data mining : practical machine learning tools and techniques - book review\", \"authors\": \"james gel",
+    "{\"title\": \"data mining : practical machine learning tools and techniques with java implementations\", \"authors\""
    ],
    [
     "2152",
     "1166",
     1,
     0.24,
-    "{\"a\":{\"title\":\"the impact of technology on commercial transaction processing\",\"authors\":\"edward e. cobb\",\"venue\":\"vldb j.\",\"year\":\"1997\"},\"b\":{\"title\":\"the impact of object technology on commercial transaction processing\",\"authors\":\"edward "
+    "{\"title\": \"the impact of technology on commercial transaction processing\", \"authors\": \"edward e. cobb\", \"venue",
+    "{\"title\": \"the impact of object technology on commercial transaction processing\", \"authors\": \"edward e. cobb\","
    ],
    [
     "2116",
     "900",
     1,
     0.29,
-    "{\"a\":{\"title\":\"performing jobs without decompression in a compressed database system\",\"authors\":\"n. winterbottom , s. j. o'connell\",\"venue\":\"sigmod record\",\"year\":\"2003\"},\"b\":{\"title\":\"performing joins without decompression in a compressed "
+    "{\"title\": \"performing jobs without decompression in a compressed database system\", \"authors\": \"n. winterbottom",
+    "{\"title\": \"performing joins without decompression in a compressed database system\", \"authors\": \"s. j. o'connel"
    ],
    [
     "1645",
     "564",
     1,
     0.31,
-    "{\"a\":{\"title\":\"reminiscences on influential papers\",\"authors\":\"christos h. papadimitriou , anant jhingran , yannis e. ioannidis , kenneth a. ross\",\"venue\":\"sigmod record\",\"year\":\"2000\"},\"b\":{\"title\":\"reminiscences on influential papers\",\"au"
+    "{\"title\": \"reminiscences on influential papers\", \"authors\": \"christos h. papadimitriou , anant jhingran , yann",
+    "{\"title\": \"reminiscences on influential papers\", \"authors\": \"kenneth a. ross\", \"venue\": \"acm sigmod record\", \""
    ],
    [
     "382",
     "2058",
     1,
     0.35,
-    "{\"a\":{\"title\":\"a framework for change diagnosis of data streams\",\"authors\":\"charu c. aggarwal\",\"venue\":\"sigmod conference\",\"year\":\"2003\"},\"b\":{\"title\":\"a framework for diagnosing changes in evolving data streams\",\"authors\":\"charu c. aggarwa"
+    "{\"title\": \"a framework for change diagnosis of data streams\", \"authors\": \"charu c. aggarwal\", \"venue\": \"sigmod",
+    "{\"title\": \"a framework for diagnosing changes in evolving data streams\", \"authors\": \"charu c. aggarwal\", \"venu"
    ]
   ],
   "false_positives": [
@@ -2196,35 +2251,40 @@
     "343",
     0,
     0.97,
-    "{\"a\":{\"title\":\"editorial\",\"authors\":\"richard t. snodgrass\",\"venue\":\"acm trans . database syst .\",\"year\":\"2001\"},\"b\":{\"title\":\"editorial\",\"authors\":\"richard snodgrass\",\"venue\":\"acm transactions on database systems ( tods )\",\"year\":\"2001\"}}"
+    "{\"title\": \"editorial\", \"authors\": \"richard t. snodgrass\", \"venue\": \"acm trans . database syst .\", \"year\": \"200",
+    "{\"title\": \"editorial\", \"authors\": \"richard snodgrass\", \"venue\": \"acm transactions on database systems ( tods )"
    ],
    [
     "942",
     "669",
     0,
     0.97,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "1751",
     "804",
     0,
     0.73,
-    "{\"a\":{\"title\":\"context-based prefetch - an optimization for implementing objects on relations\",\"authors\":\"david shutt , philip a. bernstein , shankar pal\",\"venue\":\"vldb j.\",\"year\":\"2000\"},\"b\":{\"title\":\"context-based prefetch for implementin"
+    "{\"title\": \"context-based prefetch - an optimization for implementing objects on relations\", \"authors\": \"david ",
+    "{\"title\": \"context-based prefetch for implementing objects on relations\", \"authors\": \"philip a. bernstein , sh"
    ],
    [
     "317",
     "1032",
     0,
     0.69,
-    "{\"a\":{\"title\":\"garbage collection in object-oriented databases using transactional cyclic reference counting\",\"authors\":\"s. sudarshan , prasan roy , abraham silberschatz , srinivas ashwin , s. seshadri\",\"venue\":\"vldb j.\",\"year\":\"1998\"},\"b\":"
+    "{\"title\": \"garbage collection in object-oriented databases using transactional cyclic reference counting\", \"au",
+    "{\"title\": \"garbage collection in object oriented databases using transactional cyclic reference counting\", \"au"
    ],
    [
     "1165",
     "1911",
     0,
     0.68,
-    "{\"a\":{\"title\":\"tpc-d : the challenges , issues and results\",\"authors\":\"ramesh bhashyam\",\"venue\":\"vldb\",\"year\":\"1996\"},\"b\":{\"title\":\"tpc-d-the challenges , issues and results\",\"authors\":\"ramesh bhashyam\",\"venue\":\"acm sigmod record\",\"year\":\"1"
+    "{\"title\": \"tpc-d : the challenges , issues and results\", \"authors\": \"ramesh bhashyam\", \"venue\": \"vldb\", \"year\"",
+    "{\"title\": \"tpc-d-the challenges , issues and results\", \"authors\": \"ramesh bhashyam\", \"venue\": \"acm sigmod reco"
    ]
   ]
  },
@@ -2526,35 +2586,40 @@
     "659",
     1,
     0.06,
-    "A: title: data mining : practical machine learning tools and techniques - book review; authors: james geller; venue: sigmod record; year: 2002\nB: title: data mining : practical machine learning tools and techniques with java implementations"
+    "title: data mining : practical machine learning tools and techniques - book review; authors: james geller; ven",
+    "title: data mining : practical machine learning tools and techniques with java implementations; authors: ian h"
    ],
    [
     "1871",
     "402",
     1,
     0.32,
-    "A: title: spire : a progressive content-based spatial image retrieval engine; authors: chung-sheng li , vittorio castelli , lawrence d. bergman , john r. smith; venue: sigmod conference; year: 2000\nB: title: spire : a progressive content-ba"
+    "title: spire : a progressive content-based spatial image retrieval engine; authors: chung-sheng li , vittorio ",
+    "title: spire : a progressive content-based spatial image retrieval engine; authors: chung-sheng li , lawrence "
    ],
    [
     "2152",
     "1166",
     1,
     0.36,
-    "A: title: the impact of technology on commercial transaction processing; authors: edward e. cobb; venue: vldb j.; year: 1997\nB: title: the impact of object technology on commercial transaction processing; authors: edward e. cobb; venue: the"
+    "title: the impact of technology on commercial transaction processing; authors: edward e. cobb; venue: vldb j.;",
+    "title: the impact of object technology on commercial transaction processing; authors: edward e. cobb; venue: t"
    ],
    [
     "1645",
     "564",
     1,
     0.38,
-    "A: title: reminiscences on influential papers; authors: christos h. papadimitriou , anant jhingran , yannis e. ioannidis , kenneth a. ross; venue: sigmod record; year: 2000\nB: title: reminiscences on influential papers; authors: kenneth a. "
+    "title: reminiscences on influential papers; authors: christos h. papadimitriou , anant jhingran , yannis e. io",
+    "title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmod record; year: 2000"
    ],
    [
     "382",
     "2058",
     1,
     0.38,
-    "A: title: a framework for change diagnosis of data streams; authors: charu c. aggarwal; venue: sigmod conference; year: 2003\nB: title: a framework for diagnosing changes in evolving data streams; authors: charu c. aggarwal; venue: internati"
+    "title: a framework for change diagnosis of data streams; authors: charu c. aggarwal; venue: sigmod conference;",
+    "title: a framework for diagnosing changes in evolving data streams; authors: charu c. aggarwal; venue: interna"
    ]
   ],
   "false_positives": [
@@ -2563,35 +2628,40 @@
     "343",
     0,
     0.97,
-    "A: title: editorial; authors: richard t. snodgrass; venue: acm trans . database syst .; year: 2001\nB: title: editorial; authors: richard snodgrass; venue: acm transactions on database systems ( tods ); year: 2001"
+    "title: editorial; authors: richard t. snodgrass; venue: acm trans . database syst .; year: 2001",
+    "title: editorial; authors: richard snodgrass; venue: acm transactions on database systems ( tods ); year: 2001"
    ],
    [
     "942",
     "669",
     0,
     0.96,
-    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+    "title: book review column; authors: karl aberer; venue: sigmod record; year: 2002",
+    "title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
    ],
    [
     "1165",
     "1911",
     0,
     0.72,
-    "A: title: tpc-d : the challenges , issues and results; authors: ramesh bhashyam; venue: vldb; year: 1996\nB: title: tpc-d-the challenges , issues and results; authors: ramesh bhashyam; venue: acm sigmod record; year: 1996"
+    "title: tpc-d : the challenges , issues and results; authors: ramesh bhashyam; venue: vldb; year: 1996",
+    "title: tpc-d-the challenges , issues and results; authors: ramesh bhashyam; venue: acm sigmod record; year: 19"
    ],
    [
     "1751",
     "804",
     0,
     0.7,
-    "A: title: context-based prefetch - an optimization for implementing objects on relations; authors: david shutt , philip a. bernstein , shankar pal; venue: vldb j.; year: 2000\nB: title: context-based prefetch for implementing objects on rela"
+    "title: context-based prefetch - an optimization for implementing objects on relations; authors: david shutt , ",
+    "title: context-based prefetch for implementing objects on relations; authors: philip a. bernstein , shankar pa"
    ],
    [
     "2583",
     "599",
     0,
     0.68,
-    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2001\nB: title: book reviews; authors: karl aberer; venue: acm sigmod record; year: 2001"
+    "title: book review column; authors: karl aberer; venue: sigmod record; year: 2001",
+    "title: book reviews; authors: karl aberer; venue: acm sigmod record; year: 2001"
    ]
   ]
  },
@@ -2893,35 +2963,40 @@
     "659",
     1,
     0.11,
-    "{\"a\":{\"title\":\"data mining : practical machine learning tools and techniques - book review\",\"authors\":\"james geller\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"data mining : practical machine learning tools and techniques with jav"
+    "{\"title\": \"data mining : practical machine learning tools and techniques - book review\", \"authors\": \"james gel",
+    "{\"title\": \"data mining : practical machine learning tools and techniques with java implementations\", \"authors\""
    ],
    [
     "2152",
     "1166",
     1,
     0.24,
-    "{\"a\":{\"title\":\"the impact of technology on commercial transaction processing\",\"authors\":\"edward e. cobb\",\"venue\":\"vldb j.\",\"year\":\"1997\"},\"b\":{\"title\":\"the impact of object technology on commercial transaction processing\",\"authors\":\"edward "
+    "{\"title\": \"the impact of technology on commercial transaction processing\", \"authors\": \"edward e. cobb\", \"venue",
+    "{\"title\": \"the impact of object technology on commercial transaction processing\", \"authors\": \"edward e. cobb\","
    ],
    [
     "2116",
     "900",
     1,
     0.29,
-    "{\"a\":{\"title\":\"performing jobs without decompression in a compressed database system\",\"authors\":\"n. winterbottom , s. j. o'connell\",\"venue\":\"sigmod record\",\"year\":\"2003\"},\"b\":{\"title\":\"performing joins without decompression in a compressed "
+    "{\"title\": \"performing jobs without decompression in a compressed database system\", \"authors\": \"n. winterbottom",
+    "{\"title\": \"performing joins without decompression in a compressed database system\", \"authors\": \"s. j. o'connel"
    ],
    [
     "1946",
     "2145",
     1,
     0.32,
-    "{\"a\":{\"title\":\"title , preface to the special issue on persistent object systems\",\"authors\":\"?\",\"venue\":\"vldb j.\",\"year\":\"1995\"},\"b\":{\"title\":\"special issue on persistent object systems\",\"authors\":null,\"venue\":\"the vldb journal -- the inter"
+    "{\"title\": \"title , preface to the special issue on persistent object systems\", \"authors\": \"?\", \"venue\": \"vldb ",
+    "{\"title\": \"special issue on persistent object systems\", \"authors\": null, \"venue\": \"the vldb journal -- the int"
    ],
    [
     "1645",
     "564",
     1,
     0.33,
-    "{\"a\":{\"title\":\"reminiscences on influential papers\",\"authors\":\"christos h. papadimitriou , anant jhingran , yannis e. ioannidis , kenneth a. ross\",\"venue\":\"sigmod record\",\"year\":\"2000\"},\"b\":{\"title\":\"reminiscences on influential papers\",\"au"
+    "{\"title\": \"reminiscences on influential papers\", \"authors\": \"christos h. papadimitriou , anant jhingran , yann",
+    "{\"title\": \"reminiscences on influential papers\", \"authors\": \"kenneth a. ross\", \"venue\": \"acm sigmod record\", \""
    ]
   ],
   "false_positives": [
@@ -2930,35 +3005,40 @@
     "669",
     0,
     0.97,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "2470",
     "343",
     0,
     0.96,
-    "{\"a\":{\"title\":\"editorial\",\"authors\":\"richard t. snodgrass\",\"venue\":\"acm trans . database syst .\",\"year\":\"2001\"},\"b\":{\"title\":\"editorial\",\"authors\":\"richard snodgrass\",\"venue\":\"acm transactions on database systems ( tods )\",\"year\":\"2001\"}}"
+    "{\"title\": \"editorial\", \"authors\": \"richard t. snodgrass\", \"venue\": \"acm trans . database syst .\", \"year\": \"200",
+    "{\"title\": \"editorial\", \"authors\": \"richard snodgrass\", \"venue\": \"acm transactions on database systems ( tods )"
    ],
    [
     "1165",
     "1911",
     0,
     0.74,
-    "{\"a\":{\"title\":\"tpc-d : the challenges , issues and results\",\"authors\":\"ramesh bhashyam\",\"venue\":\"vldb\",\"year\":\"1996\"},\"b\":{\"title\":\"tpc-d-the challenges , issues and results\",\"authors\":\"ramesh bhashyam\",\"venue\":\"acm sigmod record\",\"year\":\"1"
+    "{\"title\": \"tpc-d : the challenges , issues and results\", \"authors\": \"ramesh bhashyam\", \"venue\": \"vldb\", \"year\"",
+    "{\"title\": \"tpc-d-the challenges , issues and results\", \"authors\": \"ramesh bhashyam\", \"venue\": \"acm sigmod reco"
    ],
    [
     "317",
     "1032",
     0,
     0.74,
-    "{\"a\":{\"title\":\"garbage collection in object-oriented databases using transactional cyclic reference counting\",\"authors\":\"s. sudarshan , prasan roy , abraham silberschatz , srinivas ashwin , s. seshadri\",\"venue\":\"vldb j.\",\"year\":\"1998\"},\"b\":"
+    "{\"title\": \"garbage collection in object-oriented databases using transactional cyclic reference counting\", \"au",
+    "{\"title\": \"garbage collection in object oriented databases using transactional cyclic reference counting\", \"au"
    ],
    [
     "1751",
     "804",
     0,
     0.73,
-    "{\"a\":{\"title\":\"context-based prefetch - an optimization for implementing objects on relations\",\"authors\":\"david shutt , philip a. bernstein , shankar pal\",\"venue\":\"vldb j.\",\"year\":\"2000\"},\"b\":{\"title\":\"context-based prefetch for implementin"
+    "{\"title\": \"context-based prefetch - an optimization for implementing objects on relations\", \"authors\": \"david ",
+    "{\"title\": \"context-based prefetch for implementing objects on relations\", \"authors\": \"philip a. bernstein , sh"
    ]
   ]
  },
@@ -3260,35 +3340,40 @@
     "960",
     1,
     0.09,
-    "A: name: canon powershot sx110 is digital camera silver 2666b001; description: canon powershot sx110 is 9 megapixel digital camera w / 10x optical zoom , 3 ' lcd , iso 1600 , optical image stabilizer silver\nB: name: canon powershot black di"
+    "name: canon powershot sx110 is digital camera silver 2666b001; description: canon powershot sx110 is 9 megapix",
+    "name: canon powershot black digital camera sx110isb; description: canon powershot sx110 is black digital camer"
    ],
    [
     "326",
     "431",
     1,
     0.1,
-    "A: name: apple ipod shuffle 1gb mp3 player mb226ll/a; description: 1gb flash memory silver\nB: name: apple 1gb silver ipod shuffle mb225lla; description: apple 1gb silver 2nd generation ipod shuffle mb225lla holds up to 240 songs 12 hours of"
+    "name: apple ipod shuffle 1gb mp3 player mb226ll/a; description: 1gb flash memory silver",
+    "name: apple 1gb silver ipod shuffle mb225lla; description: apple 1gb silver 2nd generation ipod shuffle mb225l"
    ],
    [
     "832",
     "49",
     1,
     0.1,
-    "A: name: sony mini dvd-r media 3dmr30l1h; description: 1.4 gb 3 pack; price: 6.99\nB: name: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h; description: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h record up to 30 minutes of vide"
+    "name: sony mini dvd-r media 3dmr30l1h; description: 1.4 gb 3 pack; price: 6.99",
+    "name: sony 8cm minidvd-r camcorder media 3 pack 3dmr30r1h; description: sony 8cm minidvd-r camcorder media 3 p"
    ],
    [
     "30",
     "41",
     1,
     0.11,
-    "A: name: sanus euro foundation series iii speaker stand efsatsiii; description: steel silver\nB: name: sanus euro foundations satellite speaker stand efsats; description: sanus euro foundations satellite speaker stand efsats sturdy base adju"
+    "name: sanus euro foundation series iii speaker stand efsatsiii; description: steel silver",
+    "name: sanus euro foundations satellite speaker stand efsats; description: sanus euro foundations satellite spe"
    ],
    [
     "302",
     "426",
     1,
     0.22,
-    "A: name: lg 4.0 cu . ft. capacity front load washer w / sanitary cycle\nB: name: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g; description: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g 4.2 cu . ft. capacity direct"
+    "name: lg 4.0 cu . ft. capacity front load washer w / sanitary cycle",
+    "name: lg wm2455hg 4.2 cu ft pearl gray front load washer wm2455g; description: lg wm2455hg 4.2 cu ft pearl gra"
    ]
   ],
   "false_positives": [
@@ -3297,35 +3382,40 @@
     "782",
     0,
     0.8,
-    "A: name: lg 5.6 cu.ft . freestanding electric range\nB: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet conv"
+    "name: lg 5.6 cu.ft . freestanding electric range",
+    "name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding "
    ],
    [
     "673",
     "786",
     0,
     0.8,
-    "A: name: lg 5.6 cu.ft . freestanding electric range\nB: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet conv"
+    "name: lg 5.6 cu.ft . freestanding electric range",
+    "name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding "
    ],
    [
     "690",
     "783",
     0,
     0.8,
-    "A: name: lg 5.6 cu.ft . freestanding electric range\nB: name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleani"
+    "name: lg 5.6 cu.ft . freestanding electric range",
+    "name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding "
    ],
    [
     "297",
     "453",
     0,
     0.76,
-    "A: name: lg 27 ' front-load electric dryer with 7.3 cu . ft. capacity\nB: name: lg dle3733w white xl capacity electric dryer dle3733wh; description: lg dle3733w white xl capacity electric dryer dle3733wh 7.3 cu . ft. capacity lodecibel quiet"
+    "name: lg 27 ' front-load electric dryer with 7.3 cu . ft. capacity",
+    "name: lg dle3733w white xl capacity electric dryer dle3733wh; description: lg dle3733w white xl capacity elect"
    ],
    [
     "689",
     "782",
     0,
     0.75,
-    "A: name: lg 5.6 cu.ft . freestanding electric range\nB: name: lg black freestanding electric range lre30757bk; description: lg black freestanding electric range lre30757bk 5.6 cu . ft. capacity dual convection self-cleaning touch controls ce"
+    "name: lg 5.6 cu.ft . freestanding electric range",
+    "name: lg black freestanding electric range lre30757bk; description: lg black freestanding electric range lre30"
    ]
   ]
  },
@@ -3627,35 +3717,40 @@
     "659",
     1,
     0.04,
-    "A: title: data mining : practical machine learning tools and techniques with java implementations; authors: ian h. witten , eibe frank; venue: acm sigmod record; year: 2002\nB: title: data mining : practical machine learning tools and techni"
+    "title: data mining : practical machine learning tools and techniques with java implementations; authors: ian h",
+    "title: data mining : practical machine learning tools and techniques - book review; authors: james geller; ven"
    ],
    [
     "1135",
     "906",
     1,
     0.21,
-    "A: title: small worlds : the dynamics of networks between order and randomness; authors: jie wu , duncan j. watts; venue: acm sigmod record; year: 2002\nB: title: small worlds : the dynamics of networks between order and randomness - book re"
+    "title: small worlds : the dynamics of networks between order and randomness; authors: jie wu , duncan j. watts",
+    "title: small worlds : the dynamics of networks between order and randomness - book review; authors: jie wu; ve"
    ],
    [
     "2524",
     "1542",
     1,
     0.27,
-    "A: title: indexing multimedia databases; authors: christos faloutsos; venue: international conference on management of data; year: 1995\nB: title: indexing multimedia databases ( tutorial ); authors: christos faloutsos; venue: sigmod confere"
+    "title: indexing multimedia databases; authors: christos faloutsos; venue: international conference on manageme",
+    "title: indexing multimedia databases ( tutorial ); authors: christos faloutsos; venue: sigmod conference; year"
    ],
    [
     "1645",
     "564",
     1,
     0.29,
-    "A: title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmod record; year: 2000\nB: title: reminiscences on influential papers; authors: christos h. papadimitriou , anant jhingran , yannis e. ioannidis , kenneth"
+    "title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmod record; year: 2000",
+    "title: reminiscences on influential papers; authors: christos h. papadimitriou , anant jhingran , yannis e. io"
    ],
    [
     "2116",
     "900",
     1,
     0.34,
-    "A: title: performing joins without decompression in a compressed database system; authors: s. j. o'connell , n. winterbottom; venue: acm sigmod record; year: 2003\nB: title: performing jobs without decompression in a compressed database syst"
+    "title: performing joins without decompression in a compressed database system; authors: s. j. o'connell , n. w",
+    "title: performing jobs without decompression in a compressed database system; authors: n. winterbottom , s. j."
    ]
   ],
   "false_positives": [
@@ -3664,35 +3759,40 @@
     "343",
     0,
     0.98,
-    "A: title: editorial; authors: richard snodgrass; venue: acm transactions on database systems ( tods ); year: 2001\nB: title: editorial; authors: richard t. snodgrass; venue: acm trans . database syst .; year: 2001"
+    "title: editorial; authors: richard snodgrass; venue: acm transactions on database systems ( tods ); year: 2001",
+    "title: editorial; authors: richard t. snodgrass; venue: acm trans . database syst .; year: 2001"
    ],
    [
     "942",
     "669",
     0,
     0.96,
-    "A: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002"
+    "title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002",
+    "title: book review column; authors: karl aberer; venue: sigmod record; year: 2002"
    ],
    [
     "2418",
     "1240",
     0,
     0.61,
-    "A: title: picodmbs : scaling down database techniques for the smartcard; authors: christophe bobineau , luc bouganim , philippe pucheral , patrick valduriez; venue: very large data bases; year: 2000\nB: title: picodbms : scaling down databas"
+    "title: picodmbs : scaling down database techniques for the smartcard; authors: christophe bobineau , luc bouga",
+    "title: picodbms : scaling down database techniques for the smartcard; authors: patrick valduriez , philippe pu"
    ],
    [
     "130",
     "763",
     0,
     0.6,
-    "A: title: database tuning : principles , experiments , and troubleshooting techniques ( part i ); authors: dennis shasha , philippe bonnet; venue: international conference on management of data; year: 2002\nB: title: database tuning : princi"
+    "title: database tuning : principles , experiments , and troubleshooting techniques ( part i ); authors: dennis",
+    "title: database tuning : principles , experiments , and troubleshooting techniques; authors: philippe bonnet ,"
    ],
    [
     "303",
     "1137",
     0,
     0.58,
-    "A: title: tpc-d : the challenges , issues and results; authors: ramesh bhashyam; venue: very large data bases; year: 1996\nB: title: tcp-d - the challenges , issues and results; authors: ramesh bhashyam; venue: sigmod record; year: 1996"
+    "title: tpc-d : the challenges , issues and results; authors: ramesh bhashyam; venue: very large data bases; ye",
+    "title: tcp-d - the challenges , issues and results; authors: ramesh bhashyam; venue: sigmod record; year: 1996"
    ]
   ]
  },
@@ -3994,35 +4094,40 @@
     "645",
     1,
     0.05,
-    "{\"a\":{\"name\":\"apple 500gb time capsule wireless hard drive mb276lla\",\"description\":\"apple 500gb time capsule wireless hard drive mb276lla 500gb 7200-rpm serial ata server-grade hard disk drive up to 5x the performance and 2x the range with "
+    "{\"name\": \"apple 500gb time capsule wireless hard drive mb276lla\", \"description\": \"apple 500gb time capsule wir",
+    "{\"name\": \"apple time capsule network hard drive mb277ll/a\", \"description\": \"1tb type a usb\", \"price\": \"439.0\"}"
    ],
    [
     "409",
     "96",
     1,
     0.27,
-    "{\"a\":{\"name\":\"logitech dinovo media desktop laser keyboard and mouse combo 967562\",\"description\":\"logitech dinovo media desktop laser keyboard and mouse combo 967562 unique ultra-flat keyboard detached customizable mediapad precision rechar"
+    "{\"name\": \"logitech dinovo media desktop laser keyboard and mouse combo 967562\", \"description\": \"logitech dinov",
+    "{\"name\": \"logitech cordless desktop mx 5000 laser 967562-0403\", \"description\": \"keyboard wireless 104 keys mou"
    ],
    [
     "527",
     "738",
     1,
     0.27,
-    "{\"a\":{\"name\":\"boston acoustics solo am/fm large display clock radio hsolomdnt\",\"description\":\"boston acoustics solo am/fm large display clock radio hsolomdnt rotating clock face precision tuner 3\u00a01/2 ? full-range speaker auxiliary input hig"
+    "{\"name\": \"boston acoustics solo am/fm large display clock radio hsolomdnt\", \"description\": \"boston acoustics s",
+    "{\"name\": \"boston acoustics horizon solo am/fm radio hsolomndt\", \"description\": null, \"price\": \"90.0\"}"
    ],
    [
     "121",
     "371",
     1,
     0.38,
-    "{\"a\":{\"name\":\"tivo wireless adapter ag0100\",\"description\":\"tivo wireless adapter ag0100 for use with a tivo series 2 only flip-up antenna optimized wireless performance\",\"price\":null},\"b\":{\"name\":\"tvio wireless usb network adpator\",\"descrip"
+    "{\"name\": \"tivo wireless adapter ag0100\", \"description\": \"tivo wireless adapter ag0100 for use with a tivo seri",
+    "{\"name\": \"tvio wireless usb network adpator\", \"description\": null, \"price\": null}"
    ],
    [
     "281",
     "280",
     1,
     0.41,
-    "{\"a\":{\"name\":\"tech craft dark cherry veneto series tv stand swp60\",\"description\":\"tech craft dark cherry veneto series tv stand swp60 60 ' wide credenza for flat panel tv?s and dlp?s center channel compartment and storage 260 lbs tv capacit"
+    "{\"name\": \"tech craft dark cherry veneto series tv stand swp60\", \"description\": \"tech craft dark cherry veneto ",
+    "{\"name\": \"techcraft swp60 classic wood tone credenza tv stand\", \"description\": \"wood walnut\", \"price\": null}"
    ]
   ],
   "false_positives": [
@@ -4031,35 +4136,40 @@
     "785",
     0,
     0.86,
-    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30757ss\",\"description\":\"lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview wi"
+    "{\"name\": \"lg stainless steel freestanding electric range lre30757ss\", \"description\": \"lg stainless steel frees",
+    "{\"name\": \"lg 5.6 cu.ft . freestanding electric range\", \"description\": null, \"price\": null}"
    ],
    [
     "673",
     "785",
     0,
     0.85,
-    "{\"a\":{\"name\":\"lg stainless steel freestanding electric range lre30453ss\",\"description\":\"lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop eleme"
+    "{\"name\": \"lg stainless steel freestanding electric range lre30453ss\", \"description\": \"lg stainless steel frees",
+    "{\"name\": \"lg 5.6 cu.ft . freestanding electric range\", \"description\": null, \"price\": null}"
    ],
    [
     "714",
     "787",
     0,
     0.85,
-    "{\"a\":{\"name\":\"lg 30 ' stainless steel freestanding gas range lrg30357ss\",\"description\":\"lg 30 ' stainless steel freestanding gas range lrg30357ss 5.0 cu . ft. capacity oven superboil burner 5 burner system smoothtouch controls warming drawe"
+    "{\"name\": \"lg 30 ' stainless steel freestanding gas range lrg30357ss\", \"description\": \"lg 30 ' stainless steel ",
+    "{\"name\": \"lg 5.0 cu.ft . freestanding gas range\", \"description\": null, \"price\": null}"
    ],
    [
     "714",
     "789",
     0,
     0.85,
-    "{\"a\":{\"name\":\"lg 30 ' stainless steel freestanding gas range lrg30357ss\",\"description\":\"lg 30 ' stainless steel freestanding gas range lrg30357ss 5.0 cu . ft. capacity oven superboil burner 5 burner system smoothtouch controls warming drawe"
+    "{\"name\": \"lg 30 ' stainless steel freestanding gas range lrg30357ss\", \"description\": \"lg 30 ' stainless steel ",
+    "{\"name\": \"lg 5.0 cu.ft . freestanding gas range\", \"description\": null, \"price\": null}"
    ],
    [
     "689",
     "786",
     0,
     0.83,
-    "{\"a\":{\"name\":\"lg black freestanding electric range lre30757bk\",\"description\":\"lg black freestanding electric range lre30757bk 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview window warming drawer "
+    "{\"name\": \"lg black freestanding electric range lre30757bk\", \"description\": \"lg black freestanding electric ran",
+    "{\"name\": \"lg 5.6 cu.ft . freestanding electric range\", \"description\": null, \"price\": null}"
    ]
   ]
  },
@@ -4361,35 +4471,40 @@
     "645",
     1,
     0.02,
-    "A: name: apple 500gb time capsule wireless hard drive mb276lla; description: apple 500gb time capsule wireless hard drive mb276lla 500gb 7200-rpm serial ata server-grade hard disk drive up to 5x the performance and 2x the range with 802.11 "
+    "name: apple 500gb time capsule wireless hard drive mb276lla; description: apple 500gb time capsule wireless ha",
+    "name: apple time capsule network hard drive mb277ll/a; description: 1tb type a usb; price: 439.0"
    ],
    [
     "41",
     "811",
     1,
     0.11,
-    "A: name: maytag bisque over-the-range microwave oven mmv4205bt; description: maytag bisque over-the-range microwave oven mmv4205bt 2.0 cu . ft. capacity 1,150 watts ten power levels 220 cfm airflow with two adjustable fan speeds scrolling v"
+    "name: maytag bisque over-the-range microwave oven mmv4205bt; description: maytag bisque over-the-range microwa",
+    "name: maytag mmv4205baq over-the-range microwave"
    ],
    [
     "527",
     "738",
     1,
     0.14,
-    "A: name: boston acoustics solo am/fm large display clock radio hsolomdnt; description: boston acoustics solo am/fm large display clock radio hsolomdnt rotating clock face precision tuner 3\u00a01/2 ? full-range speaker auxiliary input high contr"
+    "name: boston acoustics solo am/fm large display clock radio hsolomdnt; description: boston acoustics solo am/f",
+    "name: boston acoustics horizon solo am/fm radio hsolomndt; price: 90.0"
    ],
    [
     "409",
     "96",
     1,
     0.15,
-    "A: name: logitech dinovo media desktop laser keyboard and mouse combo 967562; description: logitech dinovo media desktop laser keyboard and mouse combo 967562 unique ultra-flat keyboard detached customizable mediapad precision rechargeable "
+    "name: logitech dinovo media desktop laser keyboard and mouse combo 967562; description: logitech dinovo media ",
+    "name: logitech cordless desktop mx 5000 laser 967562-0403; description: keyboard wireless 104 keys mouse laser"
    ],
    [
     "349",
     "1046",
     1,
     0.18,
-    "A: name: chestnut hill sound george ipod music system in white chs4001; description: chestnut hill sound george ipod music system in white chs4001 playback system for the ipod full feature wireless remote charging stand kit bandless am/fm r"
+    "name: chestnut hill sound george ipod music system in white chs4001; description: chestnut hill sound george i",
+    "name: chestnut hill chs40001 chestnut hill george ipod dock compact stereo system; price: 499.0"
    ]
   ],
   "false_positives": [
@@ -4398,35 +4513,40 @@
     "785",
     0,
     0.88,
-    "A: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop elements wit"
+    "name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding ",
+    "name: lg 5.6 cu.ft . freestanding electric range"
    ],
    [
     "690",
     "785",
     0,
     0.87,
-    "A: name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview window wa"
+    "name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding ",
+    "name: lg 5.6 cu.ft . freestanding electric range"
    ],
    [
     "691",
     "786",
     0,
     0.87,
-    "A: name: lg 5.6 cu . ft. white freestanding electric range lre30453wh; description: lg 5.6 cu . ft. white freestanding electric range lre30453wh intuitouch control system evenjet convection system 5.6 cubic capacity wideview oven window 5 r"
+    "name: lg 5.6 cu . ft. white freestanding electric range lre30453wh; description: lg 5.6 cu . ft. white freesta",
+    "name: lg 5.6 cu.ft . freestanding electric range"
    ],
    [
     "692",
     "785",
     0,
     0.85,
-    "A: name: lg 5.6 cu . ft. black freestanding electric range lre30453bk; description: lg 5.6 cu . ft. black freestanding electric range lre30453bk intuitouch control system evenjet convection system 5.6 cubic capacity wideview oven window 5 r"
+    "name: lg 5.6 cu . ft. black freestanding electric range lre30453bk; description: lg 5.6 cu . ft. black freesta",
+    "name: lg 5.6 cu.ft . freestanding electric range"
    ],
    [
     "714",
     "787",
     0,
     0.85,
-    "A: name: lg 30 ' stainless steel freestanding gas range lrg30357ss; description: lg 30 ' stainless steel freestanding gas range lrg30357ss 5.0 cu . ft. capacity oven superboil burner 5 burner system smoothtouch controls warming drawer elect"
+    "name: lg 30 ' stainless steel freestanding gas range lrg30357ss; description: lg 30 ' stainless steel freestan",
+    "name: lg 5.0 cu.ft . freestanding gas range"
    ]
   ]
  },
@@ -4728,35 +4848,40 @@
     "2011",
     1,
     0.49,
-    "{\"a\":{\"title\":\"stream : the stanford stream data manager\",\"authors\":\"jennifer widom , mayur datar , shivnath babu , justin rosenstein , itaru nishizawa , arvind arasu , keith ito , brian babcock\",\"venue\":\"sigmod conference\",\"year\":\"2003\"},\""
+    "{\"title\": \"stream : the stanford stream data manager\", \"authors\": \"jennifer widom , mayur datar , shivnath bab",
+    "{\"title\": \"stream : the stanford stream data manager ( demonstration description )\", \"authors\": \"arvind arasu "
    ],
    [
     "1814",
     "1496",
     1,
     0.55,
-    "{\"a\":{\"title\":\"upsizing from file server to clent server architectures\",\"authors\":\"the access team\",\"venue\":\"sigmod conference\",\"year\":\"1995\"},\"b\":{\"title\":\"upsizing form file server to client server architectures\",\"authors\":\"corporate the "
+    "{\"title\": \"upsizing from file server to clent server architectures\", \"authors\": \"the access team\", \"venue\": \"s",
+    "{\"title\": \"upsizing form file server to client server architectures\", \"authors\": \"corporate the access team mi"
    ],
    [
     "2284",
     "284",
     1,
     0.64,
-    "{\"a\":{\"title\":\"ominisearch : a method for searching dynamic content on the web\",\"authors\":\"henrique paques , ling liu , david buttler , calton pu\",\"venue\":\"sigmod conference\",\"year\":\"2001\"},\"b\":{\"title\":\"ominisearch : a method for searching"
+    "{\"title\": \"ominisearch : a method for searching dynamic content on the web\", \"authors\": \"henrique paques , lin",
+    "{\"title\": \"ominisearch : a method for searching dynamic content on the web\", \"authors\": \"david buttler , ling "
    ],
    [
     "393",
     "2250",
     1,
     0.64,
-    "{\"a\":{\"title\":\"data grid management systems\",\"authors\":\"arun jagatheesan , arcot rajasekar\",\"venue\":\"sigmod conference\",\"year\":\"2003\"},\"b\":{\"title\":\"data grid management systems\",\"authors\":\"arun jagatheesan , arcot rajasekar\",\"venue\":\"inter"
+    "{\"title\": \"data grid management systems\", \"authors\": \"arun jagatheesan , arcot rajasekar\", \"venue\": \"sigmod co",
+    "{\"title\": \"data grid management systems\", \"authors\": \"arun jagatheesan , arcot rajasekar\", \"venue\": \"internati"
    ],
    [
     "2599",
     "434",
     1,
     0.67,
-    "{\"a\":{\"title\":\"indexing images in oracle8i\",\"authors\":\"melliyal annamalai , samuel defazio , rajiv chopra\",\"venue\":\"sigmod conference\",\"year\":\"2000\"},\"b\":{\"title\":\"indexing images in oracle8i\",\"authors\":\"melliyal annamalai , rajiv chopra , "
+    "{\"title\": \"indexing images in oracle8i\", \"authors\": \"melliyal annamalai , samuel defazio , rajiv chopra\", \"ven",
+    "{\"title\": \"indexing images in oracle8i\", \"authors\": \"melliyal annamalai , rajiv chopra , samuel defazio , susa"
    ]
   ],
   "false_positives": [
@@ -4765,35 +4890,40 @@
     "513",
     0,
     0.92,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "386",
     "744",
     0,
     0.92,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "705",
     "669",
     0,
     0.92,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "705",
     "904",
     0,
     0.92,
-    "{\"a\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"sigmod record\",\"year\":\"2002\"},\"b\":{\"title\":\"book review column\",\"authors\":\"karl aberer\",\"venue\":\"acm sigmod record\",\"year\":\"2002\"}}"
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"sigmod record\", \"year\": \"2002\"}",
+    "{\"title\": \"book review column\", \"authors\": \"karl aberer\", \"venue\": \"acm sigmod record\", \"year\": \"2002\"}"
    ],
    [
     "359",
     "551",
     0,
     0.9,
-    "{\"a\":{\"title\":\"reminiscences on influential papers\",\"authors\":\"daniel j. rosenkrantz , nick koudas , dan suciu , peter scheuermann , rajeev rastogi , jiawei han , kenneth a. ross\",\"venue\":\"sigmod record\",\"year\":\"2001\"},\"b\":{\"title\":\"reminis"
+    "{\"title\": \"reminiscences on influential papers\", \"authors\": \"daniel j. rosenkrantz , nick koudas , dan suciu ,",
+    "{\"title\": \"reminiscences on influential papers\", \"authors\": \"kenneth a. ross\", \"venue\": \"acm sigmod record\", \""
    ]
   ]
  },
@@ -5095,35 +5225,40 @@
     "2011",
     1,
     0.27,
-    "A: title: stream : the stanford stream data manager; authors: jennifer widom , mayur datar , shivnath babu , justin rosenstein , itaru nishizawa , arvind arasu , keith ito , brian babcock; venue: sigmod conference; year: 2003\nB: title: stre"
+    "title: stream : the stanford stream data manager; authors: jennifer widom , mayur datar , shivnath babu , just",
+    "title: stream : the stanford stream data manager ( demonstration description ); authors: arvind arasu , brian "
    ],
    [
     "2599",
     "434",
     1,
     0.27,
-    "A: title: indexing images in oracle8i; authors: melliyal annamalai , samuel defazio , rajiv chopra; venue: sigmod conference; year: 2000\nB: title: indexing images in oracle8i; authors: melliyal annamalai , rajiv chopra , samuel defazio , su"
+    "title: indexing images in oracle8i; authors: melliyal annamalai , samuel defazio , rajiv chopra; venue: sigmod",
+    "title: indexing images in oracle8i; authors: melliyal annamalai , rajiv chopra , samuel defazio , susan mavris"
    ],
    [
     "131",
     "927",
     1,
     0.31,
-    "A: title: reminiscences an influential papers; authors: jeffrey f. naughton , minos n. garofalakis , kenneth a. ross; venue: sigmod record; year: 2003\nB: title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmo"
+    "title: reminiscences an influential papers; authors: jeffrey f. naughton , minos n. garofalakis , kenneth a. r",
+    "title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmod record; year: 2003"
    ],
    [
     "139",
     "1491",
     1,
     0.34,
-    "A: title: things every update replication customer should know; authors: rob golding; venue: sigmod conference; year: 1995\nB: title: things every update replication customer should know ( abstract ); authors: rob goldring; venue: internatio"
+    "title: things every update replication customer should know; authors: rob golding; venue: sigmod conference; y",
+    "title: things every update replication customer should know ( abstract ); authors: rob goldring; venue: intern"
    ],
    [
     "2284",
     "284",
     1,
     0.34,
-    "A: title: ominisearch : a method for searching dynamic content on the web; authors: henrique paques , ling liu , david buttler , calton pu; venue: sigmod conference; year: 2001\nB: title: ominisearch : a method for searching dynamic content "
+    "title: ominisearch : a method for searching dynamic content on the web; authors: henrique paques , ling liu , ",
+    "title: ominisearch : a method for searching dynamic content on the web; authors: david buttler , ling liu , ca"
    ]
   ],
   "false_positives": [
@@ -5132,35 +5267,40 @@
     "513",
     0,
     0.97,
-    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+    "title: book review column; authors: karl aberer; venue: sigmod record; year: 2002",
+    "title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
    ],
    [
     "386",
     "744",
     0,
     0.97,
-    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+    "title: book review column; authors: karl aberer; venue: sigmod record; year: 2002",
+    "title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
    ],
    [
     "705",
     "669",
     0,
     0.97,
-    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+    "title: book review column; authors: karl aberer; venue: sigmod record; year: 2002",
+    "title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
    ],
    [
     "705",
     "904",
     0,
     0.97,
-    "A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002\nB: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
+    "title: book review column; authors: karl aberer; venue: sigmod record; year: 2002",
+    "title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002"
    ],
    [
     "866",
     "552",
     0,
     0.89,
-    "A: title: special issue on data mining for intrusion detection and threat analysis - guest editor 's introduction; authors: daniel barbar\u00e1; venue: sigmod record; year: 2001\nB: title: special section on data mining for intrusion detection an"
+    "title: special issue on data mining for intrusion detection and threat analysis - guest editor 's introduction",
+    "title: special section on data mining for intrusion detection and threat analysis; authors: daniel barbar &#22"
    ]
   ]
  },

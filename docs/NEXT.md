@@ -3,7 +3,7 @@
 Written 2026-09-24 13:20 PDT by the Claude Fable 5.1 session that ran the build;
 §1.1 and §3.1 updated the same day by the Claude Opus 5.5 session that built `jev_extract`;
 §1.2, §2, §3.2 and §5 updated the same day by the Claude Fable 5.1 session that ran
-Banking77 round two.
+Banking77 round two; §1.3, §2.2, §3 and §3.3 by the same session when it wrapped up tier one.
 Read `docs/HANDOFF.md` first: it is the original build spec and still describes the
 package design, the verified Jev API contract, the DuckDB UDF facts, and the repo
 conventions. This file says what actually shipped, what the numbers mean, and the
@@ -72,6 +72,21 @@ excluded from `ruff format`.
   map and structured criteria come from label names and train only. Tests: 71 offline,
   including the whole pipeline against the fake transport and a check that the README
   headline matches the run log.
+
+## 1.3 Tier one wrap-up (PR #4 and PR #5, 2026-09-25)
+
+- PR #4: the answer-cache key hashes the request in the order it is sent (option, level
+  and field order all reach the model), instead of sorted JSON.
+- PR #5, version 0.2.0: `jev_pair`, `jev_match`, `sem_match` and the table macros
+  `sem_join`, `sem_dups`, `sem_dedup`, `sem_topk` (table and column names as strings via
+  `query_table` and the row-as-struct pattern; each blocked pair judged once, under a
+  window barrier that keeps the optimizer from copying the pure UDF into the pushed-down
+  filter). Benchmark `bench/entity_matching.py` on Abt-Buy and DBLP-ACM in the rounds
+  discipline, with the macros themselves run live on a sample; results in
+  `docs/results/entity_matching.md` from the committed run log. 91 offline tests.
+- With §3.3 done, tier one (Python UDFs + macros, HANDOFF §7) is complete. What remains
+  is tier two (§3.4) and tier three (§3.5), plus the follow-ons listed under each
+  benchmark.
 
 ## 2. The numbers and what they mean
 
@@ -167,7 +182,26 @@ question, not disagreement with a different labeling.
 Total live spend for this benchmark: $0.018 (sample) + $0.281 (full split) + $0.038
 (`sem_where`) = $0.337. The cache re-run and the demo soft group-by cost $0.
 
+### 2.2 Entity matching (PR #5)
+
+Held-out test pairs, one `jev_match` Noul per pair, R0 the plain question over the JSON
+pair and R2 the colleague-style question over labeled text lines:
+
+| corpus | pairs (matches) | R0 F1 at 0.5 | R2 F1 at 0.5 | R2 precision / recall | AUROC | ECE | Σp vs true | $ / 1k pairs |
+|---|---|---|---|---|---|---|---|---|
+| Abt-Buy | 1,916 (206) | 0.898 | 0.915 | 0.894 / 0.937 | 0.996 | 0.022 | 229.6 ± 7.3 vs 206 | $0.0207 |
+| DBLP-ACM | 2,473 (444) | 0.965 | 0.978 | 0.973 / 0.982 | 0.999 | 0.020 | 459.6 ± 7.6 vs 444 | $0.0190 |
+
+The question wording that names the rules of the match is what moved these: F1 up, ECE
+halved, and Σp from about 35% over the true count to about 10% over. The rest of the
+overshoot is the lowest bin, where Jev leaves about 1.5% on clear non-matches. Order
+matters for pairs (the shorter record first cost four points), the opposite of the flat
+Banking77 list. Total live spend for the benchmark: $0.74.
+
 ## 3. Next milestones, in priority order
+
+Tier one is complete through §3.3. The order of what remains: the cheap follow-ons under
+§3.2 and §3.3, then §3.4, then §3.5.
 
 ### 3.1 `jev_extract` — done (PR #2); what the rounds taught
 
@@ -231,10 +265,34 @@ change each), then the baseline and the chosen round on the held-out split:
   division the summed mass of the flat answer (free) and ask only the chosen division's
   intent question in a second, much cheaper request.
 
-### 3.3 `sem_join` / `sem_dedup` / `sem_topk`
-Blocked pairs from a key-equality join, then `jev_noul(struct_pack(...))` on each pair;
-`sem_topk` via `jev_score` over a shortlist. Table macros. Benchmark on a small
-entity-matching set.
+### 3.3 `sem_join` / `sem_dedup` / `sem_topk` — done (PR #5); what the rounds taught
+
+Numbers in §2.2 and `docs/results/entity_matching.md`. Five dev rounds per corpus:
+
+| dev round | change | Abt-Buy F1 at 0.5 | DBLP-ACM F1 at 0.5 |
+|---|---|---|---|
+| R0 | plain question, JSON pair | 0.930 | 0.964 |
+| R1 | colleague-style question | 0.928 | 0.974 |
+| R2 | R1 over labeled text lines | 0.941 | 0.978 |
+| R3 | R2 with the records swapped | 0.897 | 0.970 |
+| R4 | R1 with the guidance as Noul criteria | 0.939 | 0.974 |
+
+- **The rules of the match belong in the question.** Naming what still counts as the same
+  (wording, a missing field, a different price) and what makes it different (model
+  number, variant, accessory) is the round that moved F1, ECE and Σp together.
+- **Order is a lever for pairs.** The record with the fuller description goes first.
+- **The pure-UDF trap.** DuckDB copies a pure scalar into a pushed-down filter, so a naive
+  `SELECT ... WHERE p >= thr` over a judged subquery judges twice; the macros put the
+  judged rows under `row_number() OVER ()`. Users writing their own SQL should judge into
+  a table (`CREATE TABLE judged AS ...`) and filter that.
+- **Next levers.** (a) A cheap pre-filter before the Noul: a string-similarity guard or a
+  Noul over names only, then the full pair question on survivors, measured as coverage
+  against the gold. (b) Per-intent-style calibration for the bottom bin, so Σp stops
+  overshooting by the 1.5% left on clear non-matches. (c) Multi-field matching through
+  STRUCT columns is supported but unmeasured; DBLP-ACM with `title` only against all four
+  fields would show what each field buys. (d) `sem_dedup` inside large blocks is
+  quadratic; a per-block cap or a two-stage dedup (cluster by a cheap key, judge within)
+  is the follow-on before anyone runs it on a whole catalogue.
 
 ### 3.4 Tier two: community extension
 C++ or Rust extension template with the HTTP client inside the extension so
@@ -262,6 +320,9 @@ and are scripts under `bench/`, never tests. Never print, log, or commit the key
   written before that change whose insertion order differed from sorted-key order are
   never hit again (they were keyed on sorted JSON); deleting the default cache file
   reclaims only those orphaned entries.
+- The entity-matching answer caches (`bench/data/cache_abt_*.duckdb`,
+  `cache_dblp_*.duckdb`) and the demo cache live only in the `sem-join` worktree, like the
+  Banking77 caches in `banking77-round-two`; `rescore` needs them.
 - The PR #1 held-out run lives in `docs/results/banking77_runs.json` as the `pr1/R0`
   entry (flagged `legacy`, no answer cache), imported from its headline file
   `docs/results/banking77.json`, which PR #3 removed so that `report` reads one file.

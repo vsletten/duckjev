@@ -422,6 +422,16 @@ def _auroc(scores: list[tuple[float, int]]) -> float | None:
     return (rank_sum - pos * (pos + 1) / 2) / (pos * neg)
 
 
+def _two_sides(state: str, width: int = 110) -> tuple[str, str]:
+    """Both records of a pair state, each cut to ``width`` characters, for the examples."""
+    if state.startswith("A: ") and "\nB: " in state:
+        a, b = state[3:].split("\nB: ", 1)
+    else:
+        obj = json.loads(state)
+        a, b = json.dumps(obj["a"]), json.dumps(obj["b"])
+    return a[:width], b[:width]
+
+
 def metrics(con: duckdb.DuckDBPyConnection, threshold: float = THRESHOLD) -> dict[str, Any]:
     """Every reported metric, from the ``judged`` table alone."""
     n, positives, predicted, tp, expected, stderr = con.execute(
@@ -439,7 +449,7 @@ def metrics(con: duckdb.DuckDBPyConnection, threshold: float = THRESHOLD) -> dic
 
     def examples(label: int, direction: str) -> list[list[Any]]:
         rows = con.execute(EXAMPLES_SQL.format(dir=direction), {"label": label, "k": 5}).fetchall()
-        return [[lid, rid, y, p, s[:240]] for lid, rid, y, p, s in rows]
+        return [[lid, rid, y, p, *_two_sides(s)] for lid, rid, y, p, s in rows]
 
     return {
         "pairs": n,
@@ -774,9 +784,12 @@ def _reliability_table(rows: list[list[Any]]) -> str:
 
 
 def _examples_table(rows: list[list[Any]]) -> str:
+    def cell(s: str) -> str:
+        return s.replace("|", "\\|").replace("\n", " ")
+
     return _table(
-        ["p", "gold", "pair state (truncated)"],
-        [[f"{p:.2f}", y, s.replace("|", "\\|").replace("\n", " ")] for _, _, y, p, s in rows],
+        ["p", "gold", "record A (cut)", "record B (cut)"],
+        [[f"{p:.2f}", y, cell(a), cell(b)] for _, _, y, p, a, b in rows],
     )
 
 

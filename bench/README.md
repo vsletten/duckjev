@@ -67,3 +67,30 @@ cache (`bench/data/cache_<split>_<round>.duckdb`) with a transport that refuses 
 request, so it costs nothing and cannot read another run's data. `--dry-run` swaps
 in a fake transport, writes only `_dry` files, and records nothing. A test checks
 the README headline table against `docs/results/sroie_runs.json`.
+
+## Entity matching (`sem_join`, `sem_dedup`, `sem_topk`)
+
+```bash
+uv run python bench/entity_matching.py prepare                                   # downloads, no key
+uv run python bench/entity_matching.py coverage --record                         # blocking coverage, offline
+uv run python bench/entity_matching.py run R0 --corpus abt --split dev --limit 40 # pre-flight, not recorded
+uv run python bench/entity_matching.py run R2 --corpus abt --split dev           # one round on the dev split
+uv run python bench/entity_matching.py run R2 --corpus dblp --split test         # the held-out split
+uv run python bench/entity_matching.py demo --corpus abt                         # the macros live, on a sample
+uv run python bench/entity_matching.py rescore                                   # rebuild runs from their caches
+uv run python bench/entity_matching.py report                                    # writes docs/results/entity_matching.md
+```
+
+Two DeepMatcher / Magellan sets, Abt-Buy (textual products) and DBLP-ACM (structured
+citations), each with two record tables and labeled candidate pairs split train / valid /
+test by their authors. The valid split is the dev set; the test split is held out and runs
+only with the baseline and the round chosen on dev (best dev F1 at the default threshold
+0.5, ties to fewer tokens). Every labeled pair is one `jev_match` Noul; a round in
+`ROUNDS` changes the question wording, the pair-state layout or the record order.
+`coverage` measures what a key-equality block keeps without Jev; `demo` runs `sem_join`,
+`sem_dedup` and `sem_topk` themselves on a sample of left rows (the dedup demo caps the
+right rows per block, because every pair inside a block is judged). The same conventions
+as the other benchmarks apply: a committed run log, `rescore` through a refusing
+transport, suffixed files for pre-flights and dry runs, a full run that refuses to start
+without a pre-flight, and a test that checks the README table against the run log.
+

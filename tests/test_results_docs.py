@@ -93,3 +93,37 @@ def test_readme_banking77_table_matches_run_log() -> None:
         for label, want in expected.items():
             cell = _row(section, label)[i]
             assert cell.startswith(want), (label, cell, want)
+
+
+EM = json.loads((ROOT / "docs" / "results" / "entity_matching_runs.json").read_text())
+EM_NAMES = {"abt": "Abt-Buy", "dblp": "DBLP-ACM"}
+
+
+def _em_chosen_round(corpus: str) -> str:
+    """The rule in bench/entity_matching.py: best dev F1 at 0.5, ties to fewer tokens."""
+    dev = [
+        (r["at_threshold"]["f1"], -r["input_tokens_per_request"], r["round"])
+        for k, r in EM.items()
+        if k.startswith(f"{corpus}/dev/") and r["round_config"]["selectable"]
+    ]
+    return max(dev)[2]
+
+
+def test_readme_entity_matching_table_matches_run_log() -> None:
+    section = README.split("## Entity-matching numbers")[1].split("\n## ")[0]
+    for corpus, name in EM_NAMES.items():
+        best = _em_chosen_round(corpus)
+        assert f"R{best[1:]} F1 at 0.5" in section  # the header names the chosen round
+        base, run = EM[f"{corpus}/test/R0"], EM[f"{corpus}/test/{best}"]
+        a = run["at_threshold"]
+        line = next(ln for ln in section.splitlines() if ln.startswith(f"| {name} |"))
+        cells = [c.strip() for c in line.split("|")[2:9]]
+        assert cells == [
+            f"{base['at_threshold']['f1']:.3f}",
+            f"**{a['f1']:.3f}**",
+            f"{a['precision']:.3f} / {a['recall']:.3f}",
+            f"{run['auroc']:.3f}",
+            f"{run['ece']:.3f}",
+            f"{run['expected_count']:.1f} ± {run['expected_stderr']:.1f} vs {run['positives']}",
+            f"${run['usd_per_1k_pairs']:.4f}",
+        ], corpus

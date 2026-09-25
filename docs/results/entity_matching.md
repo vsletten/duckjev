@@ -67,23 +67,23 @@ Dev picked threshold 0.40 for R2 (F1 0.941 on dev); at that threshold the held-o
 
 The five gold matches with the lowest p:
 
-| p | gold | pair state (truncated) |
-|---|---|---|
-| 0.02 | 1 | A: name: apple 500gb time capsule wireless hard drive mb276lla; description: apple 500gb time capsule wireless hard drive mb276lla 500gb 7200-rpm serial ata server-grade hard disk drive up to 5x the performance and 2x the range with 802.11  |
-| 0.11 | 1 | A: name: maytag bisque over-the-range microwave oven mmv4205bt; description: maytag bisque over-the-range microwave oven mmv4205bt 2.0 cu . ft. capacity 1,150 watts ten power levels 220 cfm airflow with two adjustable fan speeds scrolling v |
-| 0.14 | 1 | A: name: boston acoustics solo am/fm large display clock radio hsolomdnt; description: boston acoustics solo am/fm large display clock radio hsolomdnt rotating clock face precision tuner 3 1/2 ? full-range speaker auxiliary input high contr |
-| 0.15 | 1 | A: name: logitech dinovo media desktop laser keyboard and mouse combo 967562; description: logitech dinovo media desktop laser keyboard and mouse combo 967562 unique ultra-flat keyboard detached customizable mediapad precision rechargeable  |
-| 0.18 | 1 | A: name: chestnut hill sound george ipod music system in white chs4001; description: chestnut hill sound george ipod music system in white chs4001 playback system for the ipod full feature wireless remote charging stand kit bandless am/fm r |
+| p | gold | record A (cut) | record B (cut) |
+|---|---|---|---|
+| 0.02 | 1 | name: apple 500gb time capsule wireless hard drive mb276lla; description: apple 500gb time capsule wireless ha | name: apple time capsule network hard drive mb277ll/a; description: 1tb type a usb; price: 439.0 |
+| 0.11 | 1 | name: maytag bisque over-the-range microwave oven mmv4205bt; description: maytag bisque over-the-range microwa | name: maytag mmv4205baq over-the-range microwave |
+| 0.14 | 1 | name: boston acoustics solo am/fm large display clock radio hsolomdnt; description: boston acoustics solo am/f | name: boston acoustics horizon solo am/fm radio hsolomndt; price: 90.0 |
+| 0.15 | 1 | name: logitech dinovo media desktop laser keyboard and mouse combo 967562; description: logitech dinovo media  | name: logitech cordless desktop mx 5000 laser 967562-0403; description: keyboard wireless 104 keys mouse laser |
+| 0.18 | 1 | name: chestnut hill sound george ipod music system in white chs4001; description: chestnut hill sound george i | name: chestnut hill chs40001 chestnut hill george ipod dock compact stereo system; price: 499.0 |
 
 The five gold non-matches with the highest p:
 
-| p | gold | pair state (truncated) |
-|---|---|---|
-| 0.88 | 0 | A: name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding electric range lre30453ss 5.6 cu . ft. capacity touch controls evenjet convection system wideview window 5 cooktop elements wit |
-| 0.87 | 0 | A: name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding electric range lre30757ss 5.6 cu . ft. capacity dual convection self-cleaning touch controls ceramic cooktop wideview window wa |
-| 0.87 | 0 | A: name: lg 5.6 cu . ft. white freestanding electric range lre30453wh; description: lg 5.6 cu . ft. white freestanding electric range lre30453wh intuitouch control system evenjet convection system 5.6 cubic capacity wideview oven window 5 r |
-| 0.85 | 0 | A: name: lg 5.6 cu . ft. black freestanding electric range lre30453bk; description: lg 5.6 cu . ft. black freestanding electric range lre30453bk intuitouch control system evenjet convection system 5.6 cubic capacity wideview oven window 5 r |
-| 0.85 | 0 | A: name: lg 30 ' stainless steel freestanding gas range lrg30357ss; description: lg 30 ' stainless steel freestanding gas range lrg30357ss 5.0 cu . ft. capacity oven superboil burner 5 burner system smoothtouch controls warming drawer elect |
+| p | gold | record A (cut) | record B (cut) |
+|---|---|---|---|
+| 0.88 | 0 | name: lg stainless steel freestanding electric range lre30453ss; description: lg stainless steel freestanding  | name: lg 5.6 cu.ft . freestanding electric range |
+| 0.87 | 0 | name: lg stainless steel freestanding electric range lre30757ss; description: lg stainless steel freestanding  | name: lg 5.6 cu.ft . freestanding electric range |
+| 0.87 | 0 | name: lg 5.6 cu . ft. white freestanding electric range lre30453wh; description: lg 5.6 cu . ft. white freesta | name: lg 5.6 cu.ft . freestanding electric range |
+| 0.85 | 0 | name: lg 5.6 cu . ft. black freestanding electric range lre30453bk; description: lg 5.6 cu . ft. black freesta | name: lg 5.6 cu.ft . freestanding electric range |
+| 0.85 | 0 | name: lg 30 ' stainless steel freestanding gas range lrg30357ss; description: lg 30 ' stainless steel freestan | name: lg 5.0 cu.ft . freestanding gas range |
 
 ## DBLP-ACM
 
@@ -137,23 +137,23 @@ Dev picked threshold 0.55 for R2 (F1 0.980 on dev); at that threshold the held-o
 
 The five gold matches with the lowest p:
 
-| p | gold | pair state (truncated) |
-|---|---|---|
-| 0.27 | 1 | A: title: stream : the stanford stream data manager; authors: jennifer widom , mayur datar , shivnath babu , justin rosenstein , itaru nishizawa , arvind arasu , keith ito , brian babcock; venue: sigmod conference; year: 2003 B: title: stre |
-| 0.27 | 1 | A: title: indexing images in oracle8i; authors: melliyal annamalai , samuel defazio , rajiv chopra; venue: sigmod conference; year: 2000 B: title: indexing images in oracle8i; authors: melliyal annamalai , rajiv chopra , samuel defazio , su |
-| 0.31 | 1 | A: title: reminiscences an influential papers; authors: jeffrey f. naughton , minos n. garofalakis , kenneth a. ross; venue: sigmod record; year: 2003 B: title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmo |
-| 0.34 | 1 | A: title: things every update replication customer should know; authors: rob golding; venue: sigmod conference; year: 1995 B: title: things every update replication customer should know ( abstract ); authors: rob goldring; venue: internatio |
-| 0.34 | 1 | A: title: ominisearch : a method for searching dynamic content on the web; authors: henrique paques , ling liu , david buttler , calton pu; venue: sigmod conference; year: 2001 B: title: ominisearch : a method for searching dynamic content  |
+| p | gold | record A (cut) | record B (cut) |
+|---|---|---|---|
+| 0.27 | 1 | title: stream : the stanford stream data manager; authors: jennifer widom , mayur datar , shivnath babu , just | title: stream : the stanford stream data manager ( demonstration description ); authors: arvind arasu , brian  |
+| 0.27 | 1 | title: indexing images in oracle8i; authors: melliyal annamalai , samuel defazio , rajiv chopra; venue: sigmod | title: indexing images in oracle8i; authors: melliyal annamalai , rajiv chopra , samuel defazio , susan mavris |
+| 0.31 | 1 | title: reminiscences an influential papers; authors: jeffrey f. naughton , minos n. garofalakis , kenneth a. r | title: reminiscences on influential papers; authors: kenneth a. ross; venue: acm sigmod record; year: 2003 |
+| 0.34 | 1 | title: things every update replication customer should know; authors: rob golding; venue: sigmod conference; y | title: things every update replication customer should know ( abstract ); authors: rob goldring; venue: intern |
+| 0.34 | 1 | title: ominisearch : a method for searching dynamic content on the web; authors: henrique paques , ling liu ,  | title: ominisearch : a method for searching dynamic content on the web; authors: david buttler , ling liu , ca |
 
 The five gold non-matches with the highest p:
 
-| p | gold | pair state (truncated) |
-|---|---|---|
-| 0.97 | 0 | A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002 B: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002 |
-| 0.97 | 0 | A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002 B: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002 |
-| 0.97 | 0 | A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002 B: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002 |
-| 0.97 | 0 | A: title: book review column; authors: karl aberer; venue: sigmod record; year: 2002 B: title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002 |
-| 0.89 | 0 | A: title: special issue on data mining for intrusion detection and threat analysis - guest editor 's introduction; authors: daniel barbará; venue: sigmod record; year: 2001 B: title: special section on data mining for intrusion detection an |
+| p | gold | record A (cut) | record B (cut) |
+|---|---|---|---|
+| 0.97 | 0 | title: book review column; authors: karl aberer; venue: sigmod record; year: 2002 | title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002 |
+| 0.97 | 0 | title: book review column; authors: karl aberer; venue: sigmod record; year: 2002 | title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002 |
+| 0.97 | 0 | title: book review column; authors: karl aberer; venue: sigmod record; year: 2002 | title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002 |
+| 0.97 | 0 | title: book review column; authors: karl aberer; venue: sigmod record; year: 2002 | title: book review column; authors: karl aberer; venue: acm sigmod record; year: 2002 |
+| 0.89 | 0 | title: special issue on data mining for intrusion detection and threat analysis - guest editor 's introduction | title: special section on data mining for intrusion detection and threat analysis; authors: daniel barbar &#22 |
 
 ## The macros live: Abt-Buy, 100 sampled left rows
 
