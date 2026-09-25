@@ -806,7 +806,7 @@ def _round_row(r: dict[str, Any]) -> list[Any]:
         r["ece_confidence"],
         r["ece_top_p"],
         int(r["sum_abs_hard_minus_true"]),
-        r["sum_abs_expected_minus_true"],
+        f"{r['sum_abs_expected_minus_true']:.1f}",
         f"{r['intents_within_2se']} / {r['intents']}",
         f"{r['input_tokens_per_request']:,.0f}",
         f"${r['usd_per_1k_rows']:.4f}",
@@ -848,6 +848,16 @@ def _reliability_table(rows: list[list[Any]], label: str) -> str:
     )
 
 
+def _unfused_sibling(r: dict[str, Any], runs: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """The run on the same split with the same intent questions and no fused top-up."""
+    keys = ("criteria", "structure", "order")
+    for other in runs:
+        same = all(other["round_config"][k] == r["round_config"][k] for k in keys)
+        if same and other["split"] == r["split"] and other["round_config"]["topup"] != "fused":
+            return other
+    return None
+
+
 def _topup_table(runs: list[dict[str, Any]]) -> str:
     rows = []
     for r in runs:
@@ -863,7 +873,14 @@ def _topup_table(runs: list[dict[str, Any]]) -> str:
             )
         else:
             how = "fused into the intent request"
-            cost = "the marginal tokens of one more question; see the rounds table"
+            sib = _unfused_sibling(r, runs)
+            cost = "one more question in the same request"
+            if sib:
+                extra = r["input_tokens_per_request"] - sib["input_tokens_per_request"]
+                cost = (
+                    f"{extra:,.0f} tokens / req more than {sib['split']}/{sib['round']}, "
+                    f"${extra * USD_PER_INPUT_TOKEN * 1000:.4f} / 1k rows on top"
+                )
         rows.append(
             [
                 f"{r['split']}/{r['round']}",
@@ -981,7 +998,7 @@ def _headline_table(final: dict[str, Any]) -> str:
                 "cost",
                 f"${final['usd_per_1k_rows']:.4f} per 1,000 rows (${u['est_usd']:.4f} total; "
                 f"{final['input_tokens_per_request']:,.0f} input tokens per request, "
-                f"{final['questions']} questions)",
+                f"{final['questions']} question{'s' if final['questions'] > 1 else ''})",
             ],
             [
                 "accuracy (argmax = gold)",
@@ -994,7 +1011,10 @@ def _headline_table(final: dict[str, Any]) -> str:
                 f"{final['ece_top_p']:.4f} over top-1 probability",
             ],
             ["Σ over intents of abs(hard − true)", int(final["sum_abs_hard_minus_true"])],
-            ["Σ over intents of abs(expected − true)", final["sum_abs_expected_minus_true"]],
+            [
+                "Σ over intents of abs(expected − true)",
+                f"{final['sum_abs_expected_minus_true']:.1f}",
+            ],
             [
                 "intents with abs(expected − true) ≤ 2·SE",
                 f"{final['intents_within_2se']} / {final['intents']}",

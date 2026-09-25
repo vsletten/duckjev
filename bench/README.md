@@ -6,23 +6,37 @@ Live benchmarks live here. They are scripts, not tests, and they need
 ## Banking77
 
 ```bash
-uv run python bench/banking77.py sample   # 200-row reservoir sample; projects full-split cost
-uv run python bench/banking77.py full     # full 3,080-row test split; writes docs/results/banking77.md
+uv run python bench/banking77.py prepare                        # downloads, dev sample of train, no key
+uv run python bench/banking77.py run R0 --split dev --limit 40  # pre-flight sample, not recorded
+uv run python bench/banking77.py run R1 --split dev             # one tuning round on the dev split
+uv run python bench/banking77.py run R3 --split test            # the held-out split
+uv run python bench/banking77.py confusions R0 --split dev --show 5  # top confusions, offline
+uv run python bench/banking77.py rescore                        # rebuild runs from their answer caches
+uv run python bench/banking77.py report                         # writes docs/results/banking77.md
+uv run python bench/banking77.py run R2 --split dev --dry-run   # fake transport, no key
 ```
 
-`full` refuses to start unless the last `sample` projected the full split at or
-under `--max-usd` (default $0.50), and it also passes that amount to
-`duckjev.register(max_input_tokens=...)` as a hard budget. Each phase starts from
-a fresh cache file under `bench/data/` so the timed run pays for every row; the
-cache re-run then reuses that file and must cost $0.
+The dev split is a stratified sample of `mteb/banking77` `train.jsonl`, 20 messages per
+intent (1,540 rows), drawn by a fixed rule in `prepare`; the test split (3,080 rows) is
+held out and runs only with the baseline and the round chosen on dev. Every round sends
+one fused `jev(text, $questions)` request per message; the round in `ROUNDS` decides the
+questions: flat (one 77-option Choice) or two-level (a division Choice plus one intent
+Choice per division in the same request, consumed as the product distribution), the gloss
+set (`banking77_criteria.json`, the structured `banking77_criteria_v2.json` overlay, or
+`banking77_criteria_short.json`), option order, and whether the top-up Noul rides in the
+same request. Glosses, examples and `banking77_divisions.json` were written from the label
+names and the train split only.
 
-`--dry-run` runs the same pipeline against a fake transport (no key, no Jev calls)
-and writes to `bench/data/banking77_dryrun.md` instead of the results doc.
-
-The data (`mteb/banking77` `test.jsonl`, 3,080 rows) is downloaded once into
-`bench/data/`, which is gitignored. The 77 option glosses in
-`banking77_criteria.json` were written from the label names and train-split
-examples only; the test split was never used to tune them.
+Every full live run records its metrics in `docs/results/banking77_runs.json`, which is
+committed; `report` renders the results doc from that file alone and picks the reported
+round by a fixed rule: the selectable round with the best dev accuracy, ties to fewer tokens
+per request. `--max-usd` (default $0.30) becomes the run's `max_input_tokens` budget, each
+run starts from a fresh cache file so the timed pass pays for every row, and a full run
+refuses to start until its round has a `--limit` pre-flight (which prints the projected
+cost of the split). Pre-flights and `--dry-run` runs write only `_nN` / `_dry` suffixed
+files under `bench/data/` and record nothing. `rescore` rebuilds each recorded run from
+that run's own answer cache (`bench/data/cache_<split>_<round>.duckdb`) with a transport
+that refuses every request. A test checks the README headline against the run log.
 
 ## SROIE receipts (`jev_extract`)
 

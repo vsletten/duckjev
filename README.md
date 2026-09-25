@@ -173,28 +173,46 @@ Reading the numbers:
 
 ## Banking77 numbers
 
-These come from a live run on 2026-09-24 over the full Banking77 test split: 3,080
-customer-support messages and 77 gold intents, one 77-option Choice per row,
-`jev-1.13.0`, concurrency 16. Full tables, SQL and discussion are in
-[docs/results/banking77.md](docs/results/banking77.md).
+These come from live runs on 2026-09-24 over the full Banking77 test split: 3,080
+customer-support messages, 77 gold intents, `jev-1.13.0`, concurrency 16. The test split
+was run only with the baseline and the round chosen on a dev split of train (1,540 rows,
+20 per intent) by a fixed rule. Full tables, the six dev rounds, SQL and question text are
+in [docs/results/banking77.md](docs/results/banking77.md), generated from the committed
+run log `docs/results/banking77_runs.json`.
 
-| metric | value |
-|---|---|
-| throughput | **147.6 rows/s** (3,080 rows in 20.9 s; 0 × 429, 0 × 529) |
-| cost | **$0.091 per 1,000 rows** ($0.281 total; about 2,170 input tokens per request) |
-| accuracy (argmax = gold) | **0.841** |
-| ECE, 10 bins | **0.074** over `confidence`, 0.079 over top-1 probability |
-| Σ over intents of abs(hard − true) | 602 |
-| Σ over intents of abs(expected − true) | 593.9 |
-| intents with abs(expected − true) ≤ 2·SE | 29 / 77 (38%) |
-| cache re-run | 0.21 s, 0 requests, $0 |
+| metric | R0: one 77-option Choice, one-line glosses | R3: structured criteria on the 29 confusable intents |
+|---|---|---|
+| accuracy (argmax = gold) | **0.841** ± 0.007 | **0.864** ± 0.006 |
+| ECE, 10 bins, over `confidence` / top-1 p | 0.073 / 0.078 | 0.057 / 0.062 |
+| Σ over intents of abs(hard − true) | 602 | 470 |
+| Σ over intents of abs(expected − true) | 594.8 | 484.1 |
+| intents with abs(expected − true) ≤ 2·SE | 29 / 77 | 34 / 77 |
+| input tokens per request | 2,172 | 5,501 |
+| cost | **$0.091 per 1,000 rows** | **$0.231 per 1,000 rows** |
+| throughput | 171 rows/s (0 × 429) | 81 rows/s (2,459 × 429, retried) |
+| cache re-run | 0.14 s, 0 requests, $0 | 0.31 s, 0 requests, $0 |
 
-The honest reading: Jev is reasonably calibrated in aggregate, but on Banking77
-its errors are *systematic by intent*. For example, it files reverted card
-payments under `declined_card_payment` and pending transfers under
-`transfer_timing`. Soft counts move with the hard counts there, so they beat
-argmax only slightly, and the Bernoulli standard error, which has no term for
-model bias, covers the truth for only 38% of intents.
+What the dev rounds taught:
+
+- Structured criteria (`what` / `not_for` / `examples` from train) on the intents in the
+  top confusions are the lever: +3.2 points on dev and +2.3 on the held-out split, with
+  better calibration, at 2.5× the tokens, because the option descriptions ride on every
+  request and the message itself is about 20 tokens.
+- A two-level Choice (division, then intent, all in one request) lost 3.8 points on dev.
+  The division question was right 90.3% of the time while the flat answer already lands in
+  the right division 93.2% of the time. Summing the flat distribution per division gives
+  that division readout, and a deferral rule, with no second question.
+- Reversing the option order moved 3.6% of rows and 0.1 points: order is noise for a flat
+  list, unlike the nested spans in the SROIE benchmark above.
+- Fusing the top-up Noul into the intent request cost 22 tokens per request against 294
+  for a separate query, and moved neither the intent answers (99.0% same argmax) nor the
+  top-up probabilities (99.4% within 0.05).
+- Short glosses cut tokens by 18% at no accuracy cost.
+
+Soft counts still do not beat argmax counts on this corpus. The remaining errors are
+systematic by intent (for example `beneficiary_not_allowed` filed under
+`failed_transfer`), the residual mass leaks to the same neighbours row after row, and the
+Bernoulli standard error has no term for that; see the next section.
 
 ## What is calibrated aggregation
 
@@ -217,7 +235,7 @@ worked example of that limit.
 uv sync --extra dev
 uv run pytest -q                 # offline: a fake transport, sockets blocked
 uv run ruff check . && uv run ruff format --check .
-uv run python bench/banking77.py sample && uv run python bench/banking77.py full   # live
+uv run python bench/banking77.py prepare && uv run python bench/banking77.py run R3 --split test  # live
 uv run python bench/sroie.py prepare && uv run python bench/sroie.py coverage     # offline
 uv run python bench/sroie.py run R3 --split test && uv run python bench/sroie.py report # live
 ```
