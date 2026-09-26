@@ -295,10 +295,14 @@ Numbers in §2.2 and `docs/results/entity_matching.md`. Five dev rounds per corp
   is the follow-on before anyone runs it on a whole catalogue.
 
 ### 3.4 Tier two: community extension
-C++ or Rust extension template with the HTTP client inside the extension so
-`INSTALL jev FROM community` works from the CLI, Node, Go, WASM; cost annotations so
-the planner orders semantic filters last; `jev_explain(query)` reporting estimated
-token spend before execution.
+Planned in full in `docs/TIER2.md` (2026-09-25): a C++ extension built beside tier one
+under `extension/`, same wire format, cache key and SQL surface, accepted by replaying
+the recorded benchmark caches through it with zero requests; the planner rule that runs
+semantic predicates last and never twice; `jev_explain(query)`; then the platform matrix
+and the community registry. Seven milestones, each one PR with its own gate. The
+research it rests on (DuckDB 1.5.5 optimizer internals, the extension template, the
+registry, and the LLM-calling precedents) is recorded there with what could not be
+verified.
 
 ### 3.5 Tier three: maintained judgment columns
 Sidecar table + view + `jev_refresh(table, column)` judging only new state hashes
