@@ -309,6 +309,14 @@ Sidecar table + view + `jev_refresh(table, column)` judging only new state hashe
 under the pinned model; a view-matching rewrite so a repeated question over a stored
 column becomes a column read.
 
+### 3.6 The MAUDE demo (tier one, planned 2026-09-26)
+`docs/MAUDE.md` is the build handoff: coded complaint surveillance over FDA device
+adverse-event reports pulled from openFDA, three product codes (`QBJ`, `FTR`, `LWS`),
+one fused request per report (problem code, harm category, severity), tuned in rounds
+against the codes the manufacturers filed, with trend counts with error bars, `sem_dedup`,
+a `sem_join` to recalls and `sem_topk` as live demo queries. It needs nothing from tier
+two and is the first thing to build next.
+
 ## 4. Environment on the new machine
 
 `uv sync --extra dev`; `uv run pytest -q`; `uv run ruff check .` and
