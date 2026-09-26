@@ -321,4 +321,4 @@ Notes:
 
 Design and decisions: [docs/HANDOFF.md](docs/HANDOFF.md).
 
-State at hand-off and next milestones: [docs/NEXT.md](docs/NEXT.md). Original build spec: [docs/HANDOFF.md](docs/HANDOFF.md). Tier two (the native extension) plan: [docs/TIER2.md](docs/TIER2.md).
+State at hand-off and next milestones: [docs/NEXT.md](docs/NEXT.md). Original build spec: [docs/HANDOFF.md](docs/HANDOFF.md). Tier two (the native extension) plan: [docs/TIER2.md](docs/TIER2.md). The MAUDE demo plan: [docs/MAUDE.md](docs/MAUDE.md).
