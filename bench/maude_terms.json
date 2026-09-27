@@ -1,0 +1,4424 @@
+{
+ "_": "FDA device-problem vocabulary (IMDRF Annex A as FDA publishes it), sheet A of the annexes workbook at https://www.fda.gov/media/192166/download?attachment; written by bench/maude.py prepare.",
+ "terms": [
+  {
+   "term": "Patient Device Interaction Problem",
+   "level": 1,
+   "imdrf_code": "A01",
+   "fda_code": "4001",
+   "definition": "Problem related to the interaction between the patient and the device.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Patient-Device Incompatibility",
+   "level": 2,
+   "imdrf_code": "A0101",
+   "fda_code": "2682",
+   "definition": "Problem associated with the interaction between the patient's physiology or anatomy and the device that affects the patient and/or the device.",
+   "status": null,
+   "parent": "Patient Device Interaction Problem"
+  },
+  {
+   "term": "Biocompatibility",
+   "level": 3,
+   "imdrf_code": "A010101",
+   "fda_code": "2886",
+   "definition": "Problem associated with undesirable local or systemic effects due to exposure to medical device materials or leachates from those materials by a patient who has an implant or is receiving treatment with a device made from them.",
+   "status": null,
+   "parent": "Patient-Device Incompatibility"
+  },
+  {
+   "term": "Device Appears to Trigger Rejection",
+   "level": 3,
+   "imdrf_code": "A010102",
+   "fda_code": "1524",
+   "definition": "The device appears to elicit undesired response in the patient to the presence of an implanted or invasive device, without inherent device failure, e.g. fibrous encapsulation, or inflammation of the tissue around the device, or extrusion of the device.",
+   "status": null,
+   "parent": "Patient-Device Incompatibility"
+  },
+  {
+   "term": "Inadequacy of Device Shape and/or Size",
+   "level": 3,
+   "imdrf_code": "A010103",
+   "fda_code": "1583",
+   "definition": "The physical size and/or shape of the device was inadequate with regard to the patient's anatomy.",
+   "status": null,
+   "parent": "Patient-Device Incompatibility"
+  },
+  {
+   "term": "Osseointegration Problem",
+   "level": 2,
+   "imdrf_code": "A0102",
+   "fda_code": "3003",
+   "definition": "Problem associated with interconnection between the bone tissue and the implanted device.",
+   "status": null,
+   "parent": "Patient Device Interaction Problem"
+  },
+  {
+   "term": "Failure to Osseointegrate",
+   "level": 3,
+   "imdrf_code": "A010201",
+   "fda_code": "1863",
+   "definition": "Problem associated with the failure to see direct anchorage of an implant by the formation of bony tissue around the implant without the growth of fibrous tissue at the bone-implant interface.",
+   "status": null,
+   "parent": "Osseointegration Problem"
+  },
+  {
+   "term": "Loss of Osseointegration",
+   "level": 3,
+   "imdrf_code": "A010202",
+   "fda_code": "2408",
+   "definition": "Problem associated with weakened integration of the device at the bone-implant interface due to loss of fibrous and/or bony tissue and leading to compromised anchorage of the device. i.e. Loosening/Lysis",
+   "status": null,
+   "parent": "Osseointegration Problem"
+  },
+  {
+   "term": "Loosening of Implant not Related to Bone-Ingrowth",
+   "level": 2,
+   "imdrf_code": "A0103",
+   "fda_code": "4002",
+   "definition": "Problem associated with the loss of direct anchorage of an implanted device over time or due to an injury.",
+   "status": "Modified (editorial)",
+   "parent": "Patient Device Interaction Problem"
+  },
+  {
+   "term": "Migration or Expulsion of Device",
+   "level": 2,
+   "imdrf_code": "A0104",
+   "fda_code": "1395",
+   "definition": "Problem with an implanted or invasive device moving within the body, or being completely expelled from the body.",
+   "status": null,
+   "parent": "Patient Device Interaction Problem"
+  },
+  {
+   "term": "Expulsion",
+   "level": 3,
+   "imdrf_code": "A010401",
+   "fda_code": "2933",
+   "definition": "Problem with all or part of an implanted or invasive device being completely expelled from its intended location within the body.",
+   "status": null,
+   "parent": "Migration or Expulsion of Device"
+  },
+  {
+   "term": "Migration",
+   "level": 3,
+   "imdrf_code": "A010402",
+   "fda_code": "4003",
+   "definition": "Problem with all or part of an implanted or invasive device moving from its intended location within the body.",
+   "status": null,
+   "parent": "Migration or Expulsion of Device"
+  },
+  {
+   "term": "Lack of Effect",
+   "level": 2,
+   "imdrf_code": "A0105",
+   "fda_code": "4065",
+   "definition": "Problems associated with a product having less efficacy than expected. No other malfunctions could be identified.",
+   "status": null,
+   "parent": "Patient Device Interaction Problem"
+  },
+  {
+   "term": "Device Stenosis",
+   "level": 2,
+   "imdrf_code": "A0106",
+   "fda_code": "4066",
+   "definition": "Problem associated with the narrowing or obstruction of the device (e.g. prosthetic heart valves, stents, etc.).",
+   "status": null,
+   "parent": "Patient Device Interaction Problem"
+  },
+  {
+   "term": "Implant Subsidence",
+   "level": 2,
+   "imdrf_code": "A0107",
+   "fda_code": "4078",
+   "definition": "Problem related to the settling or collapse of bone adjacent to an implanted device, in direction of the loading force.",
+   "status": "Modified (editorial)",
+   "parent": "Patient Device Interaction Problem"
+  },
+  {
+   "term": "Manufacturing, Packaging or Shipping Problem",
+   "level": 1,
+   "imdrf_code": "A02",
+   "fda_code": "2975",
+   "definition": "Problem associated with any deviations from the intended performance of the device that appear to relate to the manufacturing, packaging or shipping processes.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Product Quality Problem",
+   "level": 2,
+   "imdrf_code": "A0201",
+   "fda_code": "1506",
+   "definition": "Problem associated with an inherent device characteristic that is not satisfactory as specified or delivered.",
+   "status": null,
+   "parent": "Manufacturing, Packaging or Shipping Problem"
+  },
+  {
+   "term": "Dull, Blunt",
+   "level": 3,
+   "imdrf_code": "A020101",
+   "fda_code": "2407",
+   "definition": "Problem associated with a device not being as sharp as intended or expected.",
+   "status": null,
+   "parent": "Product Quality Problem"
+  },
+  {
+   "term": "Nonstandard Device",
+   "level": 3,
+   "imdrf_code": "A020102",
+   "fda_code": "1420",
+   "definition": "Problem associated with the device that does not meet the specifications or requirements for which it was manufactured (e.g. materials, parts, manufacturing process).",
+   "status": null,
+   "parent": "Product Quality Problem"
+  },
+  {
+   "term": "Defective Component",
+   "level": 2,
+   "imdrf_code": "A0202",
+   "fda_code": "2292",
+   "definition": "Problem associated with a device component having flaws of dimensional deviations greater than acceptable for the intended use.",
+   "status": "Retired (2025)",
+   "parent": "Manufacturing, Packaging or Shipping Problem"
+  },
+  {
+   "term": "Defective Device",
+   "level": 2,
+   "imdrf_code": "A0203",
+   "fda_code": "2588",
+   "definition": "Problem associated with having flaws or dimensional deviations greater than acceptable for the intended use of the device.",
+   "status": "Retired (2025)",
+   "parent": "Manufacturing, Packaging or Shipping Problem"
+  },
+  {
+   "term": "Device Damaged Prior to Use",
+   "level": 2,
+   "imdrf_code": "A0204",
+   "fda_code": "2284",
+   "definition": "Problem associated with packaging or shipping damage prior to the use of the device.",
+   "status": "Retired (2025)",
+   "parent": "Manufacturing, Packaging or Shipping Problem"
+  },
+  {
+   "term": "Packaging Problem",
+   "level": 2,
+   "imdrf_code": "A0205",
+   "fda_code": "3007",
+   "definition": "Problem associated with the materials used to construct the cover or outer wrapping of the device.",
+   "status": null,
+   "parent": "Manufacturing, Packaging or Shipping Problem"
+  },
+  {
+   "term": "Difficult to Open or Remove Packaging Material",
+   "level": 3,
+   "imdrf_code": "A020501",
+   "fda_code": "2922",
+   "definition": "Problem associated with difficulty for users to operate the device, specifically as it relates to the opening or removal of the packaging materials",
+   "status": "Modified (technical)",
+   "parent": "Packaging Problem"
+  },
+  {
+   "term": "Incomplete or Missing Packaging",
+   "level": 3,
+   "imdrf_code": "A020502",
+   "fda_code": "2312",
+   "definition": "Problem associated with incomplete or missing packaging that may compromise the device operation as intended.",
+   "status": "Modified (technical)",
+   "parent": "Packaging Problem"
+  },
+  {
+   "term": "Unsealed Device Packaging",
+   "level": 3,
+   "imdrf_code": "A020503",
+   "fda_code": "1444",
+   "definition": "Problem associated with the loss of packaging seal.",
+   "status": null,
+   "parent": "Packaging Problem"
+  },
+  {
+   "term": "Tear, Rip or Hole in Device Packaging",
+   "level": 3,
+   "imdrf_code": "A020504",
+   "fda_code": "2385",
+   "definition": "Problem associated with packaging damage (tear, rip or hole) prior to the use of the device.",
+   "status": null,
+   "parent": "Packaging Problem"
+  },
+  {
+   "term": "Device Packaging Look-Alike",
+   "level": 3,
+   "imdrf_code": "A020505",
+   "fda_code": "4079",
+   "definition": "Problem associated with medical device packaging that  looks similar to another product leading to confusion. The other product may be another device or a different product such as a medicine or cleaning agent.  Use A210107 if related to the device, not packaging.",
+   "status": "Modified (editorial)",
+   "parent": "Packaging Problem"
+  },
+  {
+   "term": "Device Misassembled During Manufacturing /Shipping",
+   "level": 2,
+   "imdrf_code": "A0206",
+   "fda_code": "2912",
+   "definition": "A device found incorrectly assembled when delivered to the user facility.",
+   "status": null,
+   "parent": "Manufacturing, Packaging or Shipping Problem"
+  },
+  {
+   "term": "Component Misassembled",
+   "level": 3,
+   "imdrf_code": "A020601",
+   "fda_code": "4004",
+   "definition": "A device found to have one or more components incorrectly assembled when delivered to the user facility. This includes cases in which components are interchanged.",
+   "status": null,
+   "parent": "Device Misassembled During Manufacturing /Shipping"
+  },
+  {
+   "term": "Component Missing",
+   "level": 3,
+   "imdrf_code": "A020602",
+   "fda_code": "2306",
+   "definition": "A device component(s) found to be missing when delivered to the user facility.",
+   "status": null,
+   "parent": "Device Misassembled During Manufacturing /Shipping"
+  },
+  {
+   "term": "Extra Components",
+   "level": 3,
+   "imdrf_code": "A020603",
+   "fda_code": "4067",
+   "definition": "More than the usual number of components present/additional components from this or other devices.",
+   "status": null,
+   "parent": "Device Misassembled During Manufacturing /Shipping"
+  },
+  {
+   "term": "Device Damaged Prior to Receipt by User",
+   "level": 2,
+   "imdrf_code": "A0207",
+   "fda_code": "1570",
+   "definition": "Problem associated with packaging or shipping damage prior to receipt by the user.",
+   "status": null,
+   "parent": "Manufacturing, Packaging or Shipping Problem"
+  },
+  {
+   "term": "Delivered as Unsterile Product",
+   "level": 3,
+   "imdrf_code": "A020701",
+   "fda_code": "1421",
+   "definition": "Problem associated with a device being received in such a manner to indicate that its sterility has been compromised (e.g. sterile packaging breached, visible contaminate present)",
+   "status": null,
+   "parent": "Device Damaged Prior to Receipt by User"
+  },
+  {
+   "term": "Chemical Problem",
+   "level": 1,
+   "imdrf_code": "A03",
+   "fda_code": "2893",
+   "definition": "Problem associated with any deviation from the documented specifications of the device that relate to any chemical characterization, i.e., element, compound, or mixture.",
+   "status": "Modified (technical)",
+   "parent": null
+  },
+  {
+   "term": "Device Emits Odor",
+   "level": 2,
+   "imdrf_code": "A0301",
+   "fda_code": "1425",
+   "definition": "Problem associated with an unexpected or inappropriate smell released by the device.",
+   "status": null,
+   "parent": "Chemical Problem"
+  },
+  {
+   "term": "Device Ingredient or Reagent Problem",
+   "level": 2,
+   "imdrf_code": "A0302",
+   "fda_code": "2910",
+   "definition": "Problem associated with any deviations from the documented specifications of the device that relate to any ingredient or reagent characterization.",
+   "status": null,
+   "parent": "Chemical Problem"
+  },
+  {
+   "term": "Clumping in Device or Device Ingredient",
+   "level": 3,
+   "imdrf_code": "A030201",
+   "fda_code": "1095",
+   "definition": "Problem associated with the aggregation of particles into irregular masses.",
+   "status": null,
+   "parent": "Device Ingredient or Reagent Problem"
+  },
+  {
+   "term": "Coagulation in Device or Device Ingredient",
+   "level": 3,
+   "imdrf_code": "A030202",
+   "fda_code": "1096",
+   "definition": "Problem associated with the undesired characterization of congealing, solidifying, thickening, curdling.",
+   "status": null,
+   "parent": "Device Ingredient or Reagent Problem"
+  },
+  {
+   "term": "Precipitate in Device or Device Ingredient",
+   "level": 3,
+   "imdrf_code": "A030203",
+   "fda_code": "1478",
+   "definition": "Problem associated with the separation of solid particles from a liquid as the result of a chemical or physical change.",
+   "status": null,
+   "parent": "Device Ingredient or Reagent Problem"
+  },
+  {
+   "term": "Cross Reactivity",
+   "level": 3,
+   "imdrf_code": "A030204",
+   "fda_code": "1137",
+   "definition": "Problem associated with the degree to which an antibody or antigen participates in cross reactions.",
+   "status": null,
+   "parent": "Device Ingredient or Reagent Problem"
+  },
+  {
+   "term": "Particulates",
+   "level": 3,
+   "imdrf_code": "A030205",
+   "fda_code": "1451",
+   "definition": "Substances that consist of separate particles that are introduced by the device during or before use.",
+   "status": "Modified (editorial)",
+   "parent": "Device Ingredient or Reagent Problem"
+  },
+  {
+   "term": "High pH",
+   "level": 3,
+   "imdrf_code": "A030206",
+   "fda_code": "2426",
+   "definition": "pH higher than expected and/or anticipated.",
+   "status": null,
+   "parent": "Device Ingredient or Reagent Problem"
+  },
+  {
+   "term": "Low pH",
+   "level": 3,
+   "imdrf_code": "A030207",
+   "fda_code": "4005",
+   "definition": "pH lower than expected and/or anticipated.",
+   "status": null,
+   "parent": "Device Ingredient or Reagent Problem"
+  },
+  {
+   "term": "Unexpected Color",
+   "level": 3,
+   "imdrf_code": "A030208",
+   "fda_code": "4055",
+   "definition": "Color of product is different from that expected.",
+   "status": null,
+   "parent": "Device Ingredient or Reagent Problem"
+  },
+  {
+   "term": "Improper Chemical Reaction",
+   "level": 2,
+   "imdrf_code": "A0303",
+   "fda_code": "2952",
+   "definition": "Problem associated with an unexpected or incomplete chemical reaction or effect.",
+   "status": null,
+   "parent": "Chemical Problem"
+  },
+  {
+   "term": "Material Integrity Problem",
+   "level": 1,
+   "imdrf_code": "A04",
+   "fda_code": "2978",
+   "definition": "Problem associated with any deviations from the documented specifications of the device that relate to the limited durability of all material used to construct device.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Break",
+   "level": 2,
+   "imdrf_code": "A0401",
+   "fda_code": "1069",
+   "definition": "Problem associated with undesired damage or breakage of those materials used in the device construction.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Fracture",
+   "level": 3,
+   "imdrf_code": "A040101",
+   "fda_code": "1260",
+   "definition": "Problem associated with a partial or full-thickness crack in the device materials.",
+   "status": null,
+   "parent": "Break"
+  },
+  {
+   "term": "Loss of or Failure to Bond",
+   "level": 3,
+   "imdrf_code": "A040102",
+   "fda_code": "1068",
+   "definition": "Problem associated with lack or loss of adherence between materials intended to be joined together by any bonding such as an adhesive, heat welding, etc.",
+   "status": null,
+   "parent": "Break"
+  },
+  {
+   "term": "Material Fragmentation",
+   "level": 3,
+   "imdrf_code": "A040103",
+   "fda_code": "1261",
+   "definition": "Problem associated with small pieces of the device breaking off unexpectedly.",
+   "status": null,
+   "parent": "Break"
+  },
+  {
+   "term": "Solder Joint Fracture",
+   "level": 3,
+   "imdrf_code": "A040104",
+   "fda_code": "2324",
+   "definition": "Problem associated with undesired damage or breakage in a solder joint of materials used in the device construction.",
+   "status": null,
+   "parent": "Break"
+  },
+  {
+   "term": "Burst Container",
+   "level": 2,
+   "imdrf_code": "A0402",
+   "fda_code": "1074",
+   "definition": "Problem associated with the pressure inside a vessel or container (tubing, bottle or lines) rising to such a degree that the container ruptures",
+   "status": "Modified (technical)",
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Explosion",
+   "level": 2,
+   "imdrf_code": "A0403",
+   "fda_code": "4006",
+   "definition": "Problem associated with the violent bursting due to the sudden expansion of air, gas or fluid.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Crack",
+   "level": 2,
+   "imdrf_code": "A0404",
+   "fda_code": "1135",
+   "definition": "Problem associated with an undesired partial separation and/or a visible opening along the length or width in the materials that are used in the device construction.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Degraded",
+   "level": 2,
+   "imdrf_code": "A0405",
+   "fda_code": "1153",
+   "definition": "Problem associated with a undesired change in the chemical structure, physical properties, or appearance in the materials that are used in the device construction.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Calcified",
+   "level": 3,
+   "imdrf_code": "A040501",
+   "fda_code": "1077",
+   "definition": "Problem associated with buildup of calcium salts on the device.",
+   "status": null,
+   "parent": "Degraded"
+  },
+  {
+   "term": "Corroded",
+   "level": 3,
+   "imdrf_code": "A040502",
+   "fda_code": "1131",
+   "definition": "Problem associated with the chemical or electrochemical reaction between materials, usually a metal and its environment that produces a deterioration of the metal and its properties.",
+   "status": null,
+   "parent": "Degraded"
+  },
+  {
+   "term": "Material Erosion",
+   "level": 3,
+   "imdrf_code": "A040503",
+   "fda_code": "1214",
+   "definition": "Problem associated with a progressive loss of a material from a solid surface.",
+   "status": null,
+   "parent": "Degraded"
+  },
+  {
+   "term": "Pitted",
+   "level": 3,
+   "imdrf_code": "A040504",
+   "fda_code": "1460",
+   "definition": "Problem associated with the corrosion of a material's surface, confined to a point or small area that takes the form of cavities.",
+   "status": null,
+   "parent": "Degraded"
+  },
+  {
+   "term": "Flaked",
+   "level": 3,
+   "imdrf_code": "A040505",
+   "fda_code": "1246",
+   "definition": "Problem associated with the detachment of small pieces of the coating film of a material.",
+   "status": null,
+   "parent": "Degraded"
+  },
+  {
+   "term": "Peeled/Delaminated",
+   "level": 3,
+   "imdrf_code": "A040506",
+   "fda_code": "1454",
+   "definition": "Peeling or delamination of composite materials, including coatings, that occurs when layers are separated as a result of stress or impact and resulting in loss of mechanical toughness.",
+   "status": null,
+   "parent": "Degraded"
+  },
+  {
+   "term": "Naturally Worn",
+   "level": 3,
+   "imdrf_code": "A040507",
+   "fda_code": "2988",
+   "definition": "Problem associated with material damage to a surface, usually involving progressive loss or displacement of material, due to relative motion between that surface and a contacting substance or substances.",
+   "status": null,
+   "parent": "Degraded"
+  },
+  {
+   "term": "Unraveled Material",
+   "level": 3,
+   "imdrf_code": "A040508",
+   "fda_code": "1664",
+   "definition": "Problem due to the undesired unravelling of material (e.g. disentangled, unwound etc.).",
+   "status": null,
+   "parent": "Degraded"
+  },
+  {
+   "term": "Material Deformation",
+   "level": 2,
+   "imdrf_code": "A0406",
+   "fda_code": "2976",
+   "definition": "Problem associated with an undesired material change in shape or property caused by external forces.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Deformation Due to Compressive Stress",
+   "level": 3,
+   "imdrf_code": "A040601",
+   "fda_code": "2889",
+   "definition": "Problem associated with an undesired bulge, bend, bow, kink, or wavy condition observed in the device material resulting from compressive stresses.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Dent in Material",
+   "level": 3,
+   "imdrf_code": "A040602",
+   "fda_code": "2526",
+   "definition": "Problem associated with a undesired change in shape, characterized by the presence of a slight hollow (dent) in the device surface.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Failure to Fold",
+   "level": 3,
+   "imdrf_code": "A040603",
+   "fda_code": "1255",
+   "definition": "Problem associated with an undesired material change in physical property, characterized by failure to fold.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Failure to Unfold or Unwrap",
+   "level": 3,
+   "imdrf_code": "A040604",
+   "fda_code": "1669",
+   "definition": "Problem associated with the comprising materials' deformation in that device fails to open its wrapping or open/extend in a certain manner i.e. balloon or lens.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Material Frayed",
+   "level": 3,
+   "imdrf_code": "A040605",
+   "fda_code": "1262",
+   "definition": "Problem associated with the comprising materials having damaged edges.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Material Invagination",
+   "level": 3,
+   "imdrf_code": "A040606",
+   "fda_code": "1336",
+   "definition": "Problem associated with an undesired material change in shape, characterized by the infolding of one part within another part of a structure, or creates an internal pocket within the device's structure.",
+   "status": "Modified (technical)",
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Material Too Rigid or Stiff",
+   "level": 3,
+   "imdrf_code": "A040607",
+   "fda_code": "1544",
+   "definition": "Problem associated with undesired rigidity of device material (resisting deformation in response to an applied force).",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Material Too Soft/Flexible",
+   "level": 3,
+   "imdrf_code": "A040608",
+   "fda_code": "4007",
+   "definition": "Problem associated with any device material that results in the material's inability to maintain the desired shape or support function.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Material Twisted/Bent",
+   "level": 3,
+   "imdrf_code": "A040609",
+   "fda_code": "2981",
+   "definition": "Problem associated with deformations that lead to twisting or bending of the device.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Melted",
+   "level": 3,
+   "imdrf_code": "A040610",
+   "fda_code": "1385",
+   "definition": "Problem associated with a solid device being transformed into a molten or liquid state.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Stretched",
+   "level": 3,
+   "imdrf_code": "A040611",
+   "fda_code": "1601",
+   "definition": "Problem associated with an increase or elongation, or thinning in a materials' dimension.",
+   "status": "Modified (technical)",
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Thickening of Material",
+   "level": 3,
+   "imdrf_code": "A040612",
+   "fda_code": "4056",
+   "definition": "Device is thickened due to deformation. Note: Not to be used for thickening of liquid.",
+   "status": null,
+   "parent": "Material Deformation"
+  },
+  {
+   "term": "Material Discolored",
+   "level": 2,
+   "imdrf_code": "A0407",
+   "fda_code": "1170",
+   "definition": "Problem associated with an undesired streak, pattern and/or a noticeable change in original color.",
+   "status": "Modified (technical)",
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Material Disintegration",
+   "level": 2,
+   "imdrf_code": "A0408",
+   "fda_code": "1177",
+   "definition": "Problem associated with material breaking into small particles.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Material Opacification",
+   "level": 2,
+   "imdrf_code": "A0409",
+   "fda_code": "1426",
+   "definition": "Problem associated with an undesirable opaqueness or cloudiness.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Material Perforation",
+   "level": 2,
+   "imdrf_code": "A0410",
+   "fda_code": "2205",
+   "definition": "Material constituting device is perforated possibly compromising the device's intended purpose.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Material Puncture/Hole",
+   "level": 3,
+   "imdrf_code": "A041001",
+   "fda_code": "1504",
+   "definition": "Device material(s) punctured leading to undesired holes/openings.",
+   "status": null,
+   "parent": "Material Perforation"
+  },
+  {
+   "term": "Material Protrusion/Extrusion",
+   "level": 2,
+   "imdrf_code": "A0411",
+   "fda_code": "2979",
+   "definition": "Problem associated with undesired physical appearance of device material, specifically when material extends beyond or above device surface.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Material Rupture",
+   "level": 2,
+   "imdrf_code": "A0412",
+   "fda_code": "1546",
+   "definition": "Problem associated with perforations that lead to bursting of the device.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Material Separation",
+   "level": 2,
+   "imdrf_code": "A0413",
+   "fda_code": "1562",
+   "definition": "Problem associated with an undesired disassociation or breaking apart of the device.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Material Split, Cut or Torn",
+   "level": 2,
+   "imdrf_code": "A0414",
+   "fda_code": "4008",
+   "definition": "Problem associated with materials consisting the device are split, cut or torn due to external forces (e.g. wrenching or laceration) or internal forces (e.g. exceeding the tensile stress limits belonging to the materials used in the device construction).",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Scratched Material",
+   "level": 2,
+   "imdrf_code": "A0415",
+   "fda_code": "3020",
+   "definition": "Problem associated with an undesirable shallow cut or narrow groove in the surface of the device materials.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Failure to Degrade",
+   "level": 2,
+   "imdrf_code": "A0416",
+   "fda_code": "4084",
+   "definition": "Failure of a material to degrade, absorb, dissolve, etc. in an appropriate manner, when the material is expected to do so.",
+   "status": null,
+   "parent": "Material Integrity Problem"
+  },
+  {
+   "term": "Mechanical Problem",
+   "level": 1,
+   "imdrf_code": "A05",
+   "fda_code": "1384",
+   "definition": "Problems associated with mechanical actions or defects, including moving parts or subassemblies, etc.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Detachment of Device or Device Component",
+   "level": 2,
+   "imdrf_code": "A0501",
+   "fda_code": "2907",
+   "definition": "Problem associated with the separation of the device from its physical construct, integrity, or chassis.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Device Damaged by Another Device",
+   "level": 2,
+   "imdrf_code": "A0502",
+   "fda_code": "2915",
+   "definition": "Problem associated with one device causing harm to another device.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Ejection Problem",
+   "level": 2,
+   "imdrf_code": "A0503",
+   "fda_code": "4009",
+   "definition": "Problems associated with the inability or unexpected ejection or discharge of the device from its physical location.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Failure to Eject",
+   "level": 3,
+   "imdrf_code": "A050301",
+   "fda_code": "4010",
+   "definition": "Problem associated with the inability of the device to be ejected or discharged from its physical location.",
+   "status": null,
+   "parent": "Ejection Problem"
+  },
+  {
+   "term": "Unintended Ejection",
+   "level": 3,
+   "imdrf_code": "A050302",
+   "fda_code": "1234",
+   "definition": "Problem associated with unexpected ejection of the device from its physical location. This includes but is not limited to devices such as clip appliers, film cartridge, and staples.",
+   "status": null,
+   "parent": "Ejection Problem"
+  },
+  {
+   "term": "Leak/Splash",
+   "level": 2,
+   "imdrf_code": "A0504",
+   "fda_code": "1354",
+   "definition": "Problem associated with the escape or ingress of a liquid (including blood and bodily fluids), gel, gas or radiation from or into a vessel or container.",
+   "status": "Modified (technical)",
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Fluid/Blood Leak",
+   "level": 3,
+   "imdrf_code": "A050401",
+   "fda_code": "1250",
+   "definition": "Escape (Release, Discharge) of fluid (including blood or bodily fluid) through an unintended location; often accompanied by a loss of pressure and/or output. This includes both external and internal fluid leak. This does not include fluidized powder leak.",
+   "status": null,
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Gas/Air Leak",
+   "level": 3,
+   "imdrf_code": "A050402",
+   "fda_code": "2946",
+   "definition": "Problem associated with the unintended escape of a gas/air from the container in which it is housed. This also includes both external and internal air/gas leak.",
+   "status": null,
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Gel Leak",
+   "level": 3,
+   "imdrf_code": "A050403",
+   "fda_code": "1267",
+   "definition": "Escape (Release, Discharge) of gel through an unintended location - as in leakage of ultrasound gel. Escape or release of gel from containment structures - as in gel filled implant leak.",
+   "status": null,
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Radiation Leak",
+   "level": 3,
+   "imdrf_code": "A050404",
+   "fda_code": "1357",
+   "definition": "Escape of radiation (energy in the form of waves or subatomic particles, especially those that cause ionization) through containment structures, leading to unintended exposure.",
+   "status": null,
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Perivalvular Leak",
+   "level": 3,
+   "imdrf_code": "A050405",
+   "fda_code": "1457",
+   "definition": "Problem associated with the escape of blood around a heart valve, particularly around its leaflets. Also known as paravalvular leak.",
+   "status": null,
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Intravalvular Regurgitation",
+   "level": 3,
+   "imdrf_code": "A050406",
+   "fda_code": "4068",
+   "definition": "Problem associated with the escape or backward flow of blood through or across the valve.  Also known as transvalvular regurgitation",
+   "status": "Modified (editorial)",
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Powder Leak",
+   "level": 3,
+   "imdrf_code": "A050407",
+   "fda_code": "4069",
+   "definition": "Escape (release, discharge) of powder (including particulates) through an unintended location,  often accompanied by a loss of pressure and/or output.",
+   "status": null,
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Device Endoleak",
+   "level": 3,
+   "imdrf_code": "A050408",
+   "fda_code": "4074",
+   "definition": "The observed device problem is persistent blood flow/pressure in the aneurysm sac following an endovascular aneurysm repair (EVAR) procedure.  Where other device problems lead to an endoleak the observed problems should be coded and E2121 selected as the E term.",
+   "status": null,
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Unspecified Valve Regurgitation",
+   "level": 3,
+   "imdrf_code": "A050409",
+   "fda_code": "4080",
+   "definition": "Problem associated with the escape or backward flow of blood relative to a valve where it is not specified or not confirmed whether the leak is transvalvular/intravalvular or paravalvular/perivalvular.",
+   "status": null,
+   "parent": "Leak/Splash"
+  },
+  {
+   "term": "Firing Problem",
+   "level": 2,
+   "imdrf_code": "A0505",
+   "fda_code": "4011",
+   "definition": "Problem associated with the device not discharging as intended.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Failure to Fire",
+   "level": 3,
+   "imdrf_code": "A050501",
+   "fda_code": "2610",
+   "definition": "Problem associated with failure of the device to discharge its load (e.g. surgical stapler failed to partially or completely deploy its staples).",
+   "status": null,
+   "parent": "Firing Problem"
+  },
+  {
+   "term": "Misfire",
+   "level": 3,
+   "imdrf_code": "A050502",
+   "fda_code": "2532",
+   "definition": "Problem associated with a therapy or algorithm not being delivered or executed at the expected time.",
+   "status": null,
+   "parent": "Firing Problem"
+  },
+  {
+   "term": "Mechanical Jam",
+   "level": 2,
+   "imdrf_code": "A0506",
+   "fda_code": "2983",
+   "definition": "The motion of the device is prevented or restricted.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Mechanics Altered",
+   "level": 2,
+   "imdrf_code": "A0507",
+   "fda_code": "2984",
+   "definition": "Problem associated with a device mechanical functioning of machinery, moving parts or tools of device being changed or modified.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Failure to Align",
+   "level": 3,
+   "imdrf_code": "A050701",
+   "fda_code": "2522",
+   "definition": "Problem associated with a circuit, equipment, or system whereby its functions fail to be properly synchronized or its relative positions properly oriented.",
+   "status": null,
+   "parent": "Mechanics Altered"
+  },
+  {
+   "term": "Failure to Cut",
+   "level": 3,
+   "imdrf_code": "A050702",
+   "fda_code": "2587",
+   "definition": "Inability of the device to make an incision, pierce or open as intended.",
+   "status": null,
+   "parent": "Mechanics Altered"
+  },
+  {
+   "term": "Failure to Cycle",
+   "level": 3,
+   "imdrf_code": "A050703",
+   "fda_code": "1142",
+   "definition": "Problem associated with the device failing to complete a series of processes or events.",
+   "status": null,
+   "parent": "Mechanics Altered"
+  },
+  {
+   "term": "Failure to Form Staple",
+   "level": 3,
+   "imdrf_code": "A050704",
+   "fda_code": "2579",
+   "definition": "Problem associated with the device failing to connect tissue with a stapling device due to the staples not forming correctly.",
+   "status": null,
+   "parent": "Mechanics Altered"
+  },
+  {
+   "term": "Failure to Seal",
+   "level": 3,
+   "imdrf_code": "A050705",
+   "fda_code": "4070",
+   "definition": "Problem associated with the device failing to seal the intended vessel with the device intended to provide a seal (e.g. electrosurgical hemostasis).",
+   "status": null,
+   "parent": "Mechanics Altered"
+  },
+  {
+   "term": "Noise, Audible",
+   "level": 2,
+   "imdrf_code": "A0508",
+   "fda_code": "3273",
+   "definition": "Problem associated with any unintended sound which emanates from the device (for example, squeaking from two parts rubbing together or buzzing sounds from electrical components).",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Physical Resistance/Sticking",
+   "level": 2,
+   "imdrf_code": "A0509",
+   "fda_code": "4012",
+   "definition": "Problem associated with the lack of movement in the device due parts sticking or seizing.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Adhesive Too Strong",
+   "level": 3,
+   "imdrf_code": "A050901",
+   "fda_code": "4071",
+   "definition": "Strength of an adhesive bond is too great; typically used when the adhesive is meant as a temporary hold but is acting in a more permanent manner.",
+   "status": null,
+   "parent": "Physical Resistance/Sticking"
+  },
+  {
+   "term": "Retraction Problem",
+   "level": 2,
+   "imdrf_code": "A0510",
+   "fda_code": "1536",
+   "definition": "Problem associated with drawing back the device or part of the device to an intended location.",
+   "status": "Modified (technical)",
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Structural Problem",
+   "level": 2,
+   "imdrf_code": "A0511",
+   "fda_code": "2506",
+   "definition": "Problem associated with the basic physical construction or physical make up of the device.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Collapse",
+   "level": 3,
+   "imdrf_code": "A051101",
+   "fda_code": "1099",
+   "definition": "Problem associated with the buckling or crushing of material from external forces.",
+   "status": null,
+   "parent": "Structural Problem"
+  },
+  {
+   "term": "Sharp Edges",
+   "level": 3,
+   "imdrf_code": "A051102",
+   "fda_code": "4013",
+   "definition": "The device has undesirable sharp edges which can cause harm or damage.",
+   "status": null,
+   "parent": "Structural Problem"
+  },
+  {
+   "term": "Difficult to Fold, Unfold or Collapse",
+   "level": 3,
+   "imdrf_code": "A051103",
+   "fda_code": "1254",
+   "definition": "Problem associated with the use of the device in terms of user experiencing difficulty to close or to spread out/extend length of the device, even if the operation is being performed according to labeled instructions for use.",
+   "status": null,
+   "parent": "Structural Problem"
+  },
+  {
+   "term": "Difficult to Open or Close",
+   "level": 3,
+   "imdrf_code": "A051104",
+   "fda_code": "2921",
+   "definition": "Problem associated with the use of the device in terms of user experiencing difficulty opening and closing the device, even if the operation is being performed according to labeled instructions for use.",
+   "status": null,
+   "parent": "Structural Problem"
+  },
+  {
+   "term": "Incomplete Coaptation",
+   "level": 3,
+   "imdrf_code": "A051105",
+   "fda_code": "2507",
+   "definition": "Problem associated with the heart valve leaflet not closing properly.",
+   "status": null,
+   "parent": "Structural Problem"
+  },
+  {
+   "term": "Unintended Movement",
+   "level": 2,
+   "imdrf_code": "A0512",
+   "fda_code": "3026",
+   "definition": "Problem associated with an undesired movement of the device, which may be related to the device malfunction, misdiagnosis, or mistreatment.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Device Dislodged or Dislocated",
+   "level": 3,
+   "imdrf_code": "A051201",
+   "fda_code": "2923",
+   "definition": "Problems associated with the device not remaining in an expected location.",
+   "status": null,
+   "parent": "Unintended Movement"
+  },
+  {
+   "term": "Device Tipped Over",
+   "level": 3,
+   "imdrf_code": "A051202",
+   "fda_code": "2589",
+   "definition": "Problem associated with the inability of the device to stay in an upright position.",
+   "status": null,
+   "parent": "Unintended Movement"
+  },
+  {
+   "term": "Device Fell",
+   "level": 3,
+   "imdrf_code": "A051203",
+   "fda_code": "4014",
+   "definition": "Problem associated with the device or a component unexpectedly being dropped or moving down from an intended place.",
+   "status": null,
+   "parent": "Unintended Movement"
+  },
+  {
+   "term": "Device Slipped",
+   "level": 3,
+   "imdrf_code": "A051204",
+   "fda_code": "1584",
+   "definition": "Problem associated with the device moving or sliding from the intended position.",
+   "status": null,
+   "parent": "Unintended Movement"
+  },
+  {
+   "term": "Unintended Collision",
+   "level": 3,
+   "imdrf_code": "A051205",
+   "fda_code": "1429",
+   "definition": "Problem associated with the device impacting with another object.",
+   "status": null,
+   "parent": "Unintended Movement"
+  },
+  {
+   "term": "Unintended System Motion",
+   "level": 3,
+   "imdrf_code": "A051206",
+   "fda_code": "1430",
+   "definition": "Problem associated with any motion of the system or components that was not initiated by the user.",
+   "status": null,
+   "parent": "Unintended Movement"
+  },
+  {
+   "term": "Unstable",
+   "level": 3,
+   "imdrf_code": "A051207",
+   "fda_code": "1667",
+   "definition": "Problem associated with the mechanical stability of the device.",
+   "status": null,
+   "parent": "Unintended Movement"
+  },
+  {
+   "term": "Vibration",
+   "level": 3,
+   "imdrf_code": "A051208",
+   "fda_code": "1674",
+   "definition": "Problem associated with the undesirable mechanical oscillation.",
+   "status": null,
+   "parent": "Unintended Movement"
+  },
+  {
+   "term": "Inadequate Lubrication",
+   "level": 2,
+   "imdrf_code": "A0513",
+   "fda_code": "4057",
+   "definition": "The device shows inadequate lubrication.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Damaged Thread",
+   "level": 2,
+   "imdrf_code": "A0514",
+   "fda_code": "4075",
+   "definition": "Problems associated with threads that are damaged either prior to use due to bad threading or repeated re-use (possibly with other damaged components) or threads that became stripped or damaged while being used.",
+   "status": null,
+   "parent": "Mechanical Problem"
+  },
+  {
+   "term": "Optical Problem",
+   "level": 1,
+   "imdrf_code": "A06",
+   "fda_code": "3001",
+   "definition": "Problem associated with transmission of visible light affecting the quality of the image transmitted or otherwise affecting the intended application of the visible light path.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Misfocusing",
+   "level": 2,
+   "imdrf_code": "A0601",
+   "fda_code": "1401",
+   "definition": "The problem relates to the poor focusing of the object or the focus is on the wrong object or in the wrong area.",
+   "status": null,
+   "parent": "Optical Problem"
+  },
+  {
+   "term": "Optical Decentration",
+   "level": 2,
+   "imdrf_code": "A0602",
+   "fda_code": "1360",
+   "definition": "Problem associated with being off-center of optical lenses.",
+   "status": null,
+   "parent": "Optical Problem"
+  },
+  {
+   "term": "Optical Discoloration",
+   "level": 2,
+   "imdrf_code": "A0603",
+   "fda_code": "2999",
+   "definition": "Problem associated with an undesired change of color.",
+   "status": null,
+   "parent": "Optical Problem"
+  },
+  {
+   "term": "Optical Distortion",
+   "level": 2,
+   "imdrf_code": "A0604",
+   "fda_code": "3000",
+   "definition": "Problem associated with an optical defect in an image-forming system whereby the image is not the shape of an ideal image of the object.",
+   "status": null,
+   "parent": "Optical Problem"
+  },
+  {
+   "term": "Optical Obstruction",
+   "level": 2,
+   "imdrf_code": "A0605",
+   "fda_code": "3002",
+   "definition": "Problem associated with the blocking of optical devices, e.g. visual pathways.",
+   "status": null,
+   "parent": "Optical Problem"
+  },
+  {
+   "term": "Electrical /Electronic Property Problem",
+   "level": 1,
+   "imdrf_code": "A07",
+   "fda_code": "1198",
+   "definition": "Problem associated with the function of the electrical circuitry of the device.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Capturing Problem",
+   "level": 2,
+   "imdrf_code": "A0701",
+   "fda_code": "2891",
+   "definition": "Problem associated with the inability of the device to achieve successful depolarization and contraction of a cardiac chamber caused by a pacemaker output pulse.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Failure to Capture",
+   "level": 3,
+   "imdrf_code": "A070101",
+   "fda_code": "1081",
+   "definition": "Problem associated with the failure to achieve effective and consistent depolarization of the heart resulting from the electrical stimulus of the pacemaker.",
+   "status": null,
+   "parent": "Capturing Problem"
+  },
+  {
+   "term": "High Capture Threshold",
+   "level": 3,
+   "imdrf_code": "A070102",
+   "fda_code": "3266",
+   "definition": "Problem with the amount of output energy needed to cause cardiac depolarization being higher than expected/desired.",
+   "status": null,
+   "parent": "Capturing Problem"
+  },
+  {
+   "term": "Intermittent Capture",
+   "level": 3,
+   "imdrf_code": "A070103",
+   "fda_code": "1080",
+   "definition": "Problem associated with the ineffective and inconsistent depolarization of the heart.",
+   "status": null,
+   "parent": "Capturing Problem"
+  },
+  {
+   "term": "Unstable Capture Threshold",
+   "level": 3,
+   "imdrf_code": "A070104",
+   "fda_code": "3269",
+   "definition": "Problem with the amount of output energy needed to cause cardiac depolarization being unstable.",
+   "status": null,
+   "parent": "Capturing Problem"
+  },
+  {
+   "term": "Continuous Firing",
+   "level": 2,
+   "imdrf_code": "A0702",
+   "fda_code": "1123",
+   "definition": "Problem associated with the excessive production of electrical impulses over a period.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Arcing",
+   "level": 2,
+   "imdrf_code": "A0703",
+   "fda_code": "2583",
+   "definition": "Problem associated with electrical current flowing through a gap between two conductive surfaces, typically resulting in a visible flash of light.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Arcing at Paddles",
+   "level": 3,
+   "imdrf_code": "A070301",
+   "fda_code": "1032",
+   "definition": "Problem associated with electrical current flowing through a gap between paddles (conductive surfaces), typically resulting in a visible flash of light.",
+   "status": null,
+   "parent": "Arcing"
+  },
+  {
+   "term": "Arcing of Electrodes",
+   "level": 3,
+   "imdrf_code": "A070302",
+   "fda_code": "2289",
+   "definition": "Problem associated with electrical current flowing through a gap between electrodes (conductive surfaces), typically resulting in a visible flash of light.",
+   "status": null,
+   "parent": "Arcing"
+  },
+  {
+   "term": "Sparking",
+   "level": 2,
+   "imdrf_code": "A0704",
+   "fda_code": "2595",
+   "definition": "Problem associated with a flash of light related to an electrical discharge into a normally non conductive medium, such as air. Not associated with a discharge between two conductive surfaces.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Battery Problem",
+   "level": 2,
+   "imdrf_code": "A0705",
+   "fda_code": "2885",
+   "definition": "Problem associated with the internal power of the device (e.g. battery, transformer, fuel cell or other power sources).",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Battery Problem: High Impedance",
+   "level": 3,
+   "imdrf_code": "A070501",
+   "fda_code": "2947",
+   "definition": "Problem related to increased battery internal impedance.",
+   "status": null,
+   "parent": "Battery Problem"
+  },
+  {
+   "term": "Battery Problem: Low Impedance",
+   "level": 3,
+   "imdrf_code": "A070502",
+   "fda_code": "2973",
+   "definition": "Problem related to decreased battery internal impedance.",
+   "status": null,
+   "parent": "Battery Problem"
+  },
+  {
+   "term": "Failure to Run on Battery",
+   "level": 3,
+   "imdrf_code": "A070503",
+   "fda_code": "1466",
+   "definition": "Problem associated with the device failing to operate when not connected to a fixed power source.",
+   "status": null,
+   "parent": "Battery Problem"
+  },
+  {
+   "term": "Premature Discharge of Battery",
+   "level": 3,
+   "imdrf_code": "A070504",
+   "fda_code": "1057",
+   "definition": "Battery discharging earlier than expected.",
+   "status": null,
+   "parent": "Battery Problem"
+  },
+  {
+   "term": "Charging Problem",
+   "level": 2,
+   "imdrf_code": "A0706",
+   "fda_code": "2892",
+   "definition": "Problem associated with the inability of the device to successfully charge an electrical source.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Aborted Charge",
+   "level": 3,
+   "imdrf_code": "A070601",
+   "fda_code": "2288",
+   "definition": "Problem associated with the premature ending of the charging process (e.g. of a battery or other charge storage device).",
+   "status": null,
+   "parent": "Charging Problem"
+  },
+  {
+   "term": "Delayed Charge Time",
+   "level": 3,
+   "imdrf_code": "A070602",
+   "fda_code": "2586",
+   "definition": "Problem associated with an unexpected amount of time required to charge the device (e.g. a delay in starting charging or a longer than expected charge time).",
+   "status": null,
+   "parent": "Charging Problem"
+  },
+  {
+   "term": "Failure to Charge",
+   "level": 3,
+   "imdrf_code": "A070603",
+   "fda_code": "1085",
+   "definition": "Problem associated with inability to initiate the appropriate charging process (e.g. of a battery or other charge storage device)",
+   "status": null,
+   "parent": "Charging Problem"
+  },
+  {
+   "term": "Failure to Discharge",
+   "level": 2,
+   "imdrf_code": "A0707",
+   "fda_code": "1169",
+   "definition": "Problem associated with the failure of a battery or other charge storage device to appropriately discharge as intended. Does not apply to defibrillation.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Power Problem",
+   "level": 2,
+   "imdrf_code": "A0708",
+   "fda_code": "3010",
+   "definition": "Problem associated with the energy to operate the device.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Complete Loss of Power",
+   "level": 3,
+   "imdrf_code": "A070801",
+   "fda_code": "4015",
+   "definition": "Problem associated with the lack of power to run the device.",
+   "status": null,
+   "parent": "Power Problem"
+  },
+  {
+   "term": "Intermittent Loss of Power",
+   "level": 3,
+   "imdrf_code": "A070802",
+   "fda_code": "4016",
+   "definition": "Problem associated with an intermittent disruption to the power to run the device.",
+   "status": null,
+   "parent": "Power Problem"
+  },
+  {
+   "term": "Failure to Power Up",
+   "level": 3,
+   "imdrf_code": "A070803",
+   "fda_code": "1476",
+   "definition": "Problem associated with the inability of the device to turn on related to energy delivered to the device.",
+   "status": null,
+   "parent": "Power Problem"
+  },
+  {
+   "term": "Unintended Power Up",
+   "level": 3,
+   "imdrf_code": "A070804",
+   "fda_code": "1162",
+   "definition": "Problem associated with the device turning on when not intended.",
+   "status": null,
+   "parent": "Power Problem"
+  },
+  {
+   "term": "Device Sensing Problem",
+   "level": 2,
+   "imdrf_code": "A0709",
+   "fda_code": "2917",
+   "definition": "Problem associated with the device feature that are designed to respond to a physical stimulus (temperature, illumination, motion, cardiac rhythms) and that do not transmit a resulting signal for interpretation or measurement.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Decreased Sensitivity",
+   "level": 3,
+   "imdrf_code": "A070901",
+   "fda_code": "2534",
+   "definition": "Problem with the device being less sensitive to an input than intended or expected.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Increased Sensitivity",
+   "level": 3,
+   "imdrf_code": "A070902",
+   "fda_code": "2535",
+   "definition": "Problem with the device being more sensitive to an input than intended or expected.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Failure to Analyze Signal",
+   "level": 3,
+   "imdrf_code": "A070903",
+   "fda_code": "1539",
+   "definition": "Problem with the device not analyzing a signal.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Failure to Select Signal",
+   "level": 3,
+   "imdrf_code": "A070904",
+   "fda_code": "1582",
+   "definition": "Problem associated with the failure of the device to select the appropriate input signal.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "High Sensing Threshold",
+   "level": 3,
+   "imdrf_code": "A070905",
+   "fda_code": "2574",
+   "definition": "Problem associated with the amount of input required by the device to detect a signal being higher than expected/desired.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Low Sensing Threshold",
+   "level": 3,
+   "imdrf_code": "A070906",
+   "fda_code": "2575",
+   "definition": "Problem associated with the amount of an input required by the device to detect a signal being lower than expected/desired.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Loss of Threshold",
+   "level": 3,
+   "imdrf_code": "A070907",
+   "fda_code": "1633",
+   "definition": "Problem associated with the loss of the minimum amount of energy, voltage, or current needed to consistently stimulate the heart muscle.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Failure to Sense",
+   "level": 3,
+   "imdrf_code": "A070908",
+   "fda_code": "1559",
+   "definition": "Problem associated with the failure of the device designed to respond to a physical stimulus (as temperature, illumination, motion) to transmit a resulting signal for interpretation or measurement.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Oversensing",
+   "level": 3,
+   "imdrf_code": "A070909",
+   "fda_code": "1438",
+   "definition": "Problem related to failure of the device to properly filter cardiac signals resulting in inappropriate device response.",
+   "status": "Modified (editorial)",
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Undersensing",
+   "level": 3,
+   "imdrf_code": "A070910",
+   "fda_code": "1661",
+   "definition": "Problem related to failure of the device to properly detect intrinsic cardiac activity and respond appropriately.",
+   "status": "Modified (editorial)",
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Sensing Intermittently",
+   "level": 3,
+   "imdrf_code": "A070911",
+   "fda_code": "1558",
+   "definition": "Problem with the device receiving an incoming signal on an intermittent basis when expected to be continuous.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Incorrect Interpretation of Signal",
+   "level": 3,
+   "imdrf_code": "A070912",
+   "fda_code": "1543",
+   "definition": "Problem with the device inappropriately analyzing a signal.",
+   "status": null,
+   "parent": "Device Sensing Problem"
+  },
+  {
+   "term": "Failure to Conduct",
+   "level": 2,
+   "imdrf_code": "A0710",
+   "fda_code": "1114",
+   "definition": "Problem associated with the inability of the device to allow a current of electricity to pass or to conduct electricity continuously along an electrical path.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Interrogation Problem",
+   "level": 2,
+   "imdrf_code": "A0711",
+   "fda_code": "4017",
+   "definition": "Problems associated with the device's ability to respond to signals from a system designed to interrogate its status.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Difficult to Interrogate",
+   "level": 3,
+   "imdrf_code": "A071101",
+   "fda_code": "1331",
+   "definition": "Problem associated with difficulty of a transponder system to trigger a response.",
+   "status": null,
+   "parent": "Interrogation Problem"
+  },
+  {
+   "term": "Failure to Interrogate",
+   "level": 3,
+   "imdrf_code": "A071102",
+   "fda_code": "1332",
+   "definition": "Problem associated with the device failure to appropriately respond to signals from a system designed to interrogate its status.",
+   "status": null,
+   "parent": "Interrogation Problem"
+  },
+  {
+   "term": "Pacing Problem",
+   "level": 2,
+   "imdrf_code": "A0712",
+   "fda_code": "1439",
+   "definition": "Problem associated with the inability of the device to generate a therapeutic simulated heart beat via electrical impulses.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Failure to Convert Rhythm",
+   "level": 3,
+   "imdrf_code": "A071201",
+   "fda_code": "1540",
+   "definition": "Failure of the device therapy or set of therapies to terminate the harmful cardiac rhythm that the therapy is meant to terminate.",
+   "status": null,
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "Inaccurate Synchronization",
+   "level": 3,
+   "imdrf_code": "A071202",
+   "fda_code": "1609",
+   "definition": "Problem associated with an error due to imperfect timing of two operations, e.g. signal transmission time.",
+   "status": null,
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "Inappropriate Waveform",
+   "level": 3,
+   "imdrf_code": "A071203",
+   "fda_code": "2536",
+   "definition": "Failure of the device to generate a correctly-shaped pacing output, e.g., a waveform that is too wide.",
+   "status": null,
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "No Pacing",
+   "level": 3,
+   "imdrf_code": "A071204",
+   "fda_code": "3268",
+   "definition": "Problem associated with the device ceasing to deliver paces.",
+   "status": null,
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "Pacemaker Found in Back-Up Mode",
+   "level": 3,
+   "imdrf_code": "A071205",
+   "fda_code": "1440",
+   "definition": "A device with a pacing function found in back-up Mode. This may be an appropriate fail-safe action (e.g. end of battery life), or be caused by device malfunction or due to operator error.",
+   "status": "Retired (2023)",
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "Pacing Asynchronously",
+   "level": 3,
+   "imdrf_code": "A071206",
+   "fda_code": "1441",
+   "definition": "Problem associated with a pacing transmission process such that between any two significant instants in the same group, there is always an integral number of unit intervals. Between two significant instants located in different groups, there are not always an integral number of unit intervals.",
+   "status": null,
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "Pacing Inadequately",
+   "level": 3,
+   "imdrf_code": "A071207",
+   "fda_code": "1442",
+   "definition": "Pacing voltage or pulse width is less than desired.",
+   "status": null,
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "Pacing Intermittently",
+   "level": 3,
+   "imdrf_code": "A071208",
+   "fda_code": "1443",
+   "definition": "Problem associated with the failure of pacing device for a limited period of time, following which the item recovers its ability to perform its required function without being subjected to any external corrective action. Note: such as failure is often recurrent.",
+   "status": null,
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "Extracardiac Stimulation",
+   "level": 3,
+   "imdrf_code": "A071209",
+   "fda_code": "1463",
+   "definition": "Problem associated with undesired pacemaker induced stimulation of extracardiac (muscle) tissue (e.g. diaphragm, pectoral or intercostal muscle)",
+   "status": "Modified (editorial)",
+   "parent": "Pacing Problem"
+  },
+  {
+   "term": "Defibrillation/Stimulation Problem",
+   "level": 2,
+   "imdrf_code": "A0713",
+   "fda_code": "1573",
+   "definition": "Problem associated with the delivery of electrical shock/stimulation by a device intended to deliver shocks/stimulation.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Failure to Deliver Shock/Stimulation",
+   "level": 3,
+   "imdrf_code": "A071301",
+   "fda_code": "1133",
+   "definition": "Problem associated with the failure of the device to deliver electrical energy.",
+   "status": null,
+   "parent": "Defibrillation/Stimulation Problem"
+  },
+  {
+   "term": "Inappropriate/Inadequate Shock/Stimulation",
+   "level": 3,
+   "imdrf_code": "A071302",
+   "fda_code": "1574",
+   "definition": "A shock was delivered with incorrect energy level or at incorrect timing.",
+   "status": null,
+   "parent": "Defibrillation/Stimulation Problem"
+  },
+  {
+   "term": "Intermittent Shock/Stimulation",
+   "level": 3,
+   "imdrf_code": "A071303",
+   "fda_code": "2287",
+   "definition": "Problem associated with the failure to deliver electrical energy for a limited period of time, following which the item recovers its ability to perform its required function without being subjected to any external corrective action. Note: such a failure is often recurrent.",
+   "status": null,
+   "parent": "Defibrillation/Stimulation Problem"
+  },
+  {
+   "term": "Unintended Electrical Shock",
+   "level": 2,
+   "imdrf_code": "A0714",
+   "fda_code": "4018",
+   "definition": "The device delivers unintended electrical shock. Use this term for devices that are not intended to deliver shocks/stimulation.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Grounding Malfunction",
+   "level": 2,
+   "imdrf_code": "A0715",
+   "fda_code": "1271",
+   "definition": "Problem associated with the inability to connect conductors of an electronic system for the purpose of controlling or impeding ground currents and voltages.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Electrical Overstress",
+   "level": 2,
+   "imdrf_code": "A0716",
+   "fda_code": "2924",
+   "definition": "Problem associated with an electrical activity that exceeded the specified threshold limit of the internal integrated circuitry.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Electrostatic Discharge",
+   "level": 2,
+   "imdrf_code": "A0717",
+   "fda_code": "2149",
+   "definition": "Problem associated with the discharge of electricity between two bodies previously electrically charged.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Failure to Shut Off",
+   "level": 2,
+   "imdrf_code": "A0718",
+   "fda_code": "2939",
+   "definition": "Problem associated with the device not powering off when a shut down was requested.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Device Remains Activated",
+   "level": 3,
+   "imdrf_code": "A071801",
+   "fda_code": "1525",
+   "definition": "Problem associated with the device continuing to be in an active state after deactivation was requested.",
+   "status": null,
+   "parent": "Failure to Shut Off"
+  },
+  {
+   "term": "Unexpected Shutdown",
+   "level": 2,
+   "imdrf_code": "A0719",
+   "fda_code": "4019",
+   "definition": "Problem associated with the device unexpectedly powering down.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Electromagnetic Compatibility Problem",
+   "level": 2,
+   "imdrf_code": "A0720",
+   "fda_code": "2927",
+   "definition": "Problem associated with the ability of a system to function in its electromagnetic environment without introducing intolerable disturbances to anything in its environment.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Electromagnetic Interference",
+   "level": 3,
+   "imdrf_code": "A072001",
+   "fda_code": "1194",
+   "definition": "Problem associated with a measure of electromagnetic radiation from equipment.",
+   "status": null,
+   "parent": "Electromagnetic Compatibility Problem"
+  },
+  {
+   "term": "Radiofrequency Interference (RFI)",
+   "level": 3,
+   "imdrf_code": "A072002",
+   "fda_code": "2314",
+   "definition": "Problem associated with the degradation of the reception of a wanted signal caused by RF disturbance.",
+   "status": null,
+   "parent": "Electromagnetic Compatibility Problem"
+  },
+  {
+   "term": "Circuit Failure",
+   "level": 2,
+   "imdrf_code": "A0721",
+   "fda_code": "1089",
+   "definition": "Problem associated with a failure of the internal network paths or electrical circuitry (i.e. electrical components, circuit boards, wiring)",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Capacitative Coupling",
+   "level": 3,
+   "imdrf_code": "A072101",
+   "fda_code": "1079",
+   "definition": "Problem associated with the transfer of energy within an electrical network by means of the capacitance between circuit nodes. It occurs when energy is coupled from one circuit to another through an electric field.",
+   "status": null,
+   "parent": "Circuit Failure"
+  },
+  {
+   "term": "Electrical Shorting",
+   "level": 3,
+   "imdrf_code": "A072102",
+   "fda_code": "2926",
+   "definition": "Problem associated with an electric current traveling along an accidental path (unintended path) in a circuit.",
+   "status": "Modified (editorial)",
+   "parent": "Circuit Failure"
+  },
+  {
+   "term": "Intermittent Continuity",
+   "level": 3,
+   "imdrf_code": "A072103",
+   "fda_code": "1121",
+   "definition": "Problem associated with intermittent faults in electrical/electronic interconnections.",
+   "status": null,
+   "parent": "Circuit Failure"
+  },
+  {
+   "term": "Impedance Problem",
+   "level": 2,
+   "imdrf_code": "A0722",
+   "fda_code": "2950",
+   "definition": "Problem associated with electrical impedance levels between device and patient connections.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "High Impedance",
+   "level": 3,
+   "imdrf_code": "A072201",
+   "fda_code": "1291",
+   "definition": "Problem associated with higher than intended electrical impedance levels between device and patient connections.",
+   "status": "Modified (editorial)",
+   "parent": "Impedance Problem"
+  },
+  {
+   "term": "Low Impedance",
+   "level": 3,
+   "imdrf_code": "A072202",
+   "fda_code": "2285",
+   "definition": "Problem associated with lower than intended electrical impedance levels between device and patient connections.",
+   "status": "Modified (editorial)",
+   "parent": "Impedance Problem"
+  },
+  {
+   "term": "Unstable Impedance",
+   "level": 3,
+   "imdrf_code": "A072203",
+   "fda_code": "4085",
+   "definition": "The impedance varies without being consistently too high or too low.",
+   "status": null,
+   "parent": "Impedance Problem"
+  },
+  {
+   "term": "Unexpected Mode Switch",
+   "level": 2,
+   "imdrf_code": "A0723",
+   "fda_code": "4076",
+   "definition": "A device switches mode unexpectedly e.g. back-up mode or electrocautery mode.",
+   "status": null,
+   "parent": "Electrical /Electronic Property Problem"
+  },
+  {
+   "term": "Calibration Problem",
+   "level": 1,
+   "imdrf_code": "A08",
+   "fda_code": "2890",
+   "definition": "Problem associated with the operation of the device, related to its accuracy, and associated with the calibration of the device.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Failure to Calibrate",
+   "level": 2,
+   "imdrf_code": "A0801",
+   "fda_code": "2440",
+   "definition": "Problem associated with the failure of the device to perform a self-calibration procedure or process designed to assure the accuracy and proper performance of the device.",
+   "status": null,
+   "parent": "Calibration Problem"
+  },
+  {
+   "term": "Failure to Recalibrate",
+   "level": 2,
+   "imdrf_code": "A0802",
+   "fda_code": "1517",
+   "definition": "Problem associated with the failure of the device which is unable to regain a standard level of accuracy when performing a calibration procedure or process designed to assure the accuracy and proper performance of the device.",
+   "status": null,
+   "parent": "Calibration Problem"
+  },
+  {
+   "term": "Imprecision",
+   "level": 2,
+   "imdrf_code": "A0803",
+   "fda_code": "1307",
+   "definition": "Problem associated with the device providing imprecise measurements when compared to a reference standard.",
+   "status": null,
+   "parent": "Calibration Problem"
+  },
+  {
+   "term": "Overcorrection",
+   "level": 2,
+   "imdrf_code": "A0804",
+   "fda_code": "3006",
+   "definition": "Problem associated with an adjustment that surpasses a set of criteria.",
+   "status": null,
+   "parent": "Calibration Problem"
+  },
+  {
+   "term": "Undercorrection",
+   "level": 2,
+   "imdrf_code": "A0805",
+   "fda_code": "4058",
+   "definition": "Problem associated with an adjustment that falls below a set of criteria.",
+   "status": null,
+   "parent": "Calibration Problem"
+  },
+  {
+   "term": "Output Problem",
+   "level": 1,
+   "imdrf_code": "A09",
+   "fda_code": "3005",
+   "definition": "Problem associated with any deviation from the documented specifications of the device that relate to the end result, data, or test results provided by the device.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Audible Prompt/Feedback Problem",
+   "level": 2,
+   "imdrf_code": "A0901",
+   "fda_code": "4020",
+   "definition": "Problem with any deviation from the documented specifications of the device that relate to audible feedback. e.g. voice prompts or beeps, but not safety related alarms which are covered under \"Protective Measures Problem\".",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "Inappropriate Audible Prompt/Feedback",
+   "level": 3,
+   "imdrf_code": "A090101",
+   "fda_code": "2280",
+   "definition": "Problem with audible messages which do not guide a device user to the correct action.",
+   "status": null,
+   "parent": "Audible Prompt/Feedback Problem"
+  },
+  {
+   "term": "Inaudible or Unclear Audible Prompt/Feedback",
+   "level": 3,
+   "imdrf_code": "A090102",
+   "fda_code": "2283",
+   "definition": "Problem associated with audible prompts which cannot be heard clearly.",
+   "status": null,
+   "parent": "Audible Prompt/Feedback Problem"
+  },
+  {
+   "term": "No Audible Prompt/Feedback",
+   "level": 3,
+   "imdrf_code": "A090103",
+   "fda_code": "2282",
+   "definition": "Problem associated with the device ceasing to provide audible prompts.",
+   "status": null,
+   "parent": "Audible Prompt/Feedback Problem"
+  },
+  {
+   "term": "Display or Visual Feedback Problem",
+   "level": 2,
+   "imdrf_code": "A0902",
+   "fda_code": "1184",
+   "definition": "Problem with any deviation from the documented specifications of the device that relate to visual feedback. e.g. the display of information, images on a screen, or output from the device.",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "Device Displays Incorrect Message",
+   "level": 3,
+   "imdrf_code": "A090201",
+   "fda_code": "2591",
+   "definition": "Problem associated with providing incorrect display information.",
+   "status": null,
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "Display Difficult to Read",
+   "level": 3,
+   "imdrf_code": "A090202",
+   "fda_code": "1181",
+   "definition": "Problem associated with legibility of the display, compromising for instance  the reading/interpretation of patient parameters or test results. Legibility problems can be due to color, size of font, display screen contrast or other factors.",
+   "status": null,
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "Erratic or Intermittent Display",
+   "level": 3,
+   "imdrf_code": "A090203",
+   "fda_code": "1182",
+   "definition": "A device does not consistently display the same message, result, reading, or image. e.g. the display might flicker, switch between readings or messages, or go completely blank for brief periods of time.",
+   "status": null,
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "Image Display Error/Artifact",
+   "level": 3,
+   "imdrf_code": "A090204",
+   "fda_code": "1304",
+   "definition": "Problem with image display leading to corrupted images or readouts/measurement indications.",
+   "status": null,
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "Image Orientation Incorrect",
+   "level": 3,
+   "imdrf_code": "A090205",
+   "fda_code": "1305",
+   "definition": "Problem associated with an incorrect image orientation on the device display.",
+   "status": null,
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "No Display/Image",
+   "level": 3,
+   "imdrf_code": "A090206",
+   "fda_code": "1183",
+   "definition": "Problem associated with the absence of display or image.",
+   "status": null,
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "No Visual Prompts/Feedback",
+   "level": 3,
+   "imdrf_code": "A090207",
+   "fda_code": "4021",
+   "definition": "Problem associated with the device ceasing to provide visual feedback.",
+   "status": null,
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "Poor Quality Image",
+   "level": 3,
+   "imdrf_code": "A090208",
+   "fda_code": "1408",
+   "definition": "Inadequate quality of an image or any visual representation displayed by the device, or output from the device.",
+   "status": null,
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "Visual Prompts Will not Clear",
+   "level": 3,
+   "imdrf_code": "A090209",
+   "fda_code": "2281",
+   "definition": "Problem with visual messages which continue to be displayed on/by the device after the appropriate action has been taken.",
+   "status": "Modified (editorial)",
+   "parent": "Display or Visual Feedback Problem"
+  },
+  {
+   "term": "Tactile Prompts/Feedback",
+   "level": 2,
+   "imdrf_code": "A0903",
+   "fda_code": "4022",
+   "definition": "Problem with any deviation from the documented specifications of the device that relate to tactile feedback. e.g device vibrational prompt.",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "Inappropriate Tactile Prompt/Feedback",
+   "level": 3,
+   "imdrf_code": "A090301",
+   "fda_code": "4023",
+   "definition": "Problem with tactile feedback which does not guide a device user to the correct action.",
+   "status": null,
+   "parent": "Tactile Prompts/Feedback"
+  },
+  {
+   "term": "No Tactile Prompts/Feedback",
+   "level": 3,
+   "imdrf_code": "A090302",
+   "fda_code": "4024",
+   "definition": "Problem associated with the device ceasing to provide tactile feedback.",
+   "status": null,
+   "parent": "Tactile Prompts/Feedback"
+  },
+  {
+   "term": "Energy Output Problem",
+   "level": 2,
+   "imdrf_code": "A0904",
+   "fda_code": "1431",
+   "definition": "Problem with the device's intended output of energy.",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "Energy Spectrum Incorrect",
+   "level": 3,
+   "imdrf_code": "A090401",
+   "fda_code": "1210",
+   "definition": "Problem associated with the energy output from the device not being in the expected part of the spectrum.",
+   "status": null,
+   "parent": "Energy Output Problem"
+  },
+  {
+   "term": "Failure to Deliver Energy",
+   "level": 3,
+   "imdrf_code": "A090402",
+   "fda_code": "1211",
+   "definition": "Problem associated with the failure of the device to deliver any energy.",
+   "status": null,
+   "parent": "Energy Output Problem"
+  },
+  {
+   "term": "Intermittent Energy Output",
+   "level": 3,
+   "imdrf_code": "A090403",
+   "fda_code": "4025",
+   "definition": "Problem associated with the energy output from the device being inconsistent over time.",
+   "status": null,
+   "parent": "Energy Output Problem"
+  },
+  {
+   "term": "Output Above Specifications",
+   "level": 3,
+   "imdrf_code": "A090404",
+   "fda_code": "1432",
+   "definition": "Device output is exceeding the documented specifications of the device.",
+   "status": "Modified (editorial)",
+   "parent": "Energy Output Problem"
+  },
+  {
+   "term": "Output Below Specifications",
+   "level": 3,
+   "imdrf_code": "A090405",
+   "fda_code": "3004",
+   "definition": "Device output is below the documented specifications of the device.",
+   "status": "Modified (editorial)",
+   "parent": "Energy Output Problem"
+  },
+  {
+   "term": "Therapeutic or Diagnostic Output Failure",
+   "level": 3,
+   "imdrf_code": "A090406",
+   "fda_code": "3023",
+   "definition": "Problem associated with the failure of the device to deliver the output required for treatment or identification of a disease.",
+   "status": null,
+   "parent": "Energy Output Problem"
+  },
+  {
+   "term": "Therapy Delivered to Incorrect Body Area",
+   "level": 3,
+   "imdrf_code": "A090407",
+   "fda_code": "1508",
+   "definition": "Problem associated with the device causing unintended therapeutic action to an area of the body other than the intended area.",
+   "status": null,
+   "parent": "Energy Output Problem"
+  },
+  {
+   "term": "Radiation Output Problem",
+   "level": 2,
+   "imdrf_code": "A0905",
+   "fda_code": "4026",
+   "definition": "Problem with the device's intended output of radiation.",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "Radiation Output Failure",
+   "level": 3,
+   "imdrf_code": "A090501",
+   "fda_code": "4027",
+   "definition": "Problem associated with the absence of radiation output from radiological or diagnostic devices.",
+   "status": null,
+   "parent": "Radiation Output Problem"
+  },
+  {
+   "term": "Radiation Overexposure",
+   "level": 3,
+   "imdrf_code": "A090502",
+   "fda_code": "3017",
+   "definition": "Problem associated with excessive radiation emitted from radiological or diagnostic devices.",
+   "status": null,
+   "parent": "Radiation Output Problem"
+  },
+  {
+   "term": "Radiation Underexposure",
+   "level": 3,
+   "imdrf_code": "A090503",
+   "fda_code": "3018",
+   "definition": "Problem associated with too little radiation emitted from radiological or diagnostic devices.",
+   "status": null,
+   "parent": "Radiation Output Problem"
+  },
+  {
+   "term": "Unexpected/Unintended Radiation Output",
+   "level": 3,
+   "imdrf_code": "A090504",
+   "fda_code": "4028",
+   "definition": "Device-emitted radiation when it was not supposed to. This applies to devices which are intended to emit radiation, and the radiation being emitted from the correct part of the device, but at an incorrect time. Use \"radiation leak\" if the device emits radiation which should never have been emitted, or from a location from which it should never be emitted.",
+   "status": null,
+   "parent": "Radiation Output Problem"
+  },
+  {
+   "term": "Gas Output Problem",
+   "level": 2,
+   "imdrf_code": "A0906",
+   "fda_code": "1266",
+   "definition": "Problem associated with gas output.",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "No Device Output",
+   "level": 2,
+   "imdrf_code": "A0907",
+   "fda_code": "1435",
+   "definition": "Problem associated with no measurement outcome, value or data obtained from the device.",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "Incorrect, Inadequate or Imprecise Result or Readings",
+   "level": 2,
+   "imdrf_code": "A0908",
+   "fda_code": "1535",
+   "definition": "Problem associated with a nonconforming end result, data, or test results provided by the device to its performance specifications.",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "Signal Artifact/Noise",
+   "level": 3,
+   "imdrf_code": "A090801",
+   "fda_code": "1036",
+   "definition": "Problem associated with impurities or interference in a signal (e.g. ECG artifact).",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Failure to Obtain Sample",
+   "level": 3,
+   "imdrf_code": "A090802",
+   "fda_code": "2533",
+   "definition": "The device does not collect or transfer the sample.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "False Negative Result",
+   "level": 3,
+   "imdrf_code": "A090803",
+   "fda_code": "1225",
+   "definition": "Problem associated with the device incorrectly reporting that something has not been detected and may mislead the operator/user/HCP into not taking certain actions when action should be taken.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "False Positive Result",
+   "level": 3,
+   "imdrf_code": "A090804",
+   "fda_code": "1227",
+   "definition": "Problem associated with the device incorrectly reporting that something has been detected and may mislead the operator/user/HCP to take certain actions.",
+   "status": "Modified (editorial)",
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Incorrect Measurement",
+   "level": 3,
+   "imdrf_code": "A090805",
+   "fda_code": "1383",
+   "definition": "Measurement obtained from or provided by the device is obviously incorrect.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Non Reproducible Results",
+   "level": 3,
+   "imdrf_code": "A090806",
+   "fda_code": "4029",
+   "definition": "Device results cannot be reliably reproduced.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "High Readings",
+   "level": 3,
+   "imdrf_code": "A090807",
+   "fda_code": "2459",
+   "definition": "Reading provided by the device is too high or higher than expected.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Low Readings",
+   "level": 3,
+   "imdrf_code": "A090808",
+   "fda_code": "2460",
+   "definition": "Reading provided by the device is too low or lower than expected.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "High Test Results",
+   "level": 3,
+   "imdrf_code": "A090809",
+   "fda_code": "2457",
+   "definition": "Test results provided by the device are too high or higher than expected.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Low Test Results",
+   "level": 3,
+   "imdrf_code": "A090810",
+   "fda_code": "2458",
+   "definition": "Test results provided by the device are too low or lower than expected.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Unable to Obtain Readings",
+   "level": 3,
+   "imdrf_code": "A090811",
+   "fda_code": "1516",
+   "definition": "The device does not provide or display a valid reading.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Missing Test Results",
+   "level": 3,
+   "imdrf_code": "A090812",
+   "fda_code": "3267",
+   "definition": "Problem associated with the results of a test or measurement not appearing.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Imprecise or Erratic Results",
+   "level": 3,
+   "imdrf_code": "A090813",
+   "fda_code": "4059",
+   "definition": "Reports of erroneous/discrepant results which combine high/low and/or positive/negative results. This term is not to be selected where reports indicate consistently high or low or false positive or false negative results.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Poor Visibility",
+   "level": 3,
+   "imdrf_code": "A090814",
+   "fda_code": "4072",
+   "definition": "Implanted device is difficult to detect on imaging modalities, e.g. insufficient visibility.",
+   "status": null,
+   "parent": "Incorrect, Inadequate or Imprecise Result or Readings"
+  },
+  {
+   "term": "Unexpected Therapeutic Results",
+   "level": 2,
+   "imdrf_code": "A0909",
+   "fda_code": "1631",
+   "definition": "Problem associated with the use of the device for therapeutic purposes.",
+   "status": null,
+   "parent": "Output Problem"
+  },
+  {
+   "term": "Temperature Problem",
+   "level": 1,
+   "imdrf_code": "A10",
+   "fda_code": "3022",
+   "definition": "Problem associated with the device producing unintended temperatures.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Excessive Cooling",
+   "level": 2,
+   "imdrf_code": "A1001",
+   "fda_code": "2932",
+   "definition": "Problem associated with the device producing temperatures that are lower than specified.",
+   "status": null,
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Excessive Heating",
+   "level": 2,
+   "imdrf_code": "A1002",
+   "fda_code": "4030",
+   "definition": "Problem associated with the device which have a warming or heating function, producing excessive heat.",
+   "status": null,
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Insufficient Cooling",
+   "level": 2,
+   "imdrf_code": "A1003",
+   "fda_code": "1130",
+   "definition": "Problem associated with the device, which has a cooling function, producing temperatures that are not as low as specified.",
+   "status": "Modified (technical)",
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Insufficient Heating",
+   "level": 2,
+   "imdrf_code": "A1004",
+   "fda_code": "1287",
+   "definition": "Problem associated with the device or its components producing temperatures that are not as high as what is specified.",
+   "status": null,
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Overheating of Device",
+   "level": 2,
+   "imdrf_code": "A1005",
+   "fda_code": "1437",
+   "definition": "Problem associated with the device producing high temperatures, such that its operation is compromised or harm is caused (e.g. overheating that produces melting of components or automatic shutdown).",
+   "status": null,
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Thermal Decomposition of Device",
+   "level": 2,
+   "imdrf_code": "A1006",
+   "fda_code": "1071",
+   "definition": "Problems associated with a discoloration or destruction as a result of thermal decomposition of the device.",
+   "status": null,
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Fire",
+   "level": 2,
+   "imdrf_code": "A1007",
+   "fda_code": "1245",
+   "definition": "Problem associated with the combustion of the device with a steady flame.",
+   "status": null,
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Flare or Flash",
+   "level": 2,
+   "imdrf_code": "A1008",
+   "fda_code": "2942",
+   "definition": "Problem associated with device-related burn with an unsteady flame.",
+   "status": null,
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Smoking",
+   "level": 2,
+   "imdrf_code": "A1009",
+   "fda_code": "1585",
+   "definition": "Problem associated with a cloud of vapor or gas generated from the device, generally associated after a fire or a burn.",
+   "status": null,
+   "parent": "Temperature Problem"
+  },
+  {
+   "term": "Computer Software Problem",
+   "level": 1,
+   "imdrf_code": "A11",
+   "fda_code": "1112",
+   "definition": "Problem associated with written programs, codes, and/or software system (including AI/ML) that affects device performance or communication with another device",
+   "status": "Modified (technical)",
+   "parent": null
+  },
+  {
+   "term": "Application Network Problem",
+   "level": 2,
+   "imdrf_code": "A1101",
+   "fda_code": "2879",
+   "definition": "Problem associated with the deviations from documented system specifications that affects overall system performance and/or the performance of an individual device connected to that system.",
+   "status": null,
+   "parent": "Computer Software Problem"
+  },
+  {
+   "term": "Application Program Problem",
+   "level": 2,
+   "imdrf_code": "A1102",
+   "fda_code": "2880",
+   "definition": "Problem associated with the requirement for software to fulfill its function within an intended use or application.",
+   "status": null,
+   "parent": "Computer Software Problem"
+  },
+  {
+   "term": "Application Program Freezes or Fails to Launch",
+   "level": 3,
+   "imdrf_code": "A110201",
+   "fda_code": "4031",
+   "definition": "Problem associated with an application program which freezes and/or fails to launch.",
+   "status": null,
+   "parent": "Application Program Problem"
+  },
+  {
+   "term": "Application Program Problem: Dose Calculation Error",
+   "level": 3,
+   "imdrf_code": "A110202",
+   "fda_code": "1189",
+   "definition": "Problem associated with the written program code or application software used by the device to calculate specific measurements or quantities managed by the device.",
+   "status": null,
+   "parent": "Application Program Problem"
+  },
+  {
+   "term": "Application Program Problem: Medication Error",
+   "level": 3,
+   "imdrf_code": "A110203",
+   "fda_code": "3198",
+   "definition": "Event in which the device software results in errors of medication preparation or administration.",
+   "status": null,
+   "parent": "Application Program Problem"
+  },
+  {
+   "term": "Application Program Problem: Parameter Calculation Error",
+   "level": 3,
+   "imdrf_code": "A110204",
+   "fda_code": "1449",
+   "definition": "Problem associated with the written program code or application software used by the device to calculate parameters other than those related to dose or power.",
+   "status": null,
+   "parent": "Application Program Problem"
+  },
+  {
+   "term": "Application Program Problem: Power Calculation Error",
+   "level": 3,
+   "imdrf_code": "A110205",
+   "fda_code": "1473",
+   "definition": "Problem associated with the written program code or application software used by the device for calculations related to device power.",
+   "status": null,
+   "parent": "Application Program Problem"
+  },
+  {
+   "term": "Application Program Version or Upgrade Problem",
+   "level": 3,
+   "imdrf_code": "A110206",
+   "fda_code": "2881",
+   "definition": "Problem associated with installing updates to a software system that affects the device performance or communication with another device.",
+   "status": null,
+   "parent": "Application Program Problem"
+  },
+  {
+   "term": "Problem with Software Installation",
+   "level": 3,
+   "imdrf_code": "A110207",
+   "fda_code": "3013",
+   "definition": "Problem associated with installing the device software in a manner that allows full functioning of the device. Source of installation could be manufacturer or user.",
+   "status": null,
+   "parent": "Application Program Problem"
+  },
+  {
+   "term": "Unintended Application Program Shut Down",
+   "level": 3,
+   "imdrf_code": "A110208",
+   "fda_code": "4032",
+   "definition": "Problem associated with an unintended shut down by malfunction of the application program.",
+   "status": null,
+   "parent": "Application Program Problem"
+  },
+  {
+   "term": "Program or Algorithm Execution Problem",
+   "level": 2,
+   "imdrf_code": "A1103",
+   "fda_code": "4033",
+   "definition": "Problem associated with execution problems relating to program or algorithm.",
+   "status": null,
+   "parent": "Computer Software Problem"
+  },
+  {
+   "term": "Delayed Program or Algorithm Execution",
+   "level": 3,
+   "imdrf_code": "A110301",
+   "fda_code": "4034",
+   "definition": "Problem associated with delayed execution relating to program or algorithm.",
+   "status": null,
+   "parent": "Program or Algorithm Execution Problem"
+  },
+  {
+   "term": "Intermittent Program or Algorithm Execution",
+   "level": 3,
+   "imdrf_code": "A110302",
+   "fda_code": "4035",
+   "definition": "Problem associated with intermittent execution relating to program or algorithm.",
+   "status": null,
+   "parent": "Program or Algorithm Execution Problem"
+  },
+  {
+   "term": "Program or Algorithm Execution Failure",
+   "level": 3,
+   "imdrf_code": "A110303",
+   "fda_code": "4036",
+   "definition": "Problem associated with the failure of a program or algorithm to execute. Sudden/unexpected interruption to a program's execution.",
+   "status": null,
+   "parent": "Program or Algorithm Execution Problem"
+  },
+  {
+   "term": "Computer Operating System Problem",
+   "level": 2,
+   "imdrf_code": "A1104",
+   "fda_code": "2898",
+   "definition": "Problem associated with software, firmware, and/or hardware elements that control the execution of computer programs and provides such services as computer resource allocation, job control, input/output control, and file management in a computer system.",
+   "status": null,
+   "parent": "Computer Software Problem"
+  },
+  {
+   "term": "Operating System Becomes Nonfunctional",
+   "level": 3,
+   "imdrf_code": "A110401",
+   "fda_code": "2996",
+   "definition": "Problem associated with malfunction of the computer operating system as opposed to an application software problem.",
+   "status": null,
+   "parent": "Computer Operating System Problem"
+  },
+  {
+   "term": "Operating System Version or Upgrade Problem",
+   "level": 3,
+   "imdrf_code": "A110402",
+   "fda_code": "2997",
+   "definition": "Problem associated with replacing an older operating system to an up-to-date operating system.",
+   "status": null,
+   "parent": "Computer Operating System Problem"
+  },
+  {
+   "term": "Computer System Security Problem",
+   "level": 2,
+   "imdrf_code": "A1105",
+   "fda_code": "2899",
+   "definition": "Problem associated with unauthorized access to or modification of a software system resulting in a loss of confidentiality, integrity, or availability of written program code, application software, or data or entire device.",
+   "status": null,
+   "parent": "Computer Software Problem"
+  },
+  {
+   "term": "Application Security Problem",
+   "level": 3,
+   "imdrf_code": "A110501",
+   "fda_code": "2882",
+   "definition": "Problem associated with the acquisition of computer programming codes that can replicate and spread from one computer system to another thereby leading to damaged software, hardware and data.",
+   "status": null,
+   "parent": "Computer System Security Problem"
+  },
+  {
+   "term": "Unauthorized Access to Computer System",
+   "level": 3,
+   "imdrf_code": "A110502",
+   "fda_code": "3025",
+   "definition": "Problem associated with an access that was not permitted to the computer system that may lead to modification of program, corruption of data, or and break in network security. This concept is closely associated with computer integrity which is the degree to which a system or component prevents unauthorized access to, or modification of, computer programs or data.",
+   "status": null,
+   "parent": "Computer System Security Problem"
+  },
+  {
+   "term": "Data Back-Up Problem",
+   "level": 2,
+   "imdrf_code": "A1106",
+   "fda_code": "2902",
+   "definition": "Problems relating to a system, component, file, procedure, or person available to replace or help restore a primary item in the event of a failure or externally caused disaster.",
+   "status": null,
+   "parent": "Computer Software Problem"
+  },
+  {
+   "term": "Failure to Back-Up",
+   "level": 3,
+   "imdrf_code": "A110601",
+   "fda_code": "1047",
+   "definition": "Problem associated with the inability to backup or to retrieve a backed up version (corrupted file) of device data or system files.",
+   "status": null,
+   "parent": "Data Back-Up Problem"
+  },
+  {
+   "term": "Failure to Convert to Back-Up",
+   "level": 3,
+   "imdrf_code": "A110602",
+   "fda_code": "1048",
+   "definition": "Problem associated with a failure to transition from a primary system, component, file, procedure to a backup in response to a failure in the primary item.",
+   "status": null,
+   "parent": "Data Back-Up Problem"
+  },
+  {
+   "term": "Data Problem",
+   "level": 2,
+   "imdrf_code": "A1107",
+   "fda_code": "3196",
+   "definition": "Event in which data (charting, orders, results) is not correctly stored, transferred, updated, or displayed.",
+   "status": null,
+   "parent": "Computer Software Problem"
+  },
+  {
+   "term": "Loss of Data",
+   "level": 3,
+   "imdrf_code": "A110701",
+   "fda_code": "2903",
+   "definition": "Event in which data is unintentionally permanently or temporarily lost, deleted, corrupted, or overwritten.",
+   "status": null,
+   "parent": "Data Problem"
+  },
+  {
+   "term": "Patient Data Problem",
+   "level": 3,
+   "imdrf_code": "A110702",
+   "fda_code": "3197",
+   "definition": "Event in which data is accessed by the healthcare provider and either the wrong patient or the wrong data is retrieved despite correct inquiry procedures.",
+   "status": null,
+   "parent": "Data Problem"
+  },
+  {
+   "term": "Date/Time-Related Software Problem",
+   "level": 2,
+   "imdrf_code": "A1108",
+   "fda_code": "2582",
+   "definition": "Problem associated with programming of calendar dates and/or time as a factor in the operation of the device.",
+   "status": null,
+   "parent": "Computer Software Problem"
+  },
+  {
+   "term": "Connection Problem",
+   "level": 1,
+   "imdrf_code": "A12",
+   "fda_code": "2900",
+   "definition": "Problem associated with linking of the device and/or the functional units set up to provide means for a transfer of liquid, gas, electricity or data.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Blocked Connection",
+   "level": 2,
+   "imdrf_code": "A1201",
+   "fda_code": "2888",
+   "definition": "Problem associated with linking of the device whereby their functional units set up to provide means for a transfer of fluid, gas, or data is prevented or impeded.",
+   "status": null,
+   "parent": "Connection Problem"
+  },
+  {
+   "term": "Decoupling",
+   "level": 2,
+   "imdrf_code": "A1202",
+   "fda_code": "1145",
+   "definition": "Problem associated with the device being unassociated in such a way that fluid, gas, power or signal information may not be transferred from one to another.",
+   "status": null,
+   "parent": "Connection Problem"
+  },
+  {
+   "term": "Disconnection",
+   "level": 2,
+   "imdrf_code": "A1203",
+   "fda_code": "1171",
+   "definition": "Problem associated with the linking of the device having a sufficient open space to prevent gas, liquid or electrical current flow between connectors.",
+   "status": null,
+   "parent": "Connection Problem"
+  },
+  {
+   "term": "Failure to Disconnect",
+   "level": 2,
+   "imdrf_code": "A1204",
+   "fda_code": "2541",
+   "definition": "Problem associated with the linking of the device whereby termination of the transfer of liquid, gas, electricity, or information cannot be accomplished, or linking components do not come apart, or disconnect, when expected.",
+   "status": null,
+   "parent": "Connection Problem"
+  },
+  {
+   "term": "Loose or Intermittent Connection",
+   "level": 2,
+   "imdrf_code": "A1205",
+   "fda_code": "1371",
+   "definition": "Problem associated with the connection of the device being loose or intermittent.",
+   "status": null,
+   "parent": "Connection Problem"
+  },
+  {
+   "term": "Misconnection",
+   "level": 2,
+   "imdrf_code": "A1206",
+   "fda_code": "1399",
+   "definition": "Problem associated with the connection of the device being improper or not in accordance with device specification, requirements or intended uses.",
+   "status": null,
+   "parent": "Connection Problem"
+  },
+  {
+   "term": "Incomplete or Inadequate Connection",
+   "level": 2,
+   "imdrf_code": "A1207",
+   "fda_code": "4037",
+   "definition": "Problem associated with a partial linking of the device whereby device may appear to be connected however only a partial, intermittent or no transfer of liquid, gas, electricity, or information can be accomplished.",
+   "status": null,
+   "parent": "Connection Problem"
+  },
+  {
+   "term": "Fitting Problem",
+   "level": 2,
+   "imdrf_code": "A1208",
+   "fda_code": "2183",
+   "definition": "Problem associated with the connection of the device whereby channels, switching systems, and other functional units set up to provide means for a transfer of liquid, gas, electricity, or information do not match or fit.",
+   "status": null,
+   "parent": "Connection Problem"
+  },
+  {
+   "term": "Communication or Transmission Problem",
+   "level": 1,
+   "imdrf_code": "A13",
+   "fda_code": "2896",
+   "definition": "Problem associated with the device sending or receiving signals or data. This includes transmission among internal components of the device to which the device is intended to communicate.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Failure to Read Input Signal",
+   "level": 2,
+   "imdrf_code": "A1301",
+   "fda_code": "1581",
+   "definition": "Problem associated with a failure of the device to read a signal for interpretation or measurement.",
+   "status": null,
+   "parent": "Communication or Transmission Problem"
+  },
+  {
+   "term": "Failure to Transmit Record",
+   "level": 2,
+   "imdrf_code": "A1302",
+   "fda_code": "1521",
+   "definition": "Problem associated with a failure of the device to transmit a record for interpretation or measurement.",
+   "status": null,
+   "parent": "Communication or Transmission Problem"
+  },
+  {
+   "term": "Intermittent Communication Failure",
+   "level": 2,
+   "imdrf_code": "A1303",
+   "fda_code": "4038",
+   "definition": "Inconsistent or lack of intended communication of data among internal components or with other external devices.",
+   "status": null,
+   "parent": "Communication or Transmission Problem"
+  },
+  {
+   "term": "Telemetry Discrepancy",
+   "level": 2,
+   "imdrf_code": "A1304",
+   "fda_code": "1629",
+   "definition": "Problem associated with variability of the transmission of telemetry signals.",
+   "status": null,
+   "parent": "Communication or Transmission Problem"
+  },
+  {
+   "term": "Wireless Communication Problem",
+   "level": 2,
+   "imdrf_code": "A1305",
+   "fda_code": "3283",
+   "definition": "Problems with the RF wireless technology characteristics and performance (e.g., frequency, output power, range, reception), wireless quality of service, wireless coexistence, security of wireless signals and data, and electromagnetic compatibility.",
+   "status": null,
+   "parent": "Communication or Transmission Problem"
+  },
+  {
+   "term": "Infusion or Flow Problem",
+   "level": 1,
+   "imdrf_code": "A14",
+   "fda_code": "2964",
+   "definition": "Problem associated with the device failing to deliver or draw liquids or gases as intended (e.g. delivering drugs at incorrect rate, problems with drawing fluid from a system). This includes vacuum collection devices and manual or mechanical pumps.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Deflation Problem",
+   "level": 2,
+   "imdrf_code": "A1401",
+   "fda_code": "1149",
+   "definition": "Problem associated with the deflation of the device including unintended deflation or inadequate deflation.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Failure to Deflate",
+   "level": 3,
+   "imdrf_code": "A140101",
+   "fda_code": "4060",
+   "definition": "Problem associated with the inability to deflate a device which is intended to deflate.",
+   "status": null,
+   "parent": "Deflation Problem"
+  },
+  {
+   "term": "Unintended Deflation",
+   "level": 3,
+   "imdrf_code": "A140102",
+   "fda_code": "4061",
+   "definition": "Problem associated with the unintended deflation of a device which was not designed to deflate or not at that point in time or not to that extent.",
+   "status": null,
+   "parent": "Deflation Problem"
+  },
+  {
+   "term": "Excess Flow or Over-Infusion",
+   "level": 2,
+   "imdrf_code": "A1402",
+   "fda_code": "1311",
+   "definition": "Problem associated with a delivery overdose of therapeutic agents, such as drugs or fluids being delivered into a device or a patient.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Filling Problem",
+   "level": 2,
+   "imdrf_code": "A1403",
+   "fda_code": "1233",
+   "definition": "Problem associated with the method or amount of time associated with the delivery of a fluid. Time to delivery or amount of delivered entity may be affected.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Inability to Auto-Fill",
+   "level": 3,
+   "imdrf_code": "A140301",
+   "fda_code": "1044",
+   "definition": "Complete failure to fill as part of an automated process. For insufficient filling use \"Short Fill\". For excessive filling use \"Overfill\". For inconsistent filling use \"Volume Accuracy Problem\".",
+   "status": null,
+   "parent": "Filling Problem"
+  },
+  {
+   "term": "Overfill",
+   "level": 3,
+   "imdrf_code": "A140302",
+   "fda_code": "2404",
+   "definition": "Excessive filling of a device. For complete failure to fill use \"inability to auto-fill\". For insufficient filling use \"Short Fill\". For inconsistent filling use \"Volume Accuracy Problem\".",
+   "status": null,
+   "parent": "Filling Problem"
+  },
+  {
+   "term": "Short Fill",
+   "level": 3,
+   "imdrf_code": "A140303",
+   "fda_code": "1575",
+   "definition": "Insufficient filling of a device. For complete failure to fill use \"inability to auto-fill\". For insufficient filling use \"short fill\". For inconsistent filling use \"Volume Accuracy Problem\".",
+   "status": null,
+   "parent": "Filling Problem"
+  },
+  {
+   "term": "Volume Accuracy Problem",
+   "level": 3,
+   "imdrf_code": "A140304",
+   "fda_code": "1675",
+   "definition": "Inconsistent filling of a device. This describes a problem which is observed to vary between overfilling and under filling, and may be intermittent. Use \"Overfill\" or \"Short Fill\" if problem is consistent.",
+   "status": null,
+   "parent": "Filling Problem"
+  },
+  {
+   "term": "Filtration Problem",
+   "level": 2,
+   "imdrf_code": "A1404",
+   "fda_code": "2941",
+   "definition": "Problem associated with the process of passing a substance through a porous medium, e.g., a blood clot filter for the removal of suspended matter.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Inadequate Filtration Process",
+   "level": 3,
+   "imdrf_code": "A140401",
+   "fda_code": "2308",
+   "definition": "Problem associated with the filter failing to remove items or substances which should have been removed.",
+   "status": null,
+   "parent": "Filtration Problem"
+  },
+  {
+   "term": "Inadequate Ultra Filtration",
+   "level": 3,
+   "imdrf_code": "A140402",
+   "fda_code": "1656",
+   "definition": "Problem associated with the transfer of fluid between the blood and dialysate through the dialysis membrane due to a pressure gradient (trans-membrane pressure) existing between the blood and dialysate compartments.",
+   "status": null,
+   "parent": "Filtration Problem"
+  },
+  {
+   "term": "Improper Flow or Infusion",
+   "level": 2,
+   "imdrf_code": "A1405",
+   "fda_code": "2954",
+   "definition": "Problem associated with the regulation and delivery of therapeutic agents (e.g. air, gas, drugs or fluids into a device or a patient under positive pressure).",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Backflow",
+   "level": 3,
+   "imdrf_code": "A140501",
+   "fda_code": "1064",
+   "definition": "Continuous flow of fluid (e.g. liquid, gas) against the intended flow direction.",
+   "status": null,
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Free or Unrestricted Flow",
+   "level": 3,
+   "imdrf_code": "A140502",
+   "fda_code": "2945",
+   "definition": "Problem associated with uncontrolled flow of infusion of air, gas or fluids.",
+   "status": null,
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Gradient Increase",
+   "level": 3,
+   "imdrf_code": "A140503",
+   "fda_code": "1270",
+   "definition": "Problem associated with the increased rate of change in temperature, pressure, or other variables as a function of distance, time, etc.",
+   "status": null,
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Inaccurate Delivery",
+   "level": 3,
+   "imdrf_code": "A140504",
+   "fda_code": "2339",
+   "definition": "Delivery at endpoint not as intended; either too low or too high.",
+   "status": null,
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Inaccurate Flow Rate",
+   "level": 3,
+   "imdrf_code": "A140505",
+   "fda_code": "1249",
+   "definition": "Problem associated with fluctuations in the flow volume delivered per time, even if end volume is correct, and delivered in the correct total time.",
+   "status": null,
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Intermittent Infusion or Flow",
+   "level": 3,
+   "imdrf_code": "A140506",
+   "fda_code": "2341",
+   "definition": "Problem associated with the flow not being steady characterised by intermittent stoppages to the flow.",
+   "status": "Modified (technical)",
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Reflux Within Device",
+   "level": 3,
+   "imdrf_code": "A140507",
+   "fda_code": "1522",
+   "definition": "Problem associated with partial backflow, compromising the device's flow output.",
+   "status": "Modified (editorial)",
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Restricted Flow Rate",
+   "level": 3,
+   "imdrf_code": "A140508",
+   "fda_code": "1248",
+   "definition": "Problem associated with flow rate. Flow volume delivered over time is not reaching intended flow rate.",
+   "status": "Modified (editorial)",
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Tidal Volume Fluctuations",
+   "level": 3,
+   "imdrf_code": "A140509",
+   "fda_code": "1634",
+   "definition": "Problem associated with the amount of gas that is inspired and expired during one respiratory cycle.",
+   "status": null,
+   "parent": "Improper Flow or Infusion"
+  },
+  {
+   "term": "Inflation Problem",
+   "level": 2,
+   "imdrf_code": "A1406",
+   "fda_code": "1310",
+   "definition": "Problem associated with the inability of the device to expand or enlarge with the intended inflation agent (e.g. saline or air).",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Insufficient Flow or Under Infusion",
+   "level": 2,
+   "imdrf_code": "A1407",
+   "fda_code": "2182",
+   "definition": "Problem associated with an insufficient dose of therapeutic agents, e.g., drugs or fluids being delivered into a patient under positive pressure.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "No Flow",
+   "level": 2,
+   "imdrf_code": "A1408",
+   "fda_code": "2991",
+   "definition": "Problem arising from the device failing to deliver the specified liquid or gas.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Failure to Deliver",
+   "level": 3,
+   "imdrf_code": "A140801",
+   "fda_code": "2338",
+   "definition": "Failure (=complete nonperformance) with regard to the intended function of delivery.",
+   "status": null,
+   "parent": "No Flow"
+  },
+  {
+   "term": "Failure to Infuse",
+   "level": 3,
+   "imdrf_code": "A140802",
+   "fda_code": "2340",
+   "definition": "Failure (=complete nonperformance) with regard to the intended function of infusion.",
+   "status": null,
+   "parent": "No Flow"
+  },
+  {
+   "term": "Inability to Irrigate",
+   "level": 3,
+   "imdrf_code": "A140803",
+   "fda_code": "1337",
+   "definition": "Failure (=complete nonperformance) with regard to the intended function of irrigation.",
+   "status": null,
+   "parent": "No Flow"
+  },
+  {
+   "term": "Obstruction of Flow",
+   "level": 2,
+   "imdrf_code": "A1409",
+   "fda_code": "2423",
+   "definition": "Problem related to an obstruction or blockage within the device component (e.g. tube, opening, pipe) that results in restriction of flow (including blood clotting).",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Complete Blockage",
+   "level": 3,
+   "imdrf_code": "A140901",
+   "fda_code": "1094",
+   "definition": "Problem related to an obstruction or blockage within the device component (e.g. tube, opening, pipe) that results in no flow.",
+   "status": null,
+   "parent": "Obstruction of Flow"
+  },
+  {
+   "term": "Partial Blockage",
+   "level": 3,
+   "imdrf_code": "A140902",
+   "fda_code": "1065",
+   "definition": "Problem related to an obstruction or blockage within the device component (e.g. tube, opening, pipe) that results in a reduction of the flow rate.",
+   "status": null,
+   "parent": "Obstruction of Flow"
+  },
+  {
+   "term": "Difficult to Flush",
+   "level": 2,
+   "imdrf_code": "A1410",
+   "fda_code": "1251",
+   "definition": "The device is difficult to flush, possibly indicating an obstruction within device.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Pressure Problem",
+   "level": 2,
+   "imdrf_code": "A1411",
+   "fda_code": "3012",
+   "definition": "Problem associated with the application of a force either internal or external to device that compromises the flow of fluid or gas.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Decrease in Pressure",
+   "level": 3,
+   "imdrf_code": "A141101",
+   "fda_code": "1490",
+   "definition": "Unintended decrease in pressure, compromising the device's intended function.",
+   "status": null,
+   "parent": "Pressure Problem"
+  },
+  {
+   "term": "Increase in Pressure",
+   "level": 3,
+   "imdrf_code": "A141102",
+   "fda_code": "1491",
+   "definition": "Unintended increase in pressure, compromising the device's intended function.",
+   "status": null,
+   "parent": "Pressure Problem"
+  },
+  {
+   "term": "No Pressure",
+   "level": 3,
+   "imdrf_code": "A141103",
+   "fda_code": "2994",
+   "definition": "Unintended complete loss of pressure, compromising the device's intended function.",
+   "status": null,
+   "parent": "Pressure Problem"
+  },
+  {
+   "term": "Pumping Problem",
+   "level": 2,
+   "imdrf_code": "A1412",
+   "fda_code": "3016",
+   "definition": "Problem associated with pump performance deviating from specifications in a way to compromise flow or infusion or dispensing.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Decreased Pump Speed",
+   "level": 3,
+   "imdrf_code": "A141201",
+   "fda_code": "1500",
+   "definition": "Unintended decrease in pump speed and hence, probably, flow rate, compromising the intended function of the device.",
+   "status": null,
+   "parent": "Pumping Problem"
+  },
+  {
+   "term": "Increased Pump Speed",
+   "level": 3,
+   "imdrf_code": "A141202",
+   "fda_code": "1501",
+   "definition": "Unintended increase in pump speed and hence, probably, flow rate, compromising the intended function of the device.",
+   "status": null,
+   "parent": "Pumping Problem"
+  },
+  {
+   "term": "Failure to Pump",
+   "level": 3,
+   "imdrf_code": "A141203",
+   "fda_code": "1502",
+   "definition": "Problem associated with the device which fails to start pumping.",
+   "status": null,
+   "parent": "Pumping Problem"
+  },
+  {
+   "term": "Pumping Stopped",
+   "level": 3,
+   "imdrf_code": "A141204",
+   "fda_code": "1503",
+   "definition": "Unexpected/unintended cessation of pump.",
+   "status": null,
+   "parent": "Pumping Problem"
+  },
+  {
+   "term": "Suction Problem",
+   "level": 2,
+   "imdrf_code": "A1413",
+   "fda_code": "2170",
+   "definition": "Problem associated with suction equipment, which may be a manual, electrical, vacuum or pressure source operated to evacuate and remove undesired substances (air, gas, fluid, or particulates) via tubing and collection bag.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Decrease in Suction",
+   "level": 3,
+   "imdrf_code": "A141301",
+   "fda_code": "1146",
+   "definition": "Problem associated with the removal of fluid or gas from a body cavity or device due to decreased suction.",
+   "status": null,
+   "parent": "Suction Problem"
+  },
+  {
+   "term": "Increase in Suction",
+   "level": 3,
+   "imdrf_code": "A141302",
+   "fda_code": "1604",
+   "definition": "Problem associated with the removal of fluid or gas from a body cavity or device due to increased suction.",
+   "status": null,
+   "parent": "Suction Problem"
+  },
+  {
+   "term": "Suction Failure",
+   "level": 3,
+   "imdrf_code": "A141303",
+   "fda_code": "4039",
+   "definition": "Problem associated with the complete inability to provide suction.",
+   "status": null,
+   "parent": "Suction Problem"
+  },
+  {
+   "term": "Priming Problem",
+   "level": 2,
+   "imdrf_code": "A1414",
+   "fda_code": "4040",
+   "definition": "Problem associated with the preparation of the device to begin pumping.",
+   "status": null,
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Failure to Prime",
+   "level": 3,
+   "imdrf_code": "A141401",
+   "fda_code": "1492",
+   "definition": "Problem associated with the device failing to begin the priming process (i.e. the process of preparation of device for the delivery of fluids).",
+   "status": null,
+   "parent": "Priming Problem"
+  },
+  {
+   "term": "Incomplete or Inadequate Priming",
+   "level": 3,
+   "imdrf_code": "A141402",
+   "fda_code": "4041",
+   "definition": "Problem associated with not adequately preparing the device.",
+   "status": null,
+   "parent": "Priming Problem"
+  },
+  {
+   "term": "Air/Gas in Device",
+   "level": 2,
+   "imdrf_code": "A1415",
+   "fda_code": "4062",
+   "definition": "Problem associated with air or gas in the device (e.g. air in line).",
+   "status": "Modified (technical)",
+   "parent": "Infusion or Flow Problem"
+  },
+  {
+   "term": "Activation, Positioning or Separation Problem",
+   "level": 1,
+   "imdrf_code": "A15",
+   "fda_code": "2906",
+   "definition": "Problem associated with any deviations from the intended performance of the device that relate to the sequence of events for activation, positioning or separation of device. Note: Deployment is synonymous with activation.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Activation Problem",
+   "level": 2,
+   "imdrf_code": "A1501",
+   "fda_code": "4042",
+   "definition": "Problem associated with the activation of the device. Note: Activation includes expansion.",
+   "status": null,
+   "parent": "Activation, Positioning or Separation Problem"
+  },
+  {
+   "term": "Activation Failure",
+   "level": 3,
+   "imdrf_code": "A150101",
+   "fda_code": "3270",
+   "definition": "Problem associated with the device failing to be activated including partial activation.",
+   "status": null,
+   "parent": "Activation Problem"
+  },
+  {
+   "term": "Difficult or Delayed Activation",
+   "level": 3,
+   "imdrf_code": "A150102",
+   "fda_code": "2577",
+   "definition": "Problem associated with delayed or difficult activation of the device.",
+   "status": null,
+   "parent": "Activation Problem"
+  },
+  {
+   "term": "Premature Activation",
+   "level": 3,
+   "imdrf_code": "A150103",
+   "fda_code": "1484",
+   "definition": "Problem associated with early and unexpected activation of the device.",
+   "status": null,
+   "parent": "Activation Problem"
+  },
+  {
+   "term": "Self-Activation or Keying",
+   "level": 3,
+   "imdrf_code": "A150104",
+   "fda_code": "1557",
+   "definition": "Problem associated with the unexpected or unintended activation of the device or a device function.  For Unintended Power Up use A070804",
+   "status": null,
+   "parent": "Activation Problem"
+  },
+  {
+   "term": "Key or Button Unresponsive/not Working",
+   "level": 3,
+   "imdrf_code": "A150105",
+   "fda_code": "4063",
+   "definition": "Problem associated with a device not responding to key or button inputs.",
+   "status": null,
+   "parent": "Activation Problem"
+  },
+  {
+   "term": "Unexpected Deactivation",
+   "level": 3,
+   "imdrf_code": "A150106",
+   "fda_code": "4086",
+   "definition": "Problem associated with a device deactivating during use.",
+   "status": null,
+   "parent": "Activation Problem"
+  },
+  {
+   "term": "Positioning Problem",
+   "level": 2,
+   "imdrf_code": "A1502",
+   "fda_code": "3009",
+   "definition": "Problem associated with the movement of the device to an intended location.",
+   "status": null,
+   "parent": "Activation, Positioning or Separation Problem"
+  },
+  {
+   "term": "Positioning Failure",
+   "level": 3,
+   "imdrf_code": "A150201",
+   "fda_code": "1158",
+   "definition": "Problem associated with the inability of the device to be positioned in a specified location.",
+   "status": null,
+   "parent": "Positioning Problem"
+  },
+  {
+   "term": "Malposition of Device",
+   "level": 3,
+   "imdrf_code": "A150202",
+   "fda_code": "2616",
+   "definition": "Problem associated with the device being positioned in a location other than intended or specified.",
+   "status": null,
+   "parent": "Positioning Problem"
+  },
+  {
+   "term": "Difficult or Delayed Positioning",
+   "level": 3,
+   "imdrf_code": "A150203",
+   "fda_code": "1157",
+   "definition": "Problem associated with users experiencing difficulty or delay to position the device to a specified location.",
+   "status": null,
+   "parent": "Positioning Problem"
+  },
+  {
+   "term": "Failure to Advance",
+   "level": 3,
+   "imdrf_code": "A150204",
+   "fda_code": "2524",
+   "definition": "Problem associated with failure to move the device to an intended location.",
+   "status": null,
+   "parent": "Positioning Problem"
+  },
+  {
+   "term": "Difficult to Advance",
+   "level": 3,
+   "imdrf_code": "A150205",
+   "fda_code": "2920",
+   "definition": "Problem associated with difficulty moving the device to an intended location (e.g. difficulty in advancing guide wire).",
+   "status": null,
+   "parent": "Positioning Problem"
+  },
+  {
+   "term": "Difficult to Insert",
+   "level": 3,
+   "imdrf_code": "A150206",
+   "fda_code": "1316",
+   "definition": "Problem associated with problems introducing or inserting the device, even if the user is operating the device in accordance with the instructions for use or labeling.",
+   "status": null,
+   "parent": "Positioning Problem"
+  },
+  {
+   "term": "Difficult to Remove",
+   "level": 3,
+   "imdrf_code": "A150207",
+   "fda_code": "1528",
+   "definition": "Problem associated with the user experiencing difficulty when taking out the device, even if the user is operating device in accordance with the instructions for use or labeling.",
+   "status": null,
+   "parent": "Positioning Problem"
+  },
+  {
+   "term": "Entrapment of Device",
+   "level": 3,
+   "imdrf_code": "A150208",
+   "fda_code": "1212",
+   "definition": "Problem associated with the device caught within patient vasculature, tissue, or other device.",
+   "status": null,
+   "parent": "Positioning Problem"
+  },
+  {
+   "term": "Separation Problem",
+   "level": 2,
+   "imdrf_code": "A1503",
+   "fda_code": "4043",
+   "definition": "Problem associated with the detachment or separation of the device.",
+   "status": null,
+   "parent": "Activation, Positioning or Separation Problem"
+  },
+  {
+   "term": "Separation Failure",
+   "level": 3,
+   "imdrf_code": "A150301",
+   "fda_code": "2547",
+   "definition": "Problem associated with the device or one of its components failing to detach or separate as intended.",
+   "status": null,
+   "parent": "Separation Problem"
+  },
+  {
+   "term": "Difficult or Delayed Separation",
+   "level": 3,
+   "imdrf_code": "A150302",
+   "fda_code": "4044",
+   "definition": "Problem associated with users experiencing difficulty or delay with detachment or separation of the device.",
+   "status": null,
+   "parent": "Separation Problem"
+  },
+  {
+   "term": "Premature Separation",
+   "level": 3,
+   "imdrf_code": "A150303",
+   "fda_code": "4045",
+   "definition": "Problem associated with an early and unexpected detachment or separation of the device from the system.",
+   "status": null,
+   "parent": "Separation Problem"
+  },
+  {
+   "term": "Protective Measures Problem",
+   "level": 1,
+   "imdrf_code": "A16",
+   "fda_code": "3015",
+   "definition": "Problem associated with any deviations from the documented specifications of the device that relate to the implemented and inherited design features specific to devices used for reducing risks to patient or caregiver or maintaining risks within specified levels.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Device Alarm System",
+   "level": 2,
+   "imdrf_code": "A1601",
+   "fda_code": "1012",
+   "definition": "Problem associated with the alarm system of the device.",
+   "status": null,
+   "parent": "Protective Measures Problem"
+  },
+  {
+   "term": "Alarm not Visible",
+   "level": 3,
+   "imdrf_code": "A160101",
+   "fda_code": "1022",
+   "definition": "The device does not display an alarm message when required.",
+   "status": "Modified (editorial)",
+   "parent": "Device Alarm System"
+  },
+  {
+   "term": "No Audible Alarm",
+   "level": 3,
+   "imdrf_code": "A160102",
+   "fda_code": "1019",
+   "definition": "The device fails to emit an audible alarm.",
+   "status": null,
+   "parent": "Device Alarm System"
+  },
+  {
+   "term": "Low Audible Alarm",
+   "level": 3,
+   "imdrf_code": "A160103",
+   "fda_code": "1016",
+   "definition": "The audible device alarm cannot be heard clearly.",
+   "status": null,
+   "parent": "Device Alarm System"
+  },
+  {
+   "term": "Delayed Alarm",
+   "level": 3,
+   "imdrf_code": "A160104",
+   "fda_code": "1011",
+   "definition": "The device alarm system operates with delay.",
+   "status": null,
+   "parent": "Device Alarm System"
+  },
+  {
+   "term": "False Alarm",
+   "level": 3,
+   "imdrf_code": "A160105",
+   "fda_code": "1013",
+   "definition": "Problem associated with the device providing incorrect alarm warning or alert to user.",
+   "status": null,
+   "parent": "Device Alarm System"
+  },
+  {
+   "term": "Defective Alarm",
+   "level": 3,
+   "imdrf_code": "A160106",
+   "fda_code": "1014",
+   "definition": "The device alarm does not operate as expected and/or in agreement with device's specifications.",
+   "status": null,
+   "parent": "Device Alarm System"
+  },
+  {
+   "term": "Fail-Safe Problem",
+   "level": 2,
+   "imdrf_code": "A1602",
+   "fda_code": "2936",
+   "definition": "Problem associated with the feature that prevents the unsafe use of the device.",
+   "status": null,
+   "parent": "Protective Measures Problem"
+  },
+  {
+   "term": "Fail-Safe Did not Operate",
+   "level": 3,
+   "imdrf_code": "A160201",
+   "fda_code": "4046",
+   "definition": "Problem associated with the device fail-safe mechanism, which did not function or function in a non effective way, compromising safe use of the device.",
+   "status": "Modified (editorial)",
+   "parent": "Fail-Safe Problem"
+  },
+  {
+   "term": "No Fail-Safe Mechanism",
+   "level": 3,
+   "imdrf_code": "A160202",
+   "fda_code": "2990",
+   "definition": "The device does not have a fail-safe mechanism, although such mechanism would be required for its appropriate and/or safe functioning.",
+   "status": null,
+   "parent": "Fail-Safe Problem"
+  },
+  {
+   "term": "Failure of Device to Self-Test",
+   "level": 2,
+   "imdrf_code": "A1603",
+   "fda_code": "2937",
+   "definition": "Problem associated with the device failing to perform an internal self-diagnostic process to ensure normal operation during or prior to use.",
+   "status": null,
+   "parent": "Protective Measures Problem"
+  },
+  {
+   "term": "Failure to Auto Stop",
+   "level": 2,
+   "imdrf_code": "A1604",
+   "fda_code": "2938",
+   "definition": "Problem associated with the inability of device to turn itself off when the device is not in an operable condition.",
+   "status": null,
+   "parent": "Protective Measures Problem"
+  },
+  {
+   "term": "Reset Problem",
+   "level": 2,
+   "imdrf_code": "A1605",
+   "fda_code": "3019",
+   "definition": "Problem associated with setting a variable, register, or other storage location back to a prescribed state.",
+   "status": null,
+   "parent": "Protective Measures Problem"
+  },
+  {
+   "term": "Failure to Reset",
+   "level": 3,
+   "imdrf_code": "A160501",
+   "fda_code": "1532",
+   "definition": "Problem associated with the device failing to set a variable, register, or other storage location back to a prescribed state.",
+   "status": null,
+   "parent": "Reset Problem"
+  },
+  {
+   "term": "Failure to Zero",
+   "level": 3,
+   "imdrf_code": "A160502",
+   "fda_code": "1683",
+   "definition": "Problem associated with the device failing to set a variable, register, or other storage location back to zero.",
+   "status": null,
+   "parent": "Reset Problem"
+  },
+  {
+   "term": "Inappropriate or Unexpected Reset",
+   "level": 3,
+   "imdrf_code": "A160503",
+   "fda_code": "2959",
+   "definition": "Problem associated with the device setting a variable, register, or other storage location to an inappropriate or unexpected state.",
+   "status": null,
+   "parent": "Reset Problem"
+  },
+  {
+   "term": "Premature Indicator Activation",
+   "level": 2,
+   "imdrf_code": "A1606",
+   "fda_code": "3011",
+   "definition": "Problems with the activation of a protective measure indicator earlier than expected.",
+   "status": null,
+   "parent": "Protective Measures Problem"
+  },
+  {
+   "term": "Premature Elective Replacement Indicator",
+   "level": 3,
+   "imdrf_code": "A160601",
+   "fda_code": "1483",
+   "definition": "Problems with the early or unexpected activation of the elective replacement indicator.",
+   "status": null,
+   "parent": "Premature Indicator Activation"
+  },
+  {
+   "term": "Premature End-of-Life Indicator",
+   "level": 3,
+   "imdrf_code": "A160602",
+   "fda_code": "1480",
+   "definition": "Problem with the early or unexpected activation of the end-of-life indicator.",
+   "status": null,
+   "parent": "Premature Indicator Activation"
+  },
+  {
+   "term": "Shielding Failure",
+   "level": 2,
+   "imdrf_code": "A1607",
+   "fda_code": "1568",
+   "definition": "Problem associated with the device inability to act as a barrier for absorption of radiation energy in X-rays, gamma rays, etc.",
+   "status": null,
+   "parent": "Protective Measures Problem"
+  },
+  {
+   "term": "Compatibility Problem",
+   "level": 1,
+   "imdrf_code": "A17",
+   "fda_code": "2960",
+   "definition": "Problem associated with compatibility between device or substances (medication, body fluid, etc.)",
+   "status": "Modified (technical)",
+   "parent": null
+  },
+  {
+   "term": "Component or Accessory Incompatibility",
+   "level": 2,
+   "imdrf_code": "A1701",
+   "fda_code": "2897",
+   "definition": "Problem associated with the incompatibility of any device while being operated in the same use environment thereby leading to a dysfunction between the devices.",
+   "status": null,
+   "parent": "Compatibility Problem"
+  },
+  {
+   "term": "Accessory Incompatible",
+   "level": 3,
+   "imdrf_code": "A170101",
+   "fda_code": "1004",
+   "definition": "An accessory required for the intended purpose of the device appears incompatible with device, thus compromising the intended function of the device.",
+   "status": null,
+   "parent": "Component or Accessory Incompatibility"
+  },
+  {
+   "term": "Component Incompatible",
+   "level": 3,
+   "imdrf_code": "A170102",
+   "fda_code": "1108",
+   "definition": "A component required for the proper functioning of the device is not compatible with other components or subassemblies of the device, thus compromising the intended function of the device.",
+   "status": null,
+   "parent": "Component or Accessory Incompatibility"
+  },
+  {
+   "term": "Device-Device Incompatibility",
+   "level": 2,
+   "imdrf_code": "A1702",
+   "fda_code": "2919",
+   "definition": "Problem associated with the incompatibility of two or more devices while being operated in the same use environment thereby leading to a dysfunction of more than one device.",
+   "status": null,
+   "parent": "Compatibility Problem"
+  },
+  {
+   "term": "Measurement System Incompatibility",
+   "level": 2,
+   "imdrf_code": "A1703",
+   "fda_code": "2982",
+   "definition": "Problem associated with the incompatibility of the measurement systems between and/or within device systems that are inherent to the individual device thereby leading to miscalculated or mismatched measurements from those devices, e.g., international metric system versus U.S. measurement system.",
+   "status": null,
+   "parent": "Compatibility Problem"
+  },
+  {
+   "term": "Unintended Compatibility",
+   "level": 2,
+   "imdrf_code": "A1704",
+   "fda_code": "4047",
+   "definition": "Problem associated with the ability of two or more devices which are intended to be incompatible but are able to work or fit together.",
+   "status": null,
+   "parent": "Compatibility Problem"
+  },
+  {
+   "term": "Contamination /Decontamination Problem",
+   "level": 1,
+   "imdrf_code": "A18",
+   "fda_code": "2895",
+   "definition": "Problem associated with the presence of any unexpected foreign substance found in the device, on its surface or in the package materials, which may affect performance or intended use of the device, or problem that compromise effective decontamination of the device.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Contamination",
+   "level": 2,
+   "imdrf_code": "A1801",
+   "fda_code": "1120",
+   "definition": "Problem associated with the undesired introduction of impurities either chemical or microbiological in nature, or of foreign matter into or onto the device.",
+   "status": null,
+   "parent": "Contamination /Decontamination Problem"
+  },
+  {
+   "term": "Biofilm Coating in/on Device",
+   "level": 3,
+   "imdrf_code": "A180101",
+   "fda_code": "1062",
+   "definition": "Problem associated with the undesired introduction of a biofilm coating into or onto the device.",
+   "status": "Modified (technical)",
+   "parent": "Contamination"
+  },
+  {
+   "term": "Contamination of Device Ingredient or Reagent",
+   "level": 3,
+   "imdrf_code": "A180102",
+   "fda_code": "2901",
+   "definition": "Problem associated with the undesired introduction of impurities either chemical or microbiological in nature, or of foreign matter into or onto the device ingredient or reagent.",
+   "status": null,
+   "parent": "Contamination"
+  },
+  {
+   "term": "Device Contamination with Body Fluid",
+   "level": 3,
+   "imdrf_code": "A180103",
+   "fda_code": "2317",
+   "definition": "Problem associated with the undesired presence of body fluid in/on the device, which are not part of the documented device specifications and requirements.",
+   "status": null,
+   "parent": "Contamination"
+  },
+  {
+   "term": "Device Contamination with Chemical or Other Material",
+   "level": 3,
+   "imdrf_code": "A180104",
+   "fda_code": "2944",
+   "definition": "Problem associated with contamination of the device with chemical substance or other non biologic material.",
+   "status": null,
+   "parent": "Contamination"
+  },
+  {
+   "term": "Microbial Contamination of Device",
+   "level": 3,
+   "imdrf_code": "A180105",
+   "fda_code": "2303",
+   "definition": "Problem associated with undesired microbial contamination of the device.",
+   "status": null,
+   "parent": "Contamination"
+  },
+  {
+   "term": "Device Contaminated During Manufacture or Shipping",
+   "level": 2,
+   "imdrf_code": "A1802",
+   "fda_code": "2969",
+   "definition": "Problem associated with the presence of any unexpected foreign substance found on the surface or in the package materials, which may affect optimal performance for its intended use, and which occurred during manufacture or shipping.",
+   "status": null,
+   "parent": "Contamination /Decontamination Problem"
+  },
+  {
+   "term": "Device Reprocessing Problem",
+   "level": 2,
+   "imdrf_code": "A1803",
+   "fda_code": "1091",
+   "definition": "Problem associated with a failure during any step of reprocessing process (cleaning, disinfection, packaging, labeling, sterilization) of a used or opened from its original packaging, but unused, device.",
+   "status": null,
+   "parent": "Contamination /Decontamination Problem"
+  },
+  {
+   "term": "Failure to Clean Adequately",
+   "level": 3,
+   "imdrf_code": "A180301",
+   "fda_code": "4048",
+   "definition": "Problem associated with the failure of the device or operator to remove any visible soil, foreign material or organism deposits on the external surfaces, crevices, and joints of the device.",
+   "status": null,
+   "parent": "Device Reprocessing Problem"
+  },
+  {
+   "term": "Failure to Disinfect",
+   "level": 3,
+   "imdrf_code": "A180302",
+   "fda_code": "1175",
+   "definition": "Failure to properly disinfect the device when reprocessing it.",
+   "status": null,
+   "parent": "Device Reprocessing Problem"
+  },
+  {
+   "term": "Flushing Problem",
+   "level": 3,
+   "imdrf_code": "A180303",
+   "fda_code": "1252",
+   "definition": "Flushing process was not executed properly.",
+   "status": null,
+   "parent": "Device Reprocessing Problem"
+  },
+  {
+   "term": "Problem with Removal of Enzymatic Cleaner",
+   "level": 3,
+   "imdrf_code": "A180304",
+   "fda_code": "1213",
+   "definition": "Enzymatic cleaner was not removed properly.",
+   "status": null,
+   "parent": "Device Reprocessing Problem"
+  },
+  {
+   "term": "Problem with Sterilization",
+   "level": 3,
+   "imdrf_code": "A180305",
+   "fda_code": "1596",
+   "definition": "Device was not sterilized properly during reprocessing.",
+   "status": null,
+   "parent": "Device Reprocessing Problem"
+  },
+  {
+   "term": "Residue After Decontamination",
+   "level": 3,
+   "imdrf_code": "A180306",
+   "fda_code": "2325",
+   "definition": "Problem associated with the decontamination process not adequately removing unwanted visible soil, foreign material, or organism deposits.",
+   "status": null,
+   "parent": "Device Reprocessing Problem"
+  },
+  {
+   "term": "Device Contaminated at the User Facility",
+   "level": 2,
+   "imdrf_code": "A1804",
+   "fda_code": "4064",
+   "definition": "Problem associated with the presence of any unexpected foreign substance found on the surface or in the package materials, which may affect optimal performance for its intended use, and which occurred at the user facility.",
+   "status": null,
+   "parent": "Contamination /Decontamination Problem"
+  },
+  {
+   "term": "Environmental Compatibility Problem",
+   "level": 1,
+   "imdrf_code": "A19",
+   "fda_code": "2929",
+   "definition": "Problem associated with the surrounding conditions in which the device is being used such as temperature, noise, lighting, ventilation, or other external factors such as power supply.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Ambient Noise Problem",
+   "level": 2,
+   "imdrf_code": "A1901",
+   "fda_code": "2877",
+   "definition": "Problem associated with any undesired acoustic energy or vibration that tends to interfere with the operation of the device.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Ambient Temperature Problem",
+   "level": 2,
+   "imdrf_code": "A1902",
+   "fda_code": "2878",
+   "definition": "Problem associated with compromised device performance at the ambient temperature or the storage at an inappropriate ambient temperature.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Fumes or Vapors",
+   "level": 2,
+   "imdrf_code": "A1903",
+   "fda_code": "2529",
+   "definition": "Problem associated with the visibility, odor, or toxicity of an ambient vapor or gas.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Fungus in Device Environment",
+   "level": 2,
+   "imdrf_code": "A1904",
+   "fda_code": "2316",
+   "definition": "Problem associated with the visibility of molds, mildews, yeasts, and/or mushrooms in the immediate environment in which the device is being used.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Moisture or Humidity Problem",
+   "level": 2,
+   "imdrf_code": "A1905",
+   "fda_code": "2986",
+   "definition": "Problem associated with an unsatisfactory humidity level in the storage or use environment which affects the device performance.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Moisture Damage",
+   "level": 3,
+   "imdrf_code": "A190501",
+   "fda_code": "1405",
+   "definition": "Problem associated with damage inflicted upon the device from water vapor or water in the immediate environment in which the device is being used.",
+   "status": null,
+   "parent": "Moisture or Humidity Problem"
+  },
+  {
+   "term": "Ventilation Problem in Device Environment",
+   "level": 2,
+   "imdrf_code": "A1906",
+   "fda_code": "3027",
+   "definition": "Problem associated with the circulation of fresh air in the immediate atmosphere in which the device is being used.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Fogging",
+   "level": 3,
+   "imdrf_code": "A190601",
+   "fda_code": "1253",
+   "definition": "Problem associated with the visibility of water vapor in the immediate atmosphere in which the device is being used.",
+   "status": null,
+   "parent": "Ventilation Problem in Device Environment"
+  },
+  {
+   "term": "Device Unsafe to Use in Environment",
+   "level": 2,
+   "imdrf_code": "A1907",
+   "fda_code": "2918",
+   "definition": "Problem associated with environmental condition that results in the unsafe use of the device. (e.g. electromagnetic fields, noise, vibration, microbiological contamination etc.)",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Environmental Particulates",
+   "level": 2,
+   "imdrf_code": "A1908",
+   "fda_code": "2930",
+   "definition": "Problem associated with fine solids or liquid particles such as dust, smoke, fume, and/or mist suspended in the immediate atmosphere in which the device is being used.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Medical Gas Supply Problem",
+   "level": 2,
+   "imdrf_code": "A1909",
+   "fda_code": "2985",
+   "definition": "Problem associated with the facility-supplied medical gases such as medical air, oxygen, nitrous oxide, and nitrogen.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Electrical Power Problem",
+   "level": 2,
+   "imdrf_code": "A1910",
+   "fda_code": "2925",
+   "definition": "Problem associated with the quality of the facility-supplied power.",
+   "status": null,
+   "parent": "Environmental Compatibility Problem"
+  },
+  {
+   "term": "Emergency Power Failure",
+   "level": 3,
+   "imdrf_code": "A191001",
+   "fda_code": "1205",
+   "definition": "Problem associated with the failure of the facility's emergency power backup system(s) including generators and/or interruptible power systems (UPS).",
+   "status": null,
+   "parent": "Electrical Power Problem"
+  },
+  {
+   "term": "Loss of Power",
+   "level": 3,
+   "imdrf_code": "A191002",
+   "fda_code": "1475",
+   "definition": "Problem associated with the failure of primary power supplied by the facility.",
+   "status": null,
+   "parent": "Electrical Power Problem"
+  },
+  {
+   "term": "Power Conditioning Problem",
+   "level": 3,
+   "imdrf_code": "A191003",
+   "fda_code": "1474",
+   "definition": "Problem associated with a momentary overpower/over voltage from the utility and electrical systems of user facilities; - Problem associated with inadequate power conditioning such as the presence of fluctuation, surges, spikes, dropouts, noise and other such undesirable transients.",
+   "status": null,
+   "parent": "Electrical Power Problem"
+  },
+  {
+   "term": "Installation-Related Problem",
+   "level": 1,
+   "imdrf_code": "A20",
+   "fda_code": "2965",
+   "definition": "Problem associated with unsatisfactory installation, configuration, and/or setup of a specific device.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Misassembled During Installation",
+   "level": 2,
+   "imdrf_code": "A2001",
+   "fda_code": "4049",
+   "definition": "Problem associated with the use of the device characterized by incorrect assembly of device components, parts or constituents.",
+   "status": null,
+   "parent": "Installation-Related Problem"
+  },
+  {
+   "term": "Labeling, Instructions for Use or Training Problem",
+   "level": 1,
+   "imdrf_code": "A21",
+   "fda_code": "1318",
+   "definition": "Problem associated with device markings/labeling, instructions for use, training and maintenance documentation or guidelines.",
+   "status": "Modified (editorial)",
+   "parent": null
+  },
+  {
+   "term": "Device Markings/Labeling Problem",
+   "level": 2,
+   "imdrf_code": "A2101",
+   "fda_code": "2911",
+   "definition": "Problem associated with the written, printed or graphic material accompanying or affixed to the device or any of its packaging. This includes verbal instructions relating to identification, technical description, and usage provided by the device manufacturers. Problems can include but are not limited to this material being unclear, missing, worn out, incorrect or inaccurate.",
+   "status": "Modified (editorial)",
+   "parent": "Labeling, Instructions for Use or Training Problem"
+  },
+  {
+   "term": "Expiration Date Problem",
+   "level": 3,
+   "imdrf_code": "A210101",
+   "fda_code": "2528",
+   "definition": "Any problem involving the accuracy, legibility, presence, or interpretation of an expiration date on a medical device, its labeling, or associated documentation.",
+   "status": "Modified (technical)",
+   "parent": "Device Markings/Labeling Problem"
+  },
+  {
+   "term": "Illegible or Difficult to Read Information",
+   "level": 3,
+   "imdrf_code": "A210102",
+   "fda_code": "4050",
+   "definition": "Problem associated with information unable to be read or deciphered.",
+   "status": "Modified (technical)",
+   "parent": "Device Markings/Labeling Problem"
+  },
+  {
+   "term": "Inaccurate Information",
+   "level": 3,
+   "imdrf_code": "A210103",
+   "fda_code": "4051",
+   "definition": "Problem associated with imprecise, incorrect inexact information.",
+   "status": "Modified (editorial)",
+   "parent": "Device Markings/Labeling Problem"
+  },
+  {
+   "term": "Unclear Information",
+   "level": 3,
+   "imdrf_code": "A210104",
+   "fda_code": "4052",
+   "definition": "Problem associated with ambiguous, confused information.",
+   "status": null,
+   "parent": "Device Markings/Labeling Problem"
+  },
+  {
+   "term": "Missing Information",
+   "level": 3,
+   "imdrf_code": "A210105",
+   "fda_code": "4053",
+   "definition": "Absence of information e.g. labeling, instruction for use.",
+   "status": null,
+   "parent": "Device Markings/Labeling Problem"
+  },
+  {
+   "term": "Wrong Label",
+   "level": 3,
+   "imdrf_code": "A210106",
+   "fda_code": "4073",
+   "definition": "Problem associated with an incorrect label being affixed to the device or packaging.",
+   "status": null,
+   "parent": "Device Markings/Labeling Problem"
+  },
+  {
+   "term": "Device labeling look-alike",
+   "level": 3,
+   "imdrf_code": "A210107",
+   "fda_code": "4081",
+   "definition": "Problem associated with medical device label that  looks similar to another product leading to confusion. The other product may be another device or a different product such as a medicine or cleaning agent, or other product altogether.  Use A020505 for packaging look-alike issues.",
+   "status": "Modified (technical)",
+   "parent": "Device Markings/Labeling Problem"
+  },
+  {
+   "term": "Lack of Maintenance Documentation or Guidelines",
+   "level": 2,
+   "imdrf_code": "A2102",
+   "fda_code": "2971",
+   "definition": "Problem associated with user facility not receiving adequate service documentation, guidelines, or recommendations to perform preventative and corrective maintenance and performance assurance checks.",
+   "status": null,
+   "parent": "Labeling, Instructions for Use or Training Problem"
+  },
+  {
+   "term": "Inadequate Instructions for Healthcare Professional",
+   "level": 2,
+   "imdrf_code": "A2103",
+   "fda_code": "1319",
+   "definition": "Problem associated with inaccuracies in any written, printed, or graphic matter that is affixed to the device or its packaging with any matter that accompanies the device including verbal instructions related to identification, technical description and use of device provided by the device manufacturers that is intended for healthcare professionals.",
+   "status": null,
+   "parent": "Labeling, Instructions for Use or Training Problem"
+  },
+  {
+   "term": "Inadequate Instructions for Non-Healthcare Professional",
+   "level": 2,
+   "imdrf_code": "A2104",
+   "fda_code": "2956",
+   "definition": "Problem associated with users being unclear and not able to follow any written, printed, or graphic matter that is affixed to device or its packaging with any matter that accompanies the device including verbal instructions related to identification, technical description and use of the device provided by the device manufactures that vary from the standard of medical care in a given environment.",
+   "status": null,
+   "parent": "Labeling, Instructions for Use or Training Problem"
+  },
+  {
+   "term": "Inadequate or Insufficient Training",
+   "level": 2,
+   "imdrf_code": "A2105",
+   "fda_code": "1643",
+   "definition": "Problem associated with facility not providing satisfactory initial and/or periodic user training covering operation of the device.",
+   "status": null,
+   "parent": "Labeling, Instructions for Use or Training Problem"
+  },
+  {
+   "term": "Human-Device Interface Problem",
+   "level": 1,
+   "imdrf_code": "A22",
+   "fda_code": "2949",
+   "definition": "Problem associated with the user experiencing difficulty operating or otherwise interacting with the device, even if the operation is being performed according to labeled instructions for use.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Device Difficult to Setup or Prepare",
+   "level": 2,
+   "imdrf_code": "A2201",
+   "fda_code": "1487",
+   "definition": "Problem associated with the user experiencing difficulty in preparing the device for use, even if the operation is being performed according to labeled instructions for use.\nThis includes difficulty attaching or connecting parts together.",
+   "status": null,
+   "parent": "Human-Device Interface Problem"
+  },
+  {
+   "term": "Device Difficult to Program or Calibrate",
+   "level": 2,
+   "imdrf_code": "A2202",
+   "fda_code": "1496",
+   "definition": "The device is difficult to program, calibrate or set to desired state, even by appropriately trained user/operator.",
+   "status": null,
+   "parent": "Human-Device Interface Problem"
+  },
+  {
+   "term": "Device Difficult to Maintain",
+   "level": 2,
+   "imdrf_code": "A2203",
+   "fda_code": "3134",
+   "definition": "Problem associated with the user's ability to service the device according to the manufacturer specifications relating to the device routine maintenance, i.e., periodic inspection, failure detection, repair, and care of the device to sustain or restore acceptable operating conditions.",
+   "status": null,
+   "parent": "Human-Device Interface Problem"
+  },
+  {
+   "term": "Inadequate User Interface",
+   "level": 2,
+   "imdrf_code": "A2204",
+   "fda_code": "2958",
+   "definition": "Problem associated with the means by which the operator and the equipment communicate or interact.",
+   "status": null,
+   "parent": "Human-Device Interface Problem"
+  },
+  {
+   "term": "Device Provides Uninformative Message",
+   "level": 2,
+   "imdrf_code": "A2205",
+   "fda_code": "4082",
+   "definition": "The device provides a message which is unhelpful or uninformative, such as an error code without further information about the meaning or appropriate action to take.\nIf the message does not make sense then use A2206 - Device Provides Unintelligible Message.",
+   "status": null,
+   "parent": "Human-Device Interface Problem"
+  },
+  {
+   "term": "Device Provides Unintelligible Message",
+   "level": 2,
+   "imdrf_code": "A2206",
+   "fda_code": "4083",
+   "definition": "The device provides an unintelligible or incomprehensible message such as an apparently random string of characters.\nIf the message makes sense but is not helpful then use A2205 - Device Provides Uninformative Message.",
+   "status": null,
+   "parent": "Human-Device Interface Problem"
+  },
+  {
+   "term": "Use of Device Problem",
+   "level": 1,
+   "imdrf_code": "A23",
+   "fda_code": "1670",
+   "definition": "Problem associated with failure to process, service, or operate the device according to the manufacturer's recommendations or recognized best practices.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Device Handling Problem",
+   "level": 2,
+   "imdrf_code": "A2301",
+   "fda_code": "3265",
+   "definition": "Handling of the device not in accordance with specification, prior to use on the patient.",
+   "status": null,
+   "parent": "Use of Device Problem"
+  },
+  {
+   "term": "Use of Incorrect Control/Treatment Settings",
+   "level": 2,
+   "imdrf_code": "A2302",
+   "fda_code": "1126",
+   "definition": "Problem associated with the use of the device in terms of inappropriate or incorrect control settings or incorrect treatment parameters for the device's specified operation and/or intended use.",
+   "status": null,
+   "parent": "Use of Device Problem"
+  },
+  {
+   "term": "Improper or Incorrect Procedure or Method",
+   "level": 2,
+   "imdrf_code": "A2303",
+   "fda_code": "2017",
+   "definition": "Problem associated with the use of the device in terms of nonconforming to that device's intended use, specifications, procedure and process or service instructions and information provided by the device manufacturers.",
+   "status": null,
+   "parent": "Use of Device Problem"
+  },
+  {
+   "term": "Off-Label Use",
+   "level": 2,
+   "imdrf_code": "A2304",
+   "fda_code": "1494",
+   "definition": "Problem associated with the device which has been used for an unapproved indication or for an unapproved intended use.",
+   "status": null,
+   "parent": "Use of Device Problem"
+  },
+  {
+   "term": "Misassembled",
+   "level": 2,
+   "imdrf_code": "A2305",
+   "fda_code": "1398",
+   "definition": "Problem associated with incorrect assembly of the device or constituents after being put into use.",
+   "status": null,
+   "parent": "Use of Device Problem"
+  },
+  {
+   "term": "Misassembly by Users",
+   "level": 3,
+   "imdrf_code": "A230501",
+   "fda_code": "3133",
+   "definition": "Problem associated with incorrect assembly of the device or constituents by the users.",
+   "status": null,
+   "parent": "Misassembled"
+  },
+  {
+   "term": "Misassembly During Maintenance/Repair",
+   "level": 3,
+   "imdrf_code": "A230502",
+   "fda_code": "4054",
+   "definition": "Problem associated with incorrect assembly of the device or constituents during maintenance or repair.",
+   "status": null,
+   "parent": "Misassembled"
+  },
+  {
+   "term": "No Apparent Device Problem",
+   "level": 1,
+   "imdrf_code": "A24",
+   "fda_code": "2993",
+   "definition": "An adverse event (e.g. patient harm) appears to have occurred, but there does not appear to have been a problem with the device or the way it was used.",
+   "status": "Modified (technical)",
+   "parent": null
+  },
+  {
+   "term": "No Apparent Adverse Event",
+   "level": 1,
+   "imdrf_code": "A25",
+   "fda_code": "3189",
+   "definition": "A report has been received but the description provided does not appear to relate to an adverse event. This code allows a report to be recorded for administration purposes, even if it doesn't meet the requirements for adverse event reporting.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Prophylactic Removal Due to Corrective Action",
+   "level": 2,
+   "imdrf_code": "A2501",
+   "fda_code": "4077",
+   "definition": "Prophylactic removal of a device due to corrective action without malfunction or problem of the specific device involved",
+   "status": "Modified (editorial)",
+   "parent": "No Apparent Adverse Event"
+  },
+  {
+   "term": "Insufficient Device Problem Information",
+   "level": 1,
+   "imdrf_code": "A26",
+   "fda_code": "3190",
+   "definition": "An adverse event appears to have occurred but there is not yet enough information available to classify the device problem.",
+   "status": null,
+   "parent": null
+  },
+  {
+   "term": "Appropriate Device Problem Term/Code not Available",
+   "level": 1,
+   "imdrf_code": "A27",
+   "fda_code": "3191",
+   "definition": "The device problem is not adequately described by any other term. Note: this code must not be used unless there is no other feasible code. The preferred term should be documented when submitting an adverse event report. This information will be used to determine if a new term should be added to the code table.",
+   "status": "Modified (editorial)",
+   "parent": null
+  }
+ ]
+}

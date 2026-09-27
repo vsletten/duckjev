@@ -116,6 +116,57 @@ settled: put the fuller record first, and give the question the rules of the mat
 still counts as the same, what makes it different), which is what sharpens the
 probabilities on the near-misses.
 
+## MAUDE numbers
+
+Coded complaint surveillance on FDA medical device adverse event reports (MAUDE, pulled
+from openFDA): every report is one fused `jev()` request that codes the device problem as a
+Choice over the terms filed for its product code (candidates in code), the harm as a Choice
+over FDA's event types, and the severity as a Score. Live runs on 2026-09-27 over the
+held-out test split, 3,000 reports from three product codes (continuous glucose monitors,
+silicone breast implants, implantable defibrillators), measured against the codes the
+manufacturers filed; R0 is the baseline over bare term strings, R3 the round chosen on dev.
+Full tables, all seven dev rounds, the hand-written reading recorded before the held-out
+run and the demo queries run live are in [docs/results/maude.md](docs/results/maude.md),
+generated from the committed run log `docs/results/maude_runs.json`.
+
+| metric | R0: bare terms, the description as the state | R3: criteria written from the filers' conventions, the state as an object |
+|---|---|---|
+| problem: top-1 in set | 0.550 ± 0.009 | **0.826** ± 0.007 |
+| harm: accuracy (macro average over event types) | 0.810 (0.869) | **0.893** (0.929) |
+| ECE over `confidence`, problem / harm | 0.177 / 0.079 | 0.050 / 0.030 |
+| input tokens per request | 1,120 | 5,123 |
+| cost | $0.036 per 1,000 reports | **$0.174 per 1,000 reports** |
+| the 2026 stream to date, 2.5M reports | $91 | $436 |
+
+Spice's `ai()` puts generated prose in a SQL column; duckjev is the judgment layer beside
+it, with typed answers whose probabilities are calibrated and add up to counts with error
+bars.
+
+What the rounds taught:
+
+- The label is each manufacturer's coding convention, and the lever is writing it down.
+  Dexcom files a missed sensor-failure alert under `Protective Measures Problem`, Mentor
+  files capsular contracture under `Adverse Event Without Identified Device or Use
+  Problem` where Allergan uses `Device Appears to Trigger Rejection`. The official FDA
+  definitions took top-1 in set from 0.570 to 0.640 on dev; a `not_for` naming each
+  option's confusable neighbours and one example per option, written from a gloss slice
+  outside dev and test, took it to 0.803 (QBJ from 0.443 to 0.858); the brand name and the
+  manufacturer's own narrative in the state took it to 0.820. Problem ECE went from 0.160
+  to 0.051.
+- Candidates in code win twice: the full 201-term vocabulary instead of each product
+  code's set cost 3.3 points on dev at 2.4 times the tokens. Three separate requests instead
+  of one fused cost 31% more per report for answers within half a point. Option order moved single
+  codes by up to five points in opposite directions, so it is set and measured per code.
+- Harm follows 21 CFR 803 once the rule is stated: a lead capped, replaced or explanted
+  with no complication is a serious injury, and saying so took harm accuracy from 0.809
+  to 0.901 on dev.
+- The demo ran the trend, `sem_dedup`, `sem_join` to the 23 recalls on file and `sem_topk`
+  live on 200 test reports of the glucose monitors for $0.13. The trend flagged January
+  2026 for `Protective Measures Problem`, 30.5 ± 0.7 expected reports against a trailing
+  mean near zero: Dexcom filed its G7 app sensor-failure-alert reports in that month, and
+  the join matched them to the G7 and ONE+ app recalls. Total live spend for the benchmark,
+  demo included: $2.76.
+
 ## Entity-matching numbers
 
 Live runs on 2026-09-25 over the held-out test pairs of two DeepMatcher sets, run only

@@ -127,3 +127,50 @@ def test_readme_entity_matching_table_matches_run_log() -> None:
             f"{run['expected_count']:.1f} ± {run['expected_stderr']:.1f} vs {run['positives']}",
             f"${run['usd_per_1k_pairs']:.4f}",
         ], corpus
+
+
+MAUDE = json.loads((ROOT / "docs" / "results" / "maude_runs.json").read_text())
+STREAM_2026 = 2_503_728  # bench/maude.py: MAUDE reports received 2026-01-01 to 2026-09-26
+
+
+def _maude_chosen_round() -> str:
+    """The rule in bench/maude.py: best pooled dev top-1 in set, ties to fewer tokens."""
+    dev = [
+        (r["pooled"]["top1_in_set"], -r["input_tokens_per_request"], r["round"])
+        for k, r in MAUDE.items()
+        if k.startswith("dev/") and r["round_config"]["selectable"]
+    ]
+    return max(dev)[2]
+
+
+def test_readme_maude_table_matches_run_log() -> None:
+    best = _maude_chosen_round()
+    section = README.split("## MAUDE numbers")[1].split("\n## ")[0]
+    header = section.splitlines()[section.splitlines().index("|---|---|---|") - 1]
+    assert header.split("|")[2].strip().startswith("R0:")
+    assert header.split("|")[3].strip().startswith(f"{best}:")
+    for i, run in enumerate([MAUDE["test/R0"], MAUDE[f"test/{best}"]]):
+        m = run["pooled"]
+        stream = run["input_tokens_per_report"] * STREAM_2026 * 42e-9
+        expected = {
+            "problem: top-1 in set": (
+                f"{m['top1_in_set']:.3f} ± {m['top1_in_set_se']:.3f}",
+                f"**{m['top1_in_set']:.3f}** ± {m['top1_in_set_se']:.3f}",
+            ),
+            "harm: accuracy (macro average over event types)": (
+                f"{m['harm_accuracy']:.3f} ({m['harm_macro']:.3f})",
+                f"**{m['harm_accuracy']:.3f}** ({m['harm_macro']:.3f})",
+            ),
+            "ECE over `confidence`, problem / harm": (
+                f"{m['problem_ece_confidence']:.3f} / {m['harm_ece_confidence']:.3f}",
+            )
+            * 2,
+            "input tokens per request": (f"{run['input_tokens_per_request']:,.0f}",) * 2,
+            "cost": (
+                f"${run['usd_per_1k_reports']:.3f} per 1,000 reports",
+                f"**${run['usd_per_1k_reports']:.3f} per 1,000 reports**",
+            ),
+            "the 2026 stream to date, 2.5M reports": (f"${stream:,.0f}",) * 2,
+        }
+        for label, want in expected.items():
+            assert _row(section, label)[i] == want[i], (label, want[i])

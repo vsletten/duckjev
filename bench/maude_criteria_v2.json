@@ -1,0 +1,374 @@
+{
+ "_": "Option descriptions for the MAUDE Choices beyond the FDA vocabulary. `aliases` maps an openFDA label string to the term FDA's annex now names it (editorial renames), so the option takes that term's official definition and place in the hierarchy. `glosses` is the `what` of the options the annex does not define (R1 and later). R2 overlays, per option, `not_for` and one example: `not_for` names the option's confusable neighbours that are options of the same product code, each as `short[term] (term)`; the neighbours are its parent and children in the annex hierarchy and its siblings when they share a level-2 parent (a top-level category groups problems as unlike as a battery fault and loss of capture), plus `also_not_for`, the few terms the gloss slice shows filed for the same narratives across the hierarchy. `example` is one sentence written from a gloss-slice report filed with that term. `harm` does the same for the event-type Choice. Nothing here was written from the dev or test splits.",
+ "aliases": {
+  "Over-Sensing": "Oversensing",
+  "Under-Sensing": "Undersensing",
+  "High impedance": "High Impedance",
+  "Low impedance": "Low Impedance",
+  "Appropriate Device Problem Term/Code Not Available": "Appropriate Device Problem Term/Code not Available",
+  "Extracardiac stimulation": "Extracardiac Stimulation",
+  "Alarm Not Visible": "Alarm not Visible",
+  "Output above Specifications": "Output Above Specifications",
+  "Output below Specifications": "Output Below Specifications",
+  "Labelling, Instructions for Use or Training Problem": "Labeling, Instructions for Use or Training Problem",
+  "Biofilm coating in Device": "Biofilm Coating in/on Device",
+  "Device Markings/Labelling Problem": "Device Markings/Labeling Problem",
+  "Expiration Date Error": "Expiration Date Problem"
+ },
+ "glosses": {
+  "Adverse Event Without Identified Device or Use Problem": "The patient had an adverse event, such as an infection, a complication or a symptom, and no problem with the device or with how it was used has been identified",
+  "some other problem": "A device problem that none of the other options names"
+ },
+ "short": {
+  "Activation Problem": "a sensor or device that fails to start or activate",
+  "Activation, Positioning or Separation Problem": "a general problem activating, positioning or separating the device",
+  "Adverse Event Without Identified Device or Use Problem": "a patient complication such as capsular contracture, infection or seroma with no device problem identified, as in reports that say it was reported that a patient developed capsular contracture",
+  "Application Program Freezes or Fails to Launch": "an app that freezes, will not open or shows a display issue on a mobile application",
+  "Appropriate Device Problem Term/Code Not Available": "a device problem no other term fits",
+  "Battery Problem": "a battery fault or depletion",
+  "Biocompatibility": "a local or systemic reaction to the device's materials or leachates",
+  "Break": "a component broken or cracked, such as a broken sensor wire or a shell torn while being introduced",
+  "Capturing Problem": "pacing pulses that do not capture the heart",
+  "Communication or Transmission Problem": "a general data transmission problem that is not wireless signal loss",
+  "Connection Problem": "a physical connection between parts that fails, such as a lead that will not fit the header port",
+  "Contamination": "the device found contaminated",
+  "Decreased Sensitivity": "sensing less sensitive than intended, such as low R-wave amplitudes",
+  "Defective Alarm": "an alert that did not work, reported as no alert/notification or an alert/notification settings issue",
+  "Defective Component": "a component defective from manufacture",
+  "Defective Device": "a device found defective",
+  "Defibrillation/Stimulation Problem": "a general problem with shock or stimulation therapy",
+  "Deflation Problem": "an implant losing volume",
+  "Deformation Due to Compressive Stress": "a shell deformed by compression",
+  "Device Alarm System": "an alarm problem reported in general, such as low glucose alarms that did not sound",
+  "Device Appears to Trigger Rejection": "the body reacting to the implant without a device failure, as in reports where a healthcare professional reported capsular contracture",
+  "Device Contaminated During Manufacture or Shipping": "contamination from manufacturing or shipping",
+  "Device Contamination with Chemical or Other Material": "a chemical or foreign material found on or in the device",
+  "Device Dislodged or Dislocated": "a lead or device that came out of place, such as a lead dislodged after implant",
+  "Device Displays Incorrect Message": "a wrong message or error shown on screen",
+  "Device Handling Problem": "the device mishandled by the user or surgeon",
+  "Device Sensing Problem": "a general sensing problem",
+  "Device Slipped": "an implant that slipped",
+  "Difficult to Open or Remove Packaging Material": "packaging that is hard to open",
+  "Display or Visual Feedback Problem": "a display issue, or glucose values not updating on screen",
+  "Electromagnetic Interference": "noise from an outside electrical source",
+  "Failure to Capture": "a loss of capture",
+  "Failure to Convert Rhythm": "shocks that did not convert the arrhythmia",
+  "Failure to Deliver Shock/Stimulation": "therapy withheld or delayed when it was needed",
+  "Failure to Interrogate": "a device that could not be interrogated",
+  "Failure to Power Up": "a device that will not power on",
+  "False Alarm": "an alarm with no real condition behind it",
+  "Fluid/Blood Leak": "fluid or blood leaking",
+  "Fracture": "a fractured lead conductor or coil",
+  "Gel Leak": "gel bleeding or leaking from the implant",
+  "High Capture Threshold": "a high or rising pacing threshold",
+  "High Readings": "readings higher than the true glucose value",
+  "High impedance": "impedance measured too high or out of range above",
+  "Impedance Problem": "an impedance change or alert that does not say too high or too low",
+  "Improper or Incorrect Procedure or Method": "an incorrect surgical or use procedure",
+  "Inappropriate/Inadequate Shock/Stimulation": "a shock or therapy delivered inappropriately, or with the wrong energy or timing",
+  "Incorrect, Inadequate or Imprecise Result or Readings": "erroneous results that are not reported as too high or too low, such as erroneous glucose results against a meter",
+  "Insufficient Device Problem Information": "an event with too little information to name the device problem",
+  "Interrogation Problem": "trouble communicating with the implant by programmer, telemetry or remote monitor",
+  "Loss of or Failure to Bond": "a bond or seal between parts that failed",
+  "Low Audible Alarm": "an alarm too quiet to hear",
+  "Low Readings": "readings lower than the true glucose value, or an inaccuracy between the CGM and a blood glucose meter",
+  "Low impedance": "impedance measured too low",
+  "Malposition of Device": "an implant placed or sitting in the wrong position",
+  "Material Deformation": "a shell or component deformed",
+  "Material Discolored": "a discolored component",
+  "Material Integrity Problem": "a general material failure, such as a lead suspected to be broken during implant",
+  "Material Invagination": "a shell folded in on itself",
+  "Material Rupture": "a ruptured implant shell",
+  "Mechanical Problem": "a mechanical fault, such as a lead that will not advance into the connector port",
+  "Migration": "an implant that moved from where it was placed",
+  "No Audible Alarm": "an alarm that made no sound",
+  "No Device Output": "no output at all, such as a transmitter battery issue",
+  "Noise, Audible": "an audible noise from the device",
+  "Nonstandard Device": "a device not made to specification",
+  "Off-Label Use": "use outside the labeling",
+  "Over-Sensing": "signals sensed that are not intended beats, such as T-wave oversensing",
+  "Pacing Problem": "pacing delivered incorrectly, such as inappropriate atrial pacing",
+  "Patient Device Interaction Problem": "a general problem between the patient and the device",
+  "Patient-Device Incompatibility": "a device not suited to the patient's anatomy or physiology",
+  "Premature Discharge of Battery": "a battery depleting faster than expected",
+  "Premature Elective Replacement Indicator": "an elective replacement indicator (ERI) reached too early",
+  "Premature End-of-Life Indicator": "an early end of life, or an early sensor expiration",
+  "Product Quality Problem": "a general product quality problem",
+  "Protective Measures Problem": "an expected safety alert that never came because of how the system was designed, such as a sensor failure the app does not detect",
+  "Signal Artifact/Noise": "noise or artifact on the sensed signal",
+  "Unable to Obtain Readings": "no readings obtained or recorded",
+  "Under-Sensing": "real beats the device failed to sense",
+  "Unexpected Shutdown": "a device or receiver that shut down unexpectedly",
+  "Unintended Application Program Shut Down": "an app crash",
+  "Unintended Deflation": "an implant that deflated unexpectedly",
+  "Unsealed Device Packaging": "packaging found unsealed",
+  "Unstable Impedance": "impedance varying without a clear direction",
+  "Use of Device Problem": "a problem with how the device was used, such as therapy left disabled",
+  "Wireless Communication Problem": "signal loss, or no connection between the sensor or transmitter and the app or receiver"
+ },
+ "terms": {
+  "Activation Problem": {
+   "example": "Six sensors in a row failed at start-up."
+  },
+  "Adverse Event Without Identified Device or Use Problem": {
+   "also_not_for": [
+    "Device Appears to Trigger Rejection",
+    "Biocompatibility"
+   ],
+   "example": "It was reported that a patient with Mentor MemoryGel breast implants developed capsular contracture after surgery, and Mentor has no information about explantation."
+  },
+  "Application Program Freezes or Fails to Launch": {
+   "example": "It was reported that a display issue occurred on a mobile application."
+  },
+  "Appropriate Device Problem Term/Code Not Available": {
+   "also_not_for": [
+    "Insufficient Device Problem Information",
+    "Adverse Event Without Identified Device or Use Problem"
+   ],
+   "example": "The ICD triggered an alert whose cadence indicated a right ventricular lead issue, and the lead remains in use."
+  },
+  "Battery Problem": {
+   "example": "The device was explanted due to battery depletion."
+  },
+  "Biocompatibility": {
+   "also_not_for": [
+    "Adverse Event Without Identified Device or Use Problem"
+   ]
+  },
+  "Break": {
+   "also_not_for": [
+    "Material Rupture"
+   ],
+   "example": "A healthcare professional reported a rupture when introducing the implant; it was not implanted and surgery was completed with a backup device."
+  },
+  "Capturing Problem": {
+   "example": "Two days after implant the right ventricular lead showed a rising threshold and intermittent capture."
+  },
+  "Connection Problem": {
+   "also_not_for": [
+    "Wireless Communication Problem"
+   ],
+   "example": "The right ventricular lead could not fit into the RV port of the device header."
+  },
+  "Decreased Sensitivity": {
+   "example": "The right ventricular lead exhibited decreased R-wave amplitudes."
+  },
+  "Defective Alarm": {
+   "also_not_for": [
+    "Protective Measures Problem"
+   ],
+   "example": "It was reported that no alert/notification occurred, and the data confirmed that no alert/notification was given."
+  },
+  "Deflation Problem": {
+   "also_not_for": [
+    "Material Rupture"
+   ]
+  },
+  "Detachment of Device or Device Component": {
+   "example": "It was reported that a detached or missing sensor wire occurred."
+  },
+  "Device Alarm System": {
+   "example": "An alarm issue was reported: the low glucose alarms did not sound and the customer was not alerted of changes in glucose level."
+  },
+  "Device Appears to Trigger Rejection": {
+   "also_not_for": [
+    "Adverse Event Without Identified Device or Use Problem"
+   ],
+   "example": "A healthcare professional reported capsular contracture Baker grade III on the left side; the device was explanted and replaced."
+  },
+  "Device Dislodged or Dislocated": {
+   "example": "The right ventricular lead dislodged after pocket closure on the day of implant and was repositioned."
+  },
+  "Device Sensing Problem": {
+   "example": "Atrial tachycardia/atrial fibrillation episodes with non-physiologic ventricular intervals were noted on stored episodes."
+  },
+  "Display or Visual Feedback Problem": {
+   "example": "It was reported that a display issue occurred, and glucose values not updating was found in the data."
+  },
+  "Electromagnetic Interference": {
+   "also_not_for": [
+    "Over-Sensing"
+   ],
+   "example": "Episodes of oversensing were attributed to 60 Hz noise from an outside source."
+  },
+  "Failure to Capture": {
+   "example": "The right ventricular lead exhibited an intermittent loss of capture."
+  },
+  "Failure to Convert Rhythm": {
+   "example": "The S-ICD needed three shocks to convert the ventricular arrhythmia."
+  },
+  "Failure to Deliver Shock/Stimulation": {
+   "example": "The ICD initially withheld therapy for ventricular fibrillation that was detected as supraventricular tachycardia."
+  },
+  "Failure to Interrogate": {
+   "example": "The device could not be interrogated."
+  },
+  "Failure to Power Up": {
+   "also_not_for": [
+    "No Device Output"
+   ]
+  },
+  "Failure to Read Input Signal": {
+   "example": "An S-ICD patient received an inappropriate shock due to T-wave oversensing and changes in amplitude morphology measurements."
+  },
+  "Fracture": {
+   "example": "The right ventricular lead had a possible fracture and was later replaced."
+  },
+  "Gel Leak": {
+   "also_not_for": [
+    "Material Rupture"
+   ],
+   "example": "A patient with Mentor MemoryGel implants had gel bleed on the left side, confirmed during a physical exam."
+  },
+  "High Capture Threshold": {
+   "example": "The right ventricular lead exhibited high thresholds and remains in use."
+  },
+  "High Readings": {
+   "example": "A high readings issue was reported: the customer received high sensor scan results."
+  },
+  "High impedance": {
+   "example": "The ICD recorded high out-of-range shock impedance measurements."
+  },
+  "Impedance Problem": {
+   "example": "The right ventricular lead triggered an alert for impedance and remains in use."
+  },
+  "Inappropriate or Unexpected Reset": {
+   "example": "The complaint states that a receiver reinitialization was reported."
+  },
+  "Inappropriate/Inadequate Shock/Stimulation": {
+   "example": "The ICD delivered inappropriate therapy on atrial fibrillation with rapid ventricular response that met the ventricular fibrillation detection criteria."
+  },
+  "Incorrect, Inadequate or Imprecise Result or Readings": {
+   "example": "A customer reported receiving erroneous glucose results, sensor scan results of 76 mg/dL against 200 mg/dL on a meter."
+  },
+  "Insufficient Device Problem Information": {
+   "also_not_for": [
+    "Appropriate Device Problem Term/Code Not Available"
+   ],
+   "example": "It was reported that a right ventricular lead had an unspecified failure, and no further details could be obtained."
+  },
+  "Interrogation Problem": {
+   "example": "During the implant procedure the telemetry connection with the device was lost and could not be re-established."
+  },
+  "Low Readings": {
+   "example": "It was reported that an inaccuracy between the continuous glucose monitor (CGM) and the blood glucose (BG) meter occurred, with values in the D zone of the Parkes error grid."
+  },
+  "Low impedance": {
+   "example": "The right ventricular lead exhibited low pacing impedance."
+  },
+  "Malposition of Device": {
+   "also_not_for": [
+    "Migration"
+   ],
+   "example": "A healthcare professional reported device migration/implant malposition through the National Breast Implant Registry; the device was explanted."
+  },
+  "Material Integrity Problem": {
+   "example": "During the implant procedure the physician suspected the lead could be broken, and a new lead was implanted."
+  },
+  "Material Rupture": {
+   "also_not_for": [
+    "Gel Leak",
+    "Deflation Problem",
+    "Break",
+    "Material Deformation"
+   ],
+   "example": "A patient with a 400cc Mentor MemoryGel breast implant had a rupture on the right side diagnosed by imaging and is to undergo explantation."
+  },
+  "Mechanical Problem": {
+   "example": "During an ICD changeout the chronic lead could not be advanced into the pace/sense port of the new ICD."
+  },
+  "Migration": {
+   "also_not_for": [
+    "Malposition of Device",
+    "Device Dislodged or Dislocated"
+   ],
+   "example": "After a revision procedure the patient suffered displacement of both breast prostheses."
+  },
+  "No Apparent Adverse Event": {
+   "example": "A healthcare professional reported a rupture of the left implant diagnosed by mammogram; the device remains implanted."
+  },
+  "No Audible Alarm": {
+   "also_not_for": [
+    "Protective Measures Problem"
+   ],
+   "example": "It was reported that an alert/notification settings issue occurred, and the receiver's speaker and vibrator were tested."
+  },
+  "No Device Output": {
+   "also_not_for": [
+    "Failure to Power Up"
+   ],
+   "example": "It was reported that a transmitter battery issue occurred after the transmitter was started past its use-by date."
+  },
+  "Over-Sensing": {
+   "also_not_for": [
+    "Electromagnetic Interference",
+    "Signal Artifact/Noise"
+   ],
+   "example": "The right ventricular lead exhibited T-wave oversensing and remains in use."
+  },
+  "Pacing Problem": {
+   "example": "The ICD performed atrial blanking, which resulted in inappropriate atrial pacing."
+  },
+  "Premature Discharge of Battery": {
+   "example": "Data analysis confirmed the battery was depleting more quickly than expected, and device replacement was recommended."
+  },
+  "Premature Elective Replacement Indicator": {
+   "example": "The device shows ERI with unexpected battery behavior and remains implanted."
+  },
+  "Premature End-of-Life Indicator": {
+   "example": "It was reported that an early sensor expiration occurred."
+  },
+  "Protective Measures Problem": {
+   "also_not_for": [
+    "Defective Alarm",
+    "No Audible Alarm"
+   ],
+   "example": "The user had a sensor failure but did not receive the expected sensor failure alert, because the app only detects that the session has ended."
+  },
+  "Signal Artifact/Noise": {
+   "also_not_for": [
+    "Over-Sensing"
+   ],
+   "example": "During the implant procedure the right ventricular lead exhibited noise on two analyzers and was replaced."
+  },
+  "Under-Sensing": {
+   "example": "The right ventricular lead exhibited one undersensed beat and remains in use."
+  },
+  "Unexpected Shutdown": {
+   "example": "It was reported that an unexpected receiver shutdown occurred."
+  },
+  "Unintended Application Program Shut Down": {
+   "example": "It was reported that a Dexcom app crash occurred."
+  },
+  "Unintended Ejection": {
+   "example": "It was reported that the sensor deployed on its own."
+  },
+  "Unstable Impedance": {
+   "example": "A lead integrity alert triggered on the right ventricular lead because of pacing impedance variation."
+  },
+  "Use of Device Problem": {
+   "example": "The S-ICD system had therapy disabled for over six months."
+  },
+  "Wireless Communication Problem": {
+   "also_not_for": [
+    "Connection Problem"
+   ],
+   "example": "It was reported that signal loss occurred, and signal loss over an hour was found within the investigation window."
+  }
+ },
+ "harm": {
+  "Death": {
+   "not_for": "a report where the patient survived (Injury or Malfunction)",
+   "example": "The lead showed oversensing and loss of capture that appeared to result in asystole, and it was further reported that the patient passed away."
+  },
+  "Injury": {
+   "not_for": "a device problem where the device stays in use and the patient needed no treatment (Malfunction)",
+   "example": "The right ventricular lead triggered an alert due to noise, a fracture was suspected, and the lead was capped and replaced; no patient complications were reported."
+  },
+  "Malfunction": {
+   "not_for": "a report where the device or a lead was explanted, replaced, capped, repositioned or revised, the patient received a shock, or the patient needed treatment or someone else's help, which is a serious injury even when no complication is reported (Injury)",
+   "example": "The ICD recorded high out-of-range shock impedance measurements; the alert threshold was raised and the ICD remains in service with no adverse patient effects."
+  },
+  "Other": {}
+ }
+}
