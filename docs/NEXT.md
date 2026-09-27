@@ -412,8 +412,9 @@ and are scripts under `bench/`, never tests. Never print, log, or commit the key
   `cache_dblp_*.duckdb`) and the demo cache live only in the `sem-join` worktree, like the
   Banking77 caches in `banking77-round-two`; `rescore` needs them.
 - The MAUDE answer caches (`bench/data/cache_{dev,test}_R*.duckdb`, `cache_demo_QBJ.duckdb`),
-  the raw openFDA pages, the pools and the FDA annex workbook live only in the `maude-bench`
-  worktree; `rescore` needs the caches, and a re-pull may not reproduce the pools exactly.
+  the raw openFDA pages, the pools and the FDA annex workbook are archived outside Git at
+  `/mnt/data/vsletten/artifacts/duckjev/maude-pr8/data/`. Restore that directory to
+  `bench/data/` for `rescore`; a re-pull may not reproduce the pools exactly.
 - The PR #1 held-out run lives in `docs/results/banking77_runs.json` as the `pr1/R0`
   entry (flagged `legacy`, no answer cache), imported from its headline file
   `docs/results/banking77.json`, which PR #3 removed so that `report` reads one file.

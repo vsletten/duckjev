@@ -146,6 +146,7 @@ log `docs/results/maude_runs.json`, a report rendered from it with the committed
 criteria, a fresh answer cache
 per run, `rescore` through a refusing transport, `_nN` / `_dry` files for pre-flights and
 dry runs, a full run that refuses to start without a live pre-flight of its round, and a
-test that checks the README table against the run log. The answer caches
-(`bench/data/cache_<split>_<round>.duckdb`, `cache_demo_QBJ.duckdb`) exist only in the
-worktree that ran them; copy them before deleting it.
+test that checks the README table against the run log. The PR #8 answer caches,
+raw pages, pools, and FDA annex workbook were archived outside Git at
+`/mnt/data/vsletten/artifacts/duckjev/maude-pr8/data/` before worktree cleanup.
+Restore that directory to `bench/data/` to run `rescore` without paid calls.
