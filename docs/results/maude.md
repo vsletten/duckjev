@@ -192,7 +192,7 @@ R5's option set is every term seen on the corpus, so its coverage and its covere
 
 ## Reading the numbers
 
-Written by hand from the dev rounds on 2026-09-27 06:27 UTC, before the held-out runs (2026-09-27 06:27 UTC); recorded in the run log and reproduced here unchanged.
+Written by hand from the dev rounds and recorded in the run log on 2026-09-27 06:27 UTC, before the held-out runs: `run --split test` refuses to start until the reading is recorded, and `reading` refuses once a held-out run exists. Reproduced here unchanged.
 
 **The label is the manufacturer's coding convention, and the rounds taught Jev the convention.** R0 asked for the device problem over bare term strings and got 0.570 top-1 in set on dev. Almost every miss was a report Jev read correctly and coded one level away from where its manufacturer files it: Dexcom files a missed sensor-failure alert as `Protective Measures Problem`, where the narrative reads as `Defective Alarm`; Dexcom files signal loss as `Wireless Communication Problem`, where Jev picked its parent; Allergan files capsular contracture as `Device Appears to Trigger Rejection` and Mentor files the same complication as `Adverse Event Without Identified Device or Use Problem`. The official definitions (R1) moved FTR from 0.448 to 0.677 and left QBJ where it was. Writing the conventions down as `not_for` and one example per option, from the gloss slice only (R2), took QBJ from 0.443 to 0.858 and the pooled number to 0.803; adding the brand name and the manufacturer's own narrative to the state (R3) took FTR to 0.770 and the pooled number to 0.820. Problem ECE fell from 0.160 to 0.051 along the way.
 

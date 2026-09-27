@@ -2204,13 +2204,13 @@ def report(args: argparse.Namespace) -> int:
         ]
     if "reading" in runs:
         rd = runs["reading"]
-        held = [runs[k]["timestamp"] for k in runs if k.startswith("test/")]
         parts += [
             "## Reading the numbers",
             "",
-            f"Written by hand from the dev rounds on {rd['written']}"
-            + (f", before the held-out runs ({min(held)})" if held else "")
-            + "; recorded in the run log and reproduced here unchanged.",
+            f"Written by hand from the dev rounds and recorded in the run log on {rd['written']}, "
+            "before the held-out runs: `run --split test` refuses to start until the reading "
+            "is recorded, and `reading` refuses once a held-out run exists. Reproduced here "
+            "unchanged.",
             "",
             rd["text"],
             "",
