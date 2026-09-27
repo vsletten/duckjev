@@ -11,6 +11,7 @@ import shutil
 import sys
 from pathlib import Path
 
+import duckdb
 import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -330,6 +331,19 @@ def test_dry_run_keyword_answers_and_gates(tiny: Path) -> None:
     assert bench.main(["run", "R0", "--split", "test"]) == 2
     bench.RUNS_FILE.write_text(json.dumps({"dev/R0": {**s, "dry_run": False}, "reading": {}}))
     assert bench.main(["run", "R2", "--split", "test"]) == 2
+
+
+def test_metrics_scope_binds_untrusted_code(tiny: Path) -> None:
+    assert bench.main(["run", "R0", "--split", "dev", "--dry-run"]) == 0
+    con = duckdb.connect()
+    con.execute(
+        "CREATE TABLE scored AS SELECT * FROM read_parquet(?)",
+        [str(tiny / "scored_dev_R0_dry.parquet")],
+    )
+    original_rows = con.execute("SELECT count(*) FROM scored").fetchone()[0]
+    result = bench.metrics_for(con, "QBJ'; DROP TABLE scored; --")
+    assert result["rows"] == 0
+    assert con.execute("SELECT count(*) FROM scored").fetchone()[0] == original_rows
 
 
 def test_budget_hard_stop(tiny: Path) -> None:

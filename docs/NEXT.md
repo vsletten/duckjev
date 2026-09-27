@@ -118,7 +118,7 @@ MAUDE demo (§1.5, §3.6).
   AUROC 0.973; $0.174 per 1,000 reports at 5,123 tokens per request, 107 reports/s at
   concurrency 16 (745 retried 429s). The reading had predicted 0.82, 0.90 and 0.05. At
   confidence 0.9, R3 answers 56% of reports at 0.947 top-1 in set.
-- The package is unchanged (0.2.0). Tests: `tests/test_maude_bench.py` (14, offline, the
+- The package is unchanged (0.2.0). Tests: `tests/test_maude_bench.py` (15, offline, the
   whole pipeline on a dozen synthetic reports against a keyword fake transport) and the
   README check in `tests/test_results_docs.py`.
 
