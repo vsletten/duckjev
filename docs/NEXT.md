@@ -104,17 +104,21 @@ MAUDE demo (§1.5, §3.6).
   keys and option sets (40, 35 and 40 terms) to `bench/maude_ids.json`. The R1 glosses,
   aliases for FDA's editorial renames, and the R2 `not_for` phrases and examples are in
   `bench/maude_criteria_v2.json`, written from the gloss slice only.
+- Candidate frequencies and order came from the full eligible pool before the split,
+  including the test reports' filed labels. The test reports were held out from round
+  selection, but the candidate lists are test-aware.
 - Seven dev rounds, the reading recorded before the held-out split (2026-09-27 06:27 UTC),
   held-out runs of R0 and the chosen R3, and the demo on QBJ; the run log is
   `docs/results/maude_runs.json` and `docs/results/maude.md` is generated from it. Total live
-  spend $2.76 of the $3.00 hard stop, every call recorded in the log.
+  spend $2.76 against the configured $3.00 token guard, every call recorded in the log.
+  In-flight requests can overshoot the guard, so it is not a strict spend ceiling.
 - Held out, 3,000 reports, R3 against R0: top-1 in set **0.826** ± 0.007 against 0.550
   (QBJ 0.850, FTR 0.797, LWS 0.832); harm accuracy **0.893** (macro 0.929) against 0.810
   (0.869); ECE 0.050 on the problem and 0.030 on the harm (R0 0.177 and 0.079); severity
   AUROC 0.973; $0.174 per 1,000 reports at 5,123 tokens per request, 107 reports/s at
   concurrency 16 (745 retried 429s). The reading had predicted 0.82, 0.90 and 0.05. At
   confidence 0.9, R3 answers 56% of reports at 0.947 top-1 in set.
-- The package is unchanged (0.2.0). Tests: `tests/test_maude_bench.py` (13, offline, the
+- The package is unchanged (0.2.0). Tests: `tests/test_maude_bench.py` (14, offline, the
   whole pipeline on a dozen synthetic reports against a keyword fake transport) and the
   README check in `tests/test_results_docs.py`.
 

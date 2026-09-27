@@ -296,6 +296,21 @@ def test_prepare_from_fixture(tiny: Path) -> None:
     assert (tiny / "maude_recalls.parquet").exists()
 
 
+def test_prepare_refuses_a_missing_committed_report(tiny: Path) -> None:
+    ids = json.loads(bench.IDS_FILE.read_text())
+    missing = ids["codes"]["QBJ"]["splits"]["test"][0]
+    fixture = tiny.parent / "fixture.json"
+    data = json.loads(fixture.read_text())
+    data["reports"]["QBJ"] = [r for r in data["reports"]["QBJ"] if r["mdr_report_key"] != missing]
+    fixture.write_text(json.dumps(data))
+    split = tiny / "maude_QBJ_test.parquet"
+    before = split.read_bytes()
+
+    with pytest.raises(SystemExit, match="committed split keys are missing"):
+        bench.main(["prepare", "--from-fixture", str(fixture)])
+    assert split.read_bytes() == before
+
+
 def test_dry_run_keyword_answers_and_gates(tiny: Path) -> None:
     assert bench.main(["run", "R1", "--split", "dev"]) == 2  # no pre-flight
     assert bench.main(["run", "R0", "--split", "dev", "--dry-run"]) == 0

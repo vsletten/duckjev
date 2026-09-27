@@ -125,6 +125,9 @@ over FDA's event types, and the severity as a Score. Live runs on 2026-09-27 ove
 held-out test split, 3,000 reports from three product codes (continuous glucose monitors,
 silicone breast implants, implantable defibrillators), measured against the codes the
 manufacturers filed; R0 is the baseline over bare term strings, R3 the round chosen on dev.
+The report rows were held out from round selection, while the per-code candidate terms
+and their order were selected from the full eligible pool, including test labels. The
+reported test result therefore uses test-aware candidate lists.
 Full tables, all seven dev rounds, the hand-written reading recorded before the held-out
 run and the demo queries run live are in [docs/results/maude.md](docs/results/maude.md),
 generated from the committed run log `docs/results/maude_runs.json`.
@@ -136,7 +139,10 @@ generated from the committed run log `docs/results/maude_runs.json`.
 | ECE over `confidence`, problem / harm | 0.177 / 0.079 | 0.050 / 0.030 |
 | input tokens per request | 1,120 | 5,123 |
 | cost | $0.036 per 1,000 reports | **$0.174 per 1,000 reports** |
-| the 2026 stream to date, 2.5M reports | $91 | $436 |
+| scenario: 2.5M reports at this sample's mean input tokens | $91 | $436 |
+
+The $91 and $436 figures apply the measured three-code sample's average token use to all
+2.5M MAUDE reports. They are scaling scenarios, not measured costs for other device codes.
 
 Spice's `ai()` puts generated prose in a SQL column; duckjev is the judgment layer beside
 it, with typed answers whose probabilities are calibrated and add up to counts with error
@@ -148,8 +154,8 @@ What the rounds taught:
   Dexcom files a missed sensor-failure alert under `Protective Measures Problem`, Mentor
   files capsular contracture under `Adverse Event Without Identified Device or Use
   Problem` where Allergan uses `Device Appears to Trigger Rejection`. The official FDA
-  definitions took top-1 in set from 0.570 to 0.640 on dev; a `not_for` naming each
-  option's confusable neighbours and one example per option, written from a gloss slice
+  definitions took top-1 in set from 0.570 to 0.640 on dev; `not_for` phrases naming
+  confusable neighbours and examples where available, written from a gloss slice
   outside dev and test, took it to 0.803 (QBJ from 0.443 to 0.858); the brand name and the
   manufacturer's own narrative in the state took it to 0.820. Problem ECE went from 0.160
   to 0.051.

@@ -170,7 +170,7 @@ def test_readme_maude_table_matches_run_log() -> None:
                 f"${run['usd_per_1k_reports']:.3f} per 1,000 reports",
                 f"**${run['usd_per_1k_reports']:.3f} per 1,000 reports**",
             ),
-            "the 2026 stream to date, 2.5M reports": (f"${stream:,.0f}",) * 2,
+            "scenario: 2.5M reports at this sample's mean input tokens": (f"${stream:,.0f}",) * 2,
         }
         for label, want in expected.items():
             assert _row(section, label)[i] == want[i], (label, want[i])
