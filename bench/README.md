@@ -131,8 +131,8 @@ definitions and hierarchy. `OPENFDA_API_KEY` is optional; the pull fits the keyl
 Every round sends one fused `jev()` request per report (R6 sends three): a Choice over the
 code's option set plus a catch-all, a Choice over the event types and a severity Score. The
 round in `ROUNDS` changes one input: the option descriptions (bare, official definitions,
-or those plus `not_for` and examples where available from `bench/maude_criteria_v2.json`, written from
-the gloss slice only), the state (the description, or an object with the device names and
+or those plus `not_for` and examples where available from `bench/maude_criteria_v2.json`, whose
+phrases and examples come from the gloss slice), the state (the description, or an object with the device names and
 the manufacturer's narrative), the option order, the vocabulary (the code's set or every
 term seen) and fusion. The chosen round is the selectable round with the best pooled dev
 top-1 in set, ties to fewer tokens per request. The held-out split refuses to run before the

@@ -2124,7 +2124,10 @@ def report(args: argparse.Namespace) -> int:
         "The keys are committed in `bench/maude_ids.json`.",
         "The option frequencies and order were computed from the full eligible pool before "
         "the split, including the test reports' filed terms. The reported test rows were "
-        "held out from round selection, but the candidate lists are test-aware.",
+        "held out from round selection, but the candidate lists are test-aware. The R2 "
+        "phrases and examples were written from the gloss slice; which confusions they "
+        "target was read from the dev rounds, and the manufacturer conventions behind them "
+        "were cross-checked against pool-wide term counts that include the test reports.",
         "",
         "**What is asked.** One fused `jev(description, $questions)` request per report: "
         "`problem`, a Choice over the product code's option set (its "

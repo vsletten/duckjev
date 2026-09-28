@@ -103,7 +103,9 @@ MAUDE demo (§1.5, §3.6).
   annex (491 terms with definitions and hierarchy) to `bench/maude_terms.json` and the split
   keys and option sets (40, 35 and 40 terms) to `bench/maude_ids.json`. The R1 glosses,
   aliases for FDA's editorial renames, and the R2 `not_for` phrases and examples are in
-  `bench/maude_criteria_v2.json`, written from the gloss slice only.
+  `bench/maude_criteria_v2.json`. The phrases and examples were written from the gloss
+  slice; the manufacturer conventions they target were also checked against pool-wide term
+  counts that include the test reports (issue #10).
 - Candidate frequencies and order came from the full eligible pool before the split,
   including the test reports' filed labels. The test reports were held out from round
   selection, but the candidate lists are test-aware.
