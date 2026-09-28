@@ -3,7 +3,8 @@
 Written 2026-09-24 13:20 PDT by the Claude Fable 5.1 session that ran the build;
 §1.1 and §3.1 updated the same day by the Claude Opus 5.5 session that built `jev_extract`;
 §1.2, §2, §3.2 and §5 updated the same day by the Claude Fable 5.1 session that ran
-Banking77 round two; §1.3, §2.2, §3 and §3.3 by the same session when it wrapped up tier one.
+Banking77 round two; §1.3, §2.2, §3 and §3.3 by the same session when it wrapped up tier one;
+§1.4, §1.5, §3, §3.6 and §5 on 2026-09-27 by the Claude Opus 5.5 session that built the MAUDE demo.
 Read `docs/HANDOFF.md` first: it is the original build spec and still describes the
 package design, the verified Jev API contract, the DuckDB UDF facts, and the repo
 conventions. This file says what actually shipped, what the numbers mean, and the
@@ -87,6 +88,41 @@ excluded from `ruff format`.
 - With §3.3 done, tier one (Python UDFs + macros, HANDOFF §7) is complete. What remains
   is tier two (§3.4) and tier three (§3.5), plus the follow-ons listed under each
   benchmark.
+
+## 1.4 Plans (PR #6 and PR #7, 2026-09-25 and 2026-09-26)
+
+`docs/TIER2.md`, the tier-two plan (§3.4), and `docs/MAUDE.md`, the build handoff for the
+MAUDE demo (§1.5, §3.6).
+
+## 1.5 The MAUDE demo (PR #8, 2026-09-27)
+
+- `bench/maude.py` (`prepare`, `run`, `confusions`, `reading`, `rescore`, `report`, `demo`,
+  each with `--dry-run`). `prepare` pulled 41,776 QBJ (the 8th and 22nd of each month),
+  33,176 FTR and 24,619 LWS reports received 2025-07-01 to 2026-06-30 from openFDA, 41,748,
+  30,832 and 24,521 of them eligible, plus 256 recall records; it wrote FDA's device-problem
+  annex (491 terms with definitions and hierarchy) to `bench/maude_terms.json` and the split
+  keys and option sets (40, 35 and 40 terms) to `bench/maude_ids.json`. The R1 glosses,
+  aliases for FDA's editorial renames, and the R2 `not_for` phrases and examples are in
+  `bench/maude_criteria_v2.json`. The phrases and examples were written from the gloss
+  slice; the manufacturer conventions they target were also checked against pool-wide term
+  counts that include the test reports (issue #10).
+- Candidate frequencies and order came from the full eligible pool before the split,
+  including the test reports' filed labels. The test reports were held out from round
+  selection, but the candidate lists are test-aware.
+- Seven dev rounds, the reading recorded before the held-out split (2026-09-27 06:27 UTC),
+  held-out runs of R0 and the chosen R3, and the demo on QBJ; the run log is
+  `docs/results/maude_runs.json` and `docs/results/maude.md` is generated from it. Total live
+  spend $2.76 against the configured $3.00 token guard, every call recorded in the log.
+  In-flight requests can overshoot the guard, so it is not a strict spend ceiling.
+- Held out, 3,000 reports, R3 against R0: top-1 in set **0.826** ± 0.007 against 0.550
+  (QBJ 0.850, FTR 0.797, LWS 0.832); harm accuracy **0.893** (macro 0.929) against 0.810
+  (0.869); ECE 0.050 on the problem and 0.030 on the harm (R0 0.177 and 0.079); severity
+  AUROC 0.973; $0.174 per 1,000 reports at 5,123 tokens per request, 107 reports/s at
+  concurrency 16 (745 retried 429s). The reading had predicted 0.82, 0.90 and 0.05. At
+  confidence 0.9, R3 answers 56% of reports at 0.947 top-1 in set.
+- The package is unchanged (0.2.0). Tests: `tests/test_maude_bench.py` (15, offline, the
+  whole pipeline on a dozen synthetic reports against a keyword fake transport) and the
+  README check in `tests/test_results_docs.py`.
 
 ## 2. The numbers and what they mean
 
@@ -200,8 +236,8 @@ Banking77 list. Total live spend for the benchmark: $0.74.
 
 ## 3. Next milestones, in priority order
 
-Tier one is complete through §3.3. The order of what remains: the cheap follow-ons under
-§3.2 and §3.3, then §3.4, then §3.5.
+Tier one is complete through §3.3, and the MAUDE demo (§3.6) is done. The order of what
+remains: the cheap follow-ons under §3.2, §3.3 and §3.6, then §3.4, then §3.5.
 
 ### 3.1 `jev_extract` — done (PR #2); what the rounds taught
 
@@ -309,13 +345,57 @@ Sidecar table + view + `jev_refresh(table, column)` judging only new state hashe
 under the pinned model; a view-matching rewrite so a repeated question over a stored
 column becomes a column read.
 
-### 3.6 The MAUDE demo (tier one, planned 2026-09-26)
-`docs/MAUDE.md` is the build handoff: coded complaint surveillance over FDA device
-adverse-event reports pulled from openFDA, three product codes (`QBJ`, `FTR`, `LWS`),
-one fused request per report (problem code, harm category, severity), tuned in rounds
-against the codes the manufacturers filed, with trend counts with error bars, `sem_dedup`,
-a `sem_join` to recalls and `sem_topk` as live demo queries. It needs nothing from tier
-two and is the first thing to build next.
+### 3.6 The MAUDE demo — done (PR #8); what the rounds taught
+
+Numbers in §1.5 and `docs/results/maude.md`. Seven dev rounds on 1,500 reports (500 per
+code), one input change each; top-1 in set pooled and per code:
+
+| dev round | change | top-1 in set | QBJ | FTR | LWS | harm acc. | tokens / report | $ / 1k |
+|---|---|---|---|---|---|---|---|---|
+| R0 | baseline: bare term strings, the description as the state | 0.570 | 0.455 | 0.448 | 0.812 | 0.809 | 900 | $0.038 |
+| R1 | the official FDA definitions as `what` | 0.640 | 0.443 | 0.677 | 0.804 | 0.809 | 1,965 | $0.083 |
+| R2 | R1 plus `not_for` and one gloss-slice example per option, both Choices | 0.803 | 0.858 | 0.717 | 0.833 | 0.899 | 3,786 | $0.159 |
+| R3 | R2 with the state as an object (device names, manufacturer narrative) | 0.820 | 0.860 | 0.770 | 0.831 | 0.901 | 4,239 | $0.178 |
+| R4 | R3 with the option order reversed (check) | 0.826 | 0.908 | 0.737 | 0.833 | 0.903 | 4,239 | $0.178 |
+| R5 | R3 over the full 201-term vocabulary (check) | 0.787 | 0.840 | 0.724 | 0.798 | 0.902 | 10,127 | $0.425 |
+| R6 | R3 as three separate requests (check) | 0.815 | 0.858 | 0.764 | 0.825 | 0.905 | 5,538 | $0.233 |
+
+- **The label is the filer's convention; write it down.** Almost every R0 miss was a report
+  read correctly and coded where its manufacturer does not file it: Dexcom files a missed
+  sensor-failure alert under `Protective Measures Problem`, Mentor files capsular
+  contracture under `Adverse Event Without Identified Device or Use Problem` where Allergan
+  uses `Device Appears to Trigger Rejection`, Establishment Labs files a rupture as `Break`.
+  Definitions alone moved FTR; `not_for` naming each option's confusable neighbours with one
+  example from the gloss slice moved QBJ from 0.443 to 0.858; the brand name and the
+  manufacturer's narrative in the state moved FTR another five points.
+- **Candidates in code pay twice.** The full vocabulary cost 3.3 points at 2.4 times the
+  tokens and a quarter of the throughput (1,647 retried 429s at concurrency 8).
+- **Fusion is the cost lever.** Three requests instead of one: 31% more tokens per report,
+  2.7 times the wall time, answers within half a point.
+- **Order is per code.** Reversing the option lists moved QBJ up 4.8 points and FTR down 3.3.
+- **Harm follows 803.3 once the rule is stated.** Saying that a lead capped, replaced or
+  explanted with no complication is a serious injury took LWS Injury from 0.262 to 0.631 on
+  dev; held out it is 0.570, and the rest are reports where the filer counted reprogramming
+  or a recommended replacement as the intervention.
+- **The demo.** On 200 QBJ test reports the trend flagged January 2026 for `Protective
+  Measures Problem` (30.5 ± 0.7 expected against a trailing mean near zero): Dexcom filed its
+  G7 app sensor-failure-alert reports that month, and `sem_join` matched them to the G7 and
+  ONE+ app recalls (Z-2446-2025 to Z-2450-2025). Reports whose `remedial_action` says Recall
+  matched at the same rate as the rest, because most are Abbott reports citing field action
+  FA1002-2025, which is not among the 23 recall records openFDA holds for QBJ. `sem_dedup`
+  judged 900 of 2,598 blocked pairs the same incident, most of them Abbott MedWatch reports
+  whose narratives repeat verbatim on one event date.
+- **Next levers, in order.** (a) The manufacturer's name in the state, or option
+  descriptions per filer, for the conventions the narrative does not carry (Mentor against
+  Allergan, Abbott US against UK, Dexcom's direction-free inaccuracy template). (b) Option
+  order set per code. (c) A harm wording round for the reprogramming and replacement
+  conventions, selected on the harm question. (d) Dedup pair states with identifiers (lot,
+  source, device serial where published), since templated narratives cannot separate
+  incidents. (e) A volume term in the signal rule's standard error, and the trend over a
+  whole split rather than 200 reports. (f) The accuracy-per-token frontier: `not_for` trimmed
+  to the pairs each code confuses, since R3's 5,123 tokens are mostly option descriptions.
+  (g) A native object state: `jev()` takes a VARCHAR state, so R3 sent its object as JSON
+  text; an object-valued state needs a JSON-typed state argument in the package and a new run.
 
 ## 4. Environment on the new machine
 
@@ -335,6 +415,10 @@ and are scripts under `bench/`, never tests. Never print, log, or commit the key
 - The entity-matching answer caches (`bench/data/cache_abt_*.duckdb`,
   `cache_dblp_*.duckdb`) and the demo cache live only in the `sem-join` worktree, like the
   Banking77 caches in `banking77-round-two`; `rescore` needs them.
+- The MAUDE answer caches (`bench/data/cache_{dev,test}_R*.duckdb`, `cache_demo_QBJ.duckdb`),
+  the raw openFDA pages, the pools and the FDA annex workbook are archived outside Git at
+  `/mnt/data/vsletten/artifacts/duckjev/maude-pr8/data/`. Restore that directory to
+  `bench/data/` for `rescore`; a re-pull may not reproduce the pools exactly.
 - The PR #1 held-out run lives in `docs/results/banking77_runs.json` as the `pr1/R0`
   entry (flagged `legacy`, no answer cache), imported from its headline file
   `docs/results/banking77.json`, which PR #3 removed so that `report` reads one file.

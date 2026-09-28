@@ -326,6 +326,14 @@ narrative gets 0.7) so the tiny pipeline has deterministic numbers. Tests never 
 network; `prepare` is the only code that calls openFDA and it is not exercised by tests
 except through the fixture path.
 
+**SQL review note (PR #8).** An automated SQLAlchemy injection rule flagged the
+DuckDB `con.execute` calls in `metrics_for` and `confusions`. These calls use fixed
+SQL templates; `SCOPE` is a module constant, while `code`, `top`, and the displayed
+confusion terms are passed as bound parameters. The CLI also restricts `--code` to
+the three configured product codes. `test_metrics_scope_binds_untrusted_code` passes
+an SQL payload as the code parameter and verifies that the `scored` table survives.
+The warning does not identify a user-controlled SQL fragment in these calls.
+
 ## 4. The demo queries
 
 All over `judged` (one row per report; `problem`, `harm` and `severity` are struct

@@ -94,3 +94,59 @@ as the other benchmarks apply: a committed run log, `rescore` through a refusing
 transport, suffixed files for pre-flights and dry runs, a full run that refuses to start
 without a pre-flight, and a test that checks the README table against the run log.
 
+
+## MAUDE (coded complaint surveillance)
+
+Historical run sequence. The committed spend ledger leaves too little of its configured
+budget to replay these paid commands; a new run needs its own ledger, pre-flights,
+pre-test reading, and spend approval.
+
+```bash
+uv run python bench/maude.py prepare                              # openFDA pull and FDA vocabulary, no Jev key
+uv run python bench/maude.py run R0 --split dev --limit 40        # pre-flight, spend recorded, rows not
+uv run python bench/maude.py run R3 --split dev                   # one round on the dev split
+uv run python bench/maude.py confusions R3 --split dev --code FTR --show 3  # top confusions, offline
+uv run python bench/maude.py reading --file reading.md            # the hand-written reading, before test
+uv run python bench/maude.py run R3 --split test                  # the held-out split
+uv run python bench/maude.py demo --code QBJ                      # trend, sem_dedup, sem_join, sem_topk live
+uv run python bench/maude.py rescore                              # rebuild runs from their answer caches
+uv run python bench/maude.py report                               # writes docs/results/maude.md
+```
+
+`prepare` pulls every report of three FDA product codes over a closed `date_received`
+window from openFDA `device/event` (999 a page, following the `search_after` cursor; QBJ
+only on the 8th and 22nd of each month), keeps the reports whose Description of Event or
+Problem has at least 100 characters and whose event type is filled, and writes the raw
+pages, one parquet pool per code, the split slices and the recalls on file under
+`bench/data/`. It draws dev (500), test (1,000) and a gloss slice (200) per code by a fixed
+hash rule stratified by event type (a floor of 50 per type in dev and test where that many
+exist), and commits the keys and each code's option set to `bench/maude_ids.json`; a later
+`prepare` reuses those keys unless `--resample` and refuses a refreshed pull that omits
+one. The per-code option sets were counted from the entire eligible pool, including test
+labels, before the split; the test reports were held out from round selection but their
+candidate lists are test-aware. It also reads sheet A of FDA's annexes
+workbook with DuckDB's `read_xlsx` into `bench/maude_terms.json`, the vocabulary with its
+definitions and hierarchy. `OPENFDA_API_KEY` is optional; the pull fits the keyless limit.
+
+Every round sends one fused `jev()` request per report (R6 sends three): a Choice over the
+code's option set plus a catch-all, a Choice over the event types and a severity Score. The
+round in `ROUNDS` changes one input: the option descriptions (bare, official definitions,
+or those plus `not_for` and examples where available from `bench/maude_criteria_v2.json`, whose
+phrases and examples come from the gloss slice), the state (the description, or an object with the device names and
+the manufacturer's narrative), the option order, the vocabulary (the code's set or every
+term seen) and fusion. The chosen round is the selectable round with the best pooled dev
+top-1 in set, ties to fewer tokens per request. The held-out split refuses to run before the
+reading is recorded and for any round but R0 and the chosen one.
+
+Every live call appends its spend to the run log, pre-flights and failed runs included,
+and `--max-usd` (default $0.50) derives an input-token guard from the unspent part of the
+configured $3.00 budget. Concurrent in-flight requests can overshoot that guard. The
+other conventions are those of the benchmarks above: a committed run
+log `docs/results/maude_runs.json`, a report rendered from it with the committed IDs and
+criteria, a fresh answer cache
+per run, `rescore` through a refusing transport, `_nN` / `_dry` files for pre-flights and
+dry runs, a full run that refuses to start without a live pre-flight of its round, and a
+test that checks the README table against the run log. The PR #8 answer caches,
+raw pages, pools, and FDA annex workbook were archived outside Git at
+`/mnt/data/vsletten/artifacts/duckjev/maude-pr8/data/` before worktree cleanup.
+Restore that directory to `bench/data/` to run `rescore` without paid calls.
