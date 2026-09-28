@@ -346,6 +346,24 @@ def test_metrics_scope_binds_untrusted_code(tiny: Path) -> None:
     assert con.execute("SELECT count(*) FROM scored").fetchone()[0] == original_rows
 
 
+def test_metric_queries_are_literal_and_scoped_by_parameter() -> None:
+    names = [
+        "SUMMARY_SQL",
+        "HARM_SQL",
+        "HARM_MATRIX_SQL",
+        "RELIABILITY_SQL",
+        "DEFERRAL_SQL",
+        "SEVERITY_SQL",
+        "CONFUSIONS_SQL",
+        "ERRORS_SQL",
+        "CONFUSION_EXAMPLES_SQL",
+        "COUNTS_SQL",
+    ]
+    for name in names:
+        sql = getattr(bench, name)
+        assert "{" not in sql and "$code IS NULL OR product_code = $code" in sql, name
+
+
 def test_budget_hard_stop(tiny: Path) -> None:
     bench.RUNS_FILE.write_text(json.dumps({"spend": [{"usd": 2.9}]}))
     assert bench.budget_tokens(0.5, dry_run=False) == int(0.1 / bench.USD_PER_INPUT_TOKEN)

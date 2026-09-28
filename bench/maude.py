@@ -829,8 +829,9 @@ JUDGE_SQLS: dict[tuple[bool, str, str], str] = {
 IDENTICAL_SQL = """SELECT count(*) FROM judged j JOIN judged_rerun r
 USING (product_code, mdr_report_key) WHERE j.a IS NOT DISTINCT FROM r.a"""
 
-SCOPE = "($code IS NULL OR product_code = $code)"
-SUMMARY_SQL = f"""SELECT count(*) AS rows,
+# Every metric query is a literal constant; the product code, the catch-all, the question and
+# the confidence column are bound parameters ($code NULL means all codes).
+SUMMARY_SQL = """SELECT count(*) AS rows,
   count(*) FILTER (covered) AS covered_rows,
   avg(top1_in_set::INT) FILTER (covered) AS top1_in_set,
   avg(top1_in_set::INT) AS top1_all_rows,
@@ -839,47 +840,60 @@ SUMMARY_SQL = f"""SELECT count(*) AS rows,
   avg(set_mass) FILTER (covered) AS set_mass,
   count(*) FILTER (covered_code) AS covered_code_rows,
   avg(top1_in_set::INT) FILTER (covered_code) AS top1_on_code_rows,
-  avg((problem = '{CATCH_ALL}')::INT) AS catch_all_share,
+  avg((problem = $catch_all)::INT) AS catch_all_share,
   avg(n_filed) AS filed_terms_per_report,
   avg(harm_correct::INT) AS harm_accuracy
-FROM scored WHERE {SCOPE}"""
-HARM_SQL = f"""SELECT event_type, count(*) AS n, avg(harm_correct::INT) AS accuracy,
+FROM scored WHERE ($code IS NULL OR product_code = $code)"""
+HARM_SQL = """SELECT event_type, count(*) AS n, avg(harm_correct::INT) AS accuracy,
   avg(severity) AS mean_severity
-FROM scored WHERE {SCOPE} GROUP BY event_type ORDER BY event_type"""
-HARM_MATRIX_SQL = f"""SELECT event_type, harm, count(*) AS n FROM scored WHERE {SCOPE}
+FROM scored WHERE ($code IS NULL OR product_code = $code)
+GROUP BY event_type ORDER BY event_type"""
+HARM_MATRIX_SQL = """SELECT event_type, harm, count(*) AS n
+FROM scored WHERE ($code IS NULL OR product_code = $code)
 GROUP BY ALL ORDER BY event_type, harm"""
+# Both Choices as rows of one view, so reliability and deferral take the question as a
+# parameter: problem accuracy is top-1 in set over the covered reports, harm over all.
+LONG_VIEW_SQL = """CREATE OR REPLACE TEMP VIEW judged_long AS
+SELECT product_code, 'problem' AS question, problem_confidence AS confidence,
+       problem_top_p AS top_p, top1_in_set AS correct, covered AS eligible FROM scored
+UNION ALL
+SELECT product_code, 'harm', harm_confidence, harm_top_p, harm_correct, true FROM scored"""
+QUESTIONS = ("problem", "harm")
 RELIABILITY_SQL = """WITH b AS (
-  SELECT least(floor({conf} * 10), 9)::INT AS bin, {conf} AS conf, {correct}::INT AS correct
-  FROM scored WHERE {where} AND {scope})
+  SELECT least(floor(conf * 10), 9)::INT AS bin, conf, correct FROM (
+    SELECT CASE WHEN $by = 'top_p' THEN top_p ELSE confidence END AS conf,
+           correct::INT AS correct
+    FROM judged_long
+    WHERE question = $question AND eligible AND ($code IS NULL OR product_code = $code)))
 SELECT bin, count(*) AS n, avg(conf) AS mean_conf, avg(correct) AS accuracy
 FROM b GROUP BY bin ORDER BY bin"""
-QUESTION_COLUMNS = {
-    "problem": ("top1_in_set", "covered"),
-    "harm": ("harm_correct", "true"),
-}
-RELIABILITY_SQLS: dict[tuple[str, str], str] = {
-    (q, conf): RELIABILITY_SQL.format(conf=f"{q}_{conf}", correct=correct, where=where, scope=SCOPE)
-    for q, (correct, where) in QUESTION_COLUMNS.items()
-    for conf in ("confidence", "top_p")
-}
-DEFERRAL_SQLS: dict[str, str] = {
-    q: f"SELECT {q}_confidence, {correct}::INT FROM scored WHERE {where} AND {SCOPE}"
-    for q, (correct, where) in QUESTION_COLUMNS.items()
-}
-SEVERITY_SQL = f"""SELECT severity, (event_type IN ('Death', 'Injury'))::INT FROM scored
-WHERE event_type IN ('Death', 'Injury', 'Malfunction') AND {SCOPE}"""
-CONFUSIONS_SQL = f"""SELECT array_to_string(filed, ' + ') AS filed, problem AS predicted,
+DEFERRAL_SQL = """SELECT confidence, correct::INT FROM judged_long
+WHERE question = $question AND eligible AND ($code IS NULL OR product_code = $code)"""
+SEVERITY_SQL = """SELECT severity, (event_type IN ('Death', 'Injury'))::INT FROM scored
+WHERE event_type IN ('Death', 'Injury', 'Malfunction')
+  AND ($code IS NULL OR product_code = $code)"""
+CONFUSIONS_SQL = """SELECT array_to_string(filed, ' + ') AS filed, problem AS predicted,
   count(*) AS n
-FROM scored WHERE covered AND NOT top1_in_set AND {SCOPE}
+FROM scored
+WHERE covered AND NOT top1_in_set AND ($code IS NULL OR product_code = $code)
 GROUP BY ALL ORDER BY n DESC, filed, predicted LIMIT $k"""
+ERRORS_SQL = """SELECT count(*) FILTER (covered AND NOT top1_in_set) FROM scored
+WHERE ($code IS NULL OR product_code = $code)"""
+CONFUSION_EXAMPLES_SQL = """SELECT mdr_report_key, problem_top_p, narrative FROM scored
+WHERE array_to_string(filed, ' + ') = $f AND problem = $p
+  AND ($code IS NULL OR product_code = $code)
+ORDER BY problem_top_p DESC LIMIT 4"""
 # Per filed term: reports that carry it, reports whose argmax is it, and Σp with its SE.
-COUNTS_SQL = f"""WITH filed AS (
+COUNTS_SQL = """WITH filed AS (
   SELECT t AS term, count(*) AS filed_count FROM scored, UNNEST(filed) AS u(t)
-  WHERE {SCOPE} GROUP BY ALL),
-hard AS (SELECT problem AS term, count(*) AS argmax_count FROM scored WHERE {SCOPE} GROUP BY ALL),
+  WHERE ($code IS NULL OR product_code = $code) GROUP BY ALL),
+hard AS (
+  SELECT problem AS term, count(*) AS argmax_count FROM scored
+  WHERE ($code IS NULL OR product_code = $code) GROUP BY ALL),
 soft AS (
   SELECT e.key AS term, sum(e.value) AS expected, sqrt(sum(e.value * (1 - e.value))) AS se
-  FROM scored, UNNEST(map_entries(problem_probs)) AS u(e) WHERE {SCOPE} GROUP BY ALL)
+  FROM scored, UNNEST(map_entries(problem_probs)) AS u(e)
+  WHERE ($code IS NULL OR product_code = $code) GROUP BY ALL)
 SELECT f.term, f.filed_count, coalesce(h.argmax_count, 0) AS argmax_count, s.expected, s.se
 FROM filed f LEFT JOIN hard h USING (term) JOIN soft s USING (term)
 ORDER BY f.filed_count DESC, f.term LIMIT $k"""
@@ -1173,7 +1187,7 @@ def deferral(rows: list[tuple[float, int]]) -> list[list[Any]]:
 def metrics_for(con: duckdb.DuckDBPyConnection, code: str | None) -> dict[str, Any]:
     """Every reported metric for one product code (or all of them), from ``scored``."""
     p = {"code": code}
-    out = _row_dict(con, SUMMARY_SQL, p)
+    out = _row_dict(con, SUMMARY_SQL, p | {"catch_all": CATCH_ALL})
     out["coverage"] = out["covered_rows"] / out["rows"] if out["rows"] else None
     out["top1_in_set_se"] = _se(out["top1_in_set"], out["covered_rows"])
     out["harm_accuracy_se"] = _se(out["harm_accuracy"], out["rows"])
@@ -1182,12 +1196,14 @@ def metrics_for(con: duckdb.DuckDBPyConnection, code: str | None) -> dict[str, A
     accs = [r[2] for r in harm if r[1]]
     out["harm_macro"] = sum(accs) / len(accs) if accs else None
     out["harm_matrix"] = [list(r) for r in con.execute(HARM_MATRIX_SQL, p).fetchall()]
-    for q in QUESTION_COLUMNS:
-        for conf in ("confidence", "top_p"):
-            rel = [list(r) for r in con.execute(RELIABILITY_SQLS[(q, conf)], p).fetchall()]
-            out[f"{q}_reliability_{conf}"] = rel
-            out[f"{q}_ece_{conf}"] = _ece(rel)
-        out[f"{q}_deferral"] = deferral(con.execute(DEFERRAL_SQLS[q], p).fetchall())
+    con.execute(LONG_VIEW_SQL)
+    for q in QUESTIONS:
+        for by in ("confidence", "top_p"):
+            params = p | {"question": q, "by": by}
+            rel = [list(r) for r in con.execute(RELIABILITY_SQL, params).fetchall()]
+            out[f"{q}_reliability_{by}"] = rel
+            out[f"{q}_ece_{by}"] = _ece(rel)
+        out[f"{q}_deferral"] = deferral(con.execute(DEFERRAL_SQL, p | {"question": q}).fetchall())
     out["severity_auroc"] = _auroc(con.execute(SEVERITY_SQL, p).fetchall())
     out["confusions"] = [list(r) for r in con.execute(CONFUSIONS_SQL, p | {"k": 10}).fetchall()]
     out["counts"] = [list(r) for r in con.execute(COUNTS_SQL, p | {"k": 10}).fetchall()]
@@ -1452,19 +1468,14 @@ def confusions(args: argparse.Namespace) -> int:
     con.execute("CREATE TABLE scored AS SELECT * FROM read_parquet(?)", [str(path)])
     p = {"code": args.code}
     rows = con.execute(CONFUSIONS_SQL, p | {"k": args.top}).fetchall()
-    errors = con.execute(
-        f"SELECT count(*) FILTER (covered AND NOT top1_in_set) FROM scored WHERE {SCOPE}", p
-    ).fetchone()[0]
+    errors = con.execute(ERRORS_SQL, p).fetchone()[0]
     print(f"{_rel(path)}{' ' + args.code if args.code else ''}: {errors} errors; top pairs")
     for filed, pred, n in rows:
         print(f"  {n:3d}  {filed}  ->  {pred}")
     for filed, pred, _ in rows[: args.show]:
         print(f"\n== {filed} -> {pred}")
         for key, conf, text in con.execute(
-            f"SELECT mdr_report_key, problem_top_p, narrative FROM scored "
-            f"WHERE array_to_string(filed, ' + ') = $f AND problem = $p AND {SCOPE} "
-            "ORDER BY problem_top_p DESC LIMIT 4",
-            p | {"f": filed, "p": pred},
+            CONFUSION_EXAMPLES_SQL, p | {"f": filed, "p": pred}
         ).fetchall():
             print(f"  {key} {conf:.2f}  {text[:300]!r}")
     return 0
