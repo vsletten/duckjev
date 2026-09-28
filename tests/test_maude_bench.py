@@ -364,6 +364,26 @@ def test_metric_queries_are_literal_and_scoped_by_parameter() -> None:
         assert "{" not in sql and "$code IS NULL OR product_code = $code" in sql, name
 
 
+def test_reading_must_say_something(tiny: Path) -> None:
+    empty = tiny / "reading.md"
+    empty.write_text("  \n\n")
+    assert bench.main(["reading", "--file", str(empty)]) == 2
+    assert "reading" not in bench.load_runs()
+
+
+def test_counts_keep_filed_terms_outside_the_options(tiny: Path) -> None:
+    import duckdb
+
+    con = duckdb.connect()
+    con.execute(
+        "CREATE TABLE scored AS SELECT * FROM (VALUES ('QBJ', ['A'], 'A', MAP {'A': 0.9}), "
+        "('QBJ', ['Z'], 'A', MAP {'A': 0.8})) t(product_code, filed, problem, problem_probs)"
+    )
+    rows = con.execute(bench.COUNTS_SQL, {"code": None, "k": 10}).fetchall()
+    assert [r[:3] for r in rows] == [("A", 1, 2), ("Z", 1, 0)]
+    assert rows[1][3:] == (0.0, 0.0)
+
+
 def test_budget_hard_stop(tiny: Path) -> None:
     bench.RUNS_FILE.write_text(json.dumps({"spend": [{"usd": 2.9}]}))
     assert bench.budget_tokens(0.5, dry_run=False) == int(0.1 / bench.USD_PER_INPUT_TOKEN)

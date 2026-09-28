@@ -394,6 +394,8 @@ code), one input change each; top-1 in set pooled and per code:
   incidents. (e) A volume term in the signal rule's standard error, and the trend over a
   whole split rather than 200 reports. (f) The accuracy-per-token frontier: `not_for` trimmed
   to the pairs each code confuses, since R3's 5,123 tokens are mostly option descriptions.
+  (g) A native object state: `jev()` takes a VARCHAR state, so R3 sent its object as JSON
+  text; an object-valued state needs a JSON-typed state argument in the package and a new run.
 
 ## 4. Environment on the new machine
 

@@ -783,6 +783,9 @@ def questions_for(
 
 
 def object_state(narrative: str, brand: str | None, generic: str | None, mfr: str | None) -> str:
+    """R3's state: the report as a JSON object, serialized to text. ``jev()`` takes a VARCHAR
+    state (as ``jev_pair`` does for pairs), so Jev reads the object as JSON text, not as an
+    object-valued state; a native object state needs a package change and a new run."""
     obj: dict[str, str] = {"description of event or problem": narrative}
     if brand:
         obj["brand name"] = brand
@@ -883,7 +886,8 @@ CONFUSION_EXAMPLES_SQL = """SELECT mdr_report_key, problem_top_p, narrative FROM
 WHERE array_to_string(filed, ' + ') = $f AND problem = $p
   AND ($code IS NULL OR product_code = $code)
 ORDER BY problem_top_p DESC LIMIT 4"""
-# Per filed term: reports that carry it, reports whose argmax is it, and Σp with its SE.
+# Per filed term: reports that carry it, reports whose argmax is it, and Σp with its SE (a
+# filed term outside the round's options is kept, with no probability mass).
 COUNTS_SQL = """WITH filed AS (
   SELECT t AS term, count(*) AS filed_count FROM scored, UNNEST(filed) AS u(t)
   WHERE ($code IS NULL OR product_code = $code) GROUP BY ALL),
@@ -894,8 +898,9 @@ soft AS (
   SELECT e.key AS term, sum(e.value) AS expected, sqrt(sum(e.value * (1 - e.value))) AS se
   FROM scored, UNNEST(map_entries(problem_probs)) AS u(e)
   WHERE ($code IS NULL OR product_code = $code) GROUP BY ALL)
-SELECT f.term, f.filed_count, coalesce(h.argmax_count, 0) AS argmax_count, s.expected, s.se
-FROM filed f LEFT JOIN hard h USING (term) JOIN soft s USING (term)
+SELECT f.term, f.filed_count, coalesce(h.argmax_count, 0) AS argmax_count,
+  coalesce(s.expected, 0.0) AS expected, coalesce(s.se, 0.0) AS se
+FROM filed f LEFT JOIN hard h USING (term) LEFT JOIN soft s USING (term)
 ORDER BY f.filed_count DESC, f.term LIMIT $k"""
 
 # --------------------------------------------------------------------------- load
@@ -1488,6 +1493,9 @@ def reading(args: argparse.Namespace) -> int:
         print("the held-out split has run; the reading must be written before it")
         return 2
     text = Path(args.file).read_text(encoding="utf-8").strip()
+    if not text:
+        print(f"{args.file} is empty; the reading must say something before the held-out run")
+        return 2
     entry = {"written": datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC"), "text": text}
     if args.dry_run:
         print(json.dumps(entry, indent=1))
@@ -2146,7 +2154,8 @@ def report(args: argparse.Namespace) -> int:
         f"{MIN_TERM_REPORTS} reports in the pool, plus a catch-all `{CATCH_ALL}`: "
         + ", ".join(f"{len(ids['codes'][c]['options'])} for {c}" for c in CODES)
         + "); `harm`, a Choice over FDA's event types with glosses from 21 CFR 803.3; and "
-        "`severity`, a Score over five levels from no harm to death.",
+        "`severity`, a Score over five levels from no harm to death. R3's object state is a JSON "
+        "object sent as text: `jev()` takes a VARCHAR state, so Jev reads the serialized object.",
         "",
         "**How it is measured.** Against the codes the manufacturers filed. *Top-1 in set*: "
         "the argmax is one of the report's filed problem terms (a report may carry several), "
