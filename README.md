@@ -17,7 +17,7 @@ one gives you an estimator with error bars, and DuckDB can express it in one que
 ## Install
 
 ```bash
-uv add git+ssh://git@github.com/vsletten/duckjev.git   # private repo
+uv add git+https://github.com/vsletten/duckjev.git
 # or, from a checkout:
 uv sync --extra dev
 export TYPESAFE_API_KEY=...                             # only needed for live calls
@@ -379,3 +379,7 @@ Notes:
 Design and decisions: [docs/HANDOFF.md](docs/HANDOFF.md).
 
 State at hand-off and next milestones: [docs/NEXT.md](docs/NEXT.md). Original build spec: [docs/HANDOFF.md](docs/HANDOFF.md). Tier two (the native extension) plan: [docs/TIER2.md](docs/TIER2.md). The MAUDE demo plan: [docs/MAUDE.md](docs/MAUDE.md).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
