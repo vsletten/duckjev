@@ -3,6 +3,8 @@ name = "duckjev"
 version = "0.2.0"
 description = "Semantic operators for DuckDB backed by TypeSafe's Jev: typed, calibrated judgments as SQL functions."
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.13"
 # numpy: DuckDB 1.5 create_function() refuses to register any Python UDF without it.
 dependencies = ["duckdb>=1.1", "pyarrow>=18", "httpx>=0.27", "numpy>=2"]
