@@ -38,7 +38,10 @@ def test_a_changed_question_says_to_run_live(
 ) -> None:
     monkeypatch.setitem(demo.PARAMS, "care_q", demo.CARE_Q + " Say yes only if stated.")
     assert demo.main([]) == 1
-    assert "rerun with --live" in capsys.readouterr().err
+    captured = capsys.readouterr()
+    assert "rerun with --live" in captured.err
+    # nothing was sent, so nothing is billed, whatever the client's accounting rules
+    assert "usage: 0 requests, 0 input tokens" in captured.out
 
 
 def test_live_without_a_key_stops_before_any_request(capsys: pytest.CaptureFixture[str]) -> None:
