@@ -6,6 +6,7 @@ import asyncio
 import json
 
 import httpx
+import pyarrow as pa
 import pytest
 
 import duckjev
@@ -18,6 +19,7 @@ from duckjev.client import (
     JevClient,
     Usage,
 )
+from duckjev.functions import make_udfs
 
 NOUL = {"q": {"type": "noul", "instructions": "about a card?"}}
 
@@ -300,6 +302,89 @@ def test_an_unexpected_failure_after_sending_keeps_estimated_cost() -> None:
         assert c.billed_input_tokens == body_tokens("s0") and c._reserved == 0
         assert c.usage.snapshot()["input_tokens"] == c.billed_input_tokens
         assert c.usage.snapshot()["lost_responses"] == 1
+    finally:
+        c.close()
+
+
+@pytest.mark.parametrize(
+    "reported_usage",
+    [None, {}, {"input_tokens": -1}, {"input_tokens": False}, {"input_tokens": 1.5}],
+)
+def test_missing_or_invalid_usage_keeps_the_estimate_and_stops_the_batch(
+    reported_usage: dict | None,
+) -> None:
+    sent: list[str] = []
+
+    def handle(request: httpx.Request) -> httpx.Response:
+        sent.append(json.loads(request.content)["state"])
+        return httpx.Response(
+            200,
+            json={"answers": {"q": {"type": "noul", "noul": 0.5}}, "usage": reported_usage},
+        )
+
+    c = make(
+        httpx.MockTransport(handle), concurrency=1, max_input_tokens=10_000, cache=AnswerCache(None)
+    )
+    try:
+        with pytest.raises(JevAPIError, match="usage"):
+            c.judge([(f"s{i}", NOUL) for i in range(3)])
+        assert sent == ["s0"] and len(c.cache) == 0 and c._reserved == 0
+        assert c.billed_input_tokens == body_tokens("s0")
+        assert c.usage.snapshot()["input_tokens"] == c.billed_input_tokens
+        assert c.usage.snapshot()["lost_responses"] == 1
+    finally:
+        c.close()
+
+
+@pytest.mark.parametrize(
+    ("question", "answer"),
+    [
+        (NOUL["q"], {}),
+        (NOUL["q"], {"noul": "not numeric"}),
+        ({"type": "choice", "criteria": {"a": None}}, {"choice": "a"}),
+        ({"type": "choice", "criteria": {"a": None}}, {"choice": "a", "probabilities": []}),
+        ({"type": "score", "criteria": ["low", "high"]}, {"probabilities": {"0": 1.0}}),
+        ({"type": "score", "criteria": ["low", "high"]}, {"score": 0.5, "probabilities": []}),
+    ],
+)
+def test_unusable_typed_answers_stop_before_more_sends_or_cache_writes(
+    question: dict,
+    answer: dict,
+) -> None:
+    sent: list[str] = []
+
+    def handle(request: httpx.Request) -> httpx.Response:
+        sent.append(json.loads(request.content)["state"])
+        return httpx.Response(200, json={"answers": {"q": answer}, "usage": {"input_tokens": 1}})
+
+    c = make(httpx.MockTransport(handle), concurrency=1, cache=AnswerCache(None))
+    questions = {"q": question}
+    try:
+        with pytest.raises(JevAPIError, match="unusable"):
+            c.judge([(f"s{i}", questions) for i in range(3)])
+        assert sent == ["s0"] and len(c.cache) == 0
+        payload = {"state": "s0", "model": c.model, "questions": questions}
+        estimate = len(canonical_json(payload).encode("utf-8")) + ESTIMATE_FRAMING_TOKENS
+        assert c.billed_input_tokens == estimate
+        assert c.usage.snapshot()["input_tokens"] == estimate
+        assert c.usage.snapshot()["lost_responses"] == 1
+    finally:
+        c.close()
+
+
+def test_sql_rejects_an_unusable_answer_before_judging_the_next_row() -> None:
+    sent: list[str] = []
+
+    def handle(request: httpx.Request) -> httpx.Response:
+        sent.append(json.loads(request.content)["state"])
+        return httpx.Response(200, json={"answers": {"q": {}}, "usage": {"input_tokens": 1}})
+
+    c = make(httpx.MockTransport(handle), concurrency=1, cache=AnswerCache(None))
+    try:
+        with pytest.raises(JevAPIError, match="unusable"):
+            make_udfs(c)["jev_noul2"](pa.array(["s0", "s1", "s2"]), pa.array(["about a card?"]))
+        assert sent == ["s0"] and len(c.cache) == 0
+        assert c.billed_input_tokens == body_tokens("s0")
     finally:
         c.close()
 

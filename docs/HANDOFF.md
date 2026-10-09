@@ -209,6 +209,9 @@ is not an exact provider token bound, so in-flight requests can overshoot by the
 error. Error statuses and pre-send failures release the reservation; lost or unusable
 answers count their estimates as billed. The first batch failure stops further sends,
 allows in-flight answers to finish and be cached, then raises the first error.
+Validate answers against the typed SQL decoders before caching, and require non-negative
+integer input usage. An invalid answer or missing/invalid usage raises `JevAPIError` and
+retains its estimated cost.
 
 `timeout` defaults to 120 seconds waiting for an answer, with connecting capped at 10
 seconds. It can still be changed on the client before its first request.

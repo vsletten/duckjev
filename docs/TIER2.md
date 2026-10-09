@@ -476,6 +476,9 @@ connection) or an unusable answer keeps the estimate as billed and counts one
 `lost_responses`. A connect failure, rejected local request or failed proxy tunnel sends
 nothing to the API and releases it. Requests that cannot be built fail before reservation.
 Waiting requests refresh their estimate when earlier responses raise the learned ratio.
+Before accepting or caching a 200, validate that its answers can be decoded by the typed
+SQL paths and that input usage is present as a non-negative integer. Invalid answers or
+usage raise `JevAPIError`, retain their estimated cost and stop further batch sends.
 
 ### 3.6 Execution model
 

@@ -21,6 +21,7 @@ from typing import Any
 import httpx
 
 from .cache import AnswerCache, cache_key
+from .marshal import validate_answers
 
 DEFAULT_MODEL = "jev-1.13.0"
 DEFAULT_BASE_URL = "https://api.typesafe.ai"
@@ -445,8 +446,16 @@ class JevClient:
         answers = body.get("answers")
         if not isinstance(answers, dict) or set(answers) != set(questions):
             raise JevAPIError(resp.status_code, "response answers do not match question ids")
-        usage = body.get("usage") or {}
-        tin = int(usage.get("input_tokens", 0))
-        tout = int(usage.get("output_tokens", 0))
+        try:
+            validate_answers(answers, questions)
+        except ValueError as exc:
+            raise JevAPIError(resp.status_code, str(exc)) from exc
+        usage = body.get("usage")
+        if not isinstance(usage, dict):
+            raise JevAPIError(resp.status_code, "response usage is missing or invalid")
+        tin = usage.get("input_tokens")
+        tout = usage.get("output_tokens", 0)
+        if type(tin) is not int or type(tout) is not int or tin < 0 or tout < 0:
+            raise JevAPIError(resp.status_code, "response usage needs non-negative integer tokens")
         self.usage.add(requests=1, output_tokens=tout)
         return answers, {"input_tokens": tin, "output_tokens": tout}
