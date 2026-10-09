@@ -462,6 +462,8 @@ The same eleven counters as tier one's `Usage`, process-wide, plus `est_usd`:
 `rows, deduped, cache_hits, cache_misses, requests, input_tokens, output_tokens, retries,
 rate_limited, overloaded, lost_responses`, `est_usd = input_tokens × 42 / 1e9`.
 `jev_usage()` returns them as one row; `jev_usage_reset()` zeroes them.
+`input_tokens` includes reported usage and the reserved estimates of requests whose
+answers are lost or unusable after sending; `est_usd` therefore includes both.
 
 The budget is tier one's reservation contract (`JevClient` docstring, issue #9). Each
 attempt estimates its input tokens as the UTF-8 bytes of the compact request body plus 64,
@@ -470,8 +472,10 @@ tokens, the reservations in flight and its estimate fit under `duckjev_max_input
 Otherwise it waits for the requests in flight to settle and raises `JevBudgetExceeded` if
 it still does not fit. A 200 settles to the reported `input_tokens`, an error status
 releases the reservation, and a response lost after sending (read timeout, dropped
-connection) keeps the estimate as billed and counts one `lost_responses`. A connect
-failure sends nothing and releases it.
+connection) or an unusable answer keeps the estimate as billed and counts one
+`lost_responses`. A connect failure, rejected local request or failed proxy tunnel sends
+nothing to the API and releases it. Requests that cannot be built fail before reservation.
+Waiting requests refresh their estimate when earlier responses raise the learned ratio.
 
 ### 3.6 Execution model
 

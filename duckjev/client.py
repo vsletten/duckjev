@@ -42,7 +42,14 @@ CONNECT_TIMEOUT = 10.0
 ESTIMATE_FRAMING_TOKENS = 64
 
 # Failures raised before the request left this process: retrying them never pays twice.
-_NOT_SENT = (httpx.ConnectError, httpx.ConnectTimeout, httpx.PoolTimeout, httpx.UnsupportedProtocol)
+_NOT_SENT = (
+    httpx.ConnectError,
+    httpx.ConnectTimeout,
+    httpx.PoolTimeout,
+    httpx.UnsupportedProtocol,
+    httpx.LocalProtocolError,
+    httpx.ProxyError,
+)
 
 Answers = dict[str, dict[str, Any]]
 Item = tuple[Any, dict[str, Any]]
@@ -143,10 +150,11 @@ class JevClient:
     reservations of requests in flight and its own estimate fit under the limit; otherwise it
     waits for the requests in flight to settle and raises :class:`JevBudgetExceeded` if it
     still does not fit. A response settles its reservation to the reported usage. An error
-    status releases it. A response lost after the request was sent (a read timeout, a dropped
-    connection) keeps the estimate as billed, since the API may have charged for it; those
-    are counted in ``usage()["lost_responses"]``. A body that cannot be encoded is never
-    reserved or sent.
+    status releases it. A response lost or unusable after the request was sent (a read
+    timeout, a dropped connection, a malformed answer) keeps the estimate as billed, since
+    the API may have charged for it; those are counted in ``usage()["lost_responses"]``.
+    ``usage()["input_tokens"]`` and its estimated cost include these estimates. A request
+    that cannot be built is never reserved or sent.
 
     The first failure in a batch (the budget, an API error, retries exhausted) stops it:
     requests not yet sent are dropped, requests already in flight finish and are settled and
@@ -276,13 +284,17 @@ class JevClient:
     def _estimate(self, body: bytes) -> int:
         return math.ceil((len(body) + ESTIMATE_FRAMING_TOKENS) * self._estimate_ratio)
 
-    async def _reserve(self, estimate: int) -> None:
-        """Wait until ``estimate`` fits beside what is billed and in flight, then reserve it."""
+    async def _reserve(self, body: bytes) -> int:
+        """Wait for room, refreshing the learned estimate before each admission check."""
         if self.max_input_tokens is None:
-            return
+            return self._estimate(body)
         assert self._budget is not None
         async with self._budget:
-            while self._billed + self._reserved + estimate > self.max_input_tokens:
+            while True:
+                estimate = self._estimate(body)
+                if self._billed + self._reserved + estimate <= self.max_input_tokens:
+                    self._reserved += estimate
+                    return estimate
                 if self._reserved == 0:
                     raise JevBudgetExceeded(
                         f"a request estimated at {estimate} input tokens does not fit: "
@@ -290,12 +302,12 @@ class JevClient:
                         "already billed"
                     )
                 await self._budget.wait()
-            self._reserved += estimate
 
-    async def _settle(self, estimate: int, spent: int) -> None:
+    async def _settle(self, estimate: int, spent: int, *, lost_response: bool = False) -> None:
         """Replace a reservation with what it cost: reported tokens, the estimate, or 0."""
         with self._billed_lock:
             self._billed += spent
+        self.usage.add(input_tokens=spent, lost_responses=int(lost_response))
         if self.max_input_tokens is None:
             return
         assert self._budget is not None
@@ -364,6 +376,9 @@ class JevClient:
             payload, separators=(",", ":"), ensure_ascii=False, allow_nan=False
         ).encode("utf-8")
         headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+        # URL/header encoding can fail locally too. Build before reserving so those failures
+        # never count as sent; transport-level protocol/proxy failures use _NOT_SENT below.
+        request = self._http.build_request("POST", ENDPOINT, content=body, headers=headers)
         last = "no attempt made"
         for attempt in range(self.max_attempts):
             retry_after: str | None = None
@@ -371,14 +386,14 @@ class JevClient:
                 raise _Stopped
             async with self._sem:
                 base = len(body) + ESTIMATE_FRAMING_TOKENS
-                estimate = self._estimate(body)
-                await self._reserve(estimate)
+                estimate = await self._reserve(body)
                 if stop.is_set():  # the batch failed while this one waited for room
                     await self._settle(estimate, 0)
                     raise _Stopped
                 spent = 0
+                lost_response = False
                 try:
-                    resp = await self._http.post(ENDPOINT, content=body, headers=headers)
+                    resp = await self._http.send(request)
                 except _NOT_SENT as exc:
                     last = f"{type(exc).__name__}: {exc}"
                     resp = None
@@ -387,22 +402,22 @@ class JevClient:
                     last = f"{type(exc).__name__}: {exc}"
                     resp = None
                     spent = estimate
-                    self.usage.add(lost_responses=1)
+                    lost_response = True
                 except BaseException:
                     # Cancelled or failed mid-request, possibly after sending: count it.
-                    await self._settle(estimate, estimate)
+                    await self._settle(estimate, estimate, lost_response=True)
                     raise
                 if resp is not None and resp.status_code == 200:
                     try:
                         result = self._accept(resp, questions)
                     except BaseException:
-                        await self._settle(estimate, estimate)
+                        await self._settle(estimate, estimate, lost_response=True)
                         raise
                     spent = result[1]["input_tokens"]
                     self._estimate_ratio = max(self._estimate_ratio, spent / base)
                     await self._settle(estimate, spent)
                     return result
-                await self._settle(estimate, spent)
+                await self._settle(estimate, spent, lost_response=lost_response)
             if resp is not None:
                 if resp.status_code in (401, 403):
                     raise JevAuthError(f"Jev API rejected the API key ({resp.status_code})")
@@ -433,5 +448,5 @@ class JevClient:
         usage = body.get("usage") or {}
         tin = int(usage.get("input_tokens", 0))
         tout = int(usage.get("output_tokens", 0))
-        self.usage.add(requests=1, input_tokens=tin, output_tokens=tout)
+        self.usage.add(requests=1, output_tokens=tout)
         return answers, {"input_tokens": tin, "output_tokens": tout}

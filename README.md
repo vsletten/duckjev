@@ -53,7 +53,8 @@ cache_path=None, max_input_tokens=None, api_key=None, base_url=None, timeout=120
   requests in flight and its own estimate fit. Otherwise `JevBudgetExceeded` is raised,
   after the requests in flight finish and their answers are cached. A request whose
   answer was lost after sending, for example to a read timeout, counts as billed at its
-  estimate, and `usage()["lost_responses"]` counts these. The estimate is not a
+  estimate, and `usage()["lost_responses"]` counts these, including unusable answers.
+  `usage()["input_tokens"]` and `est_usd` include these estimates. The estimate is not a
   tokenizer: requests in flight can exceed it by the API's framing, so treat the limit
   as tight but not exact.
 - `timeout` is how many seconds to wait for an answer. Connecting is capped at 10 s. Keep

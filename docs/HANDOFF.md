@@ -195,13 +195,23 @@ docs/
 └── results/
 ```
 
-### 4.1 `register(con, *, model="jev-1.13.0", concurrency=16, cache=True, cache_path=None, max_input_tokens=None, api_key=None, base_url=None)`
+### 4.1 `register(con, *, model="jev-1.13.0", concurrency=16, cache=True, cache_path=None, max_input_tokens=None, api_key=None, base_url=None, timeout=120.0)`
 
 Installs everything below on `con`. `api_key` defaults to
 `os.environ["TYPESAFE_API_KEY"]`; missing key raises at first call, not at
 register (so tests and offline macro use work). `max_input_tokens` is a job
-budget: the client raises `JevBudgetExceeded` once cumulative billed input
-tokens pass it.
+budget reserved before each request is sent: billed tokens, reservations in flight and
+the next estimate must fit. The estimate is the compact UTF-8 body bytes plus 64, scaled
+by the largest reported/base-estimate ratio seen; waiting requests refresh it as responses
+arrive. If it still cannot fit after in-flight reservations settle, raise
+`JevBudgetExceeded`. A batch that completes exactly at the limit succeeds. This estimate
+is not an exact provider token bound, so in-flight requests can overshoot by their estimate
+error. Error statuses and pre-send failures release the reservation; lost or unusable
+answers count their estimates as billed. The first batch failure stops further sends,
+allows in-flight answers to finish and be cached, then raises the first error.
+
+`timeout` defaults to 120 seconds waiting for an answer, with connecting capped at 10
+seconds. It can still be changed on the client before its first request.
 
 ### 4.2 SQL functions
 
@@ -266,7 +276,9 @@ by construction because the model id is in the key.
 ### 4.5 Usage and cost
 
 `duckjev.usage()` returns `{requests, input_tokens, output_tokens,
-cache_hits, cache_misses, est_usd}` with `est_usd = input_tokens * 42 / 1e9`.
+cache_hits, cache_misses, lost_responses, est_usd}` with
+`est_usd = input_tokens * 42 / 1e9`. Input tokens and cost include the reserved estimates
+of lost or unusable answers, counted in `lost_responses`.
 Reset with `duckjev.usage(reset=True)`. The benchmark reports from this.
 
 ### 4.6 Macros (installed from `macros.sql` by `register()`)
@@ -430,7 +442,8 @@ A and C can start immediately; B needs A's interface only.
   `jev()`; document that plainly.
 - Rate limits are dynamic; log 429 counts in `usage()` so the benchmark
   reports them.
-- `httpx` timeouts: 30s per request is plenty; Jev is sub-second.
+- `httpx` timeouts: 120s for an answer, with connecting capped at 10s. A lost answer can
+  still be billed, so a timeout and retry can pay twice.
 
 ---
 
