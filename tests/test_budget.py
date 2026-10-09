@@ -10,7 +10,13 @@ import pytest
 
 import duckjev
 from duckjev.cache import AnswerCache, canonical_json
-from duckjev.client import ESTIMATE_FRAMING_TOKENS, JevBudgetExceeded, JevClient, Usage
+from duckjev.client import (
+    ESTIMATE_FRAMING_TOKENS,
+    JevAPIError,
+    JevBudgetExceeded,
+    JevClient,
+    Usage,
+)
 
 NOUL = {"q": {"type": "noul", "instructions": "about a card?"}}
 
@@ -181,4 +187,94 @@ def test_timeout_reaches_the_http_client_with_a_short_connect_cap() -> None:
     c.judge([("s0", NOUL)])
     assert c._http is not None
     assert c._http.timeout.read == 45.0 and c._http.timeout.connect == 10.0
+    c.close()
+
+
+def test_nothing_is_sent_after_the_batch_stops_at_the_limit() -> None:
+    # A big row cannot fit once the first is in flight and raises; a smaller row queued
+    # behind it would fit. Before, it was sent, billed and thrown away (cold review).
+    small, big, smaller = "a", "x" * 300, "y" * 20
+    t = SlowTransport(lambda s: 1)
+    for concurrency in (1, 3):
+        t.sent.clear()
+        c = make(
+            t,
+            concurrency=concurrency,
+            cache=AnswerCache(None),
+            max_input_tokens=body_tokens(small) + body_tokens(smaller) - 1,
+        )
+        with pytest.raises(JevBudgetExceeded):
+            c.judge([(small, NOUL), (big, NOUL), (smaller, NOUL)])
+        assert t.sent == [small]
+        assert len(c.cache) == 1 and c.billed_input_tokens == 1
+        c.close()
+
+
+def test_a_failure_lets_requests_in_flight_finish_and_caches_them() -> None:
+    # "bad" fails while the others are still in flight. Before, they were cancelled: billed
+    # at the API, never cached.
+    sent: list[str] = []
+
+    async def handle(request: httpx.Request) -> httpx.Response:
+        state = json.loads(request.content)["state"]
+        sent.append(state)
+        if state == "bad":
+            await asyncio.sleep(0.01)  # after all four were sent, before the others answer
+            return httpx.Response(422, json={"error": "injected"})
+        await asyncio.sleep(0.05)
+        return httpx.Response(
+            200,
+            json={"answers": {"q": {"type": "noul", "noul": 0.5}}, "usage": {"input_tokens": 7}},
+        )
+
+    c = make(httpx.MockTransport(handle), concurrency=4, cache=AnswerCache(None))
+    with pytest.raises(JevAPIError):
+        c.judge([("bad", NOUL), ("ok1", NOUL), ("ok2", NOUL), ("ok3", NOUL)])
+    assert sorted(sent) == ["bad", "ok1", "ok2", "ok3"]
+    assert len(c.cache) == 3 and c.billed_input_tokens == 21
+    c.close()
+
+
+def test_a_body_that_cannot_be_encoded_is_neither_sent_nor_charged() -> None:
+    t = SlowTransport(lambda s: 1)
+    c = make(t, max_input_tokens=10_000)
+    nan_q = {"q": {"type": "noul", "instructions": "x", "criteria": {"w": float("nan")}}}
+    with pytest.raises(ValueError):
+        c.judge([("s0", nan_q)])
+    assert t.sent == [] and c.billed_input_tokens == 0
+    c.close()
+
+
+def test_a_malformed_200_counts_its_estimate() -> None:
+    def handle(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, json={"answers": {"other": {}}, "usage": {}})
+
+    c = make(httpx.MockTransport(handle), max_input_tokens=10_000)
+    with pytest.raises(JevAPIError, match="do not match"):
+        c.judge([("s0", NOUL)])
+    assert c.billed_input_tokens == body_tokens("s0")
+    c.close()
+
+
+def test_threads_judging_at_once_share_one_budget() -> None:
+    import threading
+
+    est = body_tokens("t0-00")
+    t = SlowTransport(lambda s: est, delay=0.005)
+    c = make(t, concurrency=8, max_input_tokens=20 * est)
+    raised: list[BaseException] = []
+
+    def worker(i: int) -> None:
+        try:
+            c.judge([(f"t{i}-{j:02d}", NOUL) for j in range(10)])
+        except JevBudgetExceeded as exc:
+            raised.append(exc)
+
+    threads = [threading.Thread(target=worker, args=(i,)) for i in range(6)]
+    for th in threads:
+        th.start()
+    for th in threads:
+        th.join()
+    assert len(t.sent) == 20 and c.billed_input_tokens == 20 * est
+    assert raised and c._reserved == 0
     c.close()

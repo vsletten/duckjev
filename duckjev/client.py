@@ -9,6 +9,7 @@ process already has a running loop (Jupyter, for example).
 from __future__ import annotations
 
 import asyncio
+import json
 import math
 import os
 import random
@@ -19,7 +20,7 @@ from typing import Any
 
 import httpx
 
-from .cache import AnswerCache, cache_key, canonical_json
+from .cache import AnswerCache, cache_key
 
 DEFAULT_MODEL = "jev-1.13.0"
 DEFAULT_BASE_URL = "https://api.typesafe.ai"
@@ -69,6 +70,10 @@ class JevTransportError(JevError):
 
 class JevBudgetExceeded(JevError):
     """The next request would not fit in what is left of ``max_input_tokens``."""
+
+
+class _Stopped(Exception):
+    """A request left unsent because another request in its batch failed."""
 
 
 class Usage:
@@ -140,7 +145,12 @@ class JevClient:
     still does not fit. A response settles its reservation to the reported usage. An error
     status releases it. A response lost after the request was sent (a read timeout, a dropped
     connection) keeps the estimate as billed, since the API may have charged for it; those
-    are counted in ``usage()["lost_responses"]``.
+    are counted in ``usage()["lost_responses"]``. A body that cannot be encoded is never
+    reserved or sent.
+
+    The first failure in a batch (the budget, an API error, retries exhausted) stops it:
+    requests not yet sent are dropped, requests already in flight finish and are settled and
+    cached, then ``judge()`` raises that first failure.
 
     The estimate is the UTF-8 byte count of the request body plus
     ``ESTIMATE_FRAMING_TOKENS``, scaled by the largest ratio of reported to estimated tokens
@@ -316,20 +326,22 @@ class JevClient:
             self._sem = asyncio.Semaphore(self.concurrency)
             self._budget = asyncio.Condition()
         fetched: dict[str, tuple[Answers, dict[str, Any]]] = {}
+        # The first failure stops the batch: nothing more is sent, but requests already in
+        # flight finish, so what they cost is settled and their answers are cached.
+        stop = asyncio.Event()
+        errors: list[BaseException] = []
 
         async def one(key: str, state: Any, questions: dict[str, Any]) -> None:
-            fetched[key] = await self._post(state, questions, api_key)
+            try:
+                fetched[key] = await self._post(state, questions, api_key, stop)
+            except _Stopped:
+                pass
+            except BaseException as exc:  # re-raised by judge() after caching what arrived
+                errors.append(exc)
+                stop.set()
 
-        tasks = [asyncio.ensure_future(one(k, s, q)) for k, (s, q) in misses.items()]
-        error: BaseException | None = None
-        try:
-            await asyncio.gather(*tasks)
-        except BaseException as exc:  # re-raised by judge() after caching what arrived
-            error = exc
-            for t in tasks:
-                t.cancel()
-            await asyncio.gather(*tasks, return_exceptions=True)
-        return fetched, error
+        await asyncio.gather(*(one(k, s, q) for k, (s, q) in misses.items()))
+        return fetched, (errors[0] if errors else None)
 
     def _delay(self, attempt: int, retry_after: str | None) -> float:
         delay = self.backoff_base * self.backoff_factor**attempt
@@ -342,23 +354,31 @@ class JevClient:
         return delay
 
     async def _post(
-        self, state: Any, questions: dict[str, Any], api_key: str
+        self, state: Any, questions: dict[str, Any], api_key: str, stop: asyncio.Event
     ) -> tuple[Answers, dict[str, Any]]:
         assert self._http is not None and self._sem is not None
         payload = {"state": state, "model": self.model, "questions": questions}
-        # The bytes httpx sends for json= (compact, UTF-8), measured for the budget estimate.
-        body = canonical_json(payload).encode("utf-8")
-        headers = {"Authorization": f"Bearer {api_key}"}
+        # Encoded here, as httpx 0.28 encodes json= (compact, UTF-8, no NaN), so the estimate
+        # measures the bytes sent and a body that cannot be encoded fails before any reservation.
+        body = json.dumps(
+            payload, separators=(",", ":"), ensure_ascii=False, allow_nan=False
+        ).encode("utf-8")
+        headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
         last = "no attempt made"
         for attempt in range(self.max_attempts):
             retry_after: str | None = None
+            if stop.is_set():
+                raise _Stopped
             async with self._sem:
                 base = len(body) + ESTIMATE_FRAMING_TOKENS
                 estimate = self._estimate(body)
                 await self._reserve(estimate)
+                if stop.is_set():  # the batch failed while this one waited for room
+                    await self._settle(estimate, 0)
+                    raise _Stopped
                 spent = 0
                 try:
-                    resp = await self._http.post(ENDPOINT, json=payload, headers=headers)
+                    resp = await self._http.post(ENDPOINT, content=body, headers=headers)
                 except _NOT_SENT as exc:
                     last = f"{type(exc).__name__}: {exc}"
                     resp = None
@@ -369,7 +389,7 @@ class JevClient:
                     spent = estimate
                     self.usage.add(lost_responses=1)
                 except BaseException:
-                    # Cancelled mid-request (another request in the batch failed): count it.
+                    # Cancelled or failed mid-request, possibly after sending: count it.
                     await self._settle(estimate, estimate)
                     raise
                 if resp is not None and resp.status_code == 200:

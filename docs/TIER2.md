@@ -480,7 +480,8 @@ threads. Per call: build `(state, questions)` per usable row, key them, deduplic
 look up the cache, fan the misses out over a process-wide pool bounded by
 `duckjev_concurrency` (the bound is global, not per thread, because DuckDB may run the
 same function on many threads at once), block until every miss is answered or one has
-failed, write the cache, marshal in the vector's order. Requests in flight are tracked in a
+failed (the first failure stops sending; requests already in flight finish and are cached),
+write the cache, marshal in the vector's order. Requests in flight are tracked in a
 process-wide map keyed by cache key so two threads judging the same state at the same
 time send it once. That in-flight map plus the synchronous cache is what makes a
 double-evaluated expression cost one request, whatever the planner does (§5.1).
