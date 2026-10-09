@@ -217,6 +217,8 @@ Written by hand from the dev rounds and recorded in the run log on 2026-09-27 06
 
 The runs above use candidate lists counted over the whole eligible pool, test labels included, and report content as openFDA served it at each pull. This section reruns R0 and R3 as F0 and F3 with two changes and nothing else: each code's options are counted over its eligible pool without the test reports (`options_train` in `bench/maude_ids.json`), and every split report's content is frozen by hash (`bench/maude_frozen.json`, 2026-10-09 20:37 UTC); a frozen run refuses a report whose description, narratives, device names or filed labels differ. Options: 40 for QBJ, 34 for FTR, 40 for LWS. F3 is fixed as R3's configuration in advance, not reselected; its own reading was recorded before its held-out runs, and its spend is on a separate ledger (`spend_frozen`, $0.962 of $1.50). The PR #8 numbers stay as recorded: the original, test-aware run.
 
+**Scope and remaining limitation.** This comparison changes candidate selection and freezes report content. F3 retains PR #8's criteria in `bench/maude_criteria_v2.json`, whose manufacturer conventions were informed by pool-wide counts including test reports. It is therefore not a fully independent evaluation of the criteria. Issue #10 remains open for criteria derived from train/gloss-only convention statistics, with that source recorded before a new reading and separately authorized held-out run.
+
 Dev, top-1 in set:
 
 | round | pooled | QBJ | FTR | LWS | harm accuracy | tokens / request |

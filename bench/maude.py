@@ -604,6 +604,12 @@ def freeze(args: argparse.Namespace) -> int:
     if FROZEN_FILE.exists() and not args.refreeze:
         print(f"{_rel(FROZEN_FILE)} exists; frozen content does not move (--refreeze to redo)")
         return 2
+    runs = load_runs()
+    if args.refreeze and (
+        "reading_frozen" in runs or any(k.endswith(tuple(f"/{r}" for r in FROZEN)) for k in runs)
+    ):
+        print("the frozen experiment has recorded runs or a reading; keep its snapshot unchanged")
+        return 2
     frozen: dict[str, Any] = {
         "_": "Content hash of every split report (sha256 of the compact JSON of "
         + ", ".join(CONTENT_FIELDS)
@@ -613,6 +619,7 @@ def freeze(args: argparse.Namespace) -> int:
         "frozen_at": datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC"),
         "pool": {},
         "codes": {},
+        "options_train": {},
     }
     for code in CODES:
         pool = pq.read_table(pool_file(code)).to_pylist()
@@ -624,6 +631,7 @@ def freeze(args: argparse.Namespace) -> int:
             raise SystemExit(f"{code}: options_train would change; --refreeze to redo")
         ids["codes"][code]["options_train"] = after
         ids["codes"][code]["options_train_pool"] = len(train)
+        frozen["options_train"][code] = after
         by_key = {r["mdr_report_key"]: r for r in pool}
         frozen["pool"][code] = len(pool)  # eligible at this pull; PR #8's count is in ids
         frozen["codes"][code] = {
@@ -638,21 +646,43 @@ def freeze(args: argparse.Namespace) -> int:
         "the frozen rounds (issue #10). `options` is PR #8's list, counted with the test split."
     )
     _write_json(IDS_FILE, ids, indent=None)
-    _write_json(FROZEN_FILE, frozen, indent=None)
+    # Publish one complete manifest. A reader of an old manifest with new IDs refuses
+    # the mismatched candidates; a running evaluation keeps its already-read snapshot.
+    pending = FROZEN_FILE.with_name(f".{FROZEN_FILE.name}.{os.getpid()}.tmp")
+    try:
+        _write_json(pending, frozen, indent=None)
+        pending.replace(FROZEN_FILE)
+    finally:
+        pending.unlink(missing_ok=True)
     print(f"content hashes -> {_rel(FROZEN_FILE)}; options_train -> {_rel(IDS_FILE)}")
     return 0
 
 
-def verify_frozen(con: duckdb.DuckDBPyConnection) -> None:
-    """Refuse a frozen run if any loaded report's content differs from its frozen hash."""
-    frozen = load_json(FROZEN_FILE)["codes"]
-    want = {k: h for code in frozen.values() for split in code.values() for k, h in split.items()}
+def load_frozen(ids: dict[str, Any]) -> dict[str, Any]:
+    """Read one manifest and refuse candidate lists published from another freeze."""
+    frozen = load_json(FROZEN_FILE)
+    candidates = {c: ids["codes"][c].get("options_train") for c in CODES}
+    if frozen.get("options_train") != candidates:
+        raise SystemExit("IDs do not match the frozen candidates; restore the matching snapshot")
+    return frozen
+
+
+def verify_frozen(con: duckdb.DuckDBPyConnection, split: str, frozen: dict[str, Any]) -> None:
+    """Require each expected code/key exactly once, with its frozen content."""
+    want = {
+        (code, k): h for code, splits in frozen["codes"].items() for k, h in splits[split].items()
+    }
     cols = ", ".join(CONTENT_FIELDS)
-    rows = con.execute(f"SELECT mdr_report_key, {cols} FROM reports").fetchall()
+    rows = con.execute(f"SELECT product_code, mdr_report_key, {cols} FROM reports").fetchall()
+    if len(rows) != len(want) or {(r[0], r[1]) for r in rows} != set(want):
+        raise SystemExit(
+            f"reports do not match the frozen split {split!r}; "
+            "restore every expected code/key exactly once"
+        )
     bad = [
-        r[0]
+        (r[0], r[1])
         for r in rows
-        if want.get(r[0]) != content_hash(dict(zip(CONTENT_FIELDS, r[1:], strict=True)))
+        if want[(r[0], r[1])] != content_hash(dict(zip(CONTENT_FIELDS, r[2:], strict=True)))
     ]
     if bad:
         raise SystemExit(
@@ -1029,12 +1059,20 @@ def run_tag(split: str, rnd: str, limit: int | None = None, dry_run: bool = Fals
     return f"{split}_{rnd}" + (f"_n{limit}" if limit else "") + ("_dry" if dry_run else "")
 
 
-def load(con: duckdb.DuckDBPyConnection, split: str, limit: int | None) -> int:
+def load(
+    con: duckdb.DuckDBPyConnection,
+    split: str,
+    limit: int | None,
+    frozen: dict[str, Any] | None = None,
+) -> int:
     """The split's reports of every code in ``reports``, plus the object state column."""
     paths = [slice_file(code, split) for code in CODES]
     if not all(p.exists() for p in paths):
         raise SystemExit("run `bench/maude.py prepare` first")
     con.execute(LOAD_SQL, {"paths": [str(p) for p in paths]})
+    if frozen is not None:
+        # Verify the complete source split before any pre-flight sampling or joins.
+        verify_frozen(con, split, frozen)
     if limit:
         con.execute(SAMPLE_SQL, {"per_code": math.ceil(limit / len(CODES))})
         con.execute(
@@ -1059,9 +1097,12 @@ def load(con: duckdb.DuckDBPyConnection, split: str, limit: int | None) -> int:
     return len(rows)
 
 
-def install_questions(con: duckdb.DuckDBPyConnection, rnd: Round) -> dict[str, Any]:
+def install_questions(
+    con: duckdb.DuckDBPyConnection, rnd: Round, ids: dict[str, Any] | None = None
+) -> dict[str, Any]:
     """The per-code questions table the judged SQL joins on; returns the maps by code."""
-    ids, vocab = load_ids(), terms_by_name()
+    ids = load_ids() if ids is None else ids
+    vocab = terms_by_name()
     crit = load_criteria() if rnd.criteria != "none" else {}
     qs = {code: questions_for(rnd, code, ids, vocab, crit) for code in CODES}
     table = pa.table(
@@ -1227,9 +1268,9 @@ SCORED_SCHEMA = pa.schema(
 )
 
 
-def score(con: duckdb.DuckDBPyConnection, rnd: Round) -> None:
+def score(con: duckdb.DuckDBPyConnection, rnd: Round, ids: dict[str, Any] | None = None) -> None:
     """Build ``scored`` from ``judged`` and the reports' filed codes."""
-    ids = load_ids()
+    ids = load_ids() if ids is None else ids
     records = []
     for code, key, event_type, filed, narrative, a in con.execute(
         "SELECT r.product_code, r.mdr_report_key, r.event_type, r.product_problems, "
@@ -1237,7 +1278,8 @@ def score(con: duckdb.DuckDBPyConnection, rnd: Round) -> None:
         "ORDER BY r.product_code, r.mdr_report_key"
     ).fetchall():
         options = set(problem_options(rnd, code, ids))
-        code_options = set(problem_options(ROUNDS["R0"], code, ids))
+        baseline = ROUNDS["F0"] if rnd.candidates == "train" else ROUNDS["R0"]
+        code_options = set(problem_options(baseline, code, ids))
         rec = flatten(json.loads(a), filed, options, code_options)
         records.append(
             {
@@ -1392,10 +1434,12 @@ def budget_tokens(max_usd: float, dry_run: bool, rnd: str = "R0") -> int:
     return int(usd / USD_PER_INPUT_TOKEN)
 
 
-def _connect(cache_file: Path, args: argparse.Namespace) -> duckdb.DuckDBPyConnection:
+def _connect(
+    cache_file: Path, args: argparse.Namespace, con: duckdb.DuckDBPyConnection | None = None
+) -> duckdb.DuckDBPyConnection:
     if cache_file.exists():
         cache_file.unlink()  # a fresh cache per run, so the timed run pays for every report
-    con = duckdb.connect()
+    con = duckdb.connect() if con is None else con
     duckjev.register(
         con,
         cache_path=cache_file,
@@ -1466,17 +1510,19 @@ def run(args: argparse.Namespace) -> int:
     tag = run_tag(args.split, args.round, args.limit, args.dry_run)
     label = f"{args.split}/{args.round}" + (f" (n={args.limit})" if args.limit else "")
     book, total = ledger(args.round)
-    con = _connect(DATA / f"cache_{tag}.duckdb", args)
-    n = load(con, args.split, args.limit)
-    if frozen:
-        verify_frozen(con)
-    install_questions(con, rnd)
+    ids = load_ids()
+    snapshot = load_frozen(ids) if frozen else None
+    con = duckdb.connect()
+    n = load(con, args.split, args.limit, snapshot)
+    install_questions(con, rnd, ids)
+    # Validate the inputs before starting a fresh cache, so refusal keeps prior answers.
+    _connect(DATA / f"cache_{tag}.duckdb", args, con)
 
     secs, use = _timed(con, judge_sql(rnd, "judged"), None, label, args.dry_run, book)
     rerun_secs, rerun = _timed(con, judge_sql(rnd, "judged_rerun"), None, label, args.dry_run, book)
     identical = con.execute(IDENTICAL_SQL).fetchone()[0]
     duckjev.flush(con)
-    score(con, rnd)
+    score(con, rnd, ids)
     con.table("scored").write_parquet(str(DATA / f"scored_{tag}.parquet"))
 
     summary = {
@@ -1584,16 +1630,18 @@ def rescore(args: argparse.Namespace) -> int:
             print(f"skip {key}: {_rel(cache)} is missing")
             continue
         rnd = ROUNDS[summary["round"]]
+        ids = load_ids()
+        snapshot = load_frozen(ids) if summary["round"] in FROZEN else None
         con = duckdb.connect()
         duckjev.register(
             con, cache_path=cache, api_key="cache-only", transport=httpx.MockTransport(_refuse)
         )
-        load(con, summary["split"], None)
-        install_questions(con, rnd)
+        load(con, summary["split"], None, snapshot)
+        install_questions(con, rnd, ids)
         duckjev.usage(reset=True)
         con.execute(judge_sql(rnd, "judged"))
         assert duckjev.usage()["requests"] == 0
-        score(con, rnd)
+        score(con, rnd, ids)
         if not args.dry_run:
             con.table("scored").write_parquet(str(DATA / f"scored_{tag}.parquet"))
         before = summary["pooled"]["top1_in_set"]
@@ -2010,6 +2058,14 @@ def _frozen_section(runs: dict[str, Any], ids: dict[str, Any], best: str) -> lis
         f"(`spend_frozen`, ${total_spend(runs, 'spend_frozen'):.3f} of "
         f"${FROZEN_BUDGET_USD:.2f}). The PR #8 numbers stay as recorded: the original, "
         "test-aware run.",
+        "",
+        "**Scope and remaining limitation.** This comparison changes candidate selection "
+        "and freezes report content. F3 retains PR #8's criteria in "
+        "`bench/maude_criteria_v2.json`, whose manufacturer conventions were informed by "
+        "pool-wide counts including test reports. It is therefore not a fully independent "
+        "evaluation of the criteria. Issue #10 remains open for criteria derived from "
+        "train/gloss-only convention statistics, with that source recorded before a new "
+        "reading and separately authorized held-out run.",
         "",
     ]
     if dev:

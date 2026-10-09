@@ -140,8 +140,10 @@ The report rows were held out from round selection, while the per-code candidate
 and their order were selected from the full eligible pool, including test labels. A frozen
 re-evaluation (issue #10) reran R0 and R3 with candidate lists counted without the test
 reports and every report's content frozen by hash, after a reading recorded in advance: R3
-scored the same **0.826** ± 0.007 top-1 in set (harm 0.893), so the test-aware lists did not
-inflate the result ($0.96 of live spend on its own ledger).
+scored the same **0.826** ± 0.007 top-1 in set (harm 0.893), consistent with no material
+inflation from candidate selection ($0.96 of live spend on its own ledger). F3 retains
+criteria informed by pool-wide convention counts including test reports, so this does
+not establish a fully independent evaluation; that part of issue #10 remains open.
 Full tables, all seven dev rounds, the hand-written reading recorded before the held-out
 run and the demo queries run live are in [docs/results/maude.md](docs/results/maude.md),
 generated from the committed run log `docs/results/maude_runs.json`.

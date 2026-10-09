@@ -62,11 +62,24 @@ def test_committed_option_sets_follow_the_rule() -> None:
 
 
 def test_frozen_file_covers_every_split_key() -> None:
-    frozen = bench.load_json(bench.FROZEN_FILE)["codes"]
+    manifest = bench.load_frozen(IDS)
+    frozen = manifest["codes"]
     for code, c in IDS["codes"].items():
         for split, keys in c["splits"].items():
             assert set(frozen[code][split]) == set(keys), (code, split)
             assert all(len(h) == 64 for h in frozen[code][split].values())
+
+
+@pytest.mark.parametrize("record", ["reading_frozen", "dev/F3", "test/F0"])
+def test_refreeze_keeps_a_recorded_experiment_unchanged(
+    tiny: Path, monkeypatch: pytest.MonkeyPatch, record: str
+) -> None:
+    monkeypatch.setattr(bench, "FROZEN_FILE", tiny.parent / "maude_frozen.json")
+    assert bench.main(["freeze"]) == 0
+    before = bench.FROZEN_FILE.read_bytes(), bench.IDS_FILE.read_bytes()
+    bench.RUNS_FILE.write_text(json.dumps({record: {}}))
+    assert bench.main(["freeze", "--refreeze"]) == 2
+    assert (bench.FROZEN_FILE.read_bytes(), bench.IDS_FILE.read_bytes()) == before
 
 
 def test_every_option_has_a_definition_or_a_gloss() -> None:
@@ -517,6 +530,81 @@ def test_frozen_rounds_have_their_own_reading_gate_and_ledger(
     )
 
 
+@pytest.mark.parametrize("damage", ["missing", "duplicate", "wrong_split", "wrong_code"])
+@pytest.mark.parametrize("limit", [[], ["--limit", "2"]])
+def test_frozen_runs_require_the_exact_split(
+    tiny: Path, monkeypatch: pytest.MonkeyPatch, damage: str, limit: list[str]
+) -> None:
+    import pyarrow.parquet as pq
+
+    monkeypatch.setattr(bench, "FROZEN_FILE", tiny.parent / "maude_frozen.json")
+    assert bench.main(["freeze"]) == 0
+    path = bench.slice_file("QBJ", "dev")
+    rows = pq.read_table(path).to_pylist()
+    if damage == "missing":
+        rows.pop()
+    elif damage == "duplicate":
+        rows.append(rows[0])
+    elif damage == "wrong_split":
+        rows[0] = pq.read_table(bench.slice_file("QBJ", "test")).to_pylist()[0]
+    else:
+        rows[0]["product_code"] = "FTR"
+    bench._write_rows(rows, path)
+    cache = tiny / f"cache_{bench.run_tag('dev', 'F0', 2 if limit else None, True)}.duckdb"
+    cache.write_bytes(b"previous answers must survive input rejection")
+    with pytest.raises(SystemExit, match="frozen split"):
+        bench.main(["run", "F0", "--split", "dev", "--dry-run", *limit])
+    assert cache.read_bytes() == b"previous answers must survive input rejection"
+
+
+def test_frozen_rescore_refuses_changed_labels(tiny: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import pyarrow.parquet as pq
+
+    monkeypatch.setattr(bench, "FROZEN_FILE", tiny.parent / "maude_frozen.json")
+    assert bench.main(["freeze"]) == 0
+    assert bench.main(["run", "F3", "--split", "dev", "--dry-run"]) == 0
+    summary = json.loads((tiny / "summary_dev_F3_dry.json").read_text())
+    shutil.copy(tiny / "cache_dev_F3_dry.duckdb", tiny / "cache_dev_F3.duckdb")
+    bench.RUNS_FILE.write_text(json.dumps({"dev/F3": summary}))
+    before = bench.RUNS_FILE.read_bytes()
+    path = bench.slice_file("QBJ", "dev")
+    rows = pq.read_table(path).to_pylist()
+    rows[0]["event_type"] = "Death" if rows[0]["event_type"] != "Death" else "Injury"
+    bench._write_rows(rows, path)
+    with pytest.raises(SystemExit, match="differ from their frozen content"):
+        bench.main(["rescore"])
+    assert bench.RUNS_FILE.read_bytes() == before
+
+
+def test_frozen_code_coverage_uses_train_candidates(
+    tiny: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(bench, "FROZEN_FILE", tiny.parent / "maude_frozen.json")
+    assert bench.main(["freeze"]) == 0
+    assert bench.main(["run", "F0", "--split", "test", "--dry-run"]) == 0
+    con = duckdb.connect()
+    con.execute(
+        "CREATE TABLE scored AS SELECT * FROM read_parquet(?)",
+        [str(tiny / "scored_test_F0_dry.parquet")],
+    )
+    assert con.execute("SELECT count(*) FROM scored WHERE NOT covered").fetchone()[0] > 0
+    assert (
+        con.execute("SELECT count(*) FROM scored WHERE covered_code != covered").fetchone()[0] == 0
+    )
+
+
+def test_frozen_runs_refuse_candidates_from_a_different_snapshot(
+    tiny: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(bench, "FROZEN_FILE", tiny.parent / "maude_frozen.json")
+    assert bench.main(["freeze"]) == 0
+    ids = bench.load_ids()
+    ids["codes"]["QBJ"]["options_train"].reverse()
+    bench._write_json(bench.IDS_FILE, ids)
+    with pytest.raises(SystemExit, match="frozen candidates"):
+        bench.main(["run", "F3", "--split", "dev", "--dry-run"])
+
+
 def test_report_adds_the_frozen_section_beside_pr8(
     tiny: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -543,3 +631,4 @@ def test_report_adds_the_frozen_section_beside_pr8(
     assert "F3" not in pr8.split("## Reading the numbers")[0]  # the PR #8 tables are unchanged
     assert "Frozen reading." in frozen and "`spend_frozen`, $0.500 of $1.50" in frozen
     assert "| F3 |" in frozen and "Total live spend for the benchmark: **$0.010**" in text
+    assert "Issue #10 remains open" in frozen and "including test reports" in frozen

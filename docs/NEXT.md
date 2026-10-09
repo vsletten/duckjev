@@ -160,6 +160,16 @@ MAUDE demo (§1.5, §3.6).
   caches are gitignored and live only in `bench/data/` of the `maude-frozen-eval` worktree on
   Victor's MacBook. Archive them beside the PR #8 data before removing that worktree;
   `rescore` and any later frozen run need them.
+- Self-review: frozen runs and rescoring now require the exact split's code/key pairs
+  once each before sampling, verify content hashes, and use the candidates bound into
+  the same frozen manifest. Coverage on code rows uses the train-only set for F rounds.
+- Issue #10 remains open: F3 reuses `bench/maude_criteria_v2.json`, whose convention
+  choices were informed by pool-wide counts including test reports. These runs test the
+  candidate-selection change under the existing criteria, rather than completing an
+  independent evaluation. Re-derive criteria from train/gloss-only convention statistics,
+  record their source, then obtain a new spend authorization and record a new pre-test
+  reading before evaluating them. Keep the existing F runs and snapshot as historical
+  evidence; `freeze --refreeze` refuses an experiment with recorded F runs or a reading.
 
 ## 2. The numbers and what they mean
 
