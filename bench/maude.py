@@ -84,7 +84,11 @@ LEGACY = (
     "Adverse Event Without Identified Device or Use Problem",
     "Appropriate Device Problem Term/Code Not Available",
 )
-TOTAL_BUDGET_USD = 3.0  # local token safeguard; in-flight requests can overshoot it
+TOTAL_BUDGET_USD = 3.0  # PR #8's token guard for the R rounds and the demo; ledger "spend"
+# Issue #10's frozen re-evaluation (rounds F0 and F3): its own authorized budget and ledger.
+FROZEN_BUDGET_USD = 1.50
+FROZEN = ("F0", "F3")
+FROZEN_FILE = BENCH / "maude_frozen.json"
 STREAM_2026 = 2_503_728  # MAUDE reports received 2026-01-01 to 2026-09-26 (MAUDE.md §2)
 DEMO_ROWS = 200
 DEMO_OTHERS_PER_BLOCK = 5
@@ -564,6 +568,99 @@ def prepare(args: argparse.Namespace) -> int:
     return 0
 
 
+# --------------------------------------------------------------------------- freeze (issue #10)
+
+CONTENT_FIELDS = (
+    "narrative",
+    "mfr_narrative",
+    "brand_name",
+    "generic_name",
+    "manufacturer",
+    "event_type",
+    "product_problems",
+)
+
+
+def content_hash(rec: dict[str, Any]) -> str:
+    """sha256 of what a run reads from a report: the state fields and the filed labels."""
+    obj = {f: rec.get(f) for f in CONTENT_FIELDS}
+    obj["product_problems"] = list(obj["product_problems"] or [])
+    return hashlib.sha256(
+        json.dumps(obj, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    ).hexdigest()
+
+
+def freeze(args: argparse.Namespace) -> int:
+    """Freeze the content of every split report and the train-only candidate lists.
+
+    Writes ``bench/maude_frozen.json`` (each split key's content hash) and adds
+    ``options_train`` to every code in ``bench/maude_ids.json``: the code's option set drawn
+    from its eligible pool without the test reports, so no test label reaches a question.
+    Refuses to change either once written, unless ``--refreeze``.
+    """
+    import pyarrow.parquet as pq
+
+    ids = load_ids()
+    if FROZEN_FILE.exists() and not args.refreeze:
+        print(f"{_rel(FROZEN_FILE)} exists; frozen content does not move (--refreeze to redo)")
+        return 2
+    frozen: dict[str, Any] = {
+        "_": "Content hash of every split report (sha256 of the compact JSON of "
+        + ", ".join(CONTENT_FIELDS)
+        + ") as of the pull below, written by bench/maude.py freeze (issue #10). Frozen runs "
+        "refuse a report whose content differs.",
+        "pull": {c: ids.get("pull", {}).get(c) for c in CODES},
+        "frozen_at": datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC"),
+        "pool": {},
+        "codes": {},
+    }
+    for code in CODES:
+        pool = pq.read_table(pool_file(code)).to_pylist()
+        test = set(ids["codes"][code]["splits"]["test"])
+        train = [r for r in pool if r["mdr_report_key"] not in test]
+        before = ids["codes"][code].get("options_train")
+        after = option_set(train)
+        if before is not None and before != after and not args.refreeze:
+            raise SystemExit(f"{code}: options_train would change; --refreeze to redo")
+        ids["codes"][code]["options_train"] = after
+        ids["codes"][code]["options_train_pool"] = len(train)
+        by_key = {r["mdr_report_key"]: r for r in pool}
+        frozen["pool"][code] = len(pool)  # eligible at this pull; PR #8's count is in ids
+        frozen["codes"][code] = {
+            split: {k: content_hash(by_key[k]) for k in keys}
+            for split, keys in ids["codes"][code]["splits"].items()
+        }
+        print(f"{code}: {len(after)} train-only options from {len(train):,} reports")
+    ids["options_train_rule"] = (
+        "options_train: the code's most frequent filed terms (at least MIN_TERM_REPORTS, at "
+        "most OPTIONS_PER_CODE) counted over its eligible pool without the test split, in "
+        "descending frequency; written by bench/maude.py freeze before any held-out call of "
+        "the frozen rounds (issue #10). `options` is PR #8's list, counted with the test split."
+    )
+    _write_json(IDS_FILE, ids, indent=None)
+    _write_json(FROZEN_FILE, frozen, indent=None)
+    print(f"content hashes -> {_rel(FROZEN_FILE)}; options_train -> {_rel(IDS_FILE)}")
+    return 0
+
+
+def verify_frozen(con: duckdb.DuckDBPyConnection) -> None:
+    """Refuse a frozen run if any loaded report's content differs from its frozen hash."""
+    frozen = load_json(FROZEN_FILE)["codes"]
+    want = {k: h for code in frozen.values() for split in code.values() for k, h in split.items()}
+    cols = ", ".join(CONTENT_FIELDS)
+    rows = con.execute(f"SELECT mdr_report_key, {cols} FROM reports").fetchall()
+    bad = [
+        r[0]
+        for r in rows
+        if want.get(r[0]) != content_hash(dict(zip(CONTENT_FIELDS, r[1:], strict=True)))
+    ]
+    if bad:
+        raise SystemExit(
+            f"{len(bad)} reports differ from their frozen content (first: {bad[0]}); "
+            "restore the frozen pull before a frozen run"
+        )
+
+
 # --------------------------------------------------------------------------- rounds
 
 
@@ -578,6 +675,9 @@ class Round:
     vocabulary: str = "code"  # code: the product code's option set | global: every term seen
     fused: bool = True  # one request with three questions, or three requests
     selectable: bool = True  # False for checks that are not a candidate config
+    # pool: PR #8's options, from every eligible report including the test split's labels;
+    # train: from the pool without the test reports, frozen before any held-out call (#10)
+    candidates: str = "pool"
 
 
 ROUNDS: dict[str, Round] = {
@@ -624,6 +724,20 @@ ROUNDS: dict[str, Round] = {
         state="object",
         fused=False,
         selectable=False,
+    ),
+    "F0": Round(
+        "R0 with candidates from the pool without the test reports, on frozen report content: "
+        "the baseline of the frozen re-evaluation (issue #10)",
+        selectable=False,
+        candidates="train",
+    ),
+    "F3": Round(
+        "R3 with candidates from the pool without the test reports, on frozen report content: "
+        "the chosen round of the frozen re-evaluation, fixed in advance (issue #10)",
+        criteria="full",
+        state="object",
+        selectable=False,
+        candidates="train",
     ),
 }
 
@@ -675,6 +789,10 @@ def problem_options(rnd: Round, code: str, ids: dict[str, Any]) -> list[str]:
     """The problem Choice's options for a code, catch-all last, before any reordering."""
     if rnd.vocabulary == "global":
         terms = [t for t, _ in ids["global_options"]]
+    elif rnd.candidates == "train":
+        if "options_train" not in ids["codes"][code]:
+            raise SystemExit("run `bench/maude.py freeze` first")
+        terms = [t for t, _ in ids["codes"][code]["options_train"]]
     else:
         terms = [t for t, _ in ids["codes"][code]["options"]]
     return terms[: MAX_OPTIONS - 1] + [CATCH_ALL]
@@ -1234,14 +1352,19 @@ def save_runs(runs: dict[str, Any]) -> None:
     _write_json(RUNS_FILE, runs)
 
 
-def total_spend(runs: dict[str, Any]) -> float:
-    return sum(e["usd"] for e in runs.get("spend", []))
+def ledger(rnd: str) -> tuple[str, float]:
+    """The run log's spend list for a round, and the budget it is held to."""
+    return ("spend_frozen", FROZEN_BUDGET_USD) if rnd in FROZEN else ("spend", TOTAL_BUDGET_USD)
 
 
-def record_spend(what: str, use: dict[str, Any]) -> None:
+def total_spend(runs: dict[str, Any], book: str = "spend") -> float:
+    return sum(e["usd"] for e in runs.get(book, []))
+
+
+def record_spend(what: str, use: dict[str, Any], book: str = "spend") -> None:
     """Every live call's cost goes in the run log, pre-flights and failed runs included."""
     runs = load_runs()
-    runs.setdefault("spend", []).append(
+    runs.setdefault(book, []).append(
         {
             "what": what,
             "usd": use["est_usd"],
@@ -1253,16 +1376,18 @@ def record_spend(what: str, use: dict[str, Any]) -> None:
     save_runs(runs)
 
 
-def budget_tokens(max_usd: float, dry_run: bool) -> int:
-    """Set the run's input-token guard from its cap and remaining recorded spend.
+def budget_tokens(max_usd: float, dry_run: bool, rnd: str = "R0") -> int:
+    """Set the run's input-token guard from its cap and the remaining spend on its ledger.
 
-    Concurrent requests can overshoot this guard, so it is not a strict spend ceiling.
+    duckjev reserves each request's estimate before sending (issue #9), so the guard holds up
+    to the estimate error of the requests in flight.
     """
     usd = max_usd
     if not dry_run:
-        left = TOTAL_BUDGET_USD - total_spend(load_runs())
+        book, total = ledger(rnd)
+        left = total - total_spend(load_runs(), book)
         if left <= 0:
-            raise SystemExit(f"the ${TOTAL_BUDGET_USD:.2f} benchmark budget is spent")
+            raise SystemExit(f"the ${total:.2f} budget of ledger {book!r} is spent")
         usd = min(usd, left)
     return int(usd / USD_PER_INPUT_TOKEN)
 
@@ -1275,14 +1400,18 @@ def _connect(cache_file: Path, args: argparse.Namespace) -> duckdb.DuckDBPyConne
         con,
         cache_path=cache_file,
         concurrency=args.concurrency,
-        max_input_tokens=budget_tokens(args.max_usd, args.dry_run),
+        max_input_tokens=budget_tokens(
+            args.max_usd, args.dry_run, getattr(args, "round", None) or "R0"
+        ),
         transport=fake_transport() if args.dry_run else None,
         api_key="dry-run" if args.dry_run else None,
     )
     return con
 
 
-def _timed(con: duckdb.DuckDBPyConnection, sql: str, params: Any, what: str, dry: bool):
+def _timed(
+    con: duckdb.DuckDBPyConnection, sql: str, params: Any, what: str, dry: bool, book: str = "spend"
+):
     """Run one live statement; its usage is recorded as spend even if it fails."""
     duckjev.usage(reset=True)
     t0 = time.perf_counter()
@@ -1291,7 +1420,7 @@ def _timed(con: duckdb.DuckDBPyConnection, sql: str, params: Any, what: str, dry
     finally:
         use = duckjev.usage(reset=True)
         if not dry and use["requests"]:
-            record_spend(what, use)
+            record_spend(what, use, book)
     return time.perf_counter() - t0, use
 
 
@@ -1314,26 +1443,37 @@ def run(args: argparse.Namespace) -> int:
     if not (args.limit or args.dry_run or _preflighted(args.round)):
         print(f"run `bench/maude.py run {args.round} --split dev --limit 40` first")
         return 2
+    frozen = args.round in FROZEN
+    if frozen and not FROZEN_FILE.exists():
+        print("run `bench/maude.py freeze` first: frozen rounds verify report content")
+        return 2
     if args.split == "test" and not args.dry_run:
         if args.limit:
             print("the held-out split takes no pre-flight; the dev pre-flight covers the round")
             return 2
-        if "reading" not in runs:
-            print("record the hand-written reading (`bench/maude.py reading --file ...`) first")
+        key = "reading_frozen" if frozen else "reading"
+        if key not in runs:
+            flag = " --frozen" if frozen else ""
+            print(
+                f"record the hand-written reading (`bench/maude.py reading{flag} --file ...`) first"
+            )
             return 2
-        allowed = {"R0", chosen_round(runs)}
+        allowed = set(FROZEN) if frozen else {"R0", chosen_round(runs)}
         if args.round not in allowed:
             print(f"the held-out split runs only with {sorted(allowed)}")
             return 2
     DATA.mkdir(parents=True, exist_ok=True)
     tag = run_tag(args.split, args.round, args.limit, args.dry_run)
     label = f"{args.split}/{args.round}" + (f" (n={args.limit})" if args.limit else "")
+    book, total = ledger(args.round)
     con = _connect(DATA / f"cache_{tag}.duckdb", args)
     n = load(con, args.split, args.limit)
+    if frozen:
+        verify_frozen(con)
     install_questions(con, rnd)
 
-    secs, use = _timed(con, judge_sql(rnd, "judged"), None, label, args.dry_run)
-    rerun_secs, rerun = _timed(con, judge_sql(rnd, "judged_rerun"), None, label, args.dry_run)
+    secs, use = _timed(con, judge_sql(rnd, "judged"), None, label, args.dry_run, book)
+    rerun_secs, rerun = _timed(con, judge_sql(rnd, "judged_rerun"), None, label, args.dry_run, book)
     identical = con.execute(IDENTICAL_SQL).fetchone()[0]
     duckjev.flush(con)
     score(con, rnd)
@@ -1375,8 +1515,8 @@ def run(args: argparse.Namespace) -> int:
         print(f"recorded {args.split}/{args.round} in {_rel(RUNS_FILE)}")
     else:
         _write_json(DATA / f"summary_{tag}.json", summary)
-    spent = total_spend(load_runs())
-    print(f"benchmark spend so far: ${spent:.4f} of ${TOTAL_BUDGET_USD:.2f}")
+    spent = total_spend(load_runs(), book)
+    print(f"spend so far on ledger {book!r}: ${spent:.4f} of ${total:.2f}")
     return 0
 
 
@@ -1426,7 +1566,7 @@ def _refuse(request: httpx.Request) -> httpx.Response:
 
 
 def recorded_runs(runs: dict[str, Any]) -> list[str]:
-    return [k for k in runs if re.fullmatch(r"(dev|test)/R\d+", k)]
+    return [k for k in runs if re.fullmatch(r"(dev|test)/[RF]\d+", k)]
 
 
 def rescore(args: argparse.Namespace) -> int:
@@ -1487,9 +1627,15 @@ def confusions(args: argparse.Namespace) -> int:
 
 
 def reading(args: argparse.Namespace) -> int:
-    """Record the hand-written "Reading the numbers" section; only before the held-out run."""
+    """Record the hand-written "Reading the numbers" section; only before the held-out run.
+
+    ``--frozen`` records the frozen re-evaluation's own reading (issue #10), before its
+    held-out runs (test/F0, test/F3); PR #8's reading and runs are left as they are.
+    """
     runs = load_runs()
-    if any(k.startswith("test/") for k in runs):
+    frozen = getattr(args, "frozen", False)
+    prefixes = tuple(f"test/{r}" for r in FROZEN) if frozen else ("test/R",)
+    if any(k.startswith(prefixes) for k in runs):
         print("the held-out split has run; the reading must be written before it")
         return 2
     text = Path(args.file).read_text(encoding="utf-8").strip()
@@ -1500,7 +1646,7 @@ def reading(args: argparse.Namespace) -> int:
     if args.dry_run:
         print(json.dumps(entry, indent=1))
         return 0
-    runs["reading"] = entry
+    runs["reading_frozen" if frozen else "reading"] = entry
     save_runs(runs)
     print(f"recorded the reading ({len(text):,} characters) in {_rel(RUNS_FILE)}")
     return 0
@@ -1832,6 +1978,93 @@ HEADLINE_ROWS: list[tuple[str, Any]] = [
 ]
 
 
+def _frozen_section(runs: dict[str, Any], ids: dict[str, Any], best: str) -> list[str]:
+    """Issue #10: R0 and the chosen round again, on frozen content with train-only options."""
+    dev = [runs[f"dev/{r}"] for r in FROZEN if f"dev/{r}" in runs]
+    test = [runs[k] for k in ("test/R0", f"test/{best}", "test/F0", "test/F3") if k in runs]
+    if not dev and "reading_frozen" not in runs:
+        return []
+    frozen = load_json(FROZEN_FILE) if FROZEN_FILE.exists() else {}
+    changed = {
+        c: [t for t, _ in ids["codes"][c]["options_train"]]
+        != [t for t, _ in ids["codes"][c]["options"]]
+        for c in CODES
+    }
+    parts = [
+        "## Frozen re-evaluation (issue #10)",
+        "",
+        "The runs above use candidate lists counted over the whole eligible pool, test labels "
+        "included, and report content as openFDA served it at each pull. This section reruns "
+        f"R0 and {best} as F0 and F3 with two changes and nothing else: each code's options "
+        "are counted over its eligible pool without the test reports (`options_train` in "
+        "`bench/maude_ids.json`), and every split report's content is frozen by hash "
+        f"(`bench/maude_frozen.json`, {frozen.get('frozen_at', '?')}); a frozen run refuses a "
+        "report whose description, narratives, device names or filed labels differ. Options: "
+        + ", ".join(
+            f"{len(ids['codes'][c]['options_train'])} for {c}"
+            + ("" if changed[c] else " (same list)")
+            for c in CODES
+        )
+        + ". F3 is fixed as R3's configuration in advance, not reselected; its own reading was "
+        "recorded before its held-out runs, and its spend is on a separate ledger "
+        f"(`spend_frozen`, ${total_spend(runs, 'spend_frozen'):.3f} of "
+        f"${FROZEN_BUDGET_USD:.2f}). The PR #8 numbers stay as recorded: the original, "
+        "test-aware run.",
+        "",
+    ]
+    if dev:
+        parts += [
+            "Dev, top-1 in set:",
+            "",
+            _table(
+                ["round", "pooled", *CODES, "harm accuracy", "tokens / request"],
+                [
+                    [
+                        r["round"],
+                        f"{r['pooled']['top1_in_set']:.3f}",
+                        *[f"{r['codes'][c]['top1_in_set']:.3f}" for c in CODES],
+                        f"{r['pooled']['harm_accuracy']:.3f}",
+                        f"{r['input_tokens_per_request']:,.0f}",
+                    ]
+                    for r in [runs[k] for k in ("dev/R0", f"dev/{best}") if k in runs] + dev
+                ],
+            ),
+            "",
+        ]
+    if "reading_frozen" in runs:
+        rd = runs["reading_frozen"]
+        parts += [
+            f"Reading, recorded by hand on {rd['written']}, before the frozen held-out runs:",
+            "",
+            rd["text"],
+            "",
+        ]
+    if any(r["round"] in FROZEN for r in test):
+        parts += [
+            f"Held-out test split, pooled, PR #8's R0 and {best} beside F0 and F3:",
+            "",
+            _headline_table(test),
+            "",
+            "Per code, top-1 in set:",
+            "",
+            _table(
+                ["round", *CODES],
+                [
+                    [
+                        r["round"],
+                        *[
+                            _pm(r["codes"][c]["top1_in_set"], r["codes"][c]["top1_in_set_se"])
+                            for c in CODES
+                        ],
+                    ]
+                    for r in test
+                ],
+            ),
+            "",
+        ]
+    return parts
+
+
 def _headline_table(runs: list[dict[str, Any]], scope: str | None = None) -> str:
     def m(r: dict[str, Any]) -> dict[str, Any]:
         return r["pooled"] if scope is None else r["codes"][scope]
@@ -2109,7 +2342,7 @@ def _demo_section(runs: dict[str, Any]) -> list[str]:
 def report(args: argparse.Namespace) -> int:
     runs = load_runs()
     ids = load_ids()
-    dev = [runs[k] for k in sorted(runs) if k.startswith("dev/")]
+    dev = [runs[k] for k in sorted(runs) if k.startswith("dev/R")]
     if not dev:
         raise SystemExit("no dev round has run")
     best = chosen_round(runs)
@@ -2276,6 +2509,7 @@ def report(args: argparse.Namespace) -> int:
             rd["text"],
             "",
         ]
+    parts += _frozen_section(runs, ids, best)
     parts += _demo_section(runs)
     ex = questions_for(ROUNDS[best], "QBJ")
     parts += [
@@ -2344,6 +2578,8 @@ def report(args: argparse.Namespace) -> int:
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
+    fz = sub.add_parser("freeze")
+    fz.add_argument("--refreeze", action="store_true", help="rewrite the frozen hashes and options")
     pr = sub.add_parser("prepare")
     pr.add_argument("--from-fixture", help="openFDA-shaped JSON instead of the network (tests)")
     pr.add_argument("--resample", action="store_true", help="redraw bench/maude_ids.json")
@@ -2365,6 +2601,7 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--dry-run", action="store_true", help="read the dry run's rows")
     rd = sub.add_parser("reading")
     rd.add_argument("--file", required=True)
+    rd.add_argument("--frozen", action="store_true", help="the frozen re-evaluation's reading")
     rd.add_argument("--dry-run", action="store_true", help="print, record nothing")
     d = sub.add_parser("demo")
     d.add_argument("--code", default="QBJ", choices=list(CODES))
@@ -2380,6 +2617,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
     commands = {
         "prepare": prepare,
+        "freeze": freeze,
         "run": run,
         "confusions": confusions,
         "reading": reading,

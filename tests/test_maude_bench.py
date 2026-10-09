@@ -31,8 +31,9 @@ IDS = bench.load_json(bench.IDS_FILE)
 
 
 def test_rounds_and_codes_are_well_formed() -> None:
-    assert list(bench.ROUNDS) == [f"R{i}" for i in range(7)]
+    assert list(bench.ROUNDS) == [f"R{i}" for i in range(7)] + list(bench.FROZEN)
     for name, r in bench.ROUNDS.items():
+        assert r.candidates == ("train" if name in bench.FROZEN else "pool"), name
         assert r.criteria in ("none", "what", "full"), name
         assert r.state in bench.STATE_COLUMN and r.order in ("given", "reversed"), name
         assert r.vocabulary in ("code", "global"), name
@@ -51,7 +52,21 @@ def test_committed_option_sets_follow_the_rule() -> None:
         assert [len(splits[s]) for s in ("dev", "test", "gloss")] == [500, 1000, 200], code
         keys = [k for s in splits.values() for k in s]
         assert len(keys) == len(set(keys)), f"{code} splits overlap"
+        # issue #10: the frozen rounds' options, counted without the test split
+        train = [n for _, n in c["options_train"]]
+        assert train == sorted(train, reverse=True), code
+        assert len(train) <= bench.OPTIONS_PER_CODE and min(train) >= bench.MIN_TERM_REPORTS
+        frozen_pool = bench.load_json(bench.FROZEN_FILE)["pool"][code]
+        assert c["options_train_pool"] == frozen_pool - len(splits["test"]), code
     assert len(IDS["global_options"]) <= bench.MAX_OPTIONS - 1
+
+
+def test_frozen_file_covers_every_split_key() -> None:
+    frozen = bench.load_json(bench.FROZEN_FILE)["codes"]
+    for code, c in IDS["codes"].items():
+        for split, keys in c["splits"].items():
+            assert set(frozen[code][split]) == set(keys), (code, split)
+            assert all(len(h) == 64 for h in frozen[code][split].values())
 
 
 def test_every_option_has_a_definition_or_a_gloss() -> None:
@@ -59,6 +74,9 @@ def test_every_option_has_a_definition_or_a_gloss() -> None:
     assert all(v in vocab for v in crit["aliases"].values())
     for t, _ in IDS["global_options"]:
         assert bench.vocab_name(t, crit) in vocab or t in crit["glosses"], t
+    for c in IDS["codes"].values():
+        for t, _ in c["options_train"]:
+            assert bench.vocab_name(t, crit) in vocab or t in crit["glosses"], t
     for t, entry in crit["terms"].items():
         assert set(entry) <= {"also_not_for", "example"}, t
         assert all(n in crit["short"] for n in entry.get("also_not_for", [])), t
@@ -94,6 +112,16 @@ def test_questions_for_every_round() -> None:
     assert len(r5) == len(IDS["global_options"]) + 1 and list(r5)[-1] == bench.CATCH_ALL
     assert all(r5[t] == q["R3"]["problem"]["criteria"][t] for t in own)
     assert r5["Over-Sensing"] == {"what": bench.terms_by_name()["Oversensing"]["definition"]}
+    # F0 and F3 are R0 and R3 over the train-only options; nothing else in the questions moves
+    train = [t for t, _ in IDS["codes"]["QBJ"]["options_train"]] + [bench.CATCH_ALL]
+    assert list(q["F3"]["problem"]["criteria"]) == train
+    assert set(q["F0"]["problem"]["criteria"].values()) == {None}
+    assert q["F3"]["harm"] == q["R3"]["harm"] and q["F3"]["severity"] == q["R3"]["severity"]
+    # an option's description is R3's, except not_for names only neighbours still offered
+    assert (
+        q["F3"]["problem"]["criteria"]["Low Readings"]
+        == q["R3"]["problem"]["criteria"]["Low Readings"]
+    )
 
 
 def test_neighbours_follow_the_hierarchy() -> None:
@@ -431,3 +459,87 @@ def test_demo_rescore_and_report(tiny: Path, tmp_path: Path) -> None:
     assert "## Reading the numbers" in text and "Written before the held-out run." in text
     assert "## The demo queries live: QBJ, 1 sampled test reports" in text
     assert "Total live spend for the benchmark: **$0.010**" in text
+
+
+def test_freeze_excludes_test_labels_and_frozen_runs_refuse_changed_content(
+    tiny: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(bench, "FROZEN_FILE", tiny.parent / "maude_frozen.json")
+    assert bench.main(["run", "F3", "--split", "dev", "--dry-run"]) == 2  # not frozen yet
+    assert bench.main(["freeze"]) == 0
+    assert bench.main(["freeze"]) == 2  # frozen content does not move
+    ids = json.loads(bench.IDS_FILE.read_text())
+    import pyarrow.parquet as pq
+
+    for code in bench.CODES:
+        pool = pq.read_table(bench.pool_file(code)).to_pylist()
+        test = set(ids["codes"][code]["splits"]["test"])
+        only_test = {
+            t for r in pool if r["mdr_report_key"] in test for t in r["product_problems"]
+        } - {t for r in pool if r["mdr_report_key"] not in test for t in r["product_problems"]}
+        assert not only_test & {t for t, _ in ids["codes"][code]["options_train"]}, code
+    assert bench.main(["run", "F3", "--split", "dev", "--dry-run"]) == 0
+    # a report whose content moved after the freeze stops a frozen run, not a PR #8 round
+    path = bench.slice_file("QBJ", "dev")
+    rows = pq.read_table(path).to_pylist()
+    rows[0]["narrative"] += " EDITED"
+    bench._write_rows(rows, path)
+    with pytest.raises(SystemExit, match="differ from their frozen content"):
+        bench.main(["run", "F3", "--split", "dev", "--dry-run"])
+    assert bench.main(["run", "R3", "--split", "dev", "--dry-run"]) == 0
+
+
+def test_frozen_rounds_have_their_own_reading_gate_and_ledger(
+    tiny: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(bench, "FROZEN_FILE", tiny.parent / "maude_frozen.json")
+    assert bench.main(["freeze"]) == 0
+    (tiny / "summary_dev_F3_n40.json").write_text("{}")  # stands for a live pre-flight
+    pr8 = {"spend": [{"usd": 2.9}], "reading": {"text": "PR #8"}, "test/R3": {}}
+    bench.RUNS_FILE.write_text(json.dumps(pr8))
+    # PR #8's reading does not open the frozen held-out runs, and only F0 and F3 run there
+    assert bench.main(["run", "F3", "--split", "test"]) == 2
+    note = tiny / "reading.md"
+    note.write_text("F3 should land near R3.")
+    assert bench.main(["reading", "--frozen", "--file", str(note)]) == 0
+    runs = bench.load_runs()
+    assert (
+        runs["reading"] == {"text": "PR #8"} and runs["reading_frozen"]["text"] == note.read_text()
+    )
+    assert bench.main(["run", "R3", "--split", "test"]) == 2  # no frozen reading opens R rounds
+    # the frozen ledger: PR #8's $2.90 does not count against it, and its spend stays apart
+    tokens = bench.budget_tokens(0.5, dry_run=False, rnd="F3")
+    assert tokens == int(0.5 / bench.USD_PER_INPUT_TOKEN)
+    bench.record_spend("dev/F3", {"est_usd": 1.4, "requests": 1, "input_tokens": 1}, "spend_frozen")
+    assert bench.total_spend(bench.load_runs()) == 2.9
+    assert bench.budget_tokens(0.5, dry_run=False, rnd="F3") == int(
+        (bench.FROZEN_BUDGET_USD - 1.4) / bench.USD_PER_INPUT_TOKEN
+    )
+
+
+def test_report_adds_the_frozen_section_beside_pr8(
+    tiny: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(bench, "FROZEN_FILE", tiny.parent / "maude_frozen.json")
+    assert bench.main(["freeze"]) == 0
+    runs: dict = {}
+    for rnd in ("R0", "R3", "F0", "F3"):
+        assert bench.main(["run", rnd, "--split", "dev", "--dry-run"]) == 0
+        s = json.loads((tiny / f"summary_dev_{rnd}_dry.json").read_text())
+        shutil.copy(tiny / f"cache_dev_{rnd}_dry.duckdb", tiny / f"cache_dev_{rnd}.duckdb")
+        runs[f"dev/{rnd}"] = s
+        runs[f"test/{rnd}"] = {**s, "split": "test"}
+    runs["reading"] = {"written": "2026-01-01 00:00 UTC", "text": "PR #8 reading."}
+    runs["reading_frozen"] = {"written": "2026-10-09 00:00 UTC", "text": "Frozen reading."}
+    runs["spend"] = [{"what": "x", "usd": 0.01, "requests": 1, "input_tokens": 1, "timestamp": "t"}]
+    runs["spend_frozen"] = [
+        {"what": "y", "usd": 0.5, "requests": 1, "input_tokens": 1, "timestamp": "t"}
+    ]
+    bench.RUNS_FILE.write_text(json.dumps(runs))
+    assert bench.main(["rescore"]) == 0  # F rounds rescore from their own caches too
+    assert bench.main(["report"]) == 0
+    text = bench.RESULTS.read_text()
+    pr8, frozen = text.split("## Frozen re-evaluation (issue #10)")
+    assert "F3" not in pr8.split("## Reading the numbers")[0]  # the PR #8 tables are unchanged
+    assert "Frozen reading." in frozen and "`spend_frozen`, $0.500 of $1.50" in frozen
+    assert "| F3 |" in frozen and "Total live spend for the benchmark: **$0.010**" in text
