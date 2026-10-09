@@ -124,6 +124,20 @@ MAUDE demo (§1.5, §3.6).
   whole pipeline on a dozen synthetic reports against a keyword fake transport) and the
   README check in `tests/test_results_docs.py`.
 
+## 1.7 Keyless demo (2026-10-09)
+
+- `python -m duckjev.demo` replays 138 recorded answers over 150 openFDA reports for
+  continuous glucose monitors (QBJ, received 2026-01-08 and 2026-01-22) shipped in
+  `duckjev/demo/`. It needs no key and sends no request. `--live` re-asks under a
+  250,000-token cap. `bench/demo_data.py pull|record` rebuilds both files. The recording
+  spent $0.0029, and a first attempt that failed on a SQL error after the judging step
+  spent about as much again.
+- What it shows on that slice: 88 of 150 reports describe a missed alert (87.1 ± 2.6
+  expected), mostly Dexcom's G7 app sensor-failure-alert template (§3.6). Reports filed as
+  Injury average 0.79 for "got care" against 0.04 for Malfunction.
+- `tests/test_demo.py` runs the demo with sockets blocked and checks the recorded numbers,
+  so a change to marshalling or the cache key that breaks replay fails offline.
+
 ## 2. The numbers and what they mean
 
 Banking77 held-out test split, 3,080 rows, `jev-1.13.0`, concurrency 16, from
