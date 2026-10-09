@@ -425,9 +425,9 @@ a secret):
 | `duckjev_base_url` | `https://api.typesafe.ai` | the fixture server in tests |
 | `duckjev_concurrency` | 16 | in-flight requests, process-wide |
 | `duckjev_cache_path` | `~/.cache/duckjev/cache.duckdb` | `''` disables the cache |
-| `duckjev_max_input_tokens` | unset | job budget; passing it raises `JevBudgetExceeded` |
+| `duckjev_max_input_tokens` | unset | job budget, reserved before each request is sent (§3.5); a request that does not fit raises `JevBudgetExceeded` |
 | `duckjev_offline` | false | a cache miss is an error instead of a request |
-| `duckjev_timeout_ms` | 30000 | per request |
+| `duckjev_timeout_ms` | 120000 | per request, waiting for the answer; connecting is capped at 10000 |
 
 Errors surface as DuckDB exceptions whose message starts with the tier-one class name
 (`JevAuthError: ...`, `JevAPIError: ...`, `JevTransportError: ...`,
@@ -458,12 +458,27 @@ about 30 MB, gitignored) are the extension's offline test oracle (§4).
 
 ### 3.5 Usage counters
 
-The same ten counters as tier one's `Usage`, process-wide, plus `est_usd`:
+The same eleven counters as tier one's `Usage`, process-wide, plus `est_usd`:
 `rows, deduped, cache_hits, cache_misses, requests, input_tokens, output_tokens, retries,
-rate_limited, overloaded`, `est_usd = input_tokens × 42 / 1e9`. `jev_usage()` returns
-them as one row; `jev_usage_reset()` zeroes them. The budget check compares billed
-`input_tokens` since the last reset against `duckjev_max_input_tokens` before every
-request and after every response.
+rate_limited, overloaded, lost_responses`, `est_usd = input_tokens × 42 / 1e9`.
+`jev_usage()` returns them as one row; `jev_usage_reset()` zeroes them.
+`input_tokens` includes reported usage and the reserved estimates of requests whose
+answers are lost or unusable after sending; `est_usd` therefore includes both.
+
+The budget is tier one's reservation contract (`JevClient` docstring, issue #9). Each
+attempt estimates its input tokens as the UTF-8 bytes of the compact request body plus 64,
+scaled by the largest reported/estimated ratio seen so far, and is sent only if billed
+tokens, the reservations in flight and its estimate fit under `duckjev_max_input_tokens`.
+Otherwise it waits for the requests in flight to settle and raises `JevBudgetExceeded` if
+it still does not fit. A 200 settles to the reported `input_tokens`, an error status
+releases the reservation, and a response lost after sending (read timeout, dropped
+connection) or an unusable answer keeps the estimate as billed and counts one
+`lost_responses`. A connect failure, rejected local request or failed proxy tunnel sends
+nothing to the API and releases it. Requests that cannot be built fail before reservation.
+Waiting requests refresh their estimate when earlier responses raise the learned ratio.
+Before accepting or caching a 200, validate that its answers can be decoded by the typed
+SQL paths and that input usage is present as a non-negative integer. Invalid answers or
+usage raise `JevAPIError`, retain their estimated cost and stop further batch sends.
 
 ### 3.6 Execution model
 
@@ -472,7 +487,8 @@ threads. Per call: build `(state, questions)` per usable row, key them, deduplic
 look up the cache, fan the misses out over a process-wide pool bounded by
 `duckjev_concurrency` (the bound is global, not per thread, because DuckDB may run the
 same function on many threads at once), block until every miss is answered or one has
-failed, write the cache, marshal in the vector's order. Requests in flight are tracked in a
+failed (the first failure stops sending; requests already in flight finish and are cached),
+write the cache, marshal in the vector's order. Requests in flight are tracked in a
 process-wide map keyed by cache key so two threads judging the same state at the same
 time send it once. That in-flight map plus the synchronous cache is what makes a
 double-evaluated expression cost one request, whatever the planner does (§5.1).

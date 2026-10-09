@@ -124,6 +124,20 @@ MAUDE demo (§1.5, §3.6).
   whole pipeline on a dozen synthetic reports against a keyword fake transport) and the
   README check in `tests/test_results_docs.py`.
 
+## 1.6 Client hardening (issue #9, 2026-10-09)
+
+- `max_input_tokens` is reserved before each request is sent, not checked against an old
+  balance. Each attempt estimates its tokens (UTF-8 body bytes plus 64, scaled by the largest
+  reported/estimated ratio seen), waits while it would not fit beside the requests in flight,
+  and raises `JevBudgetExceeded` if it still does not fit once they settle. A lost response
+  (read timeout, dropped connection) counts as billed at its estimate and in
+  `usage()["lost_responses"]`; error statuses and connect failures release the reservation.
+  The PR #8 guard's in-flight overshoot (§1.5) cannot recur beyond the estimate error.
+- `register(timeout=...)`, default 120 s for the answer (was 30 s), connect capped at 10 s.
+  The first hosted deployment (2026-09-30) lost 46 answers to the 30 s default
+  under load; each retry of a sent request can be billed again.
+- `docs/TIER2.md` §3.3 and §3.5 carry the same contract for the extension.
+
 ## 1.7 Keyless demo (2026-10-09)
 
 - `python -m duckjev.demo` replays 138 recorded answers over 150 openFDA reports for
@@ -137,6 +151,40 @@ MAUDE demo (§1.5, §3.6).
   Injury average 0.79 for "got care" against 0.04 for Malfunction.
 - `tests/test_demo.py` runs the demo with sockets blocked and checks the recorded numbers,
   so a change to marshalling or the cache key that breaks replay fails offline.
+
+## 1.8 Frozen MAUDE re-evaluation (issue #10, 2026-10-09)
+
+- `bench/maude.py freeze` hashes the content of every split report (`bench/maude_frozen.json`)
+  and adds `options_train` per code to `bench/maude_ids.json`: the option set counted over
+  the eligible pool without the test reports. Rounds F0 and F3 are R0 and R3 over those
+  lists; a frozen run refuses changed content, needs its own reading (`reading --frozen`)
+  before the held-out split, and spends from its own ledger (`spend_frozen`, $1.50 authorized
+  by Victor). PR #8's runs, reading and spend are untouched.
+- Re-pulled 2026-10-09: every committed split key present; FTR's eligible pool is 30,845
+  against PR #8's 30,832, the content drift the freeze now guards against. The train-only
+  lists differ by one term in QBJ and FTR (FTR now 34) and by the order of near-tied
+  neighbours.
+- Held out, 3,000 reports: F3 **0.826** ± 0.007 top-1 in set, the same as R3 (QBJ 0.849,
+  FTR 0.799, LWS 0.829); harm 0.893 (macro 0.929); problem ECE 0.049. F0 0.549 against R0's
+  0.550. The reading, recorded before the held-out runs, predicted 0.82. Spend $0.962: two
+  pre-flights, dev F0 and F3, test F0 and F3.
+- The held-out F runs saw no 429s at concurrency 16 (R3 had 745) and ran at 182 reports/s
+  against 107. That is the API's rate limiting on the day, not something this change caused.
+- The frozen pull (`bench/data/maude_raw/`, the pools and splits) and the F runs' answer
+  caches are gitignored and live only in `bench/data/` of the `maude-frozen-eval` worktree on
+  Victor's MacBook. Archive them beside the PR #8 data before removing that worktree;
+  `rescore` and any later frozen run need them.
+- Self-review: frozen runs and rescoring now require the exact split's code/key pairs
+  once each before sampling, verify content hashes, and use the candidates bound into
+  the same frozen manifest. Coverage on code rows uses the train-only set for F rounds.
+  The demo refuses F rounds, so it cannot bypass the frozen reading, content or ledger checks.
+- Issue #10 remains open: F3 reuses `bench/maude_criteria_v2.json`, whose convention
+  choices were informed by pool-wide counts including test reports. These runs test the
+  candidate-selection change under the existing criteria, rather than completing an
+  independent evaluation. Re-derive criteria from train/gloss-only convention statistics,
+  record their source, then obtain a new spend authorization and record a new pre-test
+  reading before evaluating them. Keep the existing F runs and snapshot as historical
+  evidence; `freeze --refreeze` refuses an experiment with recorded F runs or a reading.
 
 ## 2. The numbers and what they mean
 

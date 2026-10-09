@@ -67,9 +67,23 @@ estimated dollars. The API key is only read at the first call that needs the
 network, so registering, macros and fully cached queries all work offline.
 
 Options: `register(con, model="jev-1.13.0", concurrency=16, cache=True,
-cache_path=None, max_input_tokens=None, api_key=None, base_url=None)`.
-`max_input_tokens` is a job budget. Once billed input tokens pass it,
-`JevBudgetExceeded` is raised.
+cache_path=None, max_input_tokens=None, api_key=None, base_url=None, timeout=120.0)`.
+
+- `max_input_tokens` is a job budget, checked before each request is sent. Each request
+  reserves an estimate of its input tokens (its UTF-8 bytes plus 64, scaled up once
+  responses show the API counts more). It is sent only if the billed tokens, the
+  requests in flight and its own estimate fit. Otherwise `JevBudgetExceeded` is raised,
+  after the requests in flight finish and their answers are cached. A request whose
+  answer was lost after sending, for example to a read timeout, counts as billed at its
+  estimate, and `usage()["lost_responses"]` counts these, including unusable answers.
+  Missing or invalid token usage also makes an answer unusable. These failures stop the
+  batch before further sends or caching. `usage()["input_tokens"]` and `est_usd` include
+  their estimates. The estimate is not a
+  tokenizer: requests in flight can exceed it by the API's framing, so treat the limit
+  as tight but not exact.
+- `timeout` is how many seconds to wait for an answer. Connecting is capped at 10 s. Keep
+  it generous: a request that times out after it was sent may be billed, and the retry
+  pays again.
 
 ## Three examples
 
@@ -148,8 +162,13 @@ held-out test split, 3,000 reports from three product codes (continuous glucose 
 silicone breast implants, implantable defibrillators), measured against the codes the
 manufacturers filed; R0 is the baseline over bare term strings, R3 the round chosen on dev.
 The report rows were held out from round selection, while the per-code candidate terms
-and their order were selected from the full eligible pool, including test labels. The
-reported test result therefore uses test-aware candidate lists.
+and their order were selected from the full eligible pool, including test labels. A frozen
+re-evaluation (issue #10) reran R0 and R3 with candidate lists counted without the test
+reports and every report's content frozen by hash, after a reading recorded in advance: R3
+scored the same **0.826** ± 0.007 top-1 in set (harm 0.893), consistent with no material
+inflation from candidate selection ($0.96 of live spend on its own ledger). F3 retains
+criteria informed by pool-wide convention counts including test reports, so this does
+not establish a fully independent evaluation; that part of issue #10 remains open.
 Full tables, all seven dev rounds, the hand-written reading recorded before the held-out
 run and the demo queries run live are in [docs/results/maude.md](docs/results/maude.md),
 generated from the committed run log `docs/results/maude_runs.json`.
