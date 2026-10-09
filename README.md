@@ -45,9 +45,23 @@ estimated dollars. The API key is only read at the first call that needs the
 network, so registering, macros and fully cached queries all work offline.
 
 Options: `register(con, model="jev-1.13.0", concurrency=16, cache=True,
-cache_path=None, max_input_tokens=None, api_key=None, base_url=None)`.
-`max_input_tokens` is a job budget. Once billed input tokens pass it,
-`JevBudgetExceeded` is raised.
+cache_path=None, max_input_tokens=None, api_key=None, base_url=None, timeout=120.0)`.
+
+- `max_input_tokens` is a job budget, checked before each request is sent. Each request
+  reserves an estimate of its input tokens (its UTF-8 bytes plus 64, scaled up once
+  responses show the API counts more). It is sent only if the billed tokens, the
+  requests in flight and its own estimate fit. Otherwise `JevBudgetExceeded` is raised,
+  after the requests in flight finish and their answers are cached. A request whose
+  answer was lost after sending, for example to a read timeout, counts as billed at its
+  estimate, and `usage()["lost_responses"]` counts these, including unusable answers.
+  Missing or invalid token usage also makes an answer unusable. These failures stop the
+  batch before further sends or caching. `usage()["input_tokens"]` and `est_usd` include
+  their estimates. The estimate is not a
+  tokenizer: requests in flight can exceed it by the API's framing, so treat the limit
+  as tight but not exact.
+- `timeout` is how many seconds to wait for an answer. Connecting is capped at 10 s. Keep
+  it generous: a request that times out after it was sent may be billed, and the retry
+  pays again.
 
 ## Three examples
 

@@ -124,6 +124,20 @@ MAUDE demo (§1.5, §3.6).
   whole pipeline on a dozen synthetic reports against a keyword fake transport) and the
   README check in `tests/test_results_docs.py`.
 
+## 1.6 Client hardening (issue #9, 2026-10-09)
+
+- `max_input_tokens` is reserved before each request is sent, not checked against an old
+  balance. Each attempt estimates its tokens (UTF-8 body bytes plus 64, scaled by the largest
+  reported/estimated ratio seen), waits while it would not fit beside the requests in flight,
+  and raises `JevBudgetExceeded` if it still does not fit once they settle. A lost response
+  (read timeout, dropped connection) counts as billed at its estimate and in
+  `usage()["lost_responses"]`; error statuses and connect failures release the reservation.
+  The PR #8 guard's in-flight overshoot (§1.5) cannot recur beyond the estimate error.
+- `register(timeout=...)`, default 120 s for the answer (was 30 s), connect capped at 10 s.
+  The first hosted deployment (2026-09-30) lost 46 answers to the 30 s default
+  under load; each retry of a sent request can be billed again.
+- `docs/TIER2.md` §3.3 and §3.5 carry the same contract for the extension.
+
 ## 2. The numbers and what they mean
 
 Banking77 held-out test split, 3,080 rows, `jev-1.13.0`, concurrency 16, from

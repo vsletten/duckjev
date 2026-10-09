@@ -19,6 +19,7 @@ import httpx
 from .cache import DEFAULT_CACHE_PATH, AnswerCache, cache_key
 from .client import (
     DEFAULT_MODEL,
+    DEFAULT_TIMEOUT,
     JevAPIError,
     JevAuthError,
     JevBudgetExceeded,
@@ -79,13 +80,16 @@ def register(
     api_key: str | None = None,
     base_url: str | None = None,
     transport: httpx.AsyncBaseTransport | None = None,
+    timeout: float = DEFAULT_TIMEOUT,
 ) -> JevClient:
     """Install the Jev SQL functions, macros and answer cache on ``con``.
 
     The API key defaults to ``$TYPESAFE_API_KEY`` and is only required at the
     first call that actually needs the network, so registering and running
-    macros or fully cached queries work offline. ``transport`` is for tests.
-    Returns the :class:`JevClient` backing this connection.
+    macros or fully cached queries work offline. ``max_input_tokens`` is reserved
+    before each request is sent (see :class:`JevClient`). ``timeout`` is the seconds to
+    wait for an answer. ``transport`` is for tests. Returns the :class:`JevClient`
+    backing this connection.
     """
     answer_cache = _shared_cache(cache_path or DEFAULT_CACHE_PATH) if cache else None
     client = JevClient(
@@ -96,6 +100,7 @@ def register(
         cache=answer_cache,
         max_input_tokens=max_input_tokens,
         transport=transport,
+        timeout=timeout,
     )
     register_udfs(con, client)
     for stmt in _macro_statements():
