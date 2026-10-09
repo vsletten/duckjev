@@ -23,6 +23,28 @@ uv sync --extra dev
 export TYPESAFE_API_KEY=...                             # only needed for live calls
 ```
 
+## Try it without a key
+
+```bash
+uvx --from git+https://github.com/vsletten/duckjev.git python -m duckjev.demo
+```
+
+The demo loads 150 FDA adverse event reports for continuous glucose monitors (public MAUDE
+records from openFDA, received in January 2026) and runs four SQL statements:
+
+1. It judges each report into a table with three questions: a Choice over five problem
+   kinds and two Nouls.
+2. It shows a soft group-by next to argmax counts.
+3. It counts the reports that describe a missed alert, with an expected count and its
+   standard error.
+4. It checks the answers against the event type the manufacturer filed.
+
+All 138 answers (the 150 reports dedupe to 138 requests) were recorded live and ship with
+the package. The cache key is content-addressed, so the replay needs no key and sends no
+request. `--live` asks Jev again with `$TYPESAFE_API_KEY`, capped at 250,000 input tokens.
+The recording used 68,478 tokens ($0.003). `bench/demo_data.py` rebuilds the data and the
+answers.
+
 ```python
 import duckdb, duckjev
 
