@@ -213,6 +213,61 @@ Written by hand from the dev rounds and recorded in the run log on 2026-09-27 06
 
 **What the held-out numbers should look like.** The test split is drawn from the same pools by the same rule and is twice the size, so R3 should land within two points of its dev numbers: top-1 in set near 0.82, harm accuracy near 0.90, problem ECE near 0.05, and R0 near 0.57. Coverage should stay near 0.99. At R3's 5,123 tokens per request and 1.2 reports per request after deduplication, coding the whole 2026 stream to date costs about $450; R0's bare terms cost about a fifth of that for 25 points less. The deferral curve is the operational readout: on dev at confidence 0.9, R3 answers 56% of reports at 0.948 top-1 in set and routes the rest to a person.
 
+## Frozen re-evaluation (issue #10)
+
+The runs above use candidate lists counted over the whole eligible pool, test labels included, and report content as openFDA served it at each pull. This section reruns R0 and R3 as F0 and F3 with two changes and nothing else: each code's options are counted over its eligible pool without the test reports (`options_train` in `bench/maude_ids.json`), and every split report's content is frozen by hash (`bench/maude_frozen.json`, 2026-10-09 20:37 UTC); a frozen run refuses a report whose description, narratives, device names or filed labels differ. Options: 40 for QBJ, 34 for FTR, 40 for LWS. F3 is fixed as R3's configuration in advance, not reselected; its own reading was recorded before its held-out runs, and its spend is on a separate ledger (`spend_frozen`, $0.962 of $1.50). The PR #8 numbers stay as recorded: the original, test-aware run.
+
+Dev, top-1 in set:
+
+| round | pooled | QBJ | FTR | LWS | harm accuracy | tokens / request |
+|---|---|---|---|---|---|---|
+| R0 | 0.570 | 0.455 | 0.448 | 0.812 | 0.809 | 1,130 |
+| R3 | 0.820 | 0.860 | 0.770 | 0.831 | 0.901 | 5,123 |
+| F0 | 0.566 | 0.445 | 0.449 | 0.810 | 0.815 | 1,128 |
+| F3 | 0.816 | 0.854 | 0.767 | 0.827 | 0.903 | 5,102 |
+
+Reading, written from the dev runs and recorded on 2026-10-09 20:51 UTC, before the frozen held-out runs (`reading --frozen`; `run --split test` refuses F rounds without it). Reproduced unchanged:
+
+Written by the Claude Opus 5.5 session that ran the frozen re-evaluation, from the dev runs alone, before either frozen held-out run.
+
+**What changed, and how much it could matter.** The train-only candidate lists differ from PR #8's by one term in QBJ (Material Twisted/Bent out, Patient Device Interaction Problem in), one in FTR (Unsealed Device Packaging out, 34 options), and only in order elsewhere: 6 swaps in QBJ, 14 in FTR, 4 in LWS, all between neighbours of nearly equal frequency. Coverage barely moves, because the dropped terms are rare. So the test-aware lists can only have bought R3 points through the order of near-tied options and the two swapped terms.
+
+**Dev.** F3 scored 0.816 ± 0.010 top-1 in set against R3's 0.820, with QBJ 0.854 against 0.860, FTR 0.767 against 0.770 and LWS 0.827 against 0.831. Harm accuracy was 0.903 against 0.901, and problem ECE 0.059 against 0.051. F0 scored 0.566 against R0's 0.570. Every gap is inside one standard error. They also mix the candidate change with content drift: PR #8 ran on its own pull, F rounds on the frozen 2026-10-09 pull, in which FTR's pool has 13 more eligible reports.
+
+**Prediction for the held-out split.** F3 pooled top-1 in set 0.82 (between 0.81 and 0.83), against R3's recorded 0.826; per code QBJ about 0.84, FTR about 0.79, LWS about 0.83. Harm accuracy about 0.89, problem ECE about 0.05 to 0.06. F0 about 0.55. If F3 lands within about a point of R3, the test-aware candidate lists did not materially inflate PR #8's headline, and 0.826 can be quoted with that caveat recorded. A gap over two points would mean they did, and the frozen number replaces it in the README.
+
+**Outcome.** F3 against R3 on the held-out split: top-1 in set 0.826 against 0.826 (-0.001, standard error 0.007); harm accuracy 0.893 against 0.893.
+
+Held-out test split, pooled, PR #8's R0 and R3 beside F0 and F3:
+
+| metric | R0: baseline | R3: R2 (the best of R0 to R2) with the state as an object | F0: R0 with candidates from the pool without the test reports, on frozen report content | F3: R3 with candidates from the pool without the test reports, on frozen report content |
+|---|---|---|---|---|
+| reports | 3,000 | 3,000 | 3,000 | 3,000 |
+| option-set coverage | 0.988 | 0.988 | 0.986 | 0.986 |
+| problem: top-1 in set | **0.550 ± 0.009** | **0.826 ± 0.007** | **0.549 ± 0.009** | **0.826 ± 0.007** |
+| problem: strict (one filed term) | 0.490 (2,312) | 0.818 (2,312) | 0.489 (2,307) | 0.819 (2,307) |
+| problem: mean set mass | 0.499 | 0.788 | 0.494 | 0.789 |
+| problem: top-1 over all rows | 0.543 | 0.816 | 0.542 | 0.814 |
+| harm: accuracy | **0.810 ± 0.007** | **0.893 ± 0.006** | **0.810 ± 0.007** | **0.893 ± 0.006** |
+| harm: macro average over event types | 0.869 | 0.929 | 0.875 | 0.929 |
+| severity: AUROC, Death or Injury vs Malfunction | 0.963 | 0.973 | 0.963 | 0.974 |
+| ECE, problem, `confidence` / top-1 p | 0.177 / 0.192 | 0.050 / 0.048 | 0.184 / 0.191 | 0.049 / 0.052 |
+| ECE, harm, `confidence` / top-1 p | 0.079 / 0.099 | 0.030 / 0.032 | 0.084 / 0.097 | 0.031 / 0.033 |
+| input tokens per request; requests per report | 1,120; 1 | 5,123; 1 | 1,117; 1 | 5,100; 1 |
+| cost | **$0.036 per 1,000 reports** | **$0.174 per 1,000 reports** | **$0.036 per 1,000 reports** | **$0.174 per 1,000 reports** |
+| scenario: 2.5M reports at this sample's mean input tokens | $91 | $436 | $91 | $435 |
+| throughput | 178 reports/s (0 × 429, concurrency 16) | 107 reports/s (745 × 429, concurrency 16) | 211 reports/s (0 × 429, concurrency 16) | 182 reports/s (0 × 429, concurrency 16) |
+| cache re-run | 0.09 s, 0 requests, 3,000 / 3,000 rows identical | 0.29 s, 0 requests, 3,000 / 3,000 rows identical | 0.08 s, 0 requests, 3,000 / 3,000 rows identical | 0.27 s, 0 requests, 3,000 / 3,000 rows identical |
+
+Per code, top-1 in set:
+
+| round | QBJ | FTR | LWS |
+|---|---|---|---|
+| R0 | 0.443 ± 0.016 | 0.455 ± 0.016 | 0.755 ± 0.014 |
+| R3 | 0.850 ± 0.011 | 0.797 ± 0.013 | 0.832 ± 0.012 |
+| F0 | 0.440 ± 0.016 | 0.452 ± 0.016 | 0.759 ± 0.014 |
+| F3 | 0.849 ± 0.011 | 0.799 ± 0.013 | 0.829 ± 0.012 |
+
 ## The demo queries live: QBJ, 200 sampled test reports
 
 Round R3's questions, one fused request per report (112 requests, $0.0232, 1.1 s); the answers unpack into `problem`, `harm` and `severity` struct columns of `judged`. Every query below is the SQL of MAUDE.md §4 over that table.
@@ -389,6 +444,10 @@ uv run python bench/maude.py run R5 --split dev
 uv run python bench/maude.py run R6 --split dev
 uv run python bench/maude.py run R0 --split test
 uv run python bench/maude.py run R3 --split test
+uv run python bench/maude.py run F0 --split dev
+uv run python bench/maude.py run F3 --split dev
+uv run python bench/maude.py run F0 --split test
+uv run python bench/maude.py run F3 --split test
 uv run python bench/maude.py demo --code QBJ
 uv run python bench/maude.py report
 ```

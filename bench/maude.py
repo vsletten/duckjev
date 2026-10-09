@@ -2034,12 +2034,24 @@ def _frozen_section(runs: dict[str, Any], ids: dict[str, Any], best: str) -> lis
     if "reading_frozen" in runs:
         rd = runs["reading_frozen"]
         parts += [
-            f"Reading, recorded by hand on {rd['written']}, before the frozen held-out runs:",
+            f"Reading, written from the dev runs and recorded on {rd['written']}, before the "
+            "frozen held-out runs (`reading --frozen`; `run --split test` refuses F rounds "
+            "without it). Reproduced unchanged:",
             "",
             rd["text"],
             "",
         ]
     if any(r["round"] in FROZEN for r in test):
+        by = {r["round"]: r["pooled"] for r in test}
+        if "F3" in by and best in by:
+            d = by["F3"]["top1_in_set"] - by[best]["top1_in_set"]
+            parts += [
+                f"**Outcome.** F3 against {best} on the held-out split: top-1 in set "
+                f"{by['F3']['top1_in_set']:.3f} against {by[best]['top1_in_set']:.3f} "
+                f"({d:+.3f}, standard error {by['F3']['top1_in_set_se']:.3f}); harm accuracy "
+                f"{by['F3']['harm_accuracy']:.3f} against {by[best]['harm_accuracy']:.3f}.",
+                "",
+            ]
         parts += [
             f"Held-out test split, pooled, PR #8's R0 and {best} beside F0 and F3:",
             "",

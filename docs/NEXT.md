@@ -138,6 +138,29 @@ MAUDE demo (§1.5, §3.6).
   under load; each retry of a sent request can be billed again.
 - `docs/TIER2.md` §3.3 and §3.5 carry the same contract for the extension.
 
+## 1.8 Frozen MAUDE re-evaluation (issue #10, 2026-10-09)
+
+- `bench/maude.py freeze` hashes the content of every split report (`bench/maude_frozen.json`)
+  and adds `options_train` per code to `bench/maude_ids.json`: the option set counted over
+  the eligible pool without the test reports. Rounds F0 and F3 are R0 and R3 over those
+  lists; a frozen run refuses changed content, needs its own reading (`reading --frozen`)
+  before the held-out split, and spends from its own ledger (`spend_frozen`, $1.50 authorized
+  by Victor). PR #8's runs, reading and spend are untouched.
+- Re-pulled 2026-10-09: every committed split key present; FTR's eligible pool is 30,845
+  against PR #8's 30,832, the content drift the freeze now guards against. The train-only
+  lists differ by one term in QBJ and FTR (FTR now 34) and by the order of near-tied
+  neighbours.
+- Held out, 3,000 reports: F3 **0.826** ± 0.007 top-1 in set, the same as R3 (QBJ 0.849,
+  FTR 0.799, LWS 0.829); harm 0.893 (macro 0.929); problem ECE 0.049. F0 0.549 against R0's
+  0.550. The reading, recorded before the held-out runs, predicted 0.82. Spend $0.962: two
+  pre-flights, dev F0 and F3, test F0 and F3.
+- The held-out F runs saw no 429s at concurrency 16 (R3 had 745) and ran at 182 reports/s
+  against 107. That is the API's rate limiting on the day, not something this change caused.
+- The frozen pull (`bench/data/maude_raw/`, the pools and splits) and the F runs' answer
+  caches are gitignored and live only in `bench/data/` of the `maude-frozen-eval` worktree on
+  Victor's MacBook. Archive them beside the PR #8 data before removing that worktree;
+  `rescore` and any later frozen run need them.
+
 ## 2. The numbers and what they mean
 
 Banking77 held-out test split, 3,080 rows, `jev-1.13.0`, concurrency 16, from
