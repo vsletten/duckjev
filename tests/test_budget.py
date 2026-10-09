@@ -6,17 +6,20 @@ import asyncio
 import json
 
 import httpx
+import pyarrow as pa
 import pytest
 
 import duckjev
 from duckjev.cache import AnswerCache, canonical_json
 from duckjev.client import (
     ESTIMATE_FRAMING_TOKENS,
+    USD_PER_INPUT_TOKEN,
     JevAPIError,
     JevBudgetExceeded,
     JevClient,
     Usage,
 )
+from duckjev.functions import make_udfs
 
 NOUL = {"q": {"type": "noul", "instructions": "about a card?"}}
 
@@ -116,7 +119,8 @@ def test_lost_response_counts_as_billed_and_the_retry_is_reserved_again() -> Non
     assert t.sent == ["s0", "s0"]
     assert c.billed_input_tokens == 2 * est  # the lost attempt at its estimate, plus the answer
     u = c.usage.snapshot()
-    assert u["lost_responses"] == 1 and u["input_tokens"] == est and u["retries"] == 1
+    assert u["lost_responses"] == 1 and u["input_tokens"] == 2 * est and u["retries"] == 1
+    assert u["est_usd"] == pytest.approx(c.billed_input_tokens * USD_PER_INPUT_TOKEN)
     c.close()
 
 
@@ -127,6 +131,7 @@ def test_lost_response_with_no_room_left_for_the_retry_raises() -> None:
     with pytest.raises(JevBudgetExceeded):
         c.judge([("s0", NOUL)])
     assert t.sent == ["s0"] and c.billed_input_tokens == est
+    assert c.usage.snapshot()["input_tokens"] == est
     c.close()
 
 
@@ -253,7 +258,170 @@ def test_a_malformed_200_counts_its_estimate() -> None:
     with pytest.raises(JevAPIError, match="do not match"):
         c.judge([("s0", NOUL)])
     assert c.billed_input_tokens == body_tokens("s0")
+    assert c.usage.snapshot()["input_tokens"] == c.billed_input_tokens
+    assert c.usage.snapshot()["lost_responses"] == 1
     c.close()
+
+
+@pytest.mark.parametrize("failure", [httpx.LocalProtocolError, httpx.ProxyError])
+def test_local_protocol_and_proxy_failures_are_not_billed(
+    failure: type[httpx.TransportError],
+) -> None:
+    est = body_tokens("s0")
+    t = SlowTransport(lambda s: est, fail={"s0": [failure("not forwarded")]})
+    c = make(t, concurrency=1, max_input_tokens=est)
+    try:
+        c.judge([("s0", NOUL)])
+        assert t.sent == ["s0", "s0"]
+        assert c.billed_input_tokens == est and c._reserved == 0
+        assert c.usage.snapshot()["lost_responses"] == 0
+    finally:
+        c.close()
+
+
+def test_headers_that_cannot_be_encoded_are_neither_sent_nor_charged() -> None:
+    t = SlowTransport(lambda s: 1)
+    c = make(t, api_key="invalid-\N{SNOWMAN}", max_input_tokens=10_000)
+    try:
+        with pytest.raises(UnicodeEncodeError):
+            c.judge([("s0", NOUL)])
+        assert t.sent == [] and c.billed_input_tokens == 0 and c._reserved == 0
+        assert c.usage.snapshot()["lost_responses"] == 0
+    finally:
+        c.close()
+
+
+def test_an_unexpected_failure_after_sending_keeps_estimated_cost() -> None:
+    async def handle(request: httpx.Request) -> httpx.Response:
+        raise RuntimeError("failed while receiving the answer")
+
+    c = make(httpx.MockTransport(handle), max_input_tokens=10_000)
+    try:
+        with pytest.raises(RuntimeError, match="receiving the answer"):
+            c.judge([("s0", NOUL)])
+        assert c.billed_input_tokens == body_tokens("s0") and c._reserved == 0
+        assert c.usage.snapshot()["input_tokens"] == c.billed_input_tokens
+        assert c.usage.snapshot()["lost_responses"] == 1
+    finally:
+        c.close()
+
+
+@pytest.mark.parametrize(
+    "reported_usage",
+    [None, {}, {"input_tokens": -1}, {"input_tokens": False}, {"input_tokens": 1.5}],
+)
+def test_missing_or_invalid_usage_keeps_the_estimate_and_stops_the_batch(
+    reported_usage: dict | None,
+) -> None:
+    sent: list[str] = []
+
+    def handle(request: httpx.Request) -> httpx.Response:
+        sent.append(json.loads(request.content)["state"])
+        return httpx.Response(
+            200,
+            json={"answers": {"q": {"type": "noul", "noul": 0.5}}, "usage": reported_usage},
+        )
+
+    c = make(
+        httpx.MockTransport(handle), concurrency=1, max_input_tokens=10_000, cache=AnswerCache(None)
+    )
+    try:
+        with pytest.raises(JevAPIError, match="usage"):
+            c.judge([(f"s{i}", NOUL) for i in range(3)])
+        assert sent == ["s0"] and len(c.cache) == 0 and c._reserved == 0
+        assert c.billed_input_tokens == body_tokens("s0")
+        assert c.usage.snapshot()["input_tokens"] == c.billed_input_tokens
+        assert c.usage.snapshot()["lost_responses"] == 1
+    finally:
+        c.close()
+
+
+@pytest.mark.parametrize(
+    ("question", "answer"),
+    [
+        (NOUL["q"], {}),
+        (NOUL["q"], {"noul": "not numeric"}),
+        ({"type": "choice", "criteria": {"a": None}}, {"choice": "a"}),
+        ({"type": "choice", "criteria": {"a": None}}, {"choice": "a", "probabilities": []}),
+        ({"type": "score", "criteria": ["low", "high"]}, {"probabilities": {"0": 1.0}}),
+        ({"type": "score", "criteria": ["low", "high"]}, {"score": 0.5, "probabilities": []}),
+    ],
+)
+def test_unusable_typed_answers_stop_before_more_sends_or_cache_writes(
+    question: dict,
+    answer: dict,
+) -> None:
+    sent: list[str] = []
+
+    def handle(request: httpx.Request) -> httpx.Response:
+        sent.append(json.loads(request.content)["state"])
+        return httpx.Response(200, json={"answers": {"q": answer}, "usage": {"input_tokens": 1}})
+
+    c = make(httpx.MockTransport(handle), concurrency=1, cache=AnswerCache(None))
+    questions = {"q": question}
+    try:
+        with pytest.raises(JevAPIError, match="unusable"):
+            c.judge([(f"s{i}", questions) for i in range(3)])
+        assert sent == ["s0"] and len(c.cache) == 0
+        payload = {"state": "s0", "model": c.model, "questions": questions}
+        estimate = len(canonical_json(payload).encode("utf-8")) + ESTIMATE_FRAMING_TOKENS
+        assert c.billed_input_tokens == estimate
+        assert c.usage.snapshot()["input_tokens"] == estimate
+        assert c.usage.snapshot()["lost_responses"] == 1
+    finally:
+        c.close()
+
+
+def test_sql_rejects_an_unusable_answer_before_judging_the_next_row() -> None:
+    sent: list[str] = []
+
+    def handle(request: httpx.Request) -> httpx.Response:
+        sent.append(json.loads(request.content)["state"])
+        return httpx.Response(200, json={"answers": {"q": {}}, "usage": {"input_tokens": 1}})
+
+    c = make(httpx.MockTransport(handle), concurrency=1, cache=AnswerCache(None))
+    try:
+        with pytest.raises(JevAPIError, match="unusable"):
+            make_udfs(c)["jev_noul2"](pa.array(["s0", "s1", "s2"]), pa.array(["about a card?"]))
+        assert sent == ["s0"] and len(c.cache) == 0
+        assert c.billed_input_tokens == body_tokens("s0")
+    finally:
+        c.close()
+
+
+def test_budget_waiters_use_the_latest_learned_estimate() -> None:
+    # Three requests fit at first. The first answer doubles the estimate and the other
+    # two release enough room for the old estimate, but not for the newly learned one.
+    est = body_tokens("s0")
+    sent: list[str] = []
+    first_answered = asyncio.Event()
+
+    async def handle(request: httpx.Request) -> httpx.Response:
+        state = json.loads(request.content)["state"]
+        sent.append(state)
+        if state == "s0":
+            await asyncio.sleep(0.01)  # let the fourth request enter the budget wait
+            first_answered.set()
+            tokens = 2 * est
+        else:
+            await first_answered.wait()
+            tokens = 2 * est if state == "s3" else 0
+        return httpx.Response(
+            200,
+            json={
+                "answers": {"q": {"type": "noul", "noul": 0.5}},
+                "usage": {"input_tokens": tokens},
+            },
+        )
+
+    c = make(httpx.MockTransport(handle), concurrency=4, max_input_tokens=3 * est)
+    try:
+        with pytest.raises(JevBudgetExceeded):
+            c.judge([(f"s{i}", NOUL) for i in range(4)])
+        assert sent == ["s0", "s1", "s2"]
+        assert c.billed_input_tokens == 2 * est and c._reserved == 0
+    finally:
+        c.close()
 
 
 def test_threads_judging_at_once_share_one_budget() -> None:
@@ -297,4 +465,24 @@ def test_a_stopped_batch_does_not_sleep_out_a_retry_backoff() -> None:
     with pytest.raises(JevAPIError):
         c.judge([("busy", NOUL), ("bad", NOUL)])
     assert time.monotonic() - started < 1.0
+    c.close()
+
+
+def test_a_transport_plug_that_refuses_with_a_jev_error_is_not_billed() -> None:
+    # An offline replay (python -m duckjev.demo) refuses misses from its transport. Nothing
+    # was sent, so the refusal must not show up as a lost, billed response.
+    from duckjev.client import JevError
+
+    class Refused(JevError):
+        pass
+
+    def refuse(request: httpx.Request) -> httpx.Response:
+        raise Refused("not in the shipped answers")
+
+    c = make(httpx.MockTransport(refuse), max_input_tokens=10_000)
+    with pytest.raises(Refused):
+        c.judge([("s0", NOUL)])
+    u = c.usage.snapshot()
+    assert c.billed_input_tokens == 0 and u["input_tokens"] == 0 and u["lost_responses"] == 0
+    assert c._reserved == 0
     c.close()

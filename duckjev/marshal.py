@@ -269,6 +269,36 @@ def score_array(answers: Sequence[Answer | None]) -> pa.StructArray:
     )
 
 
+def validate_answers(answers: dict[str, Answer], questions: Questions) -> None:
+    """Reject answers the typed SQL paths cannot consume before they enter the cache.
+
+    Use the same conversions as SQL, so acceptance and decoding share one contract.
+    """
+    typed: dict[str, list[Answer]] = {"noul": [], "choice": [], "score": []}
+    try:
+        for qid, question in questions.items():
+            answer = answers[qid]
+            if not isinstance(answer, dict):
+                raise ValueError("answer is not an object")
+            typed[question["type"]].append(answer)
+        for kind, convert in (
+            ("noul", noul_array),
+            ("choice", choice_array),
+            ("score", score_array),
+        ):
+            if typed[kind]:
+                convert(typed[kind])
+    except (
+        KeyError,
+        AttributeError,
+        TypeError,
+        ValueError,
+        OverflowError,
+        pa.ArrowException,
+    ) as exc:
+        raise ValueError("response contains unusable answers") from exc
+
+
 def json_array(answers: Sequence[dict[str, Answer] | None]) -> pa.Array:
     """The fused ``jev()`` result: the API's ``answers`` map as a JSON string, verbatim."""
     return pa.array(
