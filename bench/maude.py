@@ -672,8 +672,10 @@ def verify_frozen(con: duckdb.DuckDBPyConnection, split: str, frozen: dict[str, 
     want = {
         (code, k): h for code, splits in frozen["codes"].items() for k, h in splits[split].items()
     }
-    cols = ", ".join(CONTENT_FIELDS)
-    rows = con.execute(f"SELECT product_code, mdr_report_key, {cols} FROM reports").fetchall()
+    rows = con.execute(
+        "SELECT product_code, mdr_report_key, narrative, mfr_narrative, brand_name, "
+        "generic_name, manufacturer, event_type, product_problems FROM reports"
+    ).fetchall()
     if len(rows) != len(want) or {(r[0], r[1]) for r in rows} != set(want):
         raise SystemExit(
             f"reports do not match the frozen split {split!r}; "
@@ -1867,6 +1869,9 @@ def demo(args: argparse.Namespace) -> int:
     runs = load_runs()
     has_dev = any(k.startswith("dev/") for k in runs)
     name = args.round or (chosen_round(runs) if has_dev else "R0")
+    if name in FROZEN:
+        print("frozen rounds use `run`, with their content, reading and ledger checks; not `demo`")
+        return 2
     rnd = ROUNDS[name]
     code = args.code
     tag = f"demo_{code}" + ("_dry" if args.dry_run else "")

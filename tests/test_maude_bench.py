@@ -605,6 +605,18 @@ def test_frozen_runs_refuse_candidates_from_a_different_snapshot(
         bench.main(["run", "F3", "--split", "dev", "--dry-run"])
 
 
+@pytest.mark.parametrize("rnd", bench.FROZEN)
+@pytest.mark.parametrize("flags", [[], ["--dry-run"]])
+def test_demo_refuses_frozen_rounds_before_opening_a_cache(
+    tiny: Path, monkeypatch: pytest.MonkeyPatch, rnd: str, flags: list[str]
+) -> None:
+    def refuse(*args, **kwargs):
+        raise AssertionError("a frozen demo must not open a cache or register a transport")
+
+    monkeypatch.setattr(bench, "_connect", refuse)
+    assert bench.main(["demo", "--round", rnd, *flags]) == 2
+
+
 def test_report_adds_the_frozen_section_beside_pr8(
     tiny: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

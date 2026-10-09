@@ -163,6 +163,7 @@ MAUDE demo (§1.5, §3.6).
 - Self-review: frozen runs and rescoring now require the exact split's code/key pairs
   once each before sampling, verify content hashes, and use the candidates bound into
   the same frozen manifest. Coverage on code rows uses the train-only set for F rounds.
+  The demo refuses F rounds, so it cannot bypass the frozen reading, content or ledger checks.
 - Issue #10 remains open: F3 reuses `bench/maude_criteria_v2.json`, whose convention
   choices were informed by pool-wide counts including test reports. These runs test the
   candidate-selection change under the existing criteria, rather than completing an
