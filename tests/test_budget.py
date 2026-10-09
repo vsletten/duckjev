@@ -278,3 +278,23 @@ def test_threads_judging_at_once_share_one_budget() -> None:
     assert len(t.sent) == 20 and c.billed_input_tokens == 20 * est
     assert raised and c._reserved == 0
     c.close()
+
+
+def test_a_stopped_batch_does_not_sleep_out_a_retry_backoff() -> None:
+    # One request backs off for Retry-After: 5 while a sibling fails with 422. The backoff
+    # ends when the batch stops, since the retry would not be sent (cold review: 5 s before).
+    import time
+
+    async def handle(request: httpx.Request) -> httpx.Response:
+        state = json.loads(request.content)["state"]
+        if state == "busy":
+            return httpx.Response(529, headers={"retry-after": "5"}, json={})
+        await asyncio.sleep(0.05)
+        return httpx.Response(422, json={"error": "injected"})
+
+    c = make(httpx.MockTransport(handle), concurrency=2)
+    started = time.monotonic()
+    with pytest.raises(JevAPIError):
+        c.judge([("busy", NOUL), ("bad", NOUL)])
+    assert time.monotonic() - started < 1.0
+    c.close()

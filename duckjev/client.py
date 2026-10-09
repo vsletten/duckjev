@@ -416,7 +416,11 @@ class JevClient:
                 retry_after = resp.headers.get("retry-after")
             if attempt + 1 < self.max_attempts:
                 self.usage.add(retries=1)
-                await asyncio.sleep(self._delay(attempt, retry_after))
+                # Wake early if the batch stops: the next attempt would not be sent anyway.
+                try:
+                    await asyncio.wait_for(stop.wait(), self._delay(attempt, retry_after))
+                except TimeoutError:
+                    pass
         raise JevTransportError(f"Jev request failed after {self.max_attempts} attempts ({last})")
 
     def _accept(
