@@ -9,6 +9,7 @@ process already has a running loop (Jupyter, for example).
 from __future__ import annotations
 
 import asyncio
+import math
 import os
 import random
 import threading
@@ -18,7 +19,7 @@ from typing import Any
 
 import httpx
 
-from .cache import AnswerCache, cache_key
+from .cache import AnswerCache, cache_key, canonical_json
 
 DEFAULT_MODEL = "jev-1.13.0"
 DEFAULT_BASE_URL = "https://api.typesafe.ai"
@@ -29,6 +30,18 @@ API_KEY_ENV = "TYPESAFE_API_KEY"
 USD_PER_INPUT_TOKEN = 42 / 1e9
 
 RETRY_STATUSES = frozenset({429, 500, 502, 503, 504, 529})
+
+#: Seconds to wait for an answer. Long fused requests take tens of seconds under load, and a
+#: request that times out after it was sent may still be billed, so the retry can pay twice.
+DEFAULT_TIMEOUT = 120.0
+#: Seconds to wait for a connection. Nothing has been sent yet, so a retry costs nothing.
+CONNECT_TIMEOUT = 10.0
+#: Tokens added to the UTF-8 byte count of a request body for the first estimate. The API
+#: wraps the body in its own framing, so bytes alone undercount; see ``JevClient`` budget.
+ESTIMATE_FRAMING_TOKENS = 64
+
+# Failures raised before the request left this process: retrying them never pays twice.
+_NOT_SENT = (httpx.ConnectError, httpx.ConnectTimeout, httpx.PoolTimeout, httpx.UnsupportedProtocol)
 
 Answers = dict[str, dict[str, Any]]
 Item = tuple[Any, dict[str, Any]]
@@ -55,7 +68,7 @@ class JevTransportError(JevError):
 
 
 class JevBudgetExceeded(JevError):
-    """Cumulative billed input tokens passed ``max_input_tokens``."""
+    """The next request would not fit in what is left of ``max_input_tokens``."""
 
 
 class Usage:
@@ -72,6 +85,7 @@ class Usage:
         "retries",
         "rate_limited",
         "overloaded",
+        "lost_responses",
     )
 
     def __init__(self) -> None:
@@ -117,7 +131,23 @@ class _LoopThread:
 
 
 class JevClient:
-    """Batching Jev client. ``judge(batch)`` returns one ``answers`` map per item."""
+    """Batching Jev client. ``judge(batch)`` returns one ``answers`` map per item.
+
+    ``max_input_tokens`` is enforced before a request is sent. Each attempt reserves an
+    estimate of its input tokens and is sent only if the tokens already billed, the
+    reservations of requests in flight and its own estimate fit under the limit; otherwise it
+    waits for the requests in flight to settle and raises :class:`JevBudgetExceeded` if it
+    still does not fit. A response settles its reservation to the reported usage. An error
+    status releases it. A response lost after the request was sent (a read timeout, a dropped
+    connection) keeps the estimate as billed, since the API may have charged for it; those
+    are counted in ``usage()["lost_responses"]``.
+
+    The estimate is the UTF-8 byte count of the request body plus
+    ``ESTIMATE_FRAMING_TOKENS``, scaled by the largest ratio of reported to estimated tokens
+    seen so far on this client. Overshoot is therefore bounded by how far the requests in
+    flight exceed their estimates, which shrinks once the first responses arrive. Without a
+    tokenizer for the API's framing this is not an exact ceiling.
+    """
 
     def __init__(
         self,
@@ -130,13 +160,17 @@ class JevClient:
         max_input_tokens: int | None = None,
         transport: httpx.AsyncBaseTransport | None = None,
         usage: Usage | None = None,
-        timeout: float = 30.0,
+        timeout: float = DEFAULT_TIMEOUT,
         max_attempts: int = 6,
         backoff_base: float = 0.5,
         backoff_factor: float = 2.0,
     ) -> None:
         if concurrency < 1:
             raise ValueError("concurrency must be >= 1")
+        if max_input_tokens is not None and max_input_tokens < 0:
+            raise ValueError("max_input_tokens must be >= 0")
+        if timeout <= 0:
+            raise ValueError("timeout must be > 0")
         self.model = model
         self.base_url = (base_url or DEFAULT_BASE_URL).rstrip("/")
         self.concurrency = concurrency
@@ -151,6 +185,10 @@ class JevClient:
         self._transport = transport
         self._billed = 0
         self._billed_lock = threading.Lock()
+        # Budget reservations. Touched only on the loop thread, so the condition is enough.
+        self._reserved = 0
+        self._estimate_ratio = 1.0
+        self._budget: asyncio.Condition | None = None
         self._loop: _LoopThread | None = None
         self._loop_lock = threading.Lock()
         self._http: httpx.AsyncClient | None = None
@@ -160,6 +198,7 @@ class JevClient:
 
     @property
     def billed_input_tokens(self) -> int:
+        """Reported input tokens, plus the estimates of requests whose response was lost."""
         return self._billed
 
     def key_for(self, state: Any, questions: dict[str, Any]) -> str:
@@ -197,7 +236,6 @@ class JevClient:
             if error is not None:
                 raise error
             found.update({k: ans for k, (ans, _) in fetched.items()})
-            self._check_budget()
         return [found[k] for k in keys]
 
     def close(self) -> None:
@@ -219,11 +257,41 @@ class JevClient:
         return key
 
     def _check_budget(self) -> None:
-        if self.max_input_tokens is not None and self._billed > self.max_input_tokens:
+        if self.max_input_tokens is not None and self._billed >= self.max_input_tokens:
             raise JevBudgetExceeded(
-                f"billed input tokens {self._billed} passed max_input_tokens "
+                f"billed input tokens {self._billed} reached max_input_tokens "
                 f"{self.max_input_tokens}"
             )
+
+    def _estimate(self, body: bytes) -> int:
+        return math.ceil((len(body) + ESTIMATE_FRAMING_TOKENS) * self._estimate_ratio)
+
+    async def _reserve(self, estimate: int) -> None:
+        """Wait until ``estimate`` fits beside what is billed and in flight, then reserve it."""
+        if self.max_input_tokens is None:
+            return
+        assert self._budget is not None
+        async with self._budget:
+            while self._billed + self._reserved + estimate > self.max_input_tokens:
+                if self._reserved == 0:
+                    raise JevBudgetExceeded(
+                        f"a request estimated at {estimate} input tokens does not fit: "
+                        f"{self._billed} of max_input_tokens {self.max_input_tokens} "
+                        "already billed"
+                    )
+                await self._budget.wait()
+            self._reserved += estimate
+
+    async def _settle(self, estimate: int, spent: int) -> None:
+        """Replace a reservation with what it cost: reported tokens, the estimate, or 0."""
+        with self._billed_lock:
+            self._billed += spent
+        if self.max_input_tokens is None:
+            return
+        assert self._budget is not None
+        async with self._budget:
+            self._reserved -= estimate
+            self._budget.notify_all()
 
     def _loop_thread(self) -> _LoopThread:
         with self._loop_lock:
@@ -235,15 +303,18 @@ class JevClient:
         self, misses: dict[str, Item], api_key: str
     ) -> tuple[dict[str, tuple[Answers, dict[str, Any]]], BaseException | None]:
         if self._http is None:
+            # Read from self.timeout here, not in __init__, so a caller can still change it
+            # after register() and before the first request.
             self._http = httpx.AsyncClient(
                 base_url=self.base_url,
-                timeout=self.timeout,
+                timeout=httpx.Timeout(self.timeout, connect=min(self.timeout, CONNECT_TIMEOUT)),
                 transport=self._transport,
                 limits=httpx.Limits(
                     max_connections=self.concurrency, max_keepalive_connections=self.concurrency
                 ),
             )
             self._sem = asyncio.Semaphore(self.concurrency)
+            self._budget = asyncio.Condition()
         fetched: dict[str, tuple[Answers, dict[str, Any]]] = {}
 
         async def one(key: str, state: Any, questions: dict[str, Any]) -> None:
@@ -275,20 +346,44 @@ class JevClient:
     ) -> tuple[Answers, dict[str, Any]]:
         assert self._http is not None and self._sem is not None
         payload = {"state": state, "model": self.model, "questions": questions}
+        # The bytes httpx sends for json= (compact, UTF-8), measured for the budget estimate.
+        body = canonical_json(payload).encode("utf-8")
         headers = {"Authorization": f"Bearer {api_key}"}
         last = "no attempt made"
         for attempt in range(self.max_attempts):
-            self._check_budget()
             retry_after: str | None = None
             async with self._sem:
+                base = len(body) + ESTIMATE_FRAMING_TOKENS
+                estimate = self._estimate(body)
+                await self._reserve(estimate)
+                spent = 0
                 try:
                     resp = await self._http.post(ENDPOINT, json=payload, headers=headers)
-                except httpx.TransportError as exc:
+                except _NOT_SENT as exc:
                     last = f"{type(exc).__name__}: {exc}"
                     resp = None
+                except httpx.TransportError as exc:
+                    # Sent, but the answer never arrived: the API may have billed it.
+                    last = f"{type(exc).__name__}: {exc}"
+                    resp = None
+                    spent = estimate
+                    self.usage.add(lost_responses=1)
+                except BaseException:
+                    # Cancelled mid-request (another request in the batch failed): count it.
+                    await self._settle(estimate, estimate)
+                    raise
+                if resp is not None and resp.status_code == 200:
+                    try:
+                        result = self._accept(resp, questions)
+                    except BaseException:
+                        await self._settle(estimate, estimate)
+                        raise
+                    spent = result[1]["input_tokens"]
+                    self._estimate_ratio = max(self._estimate_ratio, spent / base)
+                    await self._settle(estimate, spent)
+                    return result
+                await self._settle(estimate, spent)
             if resp is not None:
-                if resp.status_code == 200:
-                    return self._accept(resp, questions)
                 if resp.status_code in (401, 403):
                     raise JevAuthError(f"Jev API rejected the API key ({resp.status_code})")
                 if resp.status_code not in RETRY_STATUSES:
@@ -314,7 +409,5 @@ class JevClient:
         usage = body.get("usage") or {}
         tin = int(usage.get("input_tokens", 0))
         tout = int(usage.get("output_tokens", 0))
-        with self._billed_lock:
-            self._billed += tin
         self.usage.add(requests=1, input_tokens=tin, output_tokens=tout)
         return answers, {"input_tokens": tin, "output_tokens": tout}
