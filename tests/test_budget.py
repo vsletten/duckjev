@@ -466,3 +466,23 @@ def test_a_stopped_batch_does_not_sleep_out_a_retry_backoff() -> None:
         c.judge([("busy", NOUL), ("bad", NOUL)])
     assert time.monotonic() - started < 1.0
     c.close()
+
+
+def test_a_transport_plug_that_refuses_with_a_jev_error_is_not_billed() -> None:
+    # An offline replay (python -m duckjev.demo) refuses misses from its transport. Nothing
+    # was sent, so the refusal must not show up as a lost, billed response.
+    from duckjev.client import JevError
+
+    class Refused(JevError):
+        pass
+
+    def refuse(request: httpx.Request) -> httpx.Response:
+        raise Refused("not in the shipped answers")
+
+    c = make(httpx.MockTransport(refuse), max_input_tokens=10_000)
+    with pytest.raises(Refused):
+        c.judge([("s0", NOUL)])
+    u = c.usage.snapshot()
+    assert c.billed_input_tokens == 0 and u["input_tokens"] == 0 and u["lost_responses"] == 0
+    assert c._reserved == 0
+    c.close()

@@ -404,6 +404,11 @@ class JevClient:
                     resp = None
                     spent = estimate
                     lost_response = True
+                except JevError:
+                    # A local transport plug refused (an offline replay, a cache-only rescore):
+                    # only duckjev raises these, so nothing left the process.
+                    await self._settle(estimate, 0)
+                    raise
                 except BaseException:
                     # Cancelled or failed mid-request, possibly after sending: count it.
                     await self._settle(estimate, estimate, lost_response=True)
