@@ -23,7 +23,7 @@ import httpx
 
 import duckjev
 from duckjev.cache import AnswerCache
-from duckjev.client import JevError
+from duckjev.client import JevError, Usage
 
 MODEL = "jev-1.13.0"  # the model the shipped answers came from; part of every cache key
 LIVE_BUDGET_TOKENS = 250_000  # $0.0105 at $42 per billion input tokens
@@ -119,7 +119,7 @@ def load_answers(cache: AnswerCache) -> int:
 
 
 def connect(live: bool) -> duckdb.DuckDBPyConnection:
-    """A connection with ``reports`` loaded and duckjev registered on an in-memory cache.
+    """A connection with ``reports`` loaded, an in-memory cache and its own usage counters.
 
     Offline, the cache holds the shipped answers and the transport refuses every request.
     Live, the cache starts empty, so every question goes to Jev under the budget.
@@ -139,6 +139,7 @@ def connect(live: bool) -> duckdb.DuckDBPyConnection:
             api_key="offline",  # never sent: the transport refuses every request
             transport=httpx.MockTransport(_refuse),
         )
+    client.usage = Usage()
     client.cache = AnswerCache(None)
     if not live:
         load_answers(client.cache)
@@ -167,7 +168,6 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="python -m duckjev.demo", description=__doc__.split("\n")[0])
     ap.add_argument("--live", action="store_true", help="ask Jev again (needs TYPESAFE_API_KEY)")
     args = ap.parse_args(argv)
-    duckjev.usage(reset=True)
     con = connect(args.live)
     client = duckjev.client_for(con)
     if not args.live:
@@ -183,9 +183,9 @@ def main(argv: list[str] | None = None) -> int:
     finally:
         client.close()
         con.close()
-    u = duckjev.usage()
-    print(
-        f"\nusage: {u['requests']} requests, {u['input_tokens']:,} input tokens, "
-        f"{u['cache_hits']} cache hits, ${u['est_usd']:.4f}"
-    )
+        u = client.usage.snapshot()
+        print(
+            f"\nusage: {u['requests']} requests, {u['input_tokens']:,} input tokens, "
+            f"{u['cache_hits']} cache hits, ${u['est_usd']:.4f}"
+        )
     return 0

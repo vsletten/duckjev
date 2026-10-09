@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import io
 
+import duckdb
 import pytest
+from fake import FakeTransport
 
 import duckjev
 from duckjev import demo
@@ -26,8 +28,9 @@ def test_every_shipped_answer_is_used() -> None:
     client = duckjev.client_for(con)
     shipped = len(client.cache)
     demo.run(con, out=io.StringIO())
-    assert duckjev.usage()["cache_hits"] == shipped
+    assert client.usage.snapshot()["cache_hits"] == shipped
     client.close()
+    con.close()
 
 
 def test_a_changed_question_says_to_run_live(
@@ -41,3 +44,45 @@ def test_a_changed_question_says_to_run_live(
 def test_live_without_a_key_stops_before_any_request(capsys: pytest.CaptureFixture[str]) -> None:
     assert demo.main(["--live"]) == 1
     assert "TYPESAFE_API_KEY" in capsys.readouterr().err
+
+
+def test_demo_preserves_other_clients_usage(capsys: pytest.CaptureFixture[str]) -> None:
+    con = duckdb.connect()
+    other = duckjev.register(con, cache=False, api_key="test-key", transport=FakeTransport())
+    try:
+        con.execute("SELECT jev_noul('my card', 'about a card?')").fetchall()
+        before = duckjev.usage()
+        assert before["requests"] == 1
+        assert demo.main([]) == 0
+        assert duckjev.usage() == before
+        assert (
+            "usage: 0 requests, 0 input tokens, 138 cache hits, $0.0000" in capsys.readouterr().out
+        )
+    finally:
+        other.close()
+        con.close()
+
+
+def test_failed_live_run_reports_usage(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    fake = FakeTransport(input_tokens=1_000)
+    register = duckjev.register
+
+    def fake_register(con, **kwargs):
+        return register(con, **(kwargs | {"api_key": "test-key", "transport": fake}))
+
+    monkeypatch.setattr(duckjev, "register", fake_register)
+    monkeypatch.setattr(
+        demo,
+        "STEPS",
+        [
+            ("One billed request", "SELECT jev_noul('my card', 'about a card?')"),
+            ("SQL failure after billing", "SELECT * FROM missing_table"),
+        ],
+    )
+    assert demo.main(["--live"]) == 1
+    captured = capsys.readouterr()
+    assert "missing_table" in captured.err
+    assert len(fake.requests) == 1
+    assert "usage: 1 requests, 1,000 input tokens, 0 cache hits, $0.0000" in captured.out

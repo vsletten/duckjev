@@ -25,6 +25,7 @@ import sys
 from pathlib import Path
 from urllib.parse import quote
 
+import duckdb
 import httpx
 
 import duckjev
@@ -113,14 +114,22 @@ def record(_: argparse.Namespace) -> int:
     if not duckjev.client.os.environ.get(duckjev.client.API_KEY_ENV):
         print("record needs TYPESAFE_API_KEY", file=sys.stderr)
         return 2
-    duckjev.usage(reset=True)
     con = demo.connect(live=True)
     client = duckjev.client_for(con)
-    demo.run(con)
-    use = duckjev.usage()
-    cache = client.cache.to_arrow().sort_by("key").to_pylist()
-    client.close()
-    con.close()
+    try:
+        demo.run(con)
+        cache = client.cache.to_arrow().sort_by("key").to_pylist()
+    except (duckjev.JevError, duckdb.Error) as exc:
+        print(f"\nrecord stopped: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        client.close()
+        con.close()
+        use = client.usage.snapshot()
+        print(
+            f"\nlive: {use['requests']} requests, {use['input_tokens']:,} input tokens, "
+            f"${use['est_usd']:.4f}"
+        )
     lines = [
         json.dumps(
             {
@@ -135,17 +144,16 @@ def record(_: argparse.Namespace) -> int:
         for e in cache
     ]
     ANSWERS.write_bytes(gzip.compress(("\n".join(lines) + "\n").encode("utf-8"), mtime=0))
-    print(
-        f"\nlive: {use['requests']} requests, {use['input_tokens']:,} input tokens, "
-        f"${use['est_usd']:.4f}; wrote {len(lines)} answers to {ANSWERS.relative_to(ROOT)}"
-    )
-    duckjev.usage(reset=True)
+    print(f"wrote {len(lines)} answers to {ANSWERS.relative_to(ROOT)}")
     out = io.StringIO()
     con = demo.connect(live=False)
-    demo.run(con, out)
-    duckjev.client_for(con).close()
-    con.close()
-    replay = duckjev.usage()
+    client = duckjev.client_for(con)
+    try:
+        demo.run(con, out)
+    finally:
+        client.close()
+        con.close()
+    replay = client.usage.snapshot()
     if replay["requests"] or replay["cache_misses"]:
         print(f"offline replay was not complete: {replay}", file=sys.stderr)
         return 1
