@@ -134,7 +134,7 @@ MAUDE demo (§1.5, §3.6).
   `usage()["lost_responses"]`; error statuses and connect failures release the reservation.
   The PR #8 guard's in-flight overshoot (§1.5) cannot recur beyond the estimate error.
 - `register(timeout=...)`, default 120 s for the answer (was 30 s), connect capped at 10 s.
-  The first deployment (Summation's sandbox, 2026-09-30) lost 46 answers to the 30 s default
+  The first hosted deployment (2026-09-30) lost 46 answers to the 30 s default
   under load; each retry of a sent request can be billed again.
 - `docs/TIER2.md` §3.3 and §3.5 carry the same contract for the extension.
 
